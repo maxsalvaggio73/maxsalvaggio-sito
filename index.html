@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Max Salvaggio — Coming Soon</title>
+  <meta name="description" content="Il nuovo sito di Max Salvaggio è in arrivo. Fotografo di moda, lingerie, swimwear e commercial. Contattaci per informazioni." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@300;400;700;900&family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    :root {
+      --anthracite: #2D3032;
+      --accent: #ff3366;
+      --font-display: 'Epilogue', sans-serif;
+      --font-body: 'Outfit', sans-serif;
+      /* Vetro fumé */
+      --card-bg: rgba(18, 18, 20, 0.42);
+      --card-border: rgba(255, 255, 255, 0.09);
+      --card-text: rgba(255, 255, 255, 0.92);
+      --card-muted: rgba(255, 255, 255, 0.42);
+      --input-bg: rgba(255, 255, 255, 0.055);
+      --input-border: rgba(255, 255, 255, 0.14);
+      --input-focus-border: rgba(255, 255, 255, 0.55);
+      --input-focus-shadow: rgba(255, 255, 255, 0.06);
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      font-family: var(--font-body);
+      background: var(--anthracite);
+    }
+
+    /* ===== MOSAIC BACKGROUND ===== */
+    #mosaic-bg {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    /* The actual mosaic canvas — rendered at 4K logical size, scaled to cover viewport */
+    #mosaic-canvas-wrapper {
+      position: absolute;
+      /* Will be sized & positioned by JS to always cover the viewport at cover ratio */
+      top: 0;
+      left: 0;
+      display: flex;
+      flex-wrap: wrap;
+      align-content: flex-start;
+      /* 4K target grid: width will be set by JS */
+    }
+
+    .mosaic-tile {
+      flex-shrink: 0;
+      overflow: hidden;
+      display: block;
+    }
+
+    .mosaic-tile img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: brightness(0.82) saturate(0.9);
+      transition: filter 0.4s ease;
+    }
+
+    /* Smooth slow pan animation */
+    @keyframes mosaicDrift {
+      0%   { transform: translate(0, 0); }
+      25%  { transform: translate(-1%, -0.5%); }
+      50%  { transform: translate(-2%, -1%); }
+      75%  { transform: translate(-1%, -0.5%); }
+      100% { transform: translate(0, 0); }
+    }
+
+    /* Dark gradient overlay on top of mosaic */
+    #mosaic-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      background:
+        radial-gradient(ellipse 80% 70% at 50% 50%, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.78) 100%),
+        linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.15) 40%, rgba(0,0,0,0.6) 100%);
+      pointer-events: none;
+    }
+
+    /* Subtle mosaic shimmer vignette */
+    #mosaic-overlay::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 50% 50% at 50% 50%, transparent 30%, rgba(0,0,0,0.3) 100%);
+    }
+
+    /* ===== PAGE LAYOUT ===== */
+    #page-wrapper {
+      position: relative;
+      z-index: 2;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 30px 20px;
+    }
+
+    /* ===== LOGO / HEADER ===== */
+    .cs-logo {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: clamp(1.4rem, 3.5vw, 2.6rem);
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: #ffffff;
+      text-align: center;
+      margin-bottom: 8px;
+      text-shadow: 0 2px 20px rgba(0,0,0,0.6);
+      transform: translateX(0.2em); /* offset for letter-spacing centering */
+    }
+
+    .cs-tagline {
+      font-family: var(--font-body);
+      font-size: clamp(0.7rem, 1.5vw, 0.85rem);
+      font-weight: 300;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    /* ===== VETRO FUMÉ CARD ===== */
+    .glass-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(18px) saturate(1.4) brightness(0.85);
+      -webkit-backdrop-filter: blur(18px) saturate(1.4) brightness(0.85);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: clamp(30px, 5vw, 52px) clamp(28px, 5vw, 56px);
+      width: 100%;
+      max-width: 500px;
+      box-shadow:
+        0 24px 60px rgba(0, 0, 0, 0.50),
+        0 1px 0 rgba(255,255,255,0.10) inset;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Riga luminosa sottile sul bordo superiore */
+    .glass-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 10%;
+      right: 10%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.30), transparent);
+    }
+
+    .card-headline {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: clamp(1.4rem, 2.8vw, 1.9rem);
+      color: var(--card-text);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 6px;
+      line-height: 1.1;
+    }
+
+    .card-sub {
+      font-size: 0.78rem;
+      color: var(--card-muted);
+      letter-spacing: 0.08em;
+      margin-bottom: 30px;
+      font-weight: 300;
+    }
+
+    /* Linea separatore elegante sotto il titolo */
+    .card-divider {
+      width: 36px;
+      height: 1px;
+      background: rgba(255,255,255,0.25);
+      margin: 0 0 28px 0;
+    }
+
+    /* ===== FORM ===== */
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .form-group label {
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--card-muted);
+      padding-left: 1px;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      background: var(--input-bg);
+      border: none;
+      border-bottom: 1px solid var(--input-border);
+      border-radius: 0;
+      color: var(--card-text);
+      font-family: var(--font-body);
+      font-size: 0.90rem;
+      font-weight: 300;
+      padding: 10px 2px;
+      outline: none;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+      width: 100%;
+      resize: none;
+    }
+
+    .form-group input::placeholder,
+    .form-group textarea::placeholder {
+      color: rgba(255, 255, 255, 0.20);
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-bottom-color: var(--input-focus-border);
+      box-shadow: 0 1px 0 var(--input-focus-border);
+    }
+
+    .form-group textarea {
+      min-height: 90px;
+      max-height: 160px;
+    }
+
+    /* Hidden honeypot field for Formspree spam protection */
+    .form-honey {
+      display: none;
+    }
+
+    /* ===== SUBMIT BUTTON — Ghost outline bianco su vetro fumé ===== */
+    .btn-submit {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: transparent;
+      color: rgba(255,255,255,0.88);
+      border: 1px solid rgba(255,255,255,0.28);
+      border-radius: 8px;
+      font-family: var(--font-body);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      padding: 14px 28px;
+      cursor: pointer;
+      overflow: hidden;
+      transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease, transform 0.25s ease;
+      margin-top: 8px;
+      width: 100%;
+    }
+
+    .btn-submit::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(255,255,255,0.06);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .btn-submit:hover {
+      background: rgba(255,255,255,0.10);
+      border-color: rgba(255,255,255,0.55);
+      color: #ffffff;
+      transform: translateY(-1px);
+    }
+
+    .btn-submit:hover::before {
+      opacity: 1;
+    }
+
+    .btn-submit:active {
+      transform: translateY(0);
+    }
+
+    .btn-submit:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* Spinner */
+    .btn-spinner {
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(255,255,255,0.4);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      display: none;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .btn-submit.loading .btn-spinner { display: block; }
+    .btn-submit.loading .btn-text { display: none; }
+
+    /* ===== SUCCESS MESSAGE ===== */
+    .success-msg {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 14px;
+      padding: 12px 0;
+    }
+
+    .success-msg.visible {
+      display: flex;
+    }
+
+    .success-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #00c47a, #00a061);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 24px rgba(0,196,122,0.35);
+    }
+
+    .success-icon svg {
+      width: 26px;
+      height: 26px;
+      stroke: #fff;
+      fill: none;
+      stroke-width: 2.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .success-title {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: 1.2rem;
+      color: var(--card-text);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .success-body {
+      font-size: 0.82rem;
+      color: var(--card-muted);
+      line-height: 1.7;
+      max-width: 300px;
+    }
+
+    /* ===== FOOTER CREDIT ===== */
+    .cs-footer {
+      position: fixed;
+      bottom: 24px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      z-index: 3;
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.2);
+      font-weight: 400;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 560px) {
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+
+      .cs-logo {
+        font-size: 1.2rem;
+      }
+
+      body {
+        overflow-y: auto;
+      }
+      html, body {
+        height: auto;
+        min-height: 100vh;
+      }
+      #mosaic-bg, #mosaic-overlay {
+        position: fixed;
+        height: 100vh;
+      }
+      #page-wrapper {
+        min-height: 100vh;
+        height: auto;
+        padding: 40px 16px 80px;
+        overflow: visible;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- MOSAIC BACKGROUND -->
+  <div id="mosaic-bg">
+    <div id="mosaic-canvas-wrapper"></div>
+  </div>
+
+  <!-- DARK OVERLAY -->
+  <div id="mosaic-overlay"></div>
+
+  <!-- PAGE CONTENT -->
+  <div id="page-wrapper">
+
+    <p class="cs-logo">Max Salvaggio</p>
+    <p class="cs-tagline">Photography &amp; Creative Direction</p>
+
+    <div class="glass-card">
+
+      <h1 class="card-headline">Coming Soon</h1>
+      <p class="card-sub">Scrivici un messaggio — ti risponderemo al più presto.</p>
+      <div class="card-divider"></div>
+
+      <!-- SUCCESS STATE -->
+      <div class="success-msg" id="success-message">
+        <div class="success-icon">
+          <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <p class="success-title">Messaggio Inviato!</p>
+        <p class="success-body">Grazie per averci contattato. Ti risponderemo il prima possibile.</p>
+      </div>
+
+      <!-- CONTACT FORM — Formspree -->
+      <!-- ⚠️  ISTRUZIONI: sostituisci YOUR_FORM_ID con il tuo ID Formspree (es. xpwdgnkl) -->
+      <!-- Registrati gratis su https://formspree.io/new  -->
+      <form
+        id="contact-form"
+        class="contact-form"
+        action="https://formspree.io/f/xzdqzagg"
+        method="POST"
+        novalidate
+      >
+        <!-- Honeypot anti-spam -->
+        <input type="text" name="_gotcha" class="form-honey" tabindex="-1" autocomplete="off" />
+        <!-- Redirect disabilitato — gestiamo noi il feedback -->
+        <input type="hidden" name="_next" value="" />
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="first-name">Nome</label>
+            <input
+              type="text"
+              id="first-name"
+              name="nome"
+              placeholder="Mario"
+              required
+              autocomplete="given-name"
+            />
+          </div>
+          <div class="form-group">
+            <label for="last-name">Cognome</label>
+            <input
+              type="text"
+              id="last-name"
+              name="cognome"
+              placeholder="Rossi"
+              required
+              autocomplete="family-name"
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Indirizzo Email</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="mario@esempio.it"
+            required
+            autocomplete="email"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="message">Messaggio</label>
+          <textarea
+            id="message"
+            name="messaggio"
+            placeholder="Scrivi qui il tuo messaggio…"
+            required
+          ></textarea>
+        </div>
+
+        <button type="submit" class="btn-submit" id="submit-btn">
+          <span class="btn-text">Invia Messaggio &nbsp;→</span>
+          <span class="btn-spinner"></span>
+        </button>
+
+      </form>
+
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="cs-footer">
+    &copy; <span id="year"></span> Max Salvaggio — All Rights Reserved
+  </footer>
+
+  <!-- ===== MOSAIC ENGINE ===== -->
+  <script>
+    // ——————————————————————————————
+    // ALL IMAGES from the archive (auto-generated list)
+    // ——————————————————————————————
+    const ALL_IMAGES = [
+"assets/mosaic/img1.jpg",
+"assets/mosaic/img2.jpg",
+"assets/mosaic/img3.jpg",
+"assets/mosaic/img4.jpg",
+"assets/mosaic/img5.jpg",
+"assets/mosaic/img6.jpg",
+"assets/mosaic/img7.jpg",
+"assets/mosaic/img8.jpg",
+"assets/mosaic/img9.jpg",
+"assets/mosaic/img10.jpg",
+"assets/mosaic/img11.jpg",
+"assets/mosaic/img12.jpg",
+"assets/mosaic/img13.jpg",
+"assets/mosaic/img14.jpg",
+"assets/mosaic/img15.jpg",
+"assets/mosaic/img16.jpg",
+"assets/mosaic/img17.jpg",
+"assets/mosaic/img18.jpg",
+"assets/mosaic/img19.jpg",
+"assets/mosaic/img20.jpg",
+"assets/mosaic/img21.jpg",
+"assets/mosaic/img22.jpg",
+"assets/mosaic/img23.jpg",
+"assets/mosaic/img24.jpg",
+"assets/mosaic/img25.jpg",
+"assets/mosaic/img26.jpg",
+"assets/mosaic/img27.jpg",
+"assets/mosaic/img28.jpg",
+"assets/mosaic/img29.jpg",
+"assets/mosaic/img30.jpg",
+"assets/mosaic/img31.jpg",
+"assets/mosaic/img32.jpg",
+"assets/mosaic/img33.jpg",
+"assets/mosaic/img34.jpg",
+"assets/mosaic/img35.jpg",
+"assets/mosaic/img36.jpg",
+"assets/mosaic/img37.jpg",
+"assets/mosaic/img38.jpg",
+"assets/mosaic/img39.jpg",
+"assets/mosaic/img40.jpg",
+"assets/mosaic/img41.jpg",
+"assets/mosaic/img42.jpg",
+"assets/mosaic/img43.jpg",
+"assets/mosaic/img44.jpg",
+"assets/mosaic/img45.jpg",
+"assets/mosaic/img46.jpg",
+"assets/mosaic/img47.jpg",
+"assets/mosaic/img48.jpg",
+"assets/mosaic/img49.jpg",
+"assets/mosaic/img50.jpg",
+"assets/mosaic/img51.jpg",
+"assets/mosaic/img52.jpg",
+"assets/mosaic/img53.jpg",
+"assets/mosaic/img54.jpg",
+"assets/mosaic/img55.jpg",
+"assets/mosaic/img56.jpg",
+"assets/mosaic/img57.jpg",
+"assets/mosaic/img58.jpg",
+"assets/mosaic/img59.jpg",
+"assets/mosaic/img60.jpg",
+"assets/mosaic/img61.jpg",
+"assets/mosaic/img62.jpg",
+"assets/mosaic/img63.jpg",
+"assets/mosaic/img64.jpg",
+"assets/mosaic/img65.jpg",
+"assets/mosaic/img66.jpg",
+"assets/mosaic/img67.jpg",
+"assets/mosaic/img68.jpg",
+"assets/mosaic/img69.jpg",
+"assets/mosaic/img70.jpg",
+"assets/mosaic/img71.jpg",
+"assets/mosaic/img72.jpg",
+"assets/mosaic/img73.jpg",
+"assets/mosaic/img74.jpg",
+"assets/mosaic/img75.jpg",
+    ];
+
+    // ——————————————————————————————
+    // MOSAIC ENGINE
+    // ——————————————————————————————
+    (function buildMosaic() {
+      const wrapper = document.getElementById('mosaic-canvas-wrapper');
+
+      // Shuffle images array (Fisher-Yates)
+      function shuffle(arr) {
+        const a = [...arr];
+        for (let i = a.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [a[i], a[j]] = [a[j], a[i]];
+        }
+        return a;
+      }
+
+      // ── Mosaic layout parameters ──────────────────────────────────
+      // We define a virtual 4K canvas (3840×2160).
+      // We tile it with cells; each cell can be portrait or landscape.
+      // The wrapper is scaled via CSS transform to always cover the viewport.
+
+      const CANVAS_W = 3840;
+      const CANVAS_H = 2160;
+
+      // Cell sizes (px on the virtual canvas)
+      const PORTRAIT_W  = 340;  // portrait tile
+      const PORTRAIT_H  = 440;
+      const LANDSCAPE_W = 480;  // landscape tile
+      const LANDSCAPE_H = 320;
+      const GAP = 4;            // inter-tile gap
+
+      // Build rows of tiles until we fill CANVAS_H
+      const tiles = [];          // [{x, y, w, h, imgUrl}]
+      let cursorY = 0;
+
+      const shuffled = shuffle(ALL_IMAGES);
+      let imgIdx = 0;
+
+      // Helper: pick next image (cycling)
+      function nextImg() {
+        const url = shuffled[imgIdx % shuffled.length];
+        imgIdx++;
+        return url;
+      }
+
+      // Build row by row
+      while (cursorY < CANVAS_H + PORTRAIT_H) {
+        let cursorX = 0;
+        // Alternate row style
+        const rowStyle = Math.random() > 0.5 ? 'portrait' : 'mixed';
+        const rowTiles = [];
+
+        while (cursorX < CANVAS_W) {
+          // Decide tile type
+          let tw, th;
+          if (rowStyle === 'portrait') {
+            tw = PORTRAIT_W;
+            th = PORTRAIT_H;
+          } else {
+            // 40% chance landscape, 60% portrait in mixed rows
+            if (Math.random() < 0.4) {
+              tw = LANDSCAPE_W;
+              th = LANDSCAPE_H;
+            } else {
+              tw = PORTRAIT_W;
+              th = PORTRAIT_H;
+            }
+          }
+
+          // Don't exceed canvas width — stretch last tile to fill
+          if (cursorX + tw > CANVAS_W) {
+            tw = CANVAS_W - cursorX;
+          }
+
+          rowTiles.push({ x: cursorX, y: cursorY, w: tw, h: th, url: nextImg() });
+          cursorX += tw + GAP;
+        }
+
+        // Normalize row height to the tallest tile in the row
+        const rowH = Math.max(...rowTiles.map(t => t.h));
+        rowTiles.forEach(t => { t.h = rowH; });
+
+        tiles.push(...rowTiles);
+        cursorY += rowH + GAP;
+      }
+
+      // ── Render tiles ──────────────────────────────────────────────
+      // The wrapper is position:absolute inside #mosaic-bg
+      // We'll set wrapper to CANVAS_W x cursorY and then scale it
+      wrapper.style.width  = CANVAS_W + 'px';
+      wrapper.style.height = cursorY + 'px';
+      wrapper.style.position = 'absolute';
+
+      tiles.forEach(t => {
+        const tile = document.createElement('div');
+        tile.className = 'mosaic-tile';
+        tile.style.cssText = `
+          position: absolute;
+          left: ${t.x}px;
+          top: ${t.y}px;
+          width: ${t.w}px;
+          height: ${t.h}px;
+        `;
+
+        const img = document.createElement('img');
+        img.src = t.url;
+        img.alt = '';
+        img.loading = 'lazy';
+        img.decoding = 'async';
+        tile.appendChild(img);
+        wrapper.appendChild(tile);
+      });
+
+      // ── Scale wrapper to cover viewport (like background-size: cover) ──
+      function scaleMosaic() {
+        const vw = window.innerWidth;
+        const vh = window.innerHeight;
+        const scaleX = vw / CANVAS_W;
+        const scaleY = vh / cursorY;
+        const scale  = Math.max(scaleX, scaleY); // cover semantics
+
+        const scaledW = CANVAS_W * scale;
+        const scaledH = cursorY * scale;
+
+        // Center the scaled canvas
+        const offsetX = (vw - scaledW) / 2;
+        const offsetY = (vh - scaledH) / 2;
+
+        wrapper.style.transformOrigin = '0 0';
+        wrapper.style.transform = `translate(${offsetX}px, ${offsetY}px) scale(${scale})`;
+      }
+
+      scaleMosaic();
+      window.addEventListener('resize', scaleMosaic);
+
+      // ── Slow drift animation ──────────────────────────────────────
+      let driftX = 0, driftY = 0;
+      let targetX = 0, targetY = 0;
+      const MAX_DRIFT = 40; // pixels in virtual canvas units
+
+      setInterval(() => {
+        targetX = (Math.random() * 2 - 1) * MAX_DRIFT;
+        targetY = (Math.random() * 2 - 1) * MAX_DRIFT;
+      }, 6000);
+
+      function animateDrift() {
+        driftX += (targetX - driftX) * 0.005;
+        driftY += (targetY - driftY) * 0.005;
+
+        const vw = window.innerWidth;
+        const vh = window.innerHeight;
+        const scaleX = vw / CANVAS_W;
+        const scaleY = vh / cursorY;
+        const scale  = Math.max(scaleX, scaleY);
+
+        const scaledW = CANVAS_W * scale;
+        const scaledH = cursorY * scale;
+        const offsetX = (vw - scaledW) / 2 + driftX;
+        const offsetY = (vh - scaledH) / 2 + driftY;
+
+        wrapper.style.transform = `translate(${offsetX}px, ${offsetY}px) scale(${scale})`;
+        requestAnimationFrame(animateDrift);
+      }
+
+      requestAnimationFrame(animateDrift);
+    })();
+
+    // ——————————————————————————————
+    // FORM LOGIC (Formspree AJAX)
+    // ——————————————————————————————
+    const form       = document.getElementById('contact-form');
+    const submitBtn  = document.getElementById('submit-btn');
+    const successMsg = document.getElementById('success-message');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      // Basic client-side validation
+      const fields = form.querySelectorAll('[required]');
+      let valid = true;
+      fields.forEach(f => {
+        f.style.borderColor = '';
+        if (!f.value.trim()) {
+          f.style.borderColor = 'rgba(255,51,102,0.7)';
+          valid = false;
+        }
+      });
+      if (!valid) return;
+
+      // Check Formspree ID has been set
+      const action = form.action;
+      if (action.includes('YOUR_FORM_ID')) {
+        alert('⚠️  Imposta il tuo ID Formspree nell\'attributo action del form.\nRegistrati su https://formspree.io e sostituisci YOUR_FORM_ID.');
+        return;
+      }
+
+      // Loading state
+      submitBtn.classList.add('loading');
+      submitBtn.disabled = true;
+
+      try {
+        const data = new FormData(form);
+        const res = await fetch(action, {
+          method: 'POST',
+          body: data,
+          headers: { 'Accept': 'application/json' }
+        });
+
+        if (res.ok) {
+          // Show success
+          form.style.display = 'none';
+          successMsg.classList.add('visible');
+        } else {
+          const json = await res.json();
+          const msg = (json.errors || []).map(e => e.message).join(', ') || 'Errore nell\'invio. Riprova.';
+          alert('❌ ' + msg);
+          submitBtn.classList.remove('loading');
+          submitBtn.disabled = false;
+        }
+      } catch (err) {
+        alert('❌ Errore di rete. Controlla la connessione e riprova.');
+        submitBtn.classList.remove('loading');
+        submitBtn.disabled = false;
+      }
+    });
+
+    // ——————————————————————————————
+    // FOOTER YEAR
+    // ——————————————————————————————
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+
+</body>
+</html>
