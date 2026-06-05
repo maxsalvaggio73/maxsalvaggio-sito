@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>PHOTO WORK — MAX SALVAGGIO</title>
+  
+  <!-- Meta Tags for SEO -->
+  <meta name="description" content="Explore the iconic photo work, campaigns, and commercial archives of fashion photographer Max Salvaggio. View high-end editorials, swimwear, studio concepts, and lingerie portraits.">
+  <meta name="keywords" content="Max Salvaggio, photographer, fashion photography, commercial photographer, swimsuit campaign, studio portraits, menswear, lingerie, fashion location">
+  <meta name="author" content="Max Salvaggio">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="PHOTO WORK — MAX SALVAGGIO">
+  <meta property="og:description" content="Explore the high-fashion, location, and commercial photography portfolio of Max Salvaggio. Featured galleries include Swimwear, Lingerie, Commercial, and Menswear campaigns.">
+  <meta property="og:url" content="index.html">
+  <meta property="og:image" content="Max Salvaggio Archivio/FASHION – LOCATION/MAX_SALVAGGIO_078.jpg">
+  
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="PHOTO WORK — MAX SALVAGGIO">
+  <meta name="twitter:description" content="Explore the high-fashion and commercial photography archives of Max Salvaggio.">
+  
+  <link rel="icon" type="image/x-icon" href="https://images.squarespace-cdn.com/content/v1/605afda9ad7e1048201d4a18/0296b407-a257-4a48-bc9d-894f31bd056e/favicon.ico?format=100w"/>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- --- CINEMATIC FULLSCREEN BACKGROUND STACK (MAX SALVAGGIO ARCHIVE) --- -->
+  <div class="bg-transitions">
+    <div class="bg-image active" data-bg-index="0" style="background-image: url('Max Salvaggio Archivio/COMMERCIAL/Max_Salvaggio_Campari_60A32X40_ok.jpg');"></div>
+    <div class="bg-image" data-bg-index="1" style="background-image: url('Max Salvaggio Archivio/FASHION – LOCATION/MAX_SALVAGGIO_078.jpg');"></div>
+    <div class="bg-image" data-bg-index="2" style="background-image: url('Max Salvaggio Archivio/FASHION-STUDIO/Max_Salvaggio_Anzhelika_121k-R-24x30-print_OK.jpeg');"></div>
+    <div class="bg-image" data-bg-index="3" style="background-image: url('Max Salvaggio Archivio/LINGERIE/Max_Salvaggio_Lingerie_Amanda_0248BW1.jpg');"></div>
+    <div class="bg-image" data-bg-index="4" style="background-image: url('Max Salvaggio Archivio/MENSWEAR/Max_Salvaggio_©_Fashion_Man_w_001.jpg');"></div>
+    <div class="bg-image" data-bg-index="5" style="background-image: url('Max Salvaggio Archivio/SWIMMWEAR/MAX_SALVAGGIO_Kenya_050.jpg');"></div>
+    <div class="bg-overlay"></div>
+  </div>
+
+  <!-- --- CLOSEABLE ANNOUNCEMENT BAR --- -->
+  <div class="announcement-bar" id="announcement-bar">
+    <p>Benvenuti nel sito di <strong>Max Salvaggio</strong>. <span style="opacity: 0.7; font-size: 0.85em;">Clicca su una voce per aprire la galleria interattiva offline.</span></p>
+    <button class="announcement-close" id="announcement-close" aria-label="Close Announcement">&times;</button>
+  </div>
+
+  <!-- --- STICKY NAVIGATION HEADER --- -->
+  <header id="top">
+    <div class="header-container">
+      <button class="hamburger" id="hamburger" aria-label="Toggle Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <a href="portfolio.html" class="logo">MAX SALVAGGIO</a>
+      <div style="width: 24px; display: none;" class="spacer-hamburger"></div> <!-- Keep header symmetrical on mobile -->
+    </div>
+    
+    <!-- Main Desktop Navigation Menu -->
+    <nav aria-label="Main Navigation">
+      <ul class="nav-menu">
+        <li><a href="portfolio.html" class="nav-link active">PHOTO WORK</a></li>
+        <li><a href="#" class="nav-link">FILM WORK</a></li>
+        <li><a href="#" class="nav-link">Exhibitions</a></li>
+        <li><a href="#" class="nav-link">Special Projects</a></li>
+        <li><a href="#" class="nav-link">Publications</a></li>
+        <li><a href="#" class="nav-link">CONTACT</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- --- OVERLAY MOBILE NAVIGATION --- -->
+  <div class="mobile-nav-overlay" id="mobile-nav-overlay">
+    <nav aria-label="Mobile Navigation">
+      <ul class="mobile-nav-list">
+        <li><a href="portfolio.html" class="mobile-nav-link active">PHOTO WORK</a></li>
+        <li><a href="#" class="mobile-nav-link">FILM WORK</a></li>
+        <li><a href="#" class="mobile-nav-link">Exhibitions</a></li>
+        <li><a href="#" class="mobile-nav-link">Special Projects</a></li>
+        <li><a href="#" class="mobile-nav-link">Publications</a></li>
+        <li><a href="#" class="mobile-nav-link">CONTACT</a></li>
+      </ul>
+    </nav>
+  </div>
+
+  <!-- --- MAIN TYPOGRAPHY STACK --- -->
+  <main>
+    <section class="portfolio-container">
+      <h1 style="display: none;">Max Salvaggio Portfolios</h1> <!-- Keep SEO H1 present but hidden for sleekness -->
+      <ul class="portfolio-list">
+        <li class="portfolio-item">
+          <a class="portfolio-link" data-portfolio-index="0" href="#">COMMERCIAL</a>
+        </li>
+        <li class="portfolio-item">
+          <a class="portfolio-link" data-portfolio-index="1" href="#">FASHION – LOCATION</a>
+        </li>
+        <li class="portfolio-item">
+          <a class="portfolio-link" data-portfolio-index="2" href="#">FASHION-STUDIO</a>
+        </li>
+        <li class="portfolio-item">
+          <a class="portfolio-link" data-portfolio-index="3" href="#">LINGERIE</a>
+        </li>
+        <li class="portfolio-item">
+          <a class="portfolio-link" data-portfolio-index="4" href="#">MENSWEAR</a>
+        </li>
+        <li class="portfolio-item">
+          <a class="portfolio-link" data-portfolio-index="5" href="#">SWIMMWEAR</a>
+        </li>
+      </ul>
+    </section>
+  </main>
+
+  <!-- --- IMMERSIVE DRAWER LIGHTBOX --- -->
+  <div class="gallery-drawer" id="gallery-drawer" role="dialog" aria-modal="true" aria-labelledby="gallery-title">
+    <div class="gallery-header">
+      <h2 class="gallery-title" id="gallery-title">COMMERCIAL</h2>
+      <button class="gallery-close" id="gallery-close" aria-label="Close Gallery">&times;</button>
+    </div>
+    <div class="gallery-content">
+      <div class="gallery-grid" id="gallery-grid">
+        <!-- Rendered Dynamically via JavaScript -->
+      </div>
+    </div>
+  </div>
+
+  <!-- --- FOOTER --- -->
+  <footer>
+    <a href="#top" class="back-to-top" aria-label="Back to Top">
+      <span>Back To Top</span>
+      <svg viewBox="0 0 320 512">
+        <path d="M177 159.7l136 136c9.4 9.4 9.4 24.6 0 33.9l-22.6 22.6c-9.4 9.4-24.6 9.4-33.9 0L160 255.9l-96.4 96.4c-9.4 9.4-24.6 9.4-33.9 0L7 329.7c-9.4-9.4-9.4-24.6 0-33.9l136-136c9.4-9.5 24.6-9.5 34 0z"/>
+      </svg>
+    </a>
+
+    <div class="footer-socials">
+      <a href="#" class="social-icon" aria-label="Instagram">Instagram</a>
+      <a href="#" class="social-icon" aria-label="Facebook">Facebook</a>
+      <a href="#" class="social-icon" aria-label="LinkedIn">LinkedIn</a>
+      <a href="#" class="social-icon" aria-label="TikTok">TikTok</a>
+    </div>
+
+    <div class="footer-bottom">
+      <p><a href="#">Privacy Policy</a></p>
+      <p>&copy; 2026 Max Salvaggio. All Rights Reserved. Custom Offline Design.</p>
+    </div>
+  </footer>
+
+  <script src="archive-data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
