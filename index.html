@@ -7,7 +7,7 @@
   <meta name="description" content="Il nuovo sito di Max Salvaggio è in arrivo. Fotografo di moda, lingerie, swimwear e commercial. Contattaci per informazioni." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@300;400;700;900&family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800;900&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     /* ===== RESET & BASE ===== */
     *, *::before, *::after {
@@ -20,8 +20,8 @@
     :root {
       --anthracite: #2D3032;
       --accent: #ff3366;
-      --font-display: 'Epilogue', sans-serif;
-      --font-body: 'Outfit', sans-serif;
+      --font-display: 'Cinzel', serif;
+      --font-body: 'Montserrat', sans-serif;
       /* Vetro fumé */
       --card-bg: rgba(18, 18, 20, 0.42);
       --card-border: rgba(255, 255, 255, 0.09);
@@ -39,6 +39,7 @@
       overflow: hidden;
       font-family: var(--font-body);
       background: var(--anthracite);
+      letter-spacing: 0.03em; /* Increased tracking for body font */
     }
 
     /* ===== MOSAIC BACKGROUND ===== */
@@ -93,8 +94,8 @@
       inset: 0;
       z-index: 1;
       background:
-        radial-gradient(ellipse 80% 70% at 50% 50%, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.78) 100%),
-        linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.15) 40%, rgba(0,0,0,0.6) 100%);
+        radial-gradient(ellipse 80% 70% at 50% 50%, rgba(0,0,0,0.18) 0%, rgba(0,0,0,0.31) 100%),
+        linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.06) 40%, rgba(0,0,0,0.24) 100%);
       pointer-events: none;
     }
 
@@ -135,11 +136,11 @@
 
     .cs-tagline {
       font-family: var(--font-body);
-      font-size: clamp(0.7rem, 1.5vw, 0.85rem);
-      font-weight: 300;
-      letter-spacing: 0.35em;
+      font-size: clamp(0.85rem, 1.8vw, 1.05rem);
+      font-weight: 400;
+      letter-spacing: 0.45em;
       text-transform: uppercase;
-      color: rgba(255,255,255,0.45);
+      color: rgba(255,255,255,0.85);
       text-align: center;
       margin-bottom: 48px;
     }
