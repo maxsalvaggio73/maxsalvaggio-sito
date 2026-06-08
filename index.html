@@ -549,22 +549,8 @@
         font-size: 1.2rem;
       }
 
-      body {
-        overflow-y: auto;
-      }
-      html, body {
-        height: auto;
-        min-height: 100vh;
-      }
-      #mosaic-bg, #mosaic-overlay {
-        position: fixed;
-        height: 100vh;
-      }
       #page-wrapper {
-        min-height: 100vh;
-        height: auto;
-        padding: 40px 16px 80px;
-        overflow: visible;
+        padding: clamp(20px, 4vh, 40px) 16px clamp(60px, 8vh, 100px);
       }
     }
   </style>
