@@ -731,8 +731,8 @@
       const LANDSCAPE_H = 320;
       const GAP = 4;            // inter-tile gap
 
-      // Build rows of tiles until we fill CANVAS_H
-      const tiles = [];          // [{x, y, w, h, imgUrl}]
+      // Build rows of tiles until Y reaches CANVAS_H
+      const originalTiles = [];
       let cursorY = 0;
 
       const shuffled = shuffle(ALL_IMAGES);
@@ -745,8 +745,8 @@
         return url;
       }
 
-      // Build row by row
-      while (cursorY < CANVAS_H + PORTRAIT_H) {
+      // Build row by row until we fill CANVAS_H
+      while (cursorY < CANVAS_H) {
         let cursorX = 0;
         // Alternate row style
         const rowStyle = Math.random() > 0.5 ? 'portrait' : 'mixed';
@@ -782,15 +782,28 @@
         const rowH = Math.max(...rowTiles.map(t => t.h));
         rowTiles.forEach(t => { t.h = rowH; });
 
-        tiles.push(...rowTiles);
+        originalTiles.push(...rowTiles);
         cursorY += rowH + GAP;
       }
 
+      const loopHeight = cursorY;
+
+      // Duplicate tiles for seamless scrolling
+      const tiles = [];
+      // First set of tiles (Y from 0 to loopHeight)
+      originalTiles.forEach(t => {
+        tiles.push({ ...t });
+      });
+      // Second set of tiles (Y from loopHeight to 2 * loopHeight)
+      originalTiles.forEach(t => {
+        tiles.push({ ...t, y: t.y + loopHeight });
+      });
+
       // ── Render tiles ──────────────────────────────────────────────
       // The wrapper is position:absolute inside #mosaic-bg
-      // We'll set wrapper to CANVAS_W x cursorY and then scale it
+      // We'll set wrapper to CANVAS_W x (2 * loopHeight) and then scale it
       wrapper.style.width  = CANVAS_W + 'px';
-      wrapper.style.height = cursorY + 'px';
+      wrapper.style.height = (2 * loopHeight) + 'px';
       wrapper.style.position = 'absolute';
 
       tiles.forEach(t => {
@@ -813,58 +826,38 @@
         wrapper.appendChild(tile);
       });
 
-      // ── Scale wrapper to cover viewport (like background-size: cover) ──
-      function scaleMosaic() {
+      // ── Scale and scroll logic ──────────────────────────────────
+      let scrollY = -loopHeight;
+      const speed = 3.6; // Virtual pixels per frame (smooth flow)
+
+      function scaleAndScroll() {
+        // Increment Y position to move background downwards (top to bottom scroll)
+        scrollY += speed;
+        if (scrollY >= 0) {
+          scrollY = -loopHeight;
+        }
+
         const vw = window.innerWidth;
         const vh = window.innerHeight;
         const scaleX = vw / CANVAS_W;
-        const scaleY = vh / cursorY;
+        const scaleY = vh / loopHeight;
         const scale  = Math.max(scaleX, scaleY); // cover semantics
 
         const scaledW = CANVAS_W * scale;
-        const scaledH = cursorY * scale;
-
-        // Center the scaled canvas
+        
+        // Center the scaled canvas horizontally
         const offsetX = (vw - scaledW) / 2;
-        const offsetY = (vh - scaledH) / 2;
+        // Apply Y scroll offset dynamically
+        const offsetY = scrollY * scale;
 
         wrapper.style.transformOrigin = '0 0';
         wrapper.style.transform = `translate(${offsetX}px, ${offsetY}px) scale(${scale})`;
+
+        requestAnimationFrame(scaleAndScroll);
       }
 
-      scaleMosaic();
-      window.addEventListener('resize', scaleMosaic);
-
-      // ── Slow drift animation ──────────────────────────────────────
-      let driftX = 0, driftY = 0;
-      let targetX = 0, targetY = 0;
-      const MAX_DRIFT = 40; // pixels in virtual canvas units
-
-      setInterval(() => {
-        targetX = (Math.random() * 2 - 1) * MAX_DRIFT;
-        targetY = (Math.random() * 2 - 1) * MAX_DRIFT;
-      }, 6000);
-
-      function animateDrift() {
-        driftX += (targetX - driftX) * 0.005;
-        driftY += (targetY - driftY) * 0.005;
-
-        const vw = window.innerWidth;
-        const vh = window.innerHeight;
-        const scaleX = vw / CANVAS_W;
-        const scaleY = vh / cursorY;
-        const scale  = Math.max(scaleX, scaleY);
-
-        const scaledW = CANVAS_W * scale;
-        const scaledH = cursorY * scale;
-        const offsetX = (vw - scaledW) / 2 + driftX;
-        const offsetY = (vh - scaledH) / 2 + driftY;
-
-        wrapper.style.transform = `translate(${offsetX}px, ${offsetY}px) scale(${scale})`;
-        requestAnimationFrame(animateDrift);
-      }
-
-      requestAnimationFrame(animateDrift);
+      scaleAndScroll();
+      window.addEventListener('resize', scaleAndScroll);
     })();
 
     // ——————————————————————————————
