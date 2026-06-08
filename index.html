@@ -1058,42 +1058,7 @@
         btnMailto.addEventListener('focus', setMailtoLink);
         btnMailto.addEventListener('touchstart', setMailtoLink);
 
-        // Intercept clicks in restricted in-app WebViews to prevent protocol crashes
-        btnMailto.addEventListener('click', (e) => {
-          const isWebView = /FBAN|FBAV|Instagram|Webview/i.test(navigator.userAgent);
-          if (isWebView) {
-            e.preventDefault();
-            const emailAddress = name + '@' + host;
-            try {
-              navigator.clipboard.writeText(emailAddress);
-            } catch (err) {
-              // Ignore clipboard failures in restricted WebViews
-            }
-            
-            // Show custom modal instead of generic browser alert
-            const modal = document.getElementById('webview-modal');
-            const modalContent = document.getElementById('modal-content-text');
-            const modalClose = document.getElementById('btn-modal-close');
-            const modalOk = document.getElementById('btn-modal-ok');
 
-            if (modal && modalContent) {
-              modalContent.innerHTML = translations[currentLang].alertWebView;
-              modal.classList.add('active');
-              modal.setAttribute('aria-hidden', 'false');
-
-              const closeModal = () => {
-                modal.classList.remove('active');
-                modal.setAttribute('aria-hidden', 'true');
-              };
-
-              if (modalClose) modalClose.onclick = closeModal;
-              if (modalOk) modalOk.onclick = closeModal;
-              modal.onclick = (evt) => {
-                if (evt.target === modal) closeModal();
-              };
-            }
-          }
-        });
       }
 
       // 3. Instagram Dynamic Decoder
