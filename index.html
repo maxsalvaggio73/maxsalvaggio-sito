@@ -23,7 +23,7 @@
       --font-display: 'Cinzel', serif;
       --font-body: 'Montserrat', sans-serif;
       /* Vetro fumé */
-      --card-bg: rgba(18, 18, 20, 0.42);
+      --card-bg: rgba(18, 18, 20, 0.15);
       --card-border: rgba(255, 255, 255, 0.09);
       --card-text: rgba(255, 255, 255, 0.92);
       --card-muted: rgba(255, 255, 255, 0.42);
@@ -124,7 +124,7 @@
     .cs-logo {
       font-family: var(--font-display);
       font-weight: 900;
-      font-size: clamp(1.4rem, 3.5vw, 2.6rem);
+      font-size: clamp(1.82rem, 4.55vw, 3.38rem);
       letter-spacing: 0.4em;
       text-transform: uppercase;
       color: #ffffff;
@@ -176,12 +176,13 @@
     .card-headline {
       font-family: var(--font-display);
       font-weight: 900;
-      font-size: clamp(1.4rem, 2.8vw, 1.9rem);
+      font-size: clamp(1.01rem, 2.02vw, 1.37rem);
       color: var(--card-text);
       text-transform: uppercase;
       letter-spacing: 0.08em;
-      margin-bottom: 6px;
+      margin-bottom: 26px;
       line-height: 1.1;
+      text-align: center;
     }
 
     .card-sub {
@@ -197,146 +198,250 @@
       width: 36px;
       height: 1px;
       background: rgba(255,255,255,0.25);
-      margin: 0 0 28px 0;
+      margin: 0 auto 28px auto;
     }
 
-    /* ===== FORM ===== */
-    .contact-form {
+    /* ===== NEW CTA & CONTACT ELEMENTS ===== */
+    .cta-text {
+      font-size: 0.90rem;
+      line-height: 1.7;
+      color: rgba(255, 255, 255, 0.78);
+      margin-bottom: 24px;
+      font-weight: 300;
+      letter-spacing: 0.03em;
+      text-align: center;
+    }
+
+    .cta-gap {
+      display: block;
+      height: 0.57rem; /* Reduced height space after periods */
+    }
+
+    .btn-mailto {
+      position: relative;
       display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-
-    .form-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-    }
-
-    .form-group {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    .form-group label {
-      font-size: 0.62rem;
-      font-weight: 600;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: #ffffff;
+      color: #000000;
+      border: 1px solid #ffffff;
+      border-radius: 8px;
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      font-weight: 700;
       letter-spacing: 0.22em;
       text-transform: uppercase;
-      color: var(--card-muted);
-      padding-left: 1px;
+      padding: 15px 30px;
+      cursor: pointer;
+      text-decoration: none;
+      overflow: hidden;
+      transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease, transform 0.25s ease;
+      width: 100%;
+      box-shadow: 0 4px 15px rgba(255, 255, 255, 0.08);
+      margin-bottom: 28px;
     }
 
-    .form-group input,
-    .form-group textarea {
+    .btn-mailto:hover {
+      background: transparent;
+      color: #ffffff;
+      border-color: rgba(255, 255, 255, 0.6);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(255, 255, 255, 0.12);
+    }
+
+    .btn-mailto:active {
+      transform: translateY(0);
+    }
+
+    /* Backup Section */
+    .backup-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      width: 100%;
+    }
+
+    .backup-divider {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 5px;
+    }
+
+    .backup-divider::before,
+    .backup-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .backup-divider span {
+      padding: 0 15px;
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--card-muted);
+    }
+
+    .btn-whatsapp {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: rgba(37, 211, 102, 0.08);
+      color: #25d366;
+      border: 1px solid rgba(37, 211, 102, 0.2);
+      border-radius: 8px;
+      font-family: var(--font-body);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 12px 24px;
+      cursor: pointer;
+      text-decoration: none;
+      width: 100%;
+      transition: background 0.3s ease, border-color 0.3s ease, transform 0.25s ease;
+    }
+
+    .btn-whatsapp:hover {
+      background: rgba(37, 211, 102, 0.18);
+      border-color: #25d366;
+      transform: translateY(-1px);
+    }
+
+    .icon-wa {
+      width: 15px;
+      height: 15px;
+    }
+
+    .btn-instagram {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: rgba(225, 48, 108, 0.08);
+      color: #e1306c;
+      border: 1px solid rgba(225, 48, 108, 0.2);
+      border-radius: 8px;
+      font-family: var(--font-body);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 12px 24px;
+      cursor: pointer;
+      text-decoration: none;
+      width: 100%;
+      transition: background 0.3s ease, border-color 0.3s ease, transform 0.25s ease;
+      margin-top: 10px;
+    }
+
+    .btn-instagram:hover {
+      background: rgba(225, 48, 108, 0.18);
+      border-color: #e1306c;
+      transform: translateY(-1px);
+    }
+
+    .icon-ig {
+      width: 15px;
+      height: 15px;
+    }
+
+    /* Newsletter Box */
+    .newsletter-section {
+      width: 100%;
+      margin-top: 15px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .newsletter-label {
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--card-muted);
+    }
+
+    .newsletter-form {
+      display: flex;
+      width: 100%;
       background: var(--input-bg);
+      border: 1px solid var(--input-border);
+      border-radius: 6px;
+      padding: 4px 6px 4px 12px;
+      align-items: center;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .newsletter-form:focus-within {
+      border-color: var(--input-focus-border);
+      box-shadow: 0 0 10px var(--input-focus-shadow);
+    }
+
+    .input-newsletter {
+      flex: 1;
+      background: transparent;
       border: none;
-      border-bottom: 1px solid var(--input-border);
-      border-radius: 0;
       color: var(--card-text);
       font-family: var(--font-body);
-      font-size: 0.90rem;
+      font-size: 0.85rem;
       font-weight: 300;
-      padding: 10px 2px;
+      padding: 8px 0;
       outline: none;
-      transition: border-color 0.3s ease, box-shadow 0.3s ease;
       width: 100%;
-      resize: none;
     }
 
-    .form-group input::placeholder,
-    .form-group textarea::placeholder {
-      color: rgba(255, 255, 255, 0.20);
+    .input-newsletter::placeholder {
+      color: rgba(255, 255, 255, 0.25);
     }
 
-    .form-group input:focus,
-    .form-group textarea:focus {
-      border-bottom-color: var(--input-focus-border);
-      box-shadow: 0 1px 0 var(--input-focus-border);
+    .btn-newsletter {
+      background: transparent;
+      border: none;
+      color: var(--card-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px;
+      transition: color 0.3s ease;
     }
 
-    .form-group textarea {
-      min-height: 90px;
-      max-height: 160px;
+    .btn-newsletter:hover {
+      color: #ffffff;
+    }
+
+    .icon-send {
+      width: 14px;
+      height: 14px;
+    }
+
+    .newsletter-success {
+      display: none;
+      font-size: 0.78rem;
+      color: #00c47a;
+      letter-spacing: 0.05em;
+      text-align: center;
+      margin-top: 5px;
+    }
+
+    .newsletter-success.visible {
+      display: block;
     }
 
     /* Hidden honeypot field for Formspree spam protection */
     .form-honey {
       display: none;
     }
-
-    /* ===== SUBMIT BUTTON — Ghost outline bianco su vetro fumé ===== */
-    .btn-submit {
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      background: transparent;
-      color: rgba(255,255,255,0.88);
-      border: 1px solid rgba(255,255,255,0.28);
-      border-radius: 8px;
-      font-family: var(--font-body);
-      font-size: 0.72rem;
-      font-weight: 600;
-      letter-spacing: 0.28em;
-      text-transform: uppercase;
-      padding: 14px 28px;
-      cursor: pointer;
-      overflow: hidden;
-      transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease, transform 0.25s ease;
-      margin-top: 8px;
-      width: 100%;
-    }
-
-    .btn-submit::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: rgba(255,255,255,0.06);
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
-
-    .btn-submit:hover {
-      background: rgba(255,255,255,0.10);
-      border-color: rgba(255,255,255,0.55);
-      color: #ffffff;
-      transform: translateY(-1px);
-    }
-
-    .btn-submit:hover::before {
-      opacity: 1;
-    }
-
-    .btn-submit:active {
-      transform: translateY(0);
-    }
-
-    .btn-submit:disabled {
-      opacity: 0.4;
-      cursor: not-allowed;
-      transform: none;
-    }
-
-    /* Spinner */
-    .btn-spinner {
-      width: 16px;
-      height: 16px;
-      border: 2px solid rgba(255,255,255,0.4);
-      border-top-color: #fff;
-      border-radius: 50%;
-      animation: spin 0.7s linear infinite;
-      display: none;
-    }
-
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-
-    .btn-submit.loading .btn-spinner { display: block; }
-    .btn-submit.loading .btn-text { display: none; }
 
     /* ===== SUCCESS MESSAGE ===== */
     .success-msg {
@@ -453,86 +558,65 @@
     <div class="glass-card">
 
       <h1 class="card-headline">Coming Soon</h1>
-      <p class="card-sub">Scrivici un messaggio — ti risponderemo al più presto.</p>
+      <p class="cta-text">Nuove visioni in arrivo, ma la creatività non si ferma.<span class="cta-gap"></span>L'agenda per i servizi fotografici e le consulenze creative è ufficialmente aperta.<span class="cta-gap"></span>Per qualsiasi richiesta o per raccontarmi le tue esigenze, clicca qui sotto: ti si aprirà la mail con la traccia già pronta da compilare.</p>
       <div class="card-divider"></div>
 
-      <!-- SUCCESS STATE -->
-      <div class="success-msg" id="success-message">
-        <div class="success-icon">
-          <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+      <!-- MAIN MAILTO ACTION -->
+      <a href="#" id="btn-mailto" class="btn-mailto">
+        Invia la tua richiesta
+      </a>
+
+      <!-- BACKUP CONTACT SECTION -->
+      <div class="backup-section">
+        <div class="backup-divider">
+          <span>Oppure contattami direttamente</span>
         </div>
-        <p class="success-title">Messaggio Inviato!</p>
-        <p class="success-body">Grazie per averci contattato. Ti risponderemo il prima possibile.</p>
+
+        <!-- WhatsApp Chat Button -->
+        <a href="#" id="btn-wa" class="btn-whatsapp" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" class="icon-wa">
+            <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.455L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.625 1.45 5.5.003 9.985-4.477 9.988-9.975.002-2.664-1.033-5.166-2.915-7.05C16.46 1.7 13.965.665 11.306.665c-5.502 0-9.99 4.48-9.993 9.978-.001 1.776.47 3.51 1.364 5.034l-1.02 3.725 3.824-1.002C5.025 18.91 5.9 19.1 6.648 19.154zM18.66 14.28c-.36-.18-2.13-1.05-2.46-1.17-.33-.12-.57-.18-.81.18-.24.36-.93 1.17-1.14 1.41-.21.24-.42.27-.78.09-.36-.18-1.52-.56-2.9-1.785-1.077-.96-1.805-2.15-2.016-2.51-.21-.36-.02-.55.16-.73.16-.16.36-.42.54-.63.18-.21.24-.36.36-.6.12-.24.06-.45-.03-.63-.09-.18-.81-1.95-1.11-2.67-.3-.72-.6-0.63-.81-.63-.21 0-.45-.03-.69-.03-.24 0-.63.09-.96.45-.33.36-1.26 1.23-1.26 3.004s1.29 3.483 1.47 3.723c.18.24 2.535 3.87 6.14 5.43 2.14.93 3.3.75 4.5.39.42-.13 1.35-.55 1.56-1.1.21-.54.21-1.01.15-1.1-.06-.1-.24-.16-.6-.36z" fill="currentColor"/>
+          </svg>
+          WhatsApp Chat Rapida
+        </a>
+
+        <!-- Instagram Profile Button -->
+        <a href="#" id="btn-ig" class="btn-instagram" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" class="icon-ig">
+            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051C.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" fill="currentColor"/>
+          </svg>
+          Instagram
+        </a>
+
+        <!-- Newsletter Box Form -->
+        <div class="newsletter-section">
+          <div class="newsletter-label">Iscriviti alla Newsletter</div>
+          <form
+            id="newsletter-form"
+            class="newsletter-form"
+            action="https://formspree.io/f/xzdqzagg"
+            method="POST"
+            novalidate
+          >
+            <!-- Honeypot anti-spam -->
+            <input type="text" name="_gotcha" class="form-honey" tabindex="-1" autocomplete="off" />
+            <input
+              type="email"
+              name="email"
+              class="input-newsletter"
+              placeholder="Lascia la tua email..."
+              required
+              autocomplete="email"
+            />
+            <button type="submit" class="btn-newsletter" aria-label="Iscriviti">
+              <svg viewBox="0 0 24 24" class="icon-send">
+                <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" fill="currentColor"/>
+              </svg>
+            </button>
+          </form>
+          <div class="newsletter-success" id="newsletter-success">Iscrizione completata con successo!</div>
+        </div>
       </div>
-
-      <!-- CONTACT FORM — Formspree -->
-      <!-- ⚠️  ISTRUZIONI: sostituisci YOUR_FORM_ID con il tuo ID Formspree (es. xpwdgnkl) -->
-      <!-- Registrati gratis su https://formspree.io/new  -->
-      <form
-        id="contact-form"
-        class="contact-form"
-        action="https://formspree.io/f/xzdqzagg"
-        method="POST"
-        novalidate
-      >
-        <!-- Honeypot anti-spam -->
-        <input type="text" name="_gotcha" class="form-honey" tabindex="-1" autocomplete="off" />
-        <!-- Redirect disabilitato — gestiamo noi il feedback -->
-        <input type="hidden" name="_next" value="" />
-
-        <div class="form-row">
-          <div class="form-group">
-            <label for="first-name">Nome</label>
-            <input
-              type="text"
-              id="first-name"
-              name="nome"
-              placeholder="Mario"
-              required
-              autocomplete="given-name"
-            />
-          </div>
-          <div class="form-group">
-            <label for="last-name">Cognome</label>
-            <input
-              type="text"
-              id="last-name"
-              name="cognome"
-              placeholder="Rossi"
-              required
-              autocomplete="family-name"
-            />
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label for="email">Indirizzo Email</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            placeholder="mario@esempio.it"
-            required
-            autocomplete="email"
-          />
-        </div>
-
-        <div class="form-group">
-          <label for="message">Messaggio</label>
-          <textarea
-            id="message"
-            name="messaggio"
-            placeholder="Scrivi qui il tuo messaggio…"
-            required
-          ></textarea>
-        </div>
-
-        <button type="submit" class="btn-submit" id="submit-btn">
-          <span class="btn-text">Invia Messaggio &nbsp;→</span>
-          <span class="btn-spinner"></span>
-        </button>
-
-      </form>
 
     </div>
   </div>
@@ -793,63 +877,100 @@
     })();
 
     // ——————————————————————————————
-    // FORM LOGIC (Formspree AJAX)
+    // NEWSLETTER FORM LOGIC (Formspree AJAX)
     // ——————————————————————————————
-    const form       = document.getElementById('contact-form');
-    const submitBtn  = document.getElementById('submit-btn');
-    const successMsg = document.getElementById('success-message');
+    const newsForm    = document.getElementById('newsletter-form');
+    const newsSuccess = document.getElementById('newsletter-success');
 
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
+    if (newsForm) {
+      newsForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
 
-      // Basic client-side validation
-      const fields = form.querySelectorAll('[required]');
-      let valid = true;
-      fields.forEach(f => {
-        f.style.borderColor = '';
-        if (!f.value.trim()) {
-          f.style.borderColor = 'rgba(255,51,102,0.7)';
-          valid = false;
+        const emailInput = newsForm.querySelector('.input-newsletter');
+        if (!emailInput || !emailInput.value.trim()) {
+          if (emailInput) emailInput.style.borderColor = 'rgba(255,51,102,0.7)';
+          return;
+        }
+
+        const action = newsForm.action;
+        const submitBtn = newsForm.querySelector('.btn-newsletter');
+        
+        // Check Formspree ID has been set
+        if (action.includes('YOUR_FORM_ID')) {
+          alert('⚠️  Imposta il tuo ID Formspree nell\'attributo action del form.\nRegistrati su https://formspree.io e sostituisci YOUR_FORM_ID.');
+          return;
+        }
+
+        if (submitBtn) submitBtn.disabled = true;
+
+        try {
+          const data = new FormData(newsForm);
+          const res = await fetch(action, {
+            method: 'POST',
+            body: data,
+            headers: { 'Accept': 'application/json' }
+          });
+
+          if (res.ok) {
+            newsForm.style.display = 'none';
+            if (newsSuccess) newsSuccess.classList.add('visible');
+          } else {
+            const json = await res.json();
+            const msg = (json.errors || []).map(e => e.message).join(', ') || 'Errore nell\'invio. Riprova.';
+            alert('❌ ' + msg);
+            if (submitBtn) submitBtn.disabled = false;
+          }
+        } catch (err) {
+          alert('❌ Errore di rete. Controlla la connessione e riprova.');
+          if (submitBtn) submitBtn.disabled = false;
         }
       });
-      if (!valid) return;
+    }
 
-      // Check Formspree ID has been set
-      const action = form.action;
-      if (action.includes('YOUR_FORM_ID')) {
-        alert('⚠️  Imposta il tuo ID Formspree nell\'attributo action del form.\nRegistrati su https://formspree.io e sostituisci YOUR_FORM_ID.');
-        return;
+    // ——————————————————————————————
+    // ANTI-SPAM DYNAMIC DECRYPTION FOR CONTACT BUTTONS
+    // ——————————————————————————————
+    (function setupAntiSpam() {
+      // 1. WhatsApp Dynamic Decoder (with universal wa.me redirection for Web & Mobile)
+      const btnWa = document.getElementById('btn-wa');
+      if (btnWa) {
+        const segments = ['https://', 'wa.', 'me/', '39', '3791626297'];
+        const setWaLink = () => {
+          btnWa.href = segments.join('');
+        };
+        btnWa.addEventListener('mouseenter', setWaLink);
+        btnWa.addEventListener('focus', setWaLink);
+        btnWa.addEventListener('touchstart', setWaLink);
       }
 
-      // Loading state
-      submitBtn.classList.add('loading');
-      submitBtn.disabled = true;
-
-      try {
-        const data = new FormData(form);
-        const res = await fetch(action, {
-          method: 'POST',
-          body: data,
-          headers: { 'Accept': 'application/json' }
-        });
-
-        if (res.ok) {
-          // Show success
-          form.style.display = 'none';
-          successMsg.classList.add('visible');
-        } else {
-          const json = await res.json();
-          const msg = (json.errors || []).map(e => e.message).join(', ') || 'Errore nell\'invio. Riprova.';
-          alert('❌ ' + msg);
-          submitBtn.classList.remove('loading');
-          submitBtn.disabled = false;
-        }
-      } catch (err) {
-        alert('❌ Errore di rete. Controlla la connessione e riprova.');
-        submitBtn.classList.remove('loading');
-        submitBtn.disabled = false;
+      // 2. Mailto Dynamic Decoder
+      const btnMailto = document.getElementById('btn-mailto');
+      if (btnMailto) {
+        const name = 'maxsalvaggio';
+        const host = 'gmail.com';
+        const subject = 'Richiesta%20Servizio%20Fotografico%20/%20Consulenza%20Creativa';
+        const body = 'Ciao%20Max,%20%0A%0Avorrei%20richiedere%20informazioni%20per:%20%0A-%20Tipo%20di%20servizio%20(Fotografia%20/%20Consulenza):%20%0A-%20Data%20indicativa:%20%0A-%20Dettagli%20del%20progetto:%20%0A%0AIl%20mio%20nome%20%C3%A8:%20%0AEcco%20il%20mio%20telefono:%20';
+        
+        const setMailtoLink = () => {
+          btnMailto.href = 'mailto:' + name + '@' + host + '?subject=' + subject + '&body=' + body;
+        };
+        btnMailto.addEventListener('mouseenter', setMailtoLink);
+        btnMailto.addEventListener('focus', setMailtoLink);
+        btnMailto.addEventListener('touchstart', setMailtoLink);
       }
-    });
+
+      // 3. Instagram Dynamic Decoder
+      const btnIg = document.getElementById('btn-ig');
+      if (btnIg) {
+        const igSegments = ['https://', 'www.', 'instagram.', 'com/', 'maxsalvaggio', '/'];
+        const setIgLink = () => {
+          btnIg.href = igSegments.join('');
+        };
+        btnIg.addEventListener('mouseenter', setIgLink);
+        btnIg.addEventListener('focus', setIgLink);
+        btnIg.addEventListener('touchstart', setIgLink);
+      }
+    })();
 
     // ——————————————————————————————
     // FOOTER YEAR
