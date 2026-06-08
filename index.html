@@ -605,9 +605,110 @@
         right: 12px;
       }
     }
+
+    /* ===== CUSTOM GLASS MODAL ===== */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .modal-card {
+      background: rgba(22, 22, 25, 0.95);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 16px;
+      padding: 32px 24px;
+      width: 90%;
+      max-width: 420px;
+      box-shadow: 
+        0 24px 70px rgba(0, 0, 0, 0.7),
+        0 1px 0 rgba(255,255,255,0.1) inset;
+      position: relative;
+      transform: translateY(20px);
+      transition: transform 0.3s ease;
+      font-family: var(--font-body);
+      color: #ffffff;
+      text-align: center;
+    }
+    .modal-overlay.active .modal-card {
+      transform: translateY(0);
+    }
+    .modal-close {
+      position: absolute;
+      top: 14px;
+      right: 18px;
+      background: transparent;
+      border: none;
+      color: rgba(255, 255, 255, 0.4);
+      font-size: 1.6rem;
+      cursor: pointer;
+      line-height: 1;
+      transition: color 0.2s ease;
+      outline: none;
+    }
+    .modal-close:hover {
+      color: #ffffff;
+    }
+    .modal-content {
+      font-size: 0.85rem;
+      line-height: 1.65;
+      margin-bottom: 26px;
+      font-weight: 300;
+      letter-spacing: 0.02em;
+    }
+    .modal-content strong {
+      font-weight: 700;
+      color: #ac9cff; /* Beautiful signature lavender */
+    }
+    .modal-btn-ok {
+      background: #ffffff;
+      color: #000000;
+      border: 1px solid #ffffff;
+      border-radius: 8px;
+      font-family: var(--font-body);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 10px 45px;
+      cursor: pointer;
+      transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
+      box-shadow: 0 4px 15px rgba(255, 255, 255, 0.08);
+      outline: none;
+    }
+    .modal-btn-ok:hover {
+      background: transparent;
+      color: #ffffff;
+      border-color: rgba(255, 255, 255, 0.6);
+      transform: translateY(-1px);
+    }
+    .modal-btn-ok:active {
+      transform: translateY(0);
+    }
   </style>
 </head>
 <body>
+
+  <!-- CUSTOM WEBVIEW WARNING MODAL -->
+  <div id="webview-modal" class="modal-overlay" aria-hidden="true" role="dialog">
+    <div class="modal-card">
+      <button class="modal-close" id="btn-modal-close" aria-label="Chiudi">&times;</button>
+      <div class="modal-content" id="modal-content-text"></div>
+      <button class="modal-btn-ok" id="btn-modal-ok">OK</button>
+    </div>
+  </div>
 
   <!-- MOSAIC BACKGROUND -->
   <div id="mosaic-bg">
@@ -789,7 +890,7 @@
         alertFormspree: `⚠️ Imposta il tuo ID Formspree nell'attributo action del form.\nRegistrati su https://formspree.io e sostituisci YOUR_FORM_ID.`,
         alertError: `Errore nell'invio. Riprova.`,
         alertNetwork: `❌ Errore di rete. Controlla la connessione e riprova.`,
-        alertWebView: `Sei all'interno del browser di Instagram/Facebook.\n\nPer inviare la richiesta:\n1. Clicca sui 3 pallini in alto a destra e seleziona "Apri nel browser" (consigliato).\noppure\n2. L'indirizzo email (maxsalvaggio@gmail.com) è stato copiato negli appunti, puoi incollarlo nella tua app di posta.`
+        alertWebView: `<strong>Sei all'interno del browser di Instagram/Facebook.</strong><br><br>Per inviare la richiesta:<br><br>1. Clicca sui <strong>tre pallini</strong> in alto a destra e seleziona <strong>"Apri nel browser"</strong> (consigliato).<br><br>oppure<br><br>2. L'indirizzo email (<strong>maxsalvaggio@gmail.com</strong>) è stato copiato negli appunti, puoi incollarlo nella tua app di posta.`
       },
       en: {
         ctaText: `<span class="cta-title">Visions in motion</span><span class="cta-title">Creativity never stops</span><span class="cta-gap"></span>The calendar for photo shoots and creative consultations is officially open.<span class="cta-gap"></span>For any requests or to tell me about your needs, click below: an email will open with a template ready to fill out.`,
@@ -804,7 +905,7 @@
         alertFormspree: `⚠️ Please set your Formspree ID in the form's action attribute.\nRegister on https://formspree.io and replace YOUR_FORM_ID.`,
         alertError: `Error sending. Please try again.`,
         alertNetwork: `❌ Network error. Check your connection and try again.`,
-        alertWebView: `You are inside the Instagram/Facebook in-app browser.\n\nTo send the request:\n1. Click the 3 dots in the top-right corner and select "Open in Browser" (recommended).\nor\n2. The email address (maxsalvaggio@gmail.com) has been copied to your clipboard, you can paste it into your mail app.`
+        alertWebView: `<strong>You are inside the Instagram/Facebook in-app browser.</strong><br><br>To send the request:<br><br>1. Click the <strong>three dots</strong> in the top-right corner and select <strong>"Open in Browser"</strong> (recommended).<br><br>or<br><br>2. The email address (<strong>maxsalvaggio@gmail.com</strong>) has been copied to your clipboard, you can paste it into your mail app.`
       }
     };
 
@@ -968,7 +1069,29 @@
             } catch (err) {
               // Ignore clipboard failures in restricted WebViews
             }
-            alert(translations[currentLang].alertWebView);
+            
+            // Show custom modal instead of generic browser alert
+            const modal = document.getElementById('webview-modal');
+            const modalContent = document.getElementById('modal-content-text');
+            const modalClose = document.getElementById('btn-modal-close');
+            const modalOk = document.getElementById('btn-modal-ok');
+
+            if (modal && modalContent) {
+              modalContent.innerHTML = translations[currentLang].alertWebView;
+              modal.classList.add('active');
+              modal.setAttribute('aria-hidden', 'false');
+
+              const closeModal = () => {
+                modal.classList.remove('active');
+                modal.setAttribute('aria-hidden', 'true');
+              };
+
+              if (modalClose) modalClose.onclick = closeModal;
+              if (modalOk) modalOk.onclick = closeModal;
+              modal.onclick = (evt) => {
+                if (evt.target === modal) closeModal();
+              };
+            }
           }
         });
       }
