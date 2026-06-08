@@ -741,7 +741,7 @@
         inputNewsletterPlaceholder: `Lascia la tua email...`,
         newsletterSuccess: `Iscrizione completata con successo!`,
         mailSubject: `Richiesta Servizio Fotografico / Consulenza Creativa`,
-        mailBody: `Ciao Max,\n\nvorrei richiedere informazioni per:\n- Tipo di servizio (Fotografia / Consulenza):\n- Data indicativa:\n- Dettagli del progetto:\n\nIl mio nome è:\nEcco il mio telefono:`,
+        mailBody: `Ciao Max, vorrei un preventivo per un servizio fotografico.\r\nSONO UN: [Privato] / [Azienda]\r\nAMBITO: (Ritratto, Moda, Glamour, Nudo, Commerciale, Interni...)\r\nUSO FOTO: [Uso Personale / Social] oppure [Uso Commerciale / Adv]\r\nQUANTE FOTO:\r\nQUANDO / DOVE:\r\nBUDGET INDICATIVO: €\r\nIDEA DEL PROGETTO (o link moodboard):\r\nNOME:\r\nSITO WEB / PROFILO SOCIAL (IG / FB):\r\nTELEFONO:\r\nORA PREFERITA PER CHIAMATA CONOSCITIVA:\r\nNOTE:\r\n\r\nUn cordiale saluto,`,
         alertFormspree: `⚠️ Imposta il tuo ID Formspree nell'attributo action del form.\nRegistrati su https://formspree.io e sostituisci YOUR_FORM_ID.`,
         alertError: `Errore nell'invio. Riprova.`,
         alertNetwork: `❌ Errore di rete. Controlla la connessione e riprova.`
@@ -755,7 +755,7 @@
         inputNewsletterPlaceholder: `Leave your email...`,
         newsletterSuccess: `Subscription completed successfully!`,
         mailSubject: `Photo Shoot / Creative Consultation Request`,
-        mailBody: `Hello Max,\n\nI would like to request information for:\n- Type of service (Photography / Consultation):\n- Estimated date:\n- Project details:\n\nMy name is:\nMy phone number is:`,
+        mailBody: `Hello Max, I would like a quote for a photo shoot.\r\nI AM A: [Individual] / [Company]\r\nFIELD: (Portrait, Fashion, Glamour, Nude, Commercial, Interior...)\r\nPHOTO USE: [Personal / Socials] or [Commercial / Adv]\r\nNUMBER OF PHOTOS:\r\nWHEN / WHERE:\r\nESTIMATED BUDGET: €\r\nPROJECT IDEA (or moodboard link):\r\nNAME:\r\nWEBSITE / SOCIAL PROFILE (IG / FB):\r\nPHONE NUMBER:\r\nPREFERRED TIME FOR AN INTRODUCTORY CALL:\r\nNOTES:\r\n\r\nBest regards,`,
         alertFormspree: `⚠️ Please set your Formspree ID in the form's action attribute.\nRegister on https://formspree.io and replace YOUR_FORM_ID.`,
         alertError: `Error sending. Please try again.`,
         alertNetwork: `❌ Network error. Check your connection and try again.`
@@ -902,7 +902,9 @@
         
         const setMailtoLink = () => {
           const subject = encodeURIComponent(translations[currentLang].mailSubject);
-          const body = encodeURIComponent(translations[currentLang].mailBody);
+          // Ensure standard \n and \r\n line breaks are normalized to \r\n to produce %0D%0A on URI encoding
+          const bodyText = translations[currentLang].mailBody.replace(/\r?\n/g, '\r\n');
+          const body = encodeURIComponent(bodyText);
           btnMailto.href = 'mailto:' + name + '@' + host + '?subject=' + subject + '&body=' + body;
         };
         btnMailto.addEventListener('mouseenter', setMailtoLink);
