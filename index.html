@@ -754,7 +754,8 @@
         mailBody: `Ciao Max,\r\nvorrei un preventivo per un servizio fotografico.\r\n\r\n\r\n• SONO UN: [Privato] / [Azienda]\r\n-->\r\n• AMBITO: (Ritratto, Moda, Glamour, Nudo, Commerciale, Interni...)\r\n-->\r\n• USO FOTO: [Uso Personale / Social] oppure [Uso Commerciale / Adv]\r\n-->\r\n• QUANTE FOTO:\r\n-->\r\n• QUANTI LOOK UNICI:\r\n-->\r\n• QUANDO / DOVE:\r\n-->\r\n• BUDGET INDICATIVO: €\r\n-->\r\n• IDEA DEL PROGETTO (o link moodboard):\r\n-->\r\n• NOME:\r\n-->\r\n• SITO WEB / PROFILO SOCIAL (IG / FB):\r\n-->\r\n• TELEFONO:\r\n-->\r\n• ORA PREFERITA PER CHIAMATA CONOSCITIVA:\r\n-->\r\n• NOTE:\r\n-->\r\n\r\nUn cordiale saluto,`,
         alertFormspree: `⚠️ Imposta il tuo ID Formspree nell'attributo action del form.\nRegistrati su https://formspree.io e sostituisci YOUR_FORM_ID.`,
         alertError: `Errore nell'invio. Riprova.`,
-        alertNetwork: `❌ Errore di rete. Controlla la connessione e riprova.`
+        alertNetwork: `❌ Errore di rete. Controlla la connessione e riprova.`,
+        alertWebView: `Sei all'interno del browser di Instagram/Facebook.\n\nPer inviare la richiesta:\n1. Clicca sui 3 pallini in alto a destra e seleziona "Apri nel browser" (consigliato).\noppure\n2. L'indirizzo email (maxsalvaggio@gmail.com) è stato copiato negli appunti, puoi incollarlo nella tua app di posta.`
       },
       en: {
         ctaText: `<span class="cta-title">Visions in motion</span><span class="cta-title">Creativity never stops</span><span class="cta-gap"></span>The calendar for photo shoots and creative consultations is officially open.<span class="cta-gap"></span>For any requests or to tell me about your needs, click below: an email will open with a template ready to fill out.`,
@@ -768,7 +769,8 @@
         mailBody: `Hello Max,\r\nI would like a quote for a photo shoot.\r\n\r\n\r\n• I AM A: [Individual] / [Company]\r\n-->\r\n• FIELD: (Portrait, Fashion, Glamour, Nude, Commercial, Interior...)\r\n-->\r\n• PHOTO USE: [Personal / Socials] or [Commercial / Adv]\r\n-->\r\n• NUMBER OF PHOTOS:\r\n-->\r\n• NUMBER OF UNIQUE LOOKS:\r\n-->\r\n• WHEN / WHERE:\r\n-->\r\n• ESTIMATED BUDGET: €\r\n-->\r\n• PROJECT IDEA (or moodboard link):\r\n-->\r\n• NAME:\r\n-->\r\n• WEBSITE / SOCIAL PROFILE (IG / FB):\r\n-->\r\n• PHONE NUMBER:\r\n-->\r\n• PREFERRED TIME FOR AN INTRODUCTORY CALL:\r\n-->\r\n• NOTES:\r\n-->\r\n\r\nBest regards,`,
         alertFormspree: `⚠️ Please set your Formspree ID in the form's action attribute.\nRegister on https://formspree.io and replace YOUR_FORM_ID.`,
         alertError: `Error sending. Please try again.`,
-        alertNetwork: `❌ Network error. Check your connection and try again.`
+        alertNetwork: `❌ Network error. Check your connection and try again.`,
+        alertWebView: `You are inside the Instagram/Facebook in-app browser.\n\nTo send the request:\n1. Click the 3 dots in the top-right corner and select "Open in Browser" (recommended).\nor\n2. The email address (maxsalvaggio@gmail.com) has been copied to your clipboard, you can paste it into your mail app.`
       }
     };
 
@@ -920,6 +922,21 @@
         btnMailto.addEventListener('mouseenter', setMailtoLink);
         btnMailto.addEventListener('focus', setMailtoLink);
         btnMailto.addEventListener('touchstart', setMailtoLink);
+
+        // Intercept clicks in restricted in-app WebViews to prevent protocol crashes
+        btnMailto.addEventListener('click', (e) => {
+          const isWebView = /FBAN|FBAV|Instagram|Webview/i.test(navigator.userAgent);
+          if (isWebView) {
+            e.preventDefault();
+            const emailAddress = name + '@' + host;
+            try {
+              navigator.clipboard.writeText(emailAddress);
+            } catch (err) {
+              // Ignore clipboard failures in restricted WebViews
+            }
+            alert(translations[currentLang].alertWebView);
+          }
+        });
       }
 
       // 3. Instagram Dynamic Decoder
