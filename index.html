@@ -32,15 +32,15 @@
       --accent: #ff3366;
       --font-display: 'Cinzel', serif;
       --font-body: 'Montserrat', sans-serif;
-      /* Vetro fumé */
-      --card-bg: rgba(18, 18, 20, 0.15);
-      --card-border: rgba(255, 255, 255, 0.09);
+      /* Vetro fumé (opacità ridotta del 50% per trasparenza aumentata) */
+      --card-bg: rgba(18, 18, 20, 0.075);
+      --card-border: rgba(255, 255, 255, 0.045);
       --card-text: rgba(255, 255, 255, 0.92);
       --card-muted: rgba(255, 255, 255, 0.42);
-      --input-bg: rgba(255, 255, 255, 0.15);
-      --input-border: rgba(255, 255, 255, 0.35);
-      --input-focus-border: rgba(255, 255, 255, 0.55);
-      --input-focus-shadow: rgba(255, 255, 255, 0.06);
+      --input-bg: rgba(255, 255, 255, 0.075);
+      --input-border: rgba(255, 255, 255, 0.175);
+      --input-focus-border: rgba(255, 255, 255, 0.275);
+      --input-focus-shadow: rgba(255, 255, 255, 0.03);
     }
 
     html, body {
@@ -136,20 +136,20 @@
       margin-bottom: clamp(60px, 12vh, 188px);
     }
 
-    /* ===== VETRO FUMÉ CARD ===== */
+    /* ===== VETRO FUMÉ CARD (COMPRESSED) ===== */
     .glass-card {
       background: var(--card-bg);
       backdrop-filter: blur(18px) saturate(1.4) brightness(0.85);
       -webkit-backdrop-filter: blur(18px) saturate(1.4) brightness(0.85);
       border: 1px solid var(--card-border);
-      border-radius: 16px;
-      padding: 16px 36px;
-      padding: clamp(12px, 2.5vw, 22px) clamp(28px, 5vw, 56px);
+      border-radius: 12px;
+      padding: 10px 24px;
+      padding: clamp(8px, 1.8vw, 14px) clamp(16px, 3.5vw, 36px);
       width: 100%;
-      max-width: 500px;
+      max-width: 390px;
       box-shadow:
-        0 24px 60px rgba(0, 0, 0, 0.50),
-        0 1px 0 rgba(255,255,255,0.10) inset;
+        0 18px 45px rgba(0, 0, 0, 0.45),
+        0 1px 0 rgba(255,255,255,0.06) inset;
       position: relative;
       top: -8px;
       overflow: hidden;
@@ -205,30 +205,30 @@
     .card-headline {
       font-family: var(--font-display);
       font-weight: 900;
-      font-size: 1.15rem;
-      font-size: clamp(1.01rem, 2.02vw, 1.37rem);
+      font-size: 0.95rem;
+      font-size: clamp(0.88rem, 1.8vw, 1.1rem);
       color: var(--card-text);
       text-transform: uppercase;
       letter-spacing: 0.08em;
-      margin-bottom: 11px;
+      margin-bottom: 6px;
       line-height: 1.1;
       text-align: center;
     }
 
     .card-sub {
-      font-size: 0.78rem;
+      font-size: 0.70rem;
       color: var(--card-muted);
       letter-spacing: 0.08em;
-      margin-bottom: 20px;
+      margin-bottom: 12px;
       font-weight: 300;
     }
 
     /* ===== NEW CTA & CONTACT ELEMENTS ===== */
     .cta-text {
-      font-size: 0.90rem;
-      line-height: 1.7;
+      font-size: 0.82rem;
+      line-height: 1.55;
       color: rgba(255, 255, 255, 0.78);
-      margin-bottom: 10px;
+      margin-bottom: 8px;
       font-weight: 300;
       letter-spacing: 0.03em;
       text-align: center;
@@ -236,13 +236,13 @@
 
     .cta-gap {
       display: block;
-      height: 0.57rem; /* Reduced height space after periods */
+      height: 0.35rem; /* Reduced height space after periods */
     }
 
     .cta-title {
       font-family: var(--font-body);
-      font-size: 0.8rem;
-      font-size: clamp(0.72rem, 1.5vw, 0.88rem);
+      font-size: 0.72rem;
+      font-size: clamp(0.66rem, 1.3vw, 0.8rem);
       font-weight: 400;
       letter-spacing: 0.27em;
       text-transform: uppercase;
@@ -251,7 +251,7 @@
       line-height: 1.6;
       text-align: center;
       transform: translateX(0.13em); /* Offset for letter-spacing optical centering */
-      margin-bottom: 4px;
+      margin-bottom: 3px;
     }
 
     .btn-mailto {
@@ -259,24 +259,24 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 10px;
+      gap: 8px;
       background: #ffffff;
       color: #000000;
       border: 1px solid #ffffff;
       border-radius: 8px;
       font-family: var(--font-body);
-      font-size: 0.75rem;
+      font-size: 0.68rem;
       font-weight: 700;
-      letter-spacing: 0.22em;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
-      padding: 6px 30px;
+      padding: 5px 20px;
       cursor: pointer;
       text-decoration: none;
       overflow: hidden;
       transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease, transform 0.25s ease;
       width: 100%;
       box-shadow: 0 4px 15px rgba(255, 255, 255, 0.08);
-      margin-bottom: 12px;
+      margin-bottom: 8px;
     }
 
     .btn-mailto:hover {
@@ -296,7 +296,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
       width: 100%;
     }
 
@@ -305,7 +305,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-bottom: 5px;
+      margin-bottom: 3px;
     }
 
     .backup-divider::before,
@@ -318,7 +318,7 @@
 
     .backup-divider span {
       padding: 0 15px;
-      font-size: 0.62rem;
+      font-size: 0.58rem;
       font-weight: 600;
       letter-spacing: 0.2em;
       text-transform: uppercase;
@@ -329,9 +329,9 @@
       display: flex;
       flex-direction: row;
       justify-content: center;
-      gap: 12px;
+      gap: 8px;
       width: 100%;
-      margin-top: 4px;
+      margin-top: 2px;
     }
 
     .btn-whatsapp {
@@ -344,7 +344,7 @@
       border: 1px solid rgba(37, 211, 102, 0.2);
       border-radius: 8px;
       font-family: var(--font-body);
-      font-size: 0.72rem;
+      font-size: 0.68rem;
       font-weight: 600;
       letter-spacing: 0.15em;
       text-transform: uppercase;
@@ -352,7 +352,7 @@
       text-decoration: none;
       width: 100%;
       max-width: 200px;
-      height: 50px;
+      height: 38px;
       transition: background 0.3s ease, border-color 0.3s ease, transform 0.25s ease;
     }
 
@@ -377,7 +377,7 @@
       border: 1px solid rgba(172, 156, 255, 0.2);
       border-radius: 8px;
       font-family: var(--font-body);
-      font-size: 0.72rem;
+      font-size: 0.68rem;
       font-weight: 600;
       letter-spacing: 0.15em;
       text-transform: uppercase;
@@ -385,7 +385,7 @@
       text-decoration: none;
       width: 100%;
       max-width: 200px;
-      height: 50px;
+      height: 38px;
       transition: background 0.3s ease, border-color 0.3s ease, transform 0.25s ease;
     }
 
@@ -403,7 +403,7 @@
     /* Newsletter Box */
     .newsletter-section {
       width: 100%;
-      margin-top: 6px;
+      margin-top: 4px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -411,7 +411,7 @@
     }
 
     .newsletter-label {
-      font-size: 0.62rem;
+      font-size: 0.58rem;
       font-weight: 600;
       letter-spacing: 0.18em;
       text-transform: uppercase;
@@ -424,7 +424,7 @@
       background: var(--input-bg);
       border: 1px solid var(--input-border);
       border-radius: 6px;
-      padding: 4px 6px 4px 12px;
+      padding: 3px 6px 3px 10px;
       align-items: center;
       transition: border-color 0.3s ease, box-shadow 0.3s ease;
     }
@@ -440,9 +440,9 @@
       border: none;
       color: var(--card-text);
       font-family: var(--font-body);
-      font-size: 0.85rem;
+      font-size: 0.78rem;
       font-weight: 300;
-      padding: 3px 0;
+      padding: 2px 0;
       outline: none;
       width: 100%;
     }
@@ -563,46 +563,47 @@
       }
 
       .cs-logo {
-        font-size: 1.6rem;
+        font-size: 1.4rem;
         letter-spacing: 0.25em;
         transform: translateX(0.125em);
-        margin-bottom: 4px;
+        margin-bottom: 3px;
       }
 
       .cs-tagline {
-        font-size: 0.72rem;
-        letter-spacing: 0.22em;
-        margin-bottom: clamp(30px, 6vh, 50px);
+        font-size: 0.68rem;
+        letter-spacing: 0.2em;
+        margin-bottom: 24px;
       }
 
       #page-wrapper {
-        padding: clamp(20px, 4vh, 40px) 16px clamp(60px, 8vh, 100px);
+        padding: clamp(15px, 3vh, 30px) 12px clamp(50px, 6vh, 80px);
       }
 
       .glass-card {
-        padding: 16px 20px;
+        padding: 8px 16px;
         top: -4px;
+        max-width: 350px;
       }
 
       .card-headline {
-        font-size: 1.05rem;
-        margin-bottom: 8px;
+        font-size: 0.88rem;
+        margin-bottom: 4px;
       }
 
       .contact-row {
         flex-direction: column;
-        gap: 8px;
+        gap: 6px;
         align-items: center;
       }
 
       .btn-whatsapp, .btn-instagram {
         max-width: 100%;
-        height: 46px;
+        height: 36px;
       }
 
       .lang-switch {
-        top: 8px;
-        right: 12px;
+        top: 6px;
+        right: 10px;
       }
     }
 
