@@ -44,8 +44,6 @@
       height: 100vh;
       display: flex;
       overflow: hidden;
-      opacity: 0; /* Fade-in after auth check */
-      transition: opacity 0.3s ease;
     }
 
     /* Custom scrollbars */
@@ -668,6 +666,19 @@
 </head>
 <body>
 
+  <!-- Loading Overlay to prevent black screen and show loading status -->
+  <div id="loading-overlay" style="position: fixed; inset: 0; background: #121415; display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 9999; transition: opacity 0.4s ease; font-family: 'Outfit', sans-serif; color: #ECEFF1;">
+    <div class="spinner" style="width: 40px; height: 40px; border: 3px solid rgba(255,255,255,0.1); border-top-color: #E50914; border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 20px;"></div>
+    <div id="loading-text" style="font-size: 0.9rem; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.8;">Verifica sessione in corso...</div>
+    <button id="loading-retry-btn" onclick="window.location.href='login.html'" style="display: none; margin-top: 20px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.15); color: #fff; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-size: 0.8rem; font-family: inherit; letter-spacing: 0.05em; transition: all 0.2s;">Vai al Login</button>
+  </div>
+
+  <style>
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+  </style>
+
   <!-- ========================================================
        LEFT SIDEBAR
        ======================================================== -->
@@ -869,46 +880,87 @@ create policy "Clients can update own files" on storage.objects for update using
       window.location.href = "login.html";
     }
 
+    // Safety Timeout: if auth check takes more than 4 seconds, show retry/login button
+    setTimeout(() => {
+      const text = document.getElementById("loading-text");
+      const btn = document.getElementById("loading-retry-btn");
+      if (text && btn && text.textContent === "Verifica sessione in corso...") {
+        console.warn("Auth check is taking too long. Displaying manual login link.");
+        text.textContent = "Connessione lenta o nessun accesso rilevato.";
+        btn.style.display = "block";
+      }
+    }, 4000);
+
     // Check Auth Status on Load
     async function checkAuth() {
-      if (!supabaseClient) return;
+      console.log("checkAuth: Inizio verifica autenticazione.");
+      if (!supabaseClient) {
+        console.error("checkAuth: supabaseClient non inizializzato.");
+        return;
+      }
 
       try {
-        const { data: { session } } = await supabaseClient.auth.getSession();
+        console.log("checkAuth: Recupero sessione da Supabase...");
+        const { data: { session }, error: sessionError } = await supabaseClient.auth.getSession();
         
+        if (sessionError) {
+          console.error("checkAuth: Errore getSession:", sessionError);
+          window.location.href = "login.html";
+          return;
+        }
+
         if (!session) {
+          console.log("checkAuth: Nessuna sessione trovata. Reindirizzamento a login.html.");
           window.location.href = "login.html";
           return;
         }
 
         currentUser = session.user;
+        console.log("checkAuth: Sessione valida per l'utente:", currentUser.email);
         document.getElementById("admin-email").textContent = currentUser.email;
 
         // Double check approval status of the current logged-in user
+        console.log("checkAuth: Verifica ruolo e stato approvazione per:", currentUser.id);
         const { data: profile, error } = await supabaseClient
           .from('profiles')
           .select('is_approved, is_admin')
           .eq('id', currentUser.id)
           .single();
 
-        if (error || !profile || !profile.is_approved) {
+        if (error) {
+          console.error("checkAuth: Errore nel caricamento del profilo:", error);
+          await supabaseClient.auth.signOut();
+          window.location.href = "login.html";
+          return;
+        }
+
+        if (!profile || !profile.is_approved) {
+          console.warn("checkAuth: Profilo non trovato o non approvato.");
           await supabaseClient.auth.signOut();
           window.location.href = "login.html";
           return;
         }
 
         if (!profile.is_admin) {
+          console.warn("checkAuth: L'utente non è un amministratore. Reindirizzamento a client-area.html.");
           window.location.href = "client-area.html";
           return;
         }
 
-        document.body.style.opacity = "1";
+        console.log("checkAuth: Utente autorizzato come Admin. Rimozione overlay di caricamento.");
+        
+        // Hide loading overlay
+        const overlay = document.getElementById("loading-overlay");
+        if (overlay) {
+          overlay.style.opacity = "0";
+          setTimeout(() => overlay.remove(), 400);
+        }
         
         // Load the sidebar lists
         loadProfiles();
 
       } catch (err) {
-        console.error("Auth check error:", err);
+        console.error("checkAuth: Eccezione catturata:", err);
         window.location.href = "login.html";
       }
     }
@@ -1617,8 +1669,7 @@ create policy "Clients can update own files" on storage.objects for update using
       }
     }
 
-    // Run auth check on load
-    window.onload = checkAuth;
+    document.addEventListener("DOMContentLoaded", checkAuth);
   </script>
 </body>
 </html>
