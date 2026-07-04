@@ -390,7 +390,7 @@ create trigger on_auth_user_created
   </main>
 
   <script>
-    let supabase = null;
+    let supabaseClient = null;
     let currentUser = null;
 
     // Check if configuration parameters are set
@@ -401,7 +401,7 @@ create trigger on_auth_user_created
                          !config.SUPABASE_ANON_KEY.includes("your-supabase-anon-key");
 
     if (isConfigured) {
-      supabase = supabase.createClient(config.SUPABASE_URL, config.SUPABASE_ANON_KEY);
+      supabaseClient = supabase.createClient(config.SUPABASE_URL, config.SUPABASE_ANON_KEY);
     } else {
       alert("⚠️  Supabase non è configurato. Inserisci le tue credenziali nel file config.js!");
       window.location.href = "login.html";
@@ -409,10 +409,10 @@ create trigger on_auth_user_created
 
     // Check Auth Status on Load
     async function checkAuth() {
-      if (!supabase) return;
+      if (!supabaseClient) return;
 
       try {
-        const { data: { session } } = await supabase.auth.getSession();
+        const { data: { session } } = await supabaseClient.auth.getSession();
         
         if (!session) {
           window.location.href = "login.html";
@@ -423,7 +423,7 @@ create trigger on_auth_user_created
         document.getElementById("admin-email").textContent = currentUser.email;
 
         // Double check approval status of the current logged-in user
-        const { data: profile, error } = await supabase
+        const { data: profile, error } = await supabaseClient
           .from('profiles')
           .select('is_approved')
           .eq('id', currentUser.id)
@@ -431,7 +431,7 @@ create trigger on_auth_user_created
 
         if (error || !profile || !profile.is_approved) {
           // Force logout if they are not approved in the DB
-          await supabase.auth.signOut();
+          await supabaseClient.auth.signOut();
           window.location.href = "login.html";
           return;
         }
@@ -449,12 +449,12 @@ create trigger on_auth_user_created
 
     // Load registered user profiles
     async function loadProfiles() {
-      if (!supabase) return;
+      if (!supabaseClient) return;
       
       const tbody = document.getElementById("users-list-body");
       
       try {
-        const { data: profiles, error } = await supabase
+        const { data: profiles, error } = await supabaseClient
           .from('profiles')
           .select('*')
           .order('created_at', { ascending: false });
@@ -522,10 +522,10 @@ create trigger on_auth_user_created
 
     // Toggle approval status (Approve / Suspend)
     async function toggleApproval(userId, approve) {
-      if (!supabase) return;
+      if (!supabaseClient) return;
 
       try {
-        const { error } = await supabase
+        const { error } = await supabaseClient
           .from('profiles')
           .update({ is_approved: approve })
           .eq('id', userId);
@@ -544,10 +544,10 @@ create trigger on_auth_user_created
 
     // Log Out
     async function handleLogout() {
-      if (!supabase) return;
+      if (!supabaseClient) return;
       
       try {
-        await supabase.auth.signOut();
+        await supabaseClient.auth.signOut();
         window.location.href = "login.html";
       } catch (err) {
         console.error("Logout error:", err);

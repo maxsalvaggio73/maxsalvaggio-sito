@@ -361,7 +361,7 @@
 
   <script>
     // Initialize Supabase Client
-    let supabase = null;
+    let supabaseClient = null;
     const banner = document.getElementById("setup-banner");
 
     // Check if configuration parameters are set and not default placeholders
@@ -372,7 +372,7 @@
                          !config.SUPABASE_ANON_KEY.includes("your-supabase-anon-key");
 
     if (isConfigured) {
-      supabase = supabase.createClient(config.SUPABASE_URL, config.SUPABASE_ANON_KEY);
+      supabaseClient = supabase.createClient(config.SUPABASE_URL, config.SUPABASE_ANON_KEY);
     } else {
       banner.style.display = "block";
       document.getElementById("btn-login-submit").disabled = true;
@@ -425,7 +425,7 @@
     // Handle Login Submission
     async function handleLogin(event) {
       event.preventDefault();
-      if (!supabase) return;
+      if (!supabaseClient) return;
 
       hideAlerts();
 
@@ -439,7 +439,7 @@
       spinner.style.display = "inline-block";
 
       try {
-        const { data, error } = await supabase.auth.signInWithPassword({
+        const { data, error } = await supabaseClient.auth.signInWithPassword({
           email: email,
           password: password
         });
@@ -462,7 +462,7 @@
         const user = data.user;
 
         // Query the profiles table to see if user is approved
-        const { data: profile, error: profileError } = await supabase
+        const { data: profile, error: profileError } = await supabaseClient
           .from('profiles')
           .select('is_approved')
           .eq('id', user.id)
@@ -471,7 +471,7 @@
         if (profileError) {
           console.error("Errore query profilo:", profileError);
           // If profile table query fails (probably doesn't exist yet)
-          await supabase.auth.signOut();
+          await supabaseClient.auth.signOut();
           showAlert('error', "Accesso negato. Tabella 'profiles' non configurata in Supabase. Esegui lo script SQL fornito!");
           btn.disabled = false;
           spinner.style.display = "none";
@@ -480,7 +480,7 @@
 
         if (!profile || !profile.is_approved) {
           // Log out immediately to prevent active session
-          await supabase.auth.signOut();
+          await supabaseClient.auth.signOut();
           showAlert('error', "Accesso negato. Il tuo account è in attesa di essere approvato dall'amministratore.");
           btn.disabled = false;
           spinner.style.display = "none";
@@ -499,7 +499,7 @@
     // Handle Signup Submission (Registration request)
     async function handleSignup(event) {
       event.preventDefault();
-      if (!supabase) return;
+      if (!supabaseClient) return;
 
       hideAlerts();
 
@@ -525,7 +525,7 @@
       spinner.style.display = "inline-block";
 
       try {
-        const { data, error } = await supabase.auth.signUp({
+        const { data, error } = await supabaseClient.auth.signUp({
           email: email,
           password: password
         });
