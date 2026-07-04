@@ -1608,10 +1608,8 @@ footer {
   position: relative;
   margin: 10px; /* Almeno 10px di distanza da ogni lato (20px totali tra foto) */
   cursor: pointer;
-  max-width: 200px;
-  max-height: 200px;
+  height: 200px;
   width: auto;
-  height: auto;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1620,10 +1618,8 @@ footer {
 }
 
 .overview-item img {
-  max-width: 200px;
-  max-height: 200px;
+  height: 200px;
   width: auto;
-  height: auto;
   object-fit: contain;
   display: block;
   opacity: 0;
