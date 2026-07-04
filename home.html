@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Max Salvaggio — Photography &amp; Creative Direction</title>
+  <meta name="description" content="Sito ufficiale di Max Salvaggio, fotografo di moda, commerciale, lingerie, swimwear e portraits. Direzione creativa a Milano.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800;900&amp;family=Outfit:wght@300;400;500;600;700&amp;family=Montserrat:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- PREMIUM CURSOR TRACKER GLOW EFFECT -->
+  <div id="custom-glow"></div>
+
+
+
+  <!-- HEADER -->
+  <header>
+    <div class="header-container">
+      <button class="hamburger" id="hamburger" aria-label="Toggle Menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <a href="#overview" class="logo" id="brand-logo">MAX SALVAGGIO</a>
+      <div style="width: 24px; display: none;" class="spacer-hamburger"></div>
+    </div>
+    
+    <nav aria-label="Main Navigation">
+      <ul class="nav-menu">
+        <li><a href="#overview" class="nav-link active" data-section="overview">Overview</a></li>
+        <li><a href="#editorials" class="nav-link" data-section="editorials">Editorials</a></li>
+        <li><a href="#campaigns" class="nav-link" data-section="campaigns">Campaigns</a></li>
+        <li><a href="#body-form" class="nav-link" data-section="body-form">Body &amp; Form</a></li>
+        <li><a href="#portraits-beauty" class="nav-link" data-section="portraits-beauty">Portraits &amp; Beauty</a></li>
+        <li><a href="#film-work" class="nav-link" data-section="film-work">Film Work</a></li>
+        <li><a href="#bio-contact" class="nav-link" data-section="bio-contact">Bio &amp; Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- OVERLAY MOBILE NAVIGATION -->
+  <div class="mobile-nav-overlay" id="mobile-nav-overlay">
+    <nav aria-label="Mobile Navigation">
+      <ul class="mobile-nav-list">
+        <li><a href="#overview" class="mobile-nav-link active" data-section="overview">Overview</a></li>
+        <li><a href="#editorials" class="mobile-nav-link" data-section="editorials">Editorials</a></li>
+        <li><a href="#campaigns" class="mobile-nav-link" data-section="campaigns">Campaigns</a></li>
+        <li><a href="#body-form" class="mobile-nav-link" data-section="body-form">Body &amp; Form</a></li>
+        <li><a href="#portraits-beauty" class="mobile-nav-link" data-section="portraits-beauty">Portraits &amp; Beauty</a></li>
+        <li><a href="#film-work" class="mobile-nav-link" data-section="film-work">Film Work</a></li>
+        <li><a href="#bio-contact" class="mobile-nav-link" data-section="bio-contact">Bio &amp; Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+
+  <!-- MAIN INTERACTIVE VIEW AREA -->
+  <main>
+    
+    <!-- OVERVIEW SECTION -->
+    <section id="overview" class="spa-section active">
+      <h1 class="section-title">Overview</h1>
+      <div class="gallery-grid" id="overview-grid">
+        <!-- Rendered Dynamically via app.js -->
+      </div>
+      <div class="load-more-container" id="overview-load-more-container" style="display:none; text-align:center; margin-top:40px;">
+        <button class="btn-load-more" id="btn-overview-load-more">Load More Works &nbsp;&darr;</button>
+      </div>
+    </section>
+
+    <!-- EDITORIALS SECTION -->
+    <section id="editorials" class="spa-section">
+      <h1 class="section-title">Editorials</h1>
+      
+      <!-- List of Editorials (Grid of Covers) -->
+      <div id="editorials-list-view">
+        <div class="editorial-covers-grid" id="editorials-grid">
+          <!-- Rendered Dynamically via app.js -->
+        </div>
+      </div>
+      
+      <!-- Project Detail Gallery (Hidden by default) -->
+      <div class="project-detail-view hidden" id="editorial-detail-view">
+        <div class="detail-header">
+          <button class="btn-back" id="btn-back-editorials">&larr; Back to Editorials</button>
+          <h2 class="detail-title" id="editorial-detail-title">Project Name</h2>
+        </div>
+        <div class="gallery-grid" id="editorial-detail-grid">
+          <!-- Rendered Dynamically via app.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- CAMPAIGNS SECTION -->
+    <section id="campaigns" class="spa-section">
+      <h1 class="section-title">Campaigns</h1>
+      <div class="section-tabs">
+        <button class="tab-link active" data-tab="campaigns-fashion">Fashion</button>
+        <button class="tab-link" data-tab="campaigns-lingerie">Lingerie</button>
+        <button class="tab-link" data-tab="campaigns-swimwear">Swimwear</button>
+      </div>
+      
+      <div id="campaigns-fashion" class="tab-content active">
+        <div class="gallery-grid" id="campaigns-fashion-grid"></div>
+      </div>
+      <div id="campaigns-lingerie" class="tab-content">
+        <div class="gallery-grid" id="campaigns-lingerie-grid"></div>
+      </div>
+      <div id="campaigns-swimwear" class="tab-content">
+        <div class="gallery-grid" id="campaigns-swimwear-grid"></div>
+      </div>
+    </section>
+
+    <!-- BODY & FORM SECTION -->
+    <section id="body-form" class="spa-section">
+      <h1 class="section-title">Body &amp; Form</h1>
+      <div class="section-tabs">
+        <button class="tab-link active" data-tab="body-organic">Organic Sculptures</button>
+        <button class="tab-link" data-tab="body-shadows">Shadows &amp; Graphic Intimacy</button>
+      </div>
+      
+      <div id="body-organic" class="tab-content active">
+        <div class="gallery-grid" id="body-organic-grid"></div>
+      </div>
+      <div id="body-shadows" class="tab-content">
+        <div class="gallery-grid" id="body-shadows-grid"></div>
+      </div>
+    </section>
+
+    <!-- PORTRAITS & BEAUTY SECTION -->
+    <section id="portraits-beauty" class="spa-section">
+      <h1 class="section-title">Portraits &amp; Beauty</h1>
+      <div class="section-tabs">
+        <button class="tab-link active" data-tab="pb-portraits">Portraits</button>
+        <button class="tab-link" data-tab="pb-beauty">Beauty</button>
+        <button class="tab-link" data-tab="pb-pets">Pets &amp; Portraits</button>
+      </div>
+      
+      <div id="pb-portraits" class="tab-content active">
+        <div class="gallery-grid" id="pb-portraits-grid"></div>
+      </div>
+      <div id="pb-beauty" class="tab-content">
+        <div class="gallery-grid" id="pb-beauty-grid"></div>
+      </div>
+      <div id="pb-pets" class="tab-content">
+        <div class="gallery-grid" id="pb-pets-grid"></div>
+      </div>
+    </section>
+
+    <!-- FILM WORK SECTION -->
+    <section id="film-work" class="spa-section">
+      <h1 class="section-title">Film Work</h1>
+      <div class="video-grid">
+        
+        <!-- Video 1 -->
+        <div class="video-card">
+          <div class="video-aspect">
+            <div class="video-placeholder-bg" style="background-image: url('0 OVERVIEW/max-salvaggio-fotografo-beauty-002.jpg')"></div>
+            <div class="video-overlay">
+              <svg class="play-icon" viewBox="0 0 24 24">
+                <polygon points="5 3 19 12 5 21 5 3"/>
+              </svg>
+            </div>
+          </div>
+          <div class="video-info">
+            <h3 class="video-title">Commercial Film Showreel</h3>
+            <p class="video-meta">Director's Cut — 2026</p>
+          </div>
+        </div>
+
+        <!-- Video 2 -->
+        <div class="video-card">
+          <div class="video-aspect">
+            <div class="video-placeholder-bg" style="background-image: url('0 OVERVIEW/max-salvaggio-fotografo-beauty-005.jpg')"></div>
+            <div class="video-overlay">
+              <svg class="play-icon" viewBox="0 0 24 24">
+                <polygon points="5 3 19 12 5 21 5 3"/>
+              </svg>
+            </div>
+          </div>
+          <div class="video-info">
+            <h3 class="video-title">Fashion Location Motion</h3>
+            <p class="video-meta">Campaign Film — Ibiza</p>
+          </div>
+        </div>
+
+        <!-- Video 3 -->
+        <div class="video-card">
+          <div class="video-aspect">
+            <div class="video-placeholder-bg" style="background-image: url('0 OVERVIEW/max-salvaggio-fotografo-beauty-006.jpg')"></div>
+            <div class="video-overlay">
+              <svg class="play-icon" viewBox="0 0 24 24">
+                <polygon points="5 3 19 12 5 21 5 3"/>
+              </svg>
+            </div>
+          </div>
+          <div class="video-info">
+            <h3 class="video-title">Shadows &amp; Light Study</h3>
+            <p class="video-meta">Artistic Short — Milano Studio</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- BIO & CONTACT SECTION -->
+    <section id="bio-contact" class="spa-section">
+      <div class="bio-container">
+        
+        <!-- Left Column: Biography -->
+        <div class="bio-profile">
+          <div class="profile-frame">
+            <img src="5 BIO &amp; CONTACT/Max_portrait_swiss_TAZY1752_bw.jpg" alt="Max Salvaggio" class="profile-img">
+          </div>
+          <div class="bio-text">
+            <p class="lead-text">I come from Marsala, a beautiful city by the sea, on the marvelous island of Sicily. I got my first camera at the age of 9 and ever since that moment, I've been unable to live without it. It has always been my "box of beauty", the best way to capture all the moments when I've realized what light is doing to things, and to keep them forever.</p>
+            <p>The camera sent me into a kind of rapture; I felt a calling, guiding me towards a new way of watching. After Palermo and the university of architecture, I decided to go to Milan to be closer to the world of fashion; I started to live on both sides of the camera lens, working passionately to achieve my dreams.</p>
+            <p>I kept finding new connections between my emotions and the lighting which I use in my sets. I began to build every shoot around the affinities of the moment and the sensations generated by the incredible relationship between me and my muse. This is the special interaction which produces the right conditions to create my style.</p>
+            <p>Since 1998 while maintaining its base in Milan, Max has decided to explore the world, traveling to wherever he could best realize his visions.</p>
+            <p class="signature">With Love, Max</p>
+          </div>
+        </div>
+
+        <!-- Right Column: Details & Contacts -->
+        <div class="bio-details">
+          
+          <div class="info-blocks">
+            <div class="info-block">
+              <h3>Clients</h3>
+              <p>Campari, Lamborghini, Longines, Dee Ocleppo, Morellato, Levante</p>
+            </div>
+            <div class="info-block">
+              <h3>Publications</h3>
+              <p>Photo Italia, Grazia, Marieclaire, Max, LRM, Ocean drive</p>
+            </div>
+          </div>
+
+          <div class="contact-form-container">
+            <h3>Get In Touch</h3>
+            <form id="contact-form" action="https://formspree.io/f/xzdqzagg" method="POST" class="contact-form" novalidate>
+              <input type="text" name="_gotcha" class="form-honey" tabindex="-1" autocomplete="off" />
+              
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="first-name">Nome</label>
+                  <input type="text" id="first-name" name="nome" placeholder="Mario" required autocomplete="given-name" />
+                </div>
+                <div class="form-group">
+                  <label for="last-name">Cognome</label>
+                  <input type="text" id="last-name" name="cognome" placeholder="Rossi" required autocomplete="family-name" />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="email">Indirizzo Email</label>
+                <input type="email" id="email" name="email" placeholder="mario@esempio.it" required autocomplete="email" />
+              </div>
+
+              <div class="form-group">
+                <label for="message">Messaggio</label>
+                <textarea id="message" name="messaggio" placeholder="Scrivi qui il tuo messaggio…" required></textarea>
+              </div>
+
+              <button type="submit" class="btn-submit" id="submit-btn">
+                <span class="btn-text">Invia Messaggio &nbsp;&rarr;</span>
+                <span class="btn-spinner"></span>
+              </button>
+            </form>
+            <div class="form-success-message" id="form-success">
+              <svg viewBox="0 0 24 24" class="success-icon">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+              <span>Messaggio inviato con successo! Ti risponderemo al più presto.</span>
+            </div>
+          </div>
+          
+          <div class="direct-contacts">
+            <a href="https://wa.me/393358043444" target="_blank" rel="noopener" class="contact-link">WhatsApp</a>
+            <span class="divider">|</span>
+            <a href="https://instagram.com/maxsalvaggio" target="_blank" rel="noopener" class="contact-link">Instagram</a>
+            <span class="divider">|</span>
+            <a href="mailto:info@maxsalvaggio.com" class="contact-link">info@maxsalvaggio.com</a>
+          </div>
+          
+        </div>
+        
+      </div>
+    </section>
+
+  </main>
+
+  <!-- IMMERSIVE LIGHTBOX OVERLAY -->
+  <div class="lightbox" id="lightbox" aria-hidden="true" role="dialog">
+    <button class="lightbox-close" id="lightbox-close" aria-label="Chiudi">&times;</button>
+    <div class="lightbox-container">
+      <button class="lightbox-nav prev-btn" id="lightbox-prev" aria-label="Immagine Precedente">&#10094;</button>
+      
+      <div class="lightbox-wrapper">
+        <div class="lightbox-img-holder">
+          <img id="lightbox-img" src="" alt="">
+        </div>
+        <div class="lightbox-caption">
+          <span class="caption-title" id="lightbox-title">Immagine</span>
+          <span class="caption-tag" id="lightbox-tag">Tag</span>
+        </div>
+      </div>
+      
+      <button class="lightbox-nav next-btn" id="lightbox-next" aria-label="Immagine Successiva">&#10095;</button>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <a href="#" class="back-to-top" id="btn-back-to-top">
+      <span>Back To Top</span>
+      <svg viewBox="0 0 320 512">
+        <path d="M177 159.7l136 136c9.4 9.4 9.4 24.6 0 33.9l-22.6 22.6c-9.4 9.4-24.6 9.4-33.9 0L160 255.9l-96.4 96.4c-9.4 9.4-24.6 9.4-33.9 0L7 329.7c-9.4-9.4-9.4-24.6 0-33.9l136-136c9.4-9.5 24.6-9.5 34 0z"/>
+      </svg>
+    </a>
+    <div class="footer-socials">
+      <a href="https://instagram.com/maxsalvaggio" target="_blank" rel="noopener" class="social-icon">Instagram</a>
+      <a href="#" class="social-icon">Facebook</a>
+      <a href="#" class="social-icon">LinkedIn</a>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Max Salvaggio. All Rights Reserved. Custom Webmaster Architecture.</p>
+      <p style="opacity:0.35; font-size: 0.65rem; margin-top: 5px; letter-spacing:0.1em;">P. IVA 01662261203</p>
+    </div>
+  </footer>
+
+  <script src="archive-data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

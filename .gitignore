@@ -1,27 +1,23 @@
-# macOS
+# Ignore Photoshop source files
+*.psd
+**/*.psd
+
+# Ignore TIFF images
+*.tif
+*.tiff
+**/*.tif
+**/*.tiff
+
+# Ignore Camera RAW files
+*.dng
+*.DNG
+**/*.dng
+**/*.DNG
+
+# Ignore Adobe Bridge metadata
+.BridgeSort
+**/.BridgeSort
+
+# Ignore OS metadata
 .DS_Store
-.AppleDouble
-.LSOverride
-._*
-.Spotlight-V100
-.Trashes
-
-# Archivio fotografico (file troppo pesanti per GitHub)
-Max Salvaggio Archivio/
-
-# Editor & IDE
-.vscode/
-.idea/
-*.swp
-*.swo
-
-# Logs
-*.log
-npm-debug.log*
-
-# Python
-__pycache__/
-*.py[cod]
-*.pyo
-*.pyd
-.env
+Thumbs.db
