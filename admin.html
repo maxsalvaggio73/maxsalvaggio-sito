@@ -256,7 +256,7 @@
 
     /* Active Client Workspace */
     .client-workspace {
-      display: none; /* Shown dynamically when client is active */
+      display: none; 
       flex-direction: column;
       height: 100%;
     }
@@ -298,6 +298,9 @@
       color: var(--text-primary);
       border-bottom: 1px solid rgba(255,255,255,0.03);
       padding-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
     .info-grid {
       display: grid;
@@ -306,7 +309,10 @@
     }
     @media (min-width: 750px) {
       .info-grid {
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+      .grid-span-all {
+        grid-column: 1 / -1;
       }
     }
     .info-item {
@@ -327,27 +333,33 @@
     }
     .info-documents {
       display: flex;
-      gap: 12px;
+      gap: 15px;
       margin-top: 10px;
     }
-    .btn-doc {
-      display: inline-flex;
+    
+    /* Document Copy Thumbnails inside admin sheet */
+    .admin-doc-preview-wrapper {
+      display: flex;
+      flex-direction: column;
       align-items: center;
       gap: 6px;
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid var(--border-color);
-      color: var(--text-primary);
-      border-radius: 4px;
-      padding: 6px 12px;
-      font-size: 0.72rem;
-      font-weight: 600;
       cursor: pointer;
-      text-decoration: none;
-      transition: all 0.2s;
     }
-    .btn-doc:hover {
-      background-color: var(--accent);
+    .admin-doc-preview-img {
+      width: 120px;
+      height: 80px;
+      object-fit: cover;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 4px;
+      transition: border-color 0.2s;
+    }
+    .admin-doc-preview-img:hover {
       border-color: var(--accent);
+    }
+    .admin-doc-label {
+      font-size: 0.65rem;
+      color: var(--text-secondary);
+      text-transform: uppercase;
     }
 
     /* Drag & Drop Upload Zone */
@@ -548,11 +560,7 @@
       color: var(--text-secondary);
       margin-bottom: 18px;
     }
-    .instruction-step strong {
-      color: var(--text-primary);
-    }
 
-    /* Notification message if database is empty */
     .empty-state {
       text-align: center;
       padding: 40px 20px;
@@ -572,6 +580,70 @@
     }
     .btn-refresh:hover {
       text-decoration: underline;
+    }
+
+    /* ========================================================
+       EMAIL NOTIFICATION POPUP MODAL (Glassmorphism Overlay)
+       ======================================================== */
+    .email-modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(18, 20, 21, 0.85);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      z-index: 2000;
+      justify-content: center;
+      align-items: center;
+    }
+    .email-modal-overlay.active {
+      display: flex;
+    }
+    .email-modal-card {
+      background: #191b1c;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 8px;
+      padding: 30px;
+      max-width: 580px;
+      width: 90%;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+    }
+    .email-modal-title {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #A5D6A7; /* Green highlight */
+    }
+    .email-modal-desc {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      margin-bottom: 20px;
+    }
+    .email-box {
+      background-color: rgba(0,0,0,0.25);
+      border: 1px solid rgba(255,255,255,0.05);
+      border-radius: 4px;
+      padding: 15px;
+      font-size: 0.8rem;
+      line-height: 1.5;
+      color: var(--text-primary);
+      width: 100%;
+      height: 250px;
+      resize: none;
+      outline: none;
+      font-family: var(--font-body);
+      margin-bottom: 20px;
+    }
+    .email-modal-footer {
+      display: flex;
+      justify-content: flex-end;
+      gap: 15px;
     }
   </style>
 </head>
@@ -639,22 +711,30 @@
       
       <div class="dashboard-card" style="text-align: left; padding: 25px;">
         <h3 style="font-family: var(--font-display); font-size: 0.9rem; text-transform: uppercase; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px; margin-bottom: 15px;">Guida SQL e Regole di Sicurezza</h3>
-        <p style="font-size: 0.8rem; line-height: 1.5; margin-bottom: 15px;">Assicurati che la tabella <code>profiles</code> e le politiche di sicurezza dello Storage siano state configurate. Se necessario, esegui questa query in Supabase:</p>
-        <div class="sql-code-box">-- 1. Aggiunge le colonne necessarie alla tabella profiles (anagrafiche + ordine file)
+        <p style="font-size: 0.8rem; line-height: 1.5; margin-bottom: 15px;">Esegui questa query in Supabase per configurare l'anagrafica estesa dei clienti e le regole di Storage:</p>
+        <div class="sql-code-box">-- 1. Aggiunge le colonne anagrafiche complete alla tabella profiles
 alter table public.profiles 
   add column if not exists is_admin boolean default false,
   add column if not exists file_order jsonb default '[]'::jsonb,
   add column if not exists full_name text,
+  add column if not exists nationality text,
   add column if not exists codice_fiscale text,
   add column if not exists dob date,
   add column if not exists pob text,
+  add column if not exists birth_province text,
+  add column if not exists birth_country text,
   add column if not exists address text,
-  add column if not exists id_front_url text,
-  add column if not exists id_back_url text,
-  add column if not exists social_link text,
-  add column if not exists onboarding_completed boolean default false;
+  add column if not exists residence_city text,
+  add column if not exists residence_province text,
+  add column if not exists residence_country text,
+  add column if not exists phone_number text,
+  add column if not exists social_instagram text,
+  add column if not exists social_facebook text,
+  add column if not exists social_other text,
+  add column if not exists onboarding_completed boolean default false,
+  add column if not exists documents_approved boolean default false;
 
--- 2. Permette agli amministratori di gestire lo storage client-proofs
+-- 2. Permette a te (Amministratore) di gestire tutto lo storage
 create policy "Admins can select files" on storage.objects for select using (
   bucket_id = 'client-proofs' and (select is_admin from public.profiles where id = auth.uid()) = true
 );
@@ -667,6 +747,18 @@ create policy "Admins can delete files" on storage.objects for delete using (
 
 -- 3. Permette ai clienti approvati di leggere solo la propria cartella
 create policy "Clients can select own files" on storage.objects for select using (
+  bucket_id = 'client-proofs' and
+  (select is_approved from public.profiles where id = auth.uid()) = true and
+  name like (select email from public.profiles where id = auth.uid()) || '/%'
+);
+
+-- 4. Permette ai clienti approvati di caricare i propri documenti
+create policy "Clients can insert own files" on storage.objects for insert with check (
+  bucket_id = 'client-proofs' and
+  (select is_approved from public.profiles where id = auth.uid()) = true and
+  name like (select email from public.profiles where id = auth.uid()) || '/%'
+);
+create policy "Clients can update own files" on storage.objects for update using (
   bucket_id = 'client-proofs' and
   (select is_approved from public.profiles where id = auth.uid()) = true and
   name like (select email from public.profiles where id = auth.uid()) || '/%'
@@ -713,6 +805,23 @@ create policy "Clients can select own files" on storage.objects for select using
     </div>
 
   </main>
+
+  <!-- ========================================================
+       EMAIL COPY MODAL
+       ======================================================== -->
+  <div class="email-modal-overlay" id="email-modal">
+    <div class="email-modal-card">
+      <h3 class="email-modal-title">Account Attivato con Successo!</h3>
+      <p class="email-modal-desc">
+        I documenti sono stati approvati e il profilo del cliente è ora attivo. Copia ed invia il testo seguente tramite la tua email per notificare l'avvenuta attivazione.
+      </p>
+      <textarea class="email-box" id="email-text-area" readonly></textarea>
+      <div class="email-modal-footer">
+        <button class="btn-doc" onclick="copyEmailText()">📋 Copia Messaggio ed Oggetto</button>
+        <button class="btn-action" style="border-radius: 4px;" onclick="closeEmailModal()">Chiudi</button>
+      </div>
+    </div>
+  </div>
 
   <script>
     let supabaseClient = null;
@@ -799,7 +908,6 @@ create policy "Clients can select own files" on storage.objects for select using
           return;
         }
 
-        // Reset lists
         reqList.innerHTML = "";
         clientList.innerHTML = "";
         adminList.innerHTML = "";
@@ -812,7 +920,7 @@ create policy "Clients can select own files" on storage.objects for select using
           item.className = "client-item";
           
           if (!user.is_approved) {
-            // PENDING REQUEST
+            // PENDING ACCESS REQUEST
             pendingCount++;
             item.innerHTML = `
               <span class="client-email-text" title="${user.email}">${user.email}</span>
@@ -830,20 +938,27 @@ create policy "Clients can select own files" on storage.objects for select using
           } else {
             // ACTIVE CLIENT
             clientCount++;
-            // Check if active
             const isActive = activeClientEmail === user.email;
             if (isActive) item.classList.add("active");
+            
+            // Pending document review badge
+            let badgeHtml = "";
+            if (user.onboarding_completed && !user.documents_approved) {
+              badgeHtml = `<span class="mini-badge mini-badge-pending" style="margin-right: 8px;">Doc. In Attesa</span>`;
+            } else if (user.documents_approved) {
+              badgeHtml = `<span class="mini-badge" style="background-color: rgba(76,175,80,0.1); color: #A5D6A7; border: 1px solid rgba(76,175,80,0.2); margin-right: 8px;">Attivo</span>`;
+            }
             
             item.onclick = () => selectClient(user.email);
             item.innerHTML = `
               <span class="client-email-text" title="${user.email}">${user.email}</span>
+              ${badgeHtml}
               <button class="btn-mini-action btn-mini-suspend" onclick="toggleApproval(event, '${user.id}', false)">Sospendi</button>
             `;
             clientList.appendChild(item);
           }
         });
 
-        // Toggle sign up requests section visibility
         if (pendingCount > 0) {
           reqSection.style.display = "block";
           document.getElementById("requests-count").textContent = pendingCount;
@@ -862,7 +977,6 @@ create policy "Clients can select own files" on storage.objects for select using
 
     // Toggle approval status (Approve / Suspend)
     async function toggleApproval(event, userId, approve) {
-      // Prevent triggering click on client selection
       event.stopPropagation();
       if (!supabaseClient) return;
 
@@ -877,7 +991,6 @@ create policy "Clients can select own files" on storage.objects for select using
           return;
         }
 
-        // Close workspace if active client gets suspended
         if (!approve) {
           const { data: suspendedUser } = await supabaseClient
             .from('profiles')
@@ -889,7 +1002,6 @@ create policy "Clients can select own files" on storage.objects for select using
           }
         }
 
-        // Reload data
         loadProfiles();
       } catch (err) {
         console.error(err);
@@ -900,7 +1012,6 @@ create policy "Clients can select own files" on storage.objects for select using
     async function selectClient(email) {
       activeClientEmail = email;
       
-      // Update active states in sidebar
       const items = document.querySelectorAll("#clients-list-body .client-item");
       items.forEach(item => {
         const text = item.querySelector(".client-email-text").textContent;
@@ -911,12 +1022,11 @@ create policy "Clients can select own files" on storage.objects for select using
         }
       });
 
-      // Show workspace panel
       document.getElementById("welcome-panel").style.display = "none";
       document.getElementById("client-panel").style.display = "flex";
       document.getElementById("active-client-title").textContent = email;
 
-      // Load client personal info
+      // Load client details sheet
       await loadClientInfo(email);
 
       // Load client files
@@ -937,15 +1047,14 @@ create policy "Clients can select own files" on storage.objects for select using
           .single();
 
         if (error || !profile) {
-          box.innerHTML = '<span style="font-size:0.8rem;color:#FF8A80">Errore nel caricamento dei dati personali del cliente.</span>';
+          box.innerHTML = '<span style="font-size:0.8rem;color:#FF8A80">Errore nel caricamento dei dati personali.</span>';
           return;
         }
 
         if (!profile.onboarding_completed) {
           box.innerHTML = `
-            <div style="background-color: rgba(255, 193, 7, 0.08); border: 1px solid rgba(255, 193, 7, 0.25); border-radius: 4px; padding: 12px 15px; font-size: 0.8rem; color: #FFE082; display: flex; align-items: center; gap: 8px;">
-              <span>⚠️</span>
-              <span><strong>In attesa di verifica identità:</strong> Il cliente non ha ancora completato l'inserimento dei dati personali e dei documenti di riconoscimento.</span>
+            <div style="background-color: rgba(255, 193, 7, 0.08); border: 1px solid rgba(255, 193, 7, 0.25); border-radius: 4px; padding: 12px 15px; font-size: 0.8rem; color: #FFE082;">
+              ⚠️ <strong>In attesa di onboarding:</strong> Il cliente non ha ancora completato l'inserimento dei dati personali e dei documenti d'identità.
             </div>
           `;
           return;
@@ -954,44 +1063,97 @@ create policy "Clients can select own files" on storage.objects for select using
         // Format Date of Birth
         const dobFormatted = profile.dob 
           ? new Date(profile.dob).toLocaleDateString('it-IT', { day: '2-digit', month: '2-digit', year: 'numeric' })
-          : 'Non indicata';
+          : 'N/D';
 
-        // Format social link
-        let socialLinkHtml = 'Nessuno';
-        if (profile.social_link) {
-          const isUrl = profile.social_link.startsWith('http');
-          const href = isUrl ? profile.social_link : `https://instagram.com/${profile.social_link.replace('@', '')}`;
-          socialLinkHtml = `<a href="${href}" target="_blank" style="color: var(--accent); text-decoration: underline;">${profile.social_link}</a>`;
+        // Format social accounts
+        let instaLinkHtml = 'Non indicato';
+        if (profile.social_instagram) {
+          const handle = profile.social_instagram.replace('instagram:', '').replace('@', '').trim();
+          instaLinkHtml = `<a href="https://instagram.com/${handle}" target="_blank" style="color: var(--accent); text-decoration: underline;">${profile.social_instagram}</a>`;
+        }
+
+        let fbLinkHtml = 'Non indicato';
+        if (profile.social_facebook) {
+          let link = profile.social_facebook.replace('facebook:', '').trim();
+          if (!link.startsWith('http')) link = `https://${link}`;
+          fbLinkHtml = `<a href="${link}" target="_blank" style="color: var(--accent); text-decoration: underline;">Profilo Facebook</a>`;
+        }
+
+        // Approval action header layout
+        let actionBtnHtml = "";
+        if (!profile.documents_approved) {
+          actionBtnHtml = `
+            <button class="btn-doc" style="background-color: var(--accent-green); border-color: var(--accent-green);" onclick="approveClientDocuments('${profile.email}', '${profile.full_name}')">
+              ✅ Approva Documenti ed Attiva Account
+            </button>
+          `;
+        } else {
+          actionBtnHtml = `
+            <span style="font-size: 0.72rem; color: var(--accent-green); font-weight:600; text-transform:uppercase; letter-spacing:0.05em; border: 1px solid rgba(76,175,80,0.3); padding: 4px 10px; border-radius:30px;">
+              🟢 Account Attivo e Verificato
+            </span>
+          `;
         }
 
         box.innerHTML = `
-          <div class="info-card-header">Scheda Anagrafica e Identità Cliente</div>
+          <div class="info-card-header">
+            <span>Scheda Anagrafica e Identità Cliente</span>
+            <div>${actionBtnHtml}</div>
+          </div>
           <div class="info-grid">
             <div class="info-item">
               <strong>Nome & Cognome</strong>
               <span>${profile.full_name || 'N/D'}</span>
             </div>
             <div class="info-item">
-              <strong>Codice Fiscale</strong>
-              <span>${profile.codice_fiscale || 'N/D'}</span>
+              <strong>Nazionalità</strong>
+              <span>${profile.nationality || 'N/D'}</span>
             </div>
             <div class="info-item">
-              <strong>Data e Luogo di Nascita</strong>
-              <span>Nato il ${dobFormatted} a ${profile.pob || 'N/D'}</span>
+              <strong>Codice Fiscale / Tax ID / VAT</strong>
+              <span>${profile.tax_vat_number || 'N/D'}</span>
             </div>
             <div class="info-item">
-              <strong>Indirizzo di Residenza</strong>
+              <strong>Nascita</strong>
+              <span>Nato il ${dobFormatted} a ${profile.pob || 'N/D'} (${profile.birth_country || 'N/D'})</span>
+            </div>
+            <div class="info-item">
+              <strong>Indirizzo Residenza</strong>
               <span>${profile.address || 'N/D'}</span>
             </div>
             <div class="info-item">
-              <strong>Social Media</strong>
-              <span>${socialLinkHtml}</span>
+              <strong>Città / Prov / Stato</strong>
+              <span>${profile.residence_city || 'N/D'} (${profile.residence_province || 'N/D'}) - ${profile.residence_country || 'N/D'}</span>
             </div>
             <div class="info-item">
-              <strong>Copia Documento (Fronte/Retro)</strong>
+              <strong>Telefono (Cellulare)</strong>
+              <span>${profile.phone_number || 'N/D'}</span>
+            </div>
+            <div class="info-item">
+              <strong>Instagram</strong>
+              <span>${instaLinkHtml}</span>
+            </div>
+            <div class="info-item">
+              <strong>Facebook</strong>
+              <span>${fbLinkHtml}</span>
+            </div>
+            ${profile.social_other ? `
+              <div class="info-item grid-span-all">
+                <strong>Altri Social Specificati</strong>
+                <span>${profile.social_other}</span>
+              </div>
+            ` : ''}
+            <div class="info-item grid-span-all" style="border-top:1px solid rgba(255,255,255,0.03); padding-top:15px; margin-top:5px;">
+              <strong>Allegati Documenti d'Identità (Clicca per ingrandire)</strong>
               <div class="info-documents">
-                <a href="${profile.id_front_url}" target="_blank" class="btn-doc">👁️ Visualizza Fronte</a>
-                <a href="${profile.id_back_url}" target="_blank" class="btn-doc">👁️ Visualizza Retro</a>
+                <div class="admin-doc-preview-wrapper" onclick="window.open('${profile.id_front_url}', '_blank')">
+                  <img src="${profile.id_front_url}" class="admin-doc-preview-img" alt="Fronte">
+                  <span class="admin-doc-label">Fronte Documento</span>
+                </div>
+                <div class="admin-doc-preview-wrapper" onclick="window.open('${profile.id_back_url}', '_blank')">
+                  <img src="${profile.id_back_url}" class="admin-doc-preview-img" alt="Retro">
+                  <span class="admin-doc-label">Retro Documento</span>
+                </div>
               </div>
             </div>
           </div>
@@ -999,8 +1161,94 @@ create policy "Clients can select own files" on storage.objects for select using
 
       } catch (err) {
         console.error(err);
-        box.innerHTML = '<span style="font-size:0.8rem;color:#FF8A80">Errore durante la lettura delle anagrafiche.</span>';
+        box.innerHTML = '<span style="font-size:0.8rem;color:#FF8A80">Errore durante il caricamento delle anagrafiche.</span>';
       }
+    }
+
+    // Approve documents, update database, and trigger email notification
+    async function approveClientDocuments(email, name) {
+      if (!supabaseClient) return;
+
+      const confirmApprove = confirm(`Sei sicuro di voler approvare i documenti e attivare l'account di ${name} (${email})?`);
+      if (!confirmApprove) return;
+
+      try {
+        const { error } = await supabaseClient
+          .from('profiles')
+          .update({ documents_approved: true })
+          .eq('email', email);
+
+        if (error) {
+          alert("Impossibile aggiornare l'approvazione: " + error.message);
+          return;
+        }
+
+        // Construct Activation Email Template
+        const subjectText = "Il tuo account su Max Salvaggio Portfolio è attivo!";
+        const bodyText = `Gentile ${name},\n\nTi comunichiamo che la verifica dei tuoi documenti di riconoscimento è andata a buon fine. Il tuo account personale è stato attivato con successo!\n\nDa questo momento puoi accedere alla tua area privata per visualizzare ed esaminare i provini fotografici del tuo servizio, scaricare gli scatti ad alta risoluzione e collaborare con lo studio.\n\nAccedi alla tua area riservata cliccando qui:\nhttps://www.maxsalvaggio.com/client-area.html\n\nUn cordiale saluto,\nMax Salvaggio\nStudio Fotografico Milano\nwww.maxsalvaggio.com`;
+
+        // Check if EmailJS is configured in config.js
+        const hasEmailJs = typeof config !== 'undefined' && 
+                           config.EMAILJS_SERVICE_ID && 
+                           config.EMAILJS_TEMPLATE_ID && 
+                           config.EMAILJS_PUBLIC_KEY;
+
+        if (hasEmailJs) {
+          // Send automatic email via EmailJS API in background
+          try {
+            await fetch("https://api.emailjs.com/api/v1.0/email/send", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                service_id: config.EMAILJS_SERVICE_ID,
+                template_id: config.EMAILJS_TEMPLATE_ID,
+                user_id: config.EMAILJS_PUBLIC_KEY,
+                template_params: {
+                  to_email: email,
+                  to_name: name,
+                  subject: subjectText,
+                  message: bodyText
+                }
+              })
+            });
+            alert("Account attivato ed email di notifica automatica inviata al cliente!");
+          } catch (eJSerr) {
+            console.error("EmailJS sending error:", eJSerr);
+            // Fallback to manual modal copy if API call failed
+            openEmailModal(subjectText, bodyText);
+          }
+        } else {
+          // Open manual copy-paste template popup modal
+          openEmailModal(subjectText, bodyText);
+        }
+
+        // Reload data
+        loadProfiles();
+        await loadClientInfo(email);
+
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    // Modal Copy-Paste trigger functions
+    function openEmailModal(subject, body) {
+      const modal = document.getElementById("email-modal");
+      const textarea = document.getElementById("email-text-area");
+      textarea.value = `Oggetto: ${subject}\n\n${body}`;
+      modal.classList.add("active");
+    }
+
+    function closeEmailModal() {
+      document.getElementById("email-modal").classList.remove("active");
+    }
+
+    function copyEmailText() {
+      const textarea = document.getElementById("email-text-area");
+      textarea.select();
+      textarea.setSelectionRange(0, 99999);
+      navigator.clipboard.writeText(textarea.value);
+      alert("Testo ed oggetto dell'email copiati negli appunti!");
     }
 
     // Close workspace and return to welcome panel

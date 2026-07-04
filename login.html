@@ -77,11 +77,6 @@
       z-index: 100;
       box-shadow: 0 4px 15px rgba(0,0,0,0.3);
     }
-    .setup-banner a {
-      color: #000;
-      text-decoration: underline;
-      margin-left: 5px;
-    }
 
     /* Main Container */
     .login-container {
@@ -212,13 +207,11 @@
       background-color: rgba(229, 9, 20, 0.15);
       border: 1px solid rgba(229, 9, 20, 0.3);
       color: #FF8A80;
-      display: none;
     }
     .alert-success {
       background-color: rgba(76, 175, 80, 0.15);
       border: 1px solid rgba(76, 175, 80, 0.3);
       color: #A5D6A7;
-      display: none;
     }
 
     /* Buttons */
@@ -310,7 +303,7 @@
     </div>
 
     <div class="login-card">
-      <div class="tabs-header">
+      <div class="tabs-header" id="tabs-header">
         <button class="tab-btn active" id="tab-login" onclick="switchTab('login')">Accedi</button>
         <button class="tab-btn" id="tab-signup" onclick="switchTab('signup')">Registrati</button>
       </div>
@@ -328,6 +321,9 @@
         <div class="form-group">
           <label class="form-label" for="login-password">Password</label>
           <input type="password" id="login-password" class="form-input" required autocomplete="current-password" placeholder="••••••••">
+        </div>
+        <div style="text-align: right; margin-top: -12px; margin-bottom: 22px;">
+          <a href="#" onclick="showRecoverScreen(event)" style="font-size: 0.75rem; color: var(--text-secondary); text-decoration: none; text-transform: uppercase; font-weight: 500;">Password dimenticata?</a>
         </div>
         <button type="submit" class="btn-submit" id="btn-login-submit">
           <span class="spinner" id="login-spinner"></span>
@@ -354,6 +350,41 @@
           <span>Richiedi Accesso</span>
         </button>
       </form>
+
+      <!-- RECOVER PASSWORD FORM -->
+      <form id="form-recover" class="form-panel" onsubmit="handleForgotPassword(event)">
+        <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 20px; text-align: center;">Inserisci l'indirizzo email associato al tuo account. Ti invieremo un link per impostare una nuova password.</p>
+        <div class="form-group">
+          <label class="form-label" for="recover-email">Indirizzo Email</label>
+          <input type="email" id="recover-email" class="form-input" required autocomplete="email" placeholder="nome@esempio.com">
+        </div>
+        <button type="submit" class="btn-submit" id="btn-recover-submit">
+          <span class="spinner" id="recover-spinner"></span>
+          <span>Invia Link di Recupero</span>
+        </button>
+        <div style="text-align: center; margin-top: 15px;">
+          <a href="#" onclick="showLoginScreen(event)" style="font-size: 0.72rem; color: var(--text-secondary); text-decoration: none; text-transform: uppercase; font-weight: 600;">Torna al Login</a>
+        </div>
+      </form>
+
+      <!-- RESET PASSWORD FORM -->
+      <form id="form-reset" class="form-panel" onsubmit="handleResetPassword(event)">
+        <h3 style="font-family: var(--font-display); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 10px; text-align: center;">Reimposta Password</h3>
+        <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 20px; text-align: center;">Digita la tua nuova password d'accesso (minimo 6 caratteri).</p>
+        <div class="form-group">
+          <label class="form-label" for="reset-password">Nuova Password</label>
+          <input type="password" id="reset-password" class="form-input" required minlength="6" autocomplete="new-password" placeholder="••••••••">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="reset-confirm">Conferma Nuova Password</label>
+          <input type="password" id="reset-confirm" class="form-input" required minlength="6" autocomplete="new-password" placeholder="••••••••">
+        </div>
+        <button type="submit" class="btn-submit" id="btn-reset-submit">
+          <span class="spinner" id="reset-spinner"></span>
+          <span>Salva Nuova Password</span>
+        </button>
+      </form>
+
     </div>
 
     <a href="home.html" class="back-home">&larr; Torna al Portfolio</a>
@@ -379,15 +410,27 @@
       document.getElementById("btn-signup-submit").disabled = true;
     }
 
+    // Checking hash token on load for password recovery redirection
+    window.onload = function() {
+      const hash = window.location.hash;
+      if (hash && (hash.includes("type=recovery") || hash.includes("access_token="))) {
+        showResetScreen();
+      }
+    };
+
     // Toggle Tabs
     function switchTab(type) {
-      // Clear alert messages
       hideAlerts();
       
       const tabLogin = document.getElementById("tab-login");
       const tabSignup = document.getElementById("tab-signup");
       const formLogin = document.getElementById("form-login");
       const formSignup = document.getElementById("form-signup");
+      const formRecover = document.getElementById("form-recover");
+      const formReset = document.getElementById("form-reset");
+
+      formRecover.classList.remove("active");
+      formReset.classList.remove("active");
 
       if (type === 'login') {
         tabLogin.classList.add("active");
@@ -400,6 +443,34 @@
         formLogin.classList.remove("active");
         formSignup.classList.add("active");
       }
+    }
+
+    function showRecoverScreen(e) {
+      if (e) e.preventDefault();
+      hideAlerts();
+      document.getElementById("tabs-header").style.display = "none";
+      
+      document.getElementById("form-login").classList.remove("active");
+      document.getElementById("form-signup").classList.remove("active");
+      document.getElementById("form-recover").classList.add("active");
+      document.getElementById("form-reset").classList.remove("active");
+    }
+
+    function showLoginScreen(e) {
+      if (e) e.preventDefault();
+      hideAlerts();
+      document.getElementById("tabs-header").style.display = "flex";
+      switchTab('login');
+    }
+
+    function showResetScreen() {
+      hideAlerts();
+      document.getElementById("tabs-header").style.display = "none";
+      
+      document.getElementById("form-login").classList.remove("active");
+      document.getElementById("form-signup").classList.remove("active");
+      document.getElementById("form-recover").classList.remove("active");
+      document.getElementById("form-reset").classList.add("active");
     }
 
     function showAlert(type, message) {
@@ -434,7 +505,6 @@
       const btn = document.getElementById("btn-login-submit");
       const spinner = document.getElementById("login-spinner");
 
-      // Loading state
       btn.disabled = true;
       spinner.style.display = "inline-block";
 
@@ -470,7 +540,6 @@
 
         if (profileError) {
           console.error("Errore query profilo:", profileError);
-          // If profile table query fails (probably doesn't exist yet)
           await supabaseClient.auth.signOut();
           showAlert('error', "Accesso negato. Tabella 'profiles' non configurata in Supabase. Esegui lo script SQL fornito!");
           btn.disabled = false;
@@ -479,13 +548,11 @@
         }
 
         if (!profile || !profile.is_approved) {
-          // Log out immediately to prevent active session
           await supabaseClient.auth.signOut();
           showAlert('error', "Accesso negato. Il tuo account è in attesa di essere approvato dall'amministratore.");
           btn.disabled = false;
           spinner.style.display = "none";
         } else {
-          // Redirect based on administrative role
           if (profile.is_admin) {
             window.location.href = "admin.html";
           } else {
@@ -513,7 +580,6 @@
       const btn = document.getElementById("btn-signup-submit");
       const spinner = document.getElementById("signup-spinner");
 
-      // Validations
       if (password !== confirm) {
         showAlert('error', "Le password inserite non coincidono.");
         return;
@@ -524,7 +590,6 @@
         return;
       }
 
-      // Loading state
       btn.disabled = true;
       spinner.style.display = "inline-block";
 
@@ -565,7 +630,6 @@
 
         showAlert('success', "Richiesta inviata! Riceverai una notifica email quando l'amministratore confermerà l'accesso. Controlla la tua casella per confermare l'indirizzo email se richiesto.");
         
-        // Reset fields
         document.getElementById("signup-email").value = "";
         document.getElementById("signup-password").value = "";
         document.getElementById("signup-confirm").value = "";
@@ -575,6 +639,86 @@
       } catch (err) {
         console.error(err);
         showAlert('error', "Si è verificato un errore durante l'invio della richiesta.");
+        btn.disabled = false;
+        spinner.style.display = "none";
+      }
+    }
+
+    // Handle Password Recovery Request
+    async function handleForgotPassword(event) {
+      event.preventDefault();
+      if (!supabaseClient) return;
+
+      hideAlerts();
+      const email = document.getElementById("recover-email").value.trim();
+      const btn = document.getElementById("btn-recover-submit");
+      const spinner = document.getElementById("recover-spinner");
+
+      btn.disabled = true;
+      spinner.style.display = "inline-block";
+
+      try {
+        const { error } = await supabaseClient.auth.resetPasswordForEmail(email, {
+          redirectTo: window.location.origin + window.location.pathname
+        });
+
+        if (error) {
+          showAlert('error', "Errore durante l'invio del recupero: " + error.message);
+          btn.disabled = false;
+          spinner.style.display = "none";
+          return;
+        }
+
+        showAlert('success', "Link di recupero inviato! Controlla la posta per reimpostare la tua password.");
+        document.getElementById("recover-email").value = "";
+        btn.disabled = false;
+        spinner.style.display = "none";
+      } catch (err) {
+        console.error(err);
+        showAlert('error', "Si è verificato un errore durante la richiesta.");
+        btn.disabled = false;
+        spinner.style.display = "none";
+      }
+    }
+
+    // Handle Password Update Form Submit
+    async function handleResetPassword(event) {
+      event.preventDefault();
+      if (!supabaseClient) return;
+
+      hideAlerts();
+      const password = document.getElementById("reset-password").value;
+      const confirm = document.getElementById("reset-confirm").value;
+      const btn = document.getElementById("btn-reset-submit");
+      const spinner = document.getElementById("reset-spinner");
+
+      if (password !== confirm) {
+        showAlert('error', "Le password inserite non coincidono.");
+        return;
+      }
+
+      btn.disabled = true;
+      spinner.style.display = "inline-block";
+
+      try {
+        const { error } = await supabaseClient.auth.updateUser({
+          password: password
+        });
+
+        if (error) {
+          showAlert('error', "Errore salvataggio password: " + error.message);
+          btn.disabled = false;
+          spinner.style.display = "none";
+          return;
+        }
+
+        alert("Password aggiornata con successo! Ora puoi accedere.");
+        window.location.hash = "";
+        window.location.reload();
+
+      } catch (err) {
+        console.error(err);
+        showAlert('error', "Errore nel salvataggio della password.");
         btn.disabled = false;
         spinner.style.display = "none";
       }

@@ -22,6 +22,7 @@
       --bg-card: rgba(26, 29, 30, 0.45);
       --border-color: rgba(255, 255, 255, 0.08);
       --accent: #E50914; /* Rosso premium */
+      --accent-yellow: #FFC107;
       --text-primary: #ECEFF1;
       --text-secondary: rgba(236, 239, 241, 0.6);
       --font-display: 'Cinzel', serif;
@@ -128,8 +129,8 @@
        ONBOARDING FORM DESIGN
        ======================================================== */
     .onboarding-container {
-      display: none; /* Shown dynamically if onboarding is not completed */
-      max-width: 680px;
+      display: none; 
+      max-width: 740px;
       margin: 0 auto 50px auto;
     }
     .onboarding-card {
@@ -200,15 +201,23 @@
       background-color: rgba(255, 255, 255, 0.04);
     }
 
-    /* Document upload boxes */
+    /* Document upload boxes with local preview support */
     .document-upload-box {
       border: 1px dashed rgba(255, 255, 255, 0.15);
       border-radius: 4px;
-      padding: 18px 12px;
+      padding: 20px 12px;
       text-align: center;
       cursor: pointer;
       background-color: rgba(255, 255, 255, 0.005);
       transition: all 0.25s ease;
+      min-height: 140px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
     }
     .document-upload-box:hover {
       border-color: rgba(229, 9, 20, 0.4);
@@ -217,11 +226,14 @@
     .upload-box-icon {
       font-size: 1.5rem;
       margin-bottom: 6px;
-      display: block;
+      transition: opacity 0.2s;
     }
     .upload-box-text {
       font-size: 0.72rem;
       color: var(--text-secondary);
+      background: rgba(0,0,0,0.6);
+      padding: 2px 6px;
+      border-radius: 3px;
     }
 
     /* Buttons */
@@ -273,12 +285,21 @@
     }
 
     /* ========================================================
-       GALLERY DESIGNS (Shown after onboarding is complete)
+       WAITING STATE PANEL (onboarding_completed = true, documents_approved = false)
+       ======================================================== */
+    .waiting-container {
+      display: none;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* ========================================================
+       GALLERY DESIGNS (Shown after documents_approved = true)
        ======================================================== */
     .dashboard-container {
       max-width: 800px;
       margin: 0 auto;
-      display: none; /* Controlled dynamically */
+      display: none; 
     }
     .dashboard-card {
       background: var(--bg-card);
@@ -332,7 +353,7 @@
     }
 
     .gallery-section {
-      display: none; /* Controlled dynamically */
+      display: none; 
     }
     .gallery-grid {
       display: grid;
@@ -488,12 +509,12 @@
       <p class="welcome-desc">Accesso protetto per <span class="welcome-user-email" id="client-email">...</span></p>
     </div>
 
-    <!-- A. ONBOARDING CONTAINER (Shown when onboarding_completed is false) -->
+    <!-- 1. ONBOARDING CONTAINER (onboarding_completed = false) -->
     <div class="onboarding-container" id="onboarding-panel">
       <div class="onboarding-card">
         <h2 class="onboarding-title">Verifica Identità Cliente</h2>
         <p class="onboarding-desc">
-          Per poter visualizzare ed esaminare il materiale fotografico caricato per te, la legge e le normative contrattuali richiedono l'inserimento dei tuoi dati anagrafici e il caricamento di una copia del tuo documento di riconoscimento.
+          Per poter accedere ai tuoi provini privati, inserisci i tuoi dati anagrafici e carica una copia fronte/retro di un documento d'identità. I tuoi dati verranno verificati dall'amministratore per abilitare l'accesso.
         </p>
 
         <form id="onboarding-form" onsubmit="handleOnboardingSubmit(event)">
@@ -501,17 +522,20 @@
             
             <div class="form-group grid-span-2">
               <label class="form-label" for="onb-fullname">Nome e Cognome Completo</label>
-              <input type="text" id="onb-fullname" class="form-input" required placeholder="come indicato sul tuo documento">
+              <input type="text" id="onb-fullname" class="form-input" required placeholder="come indicato sul tuo documento d'identità">
             </div>
 
             <div class="form-group">
-              <label class="form-label" for="onb-cf">Codice Fiscale</label>
-              <input type="text" id="onb-cf" class="form-input" required placeholder="es. RSSMRA80A01H501U">
+              <label class="form-label" for="onb-nationality">Nazionalità</label>
+              <select id="onb-nationality" class="form-input" required onchange="toggleNationalityFields(this.value)">
+                <option value="Italiana">Italiana</option>
+                <option value="Estera">Estera</option>
+              </select>
             </div>
 
             <div class="form-group">
-              <label class="form-label" for="onb-social">Profilo Social (Instagram/Web)</label>
-              <input type="text" id="onb-social" class="form-input" placeholder="es. @tuonome o link sito">
+              <label class="form-label" id="label-tax-vat" for="onb-taxvat">Codice Fiscale / P.IVA</label>
+              <input type="text" id="onb-taxvat" class="form-input" required placeholder="Codice Fiscale (o P.IVA)">
             </div>
 
             <div class="form-group">
@@ -520,32 +544,82 @@
             </div>
 
             <div class="form-group">
-              <label class="form-label" for="onb-pob">Luogo di Nascita</label>
-              <input type="text" id="onb-pob" class="form-input" required placeholder="Città (Provincia)">
+              <label class="form-label" for="onb-pob">Comune / Luogo di Nascita</label>
+              <input type="text" id="onb-pob" class="form-input" required placeholder="Luogo di Nascita">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="onb-pob-prov">Provincia di Nascita</label>
+              <input type="text" id="onb-pob-prov" class="form-input" required placeholder="es. MI, RM o Estero">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="onb-pob-country">Stato di Nascita</label>
+              <input type="text" id="onb-pob-country" class="form-input" required placeholder="es. Italia, Francia...">
             </div>
 
             <div class="form-group grid-span-2">
-              <label class="form-label" for="onb-address">Indirizzo di Residenza</label>
-              <input type="text" id="onb-address" class="form-input" required placeholder="Via/Piazza, Civico, Città, CAP">
+              <label class="form-label" for="onb-address">Indirizzo di Residenza (Via/Piazza, Civico, CAP)</label>
+              <input type="text" id="onb-address" class="form-input" required placeholder="es. Via Roma 15, CAP 20121">
             </div>
 
-            <!-- Upload ID Front -->
+            <div class="form-group">
+              <label class="form-label" for="onb-res-city">Città di Residenza</label>
+              <input type="text" id="onb-res-city" class="form-input" required placeholder="Città">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="onb-res-prov">Provincia di Residenza</label>
+              <input type="text" id="onb-res-prov" class="form-input" required placeholder="es. MI, RM">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="onb-res-country">Stato di Residenza</label>
+              <input type="text" id="onb-res-country" class="form-input" required placeholder="es. Italia">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="onb-phone">Recapito Telefonico (Cellulare)</label>
+              <input type="tel" id="onb-phone" class="form-input" required placeholder="es. +39 345 6789000">
+            </div>
+
+            <!-- Social accounts -->
+            <div class="form-group grid-span-2" style="margin-top: 10px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 15px;">
+              <span class="form-label" style="margin-bottom: 12px; display: block;">Profili Social Media</span>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="onb-instagram">Instagram</label>
+              <input type="text" id="onb-instagram" class="form-input" placeholder="instagram: @nomeutente">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="onb-facebook">Facebook</label>
+              <input type="text" id="onb-facebook" class="form-input" placeholder="facebook: link profilo">
+            </div>
+
+            <div class="form-group grid-span-2">
+              <label class="form-label" for="onb-social-other">Altri Social (LinkedIn / TikTok / Twitter)</label>
+              <input type="text" id="onb-social-other" class="form-input" placeholder="LinkedIn o altri social se posseduti">
+            </div>
+
+            <!-- Upload ID Front with visual preview -->
             <div class="form-group">
               <label class="form-label">Documento d'Identità - FRONTE</label>
-              <div class="document-upload-box" onclick="document.getElementById('file-id-front').click()">
-                <span class="upload-box-icon">📸</span>
+              <div class="document-upload-box" id="preview-box-front" onclick="document.getElementById('file-id-front').click()">
+                <span class="upload-box-icon" id="icon-front">📸</span>
                 <span class="upload-box-text" id="label-id-front">Clicca per caricare il Fronte</span>
-                <input type="file" id="file-id-front" style="display: none;" accept="image/*,application/pdf" required onchange="updateFileLabel(this, 'label-id-front')">
+                <input type="file" id="file-id-front" style="display: none;" accept="image/*,application/pdf" required onchange="handleFilePreview(this, 'preview-box-front', 'icon-front', 'label-id-front')">
               </div>
             </div>
 
-            <!-- Upload ID Back -->
+            <!-- Upload ID Back with visual preview -->
             <div class="form-group">
               <label class="form-label">Documento d'Identità - RETRO</label>
-              <div class="document-upload-box" onclick="document.getElementById('file-id-back').click()">
-                <span class="upload-box-icon">📸</span>
+              <div class="document-upload-box" id="preview-box-back" onclick="document.getElementById('file-id-back').click()">
+                <span class="upload-box-icon" id="icon-back">📸</span>
                 <span class="upload-box-text" id="label-id-back">Clicca per caricare il Retro</span>
-                <input type="file" id="file-id-back" style="display: none;" accept="image/*,application/pdf" required onchange="updateFileLabel(this, 'label-id-back')">
+                <input type="file" id="file-id-back" style="display: none;" accept="image/*,application/pdf" required onchange="handleFilePreview(this, 'preview-box-back', 'icon-back', 'label-id-back')">
               </div>
             </div>
 
@@ -553,13 +627,28 @@
 
           <button type="submit" class="btn-submit" id="btn-onboarding-submit">
             <span class="spinner" id="onb-spinner"></span>
-            <span>Invia e Sblocca Galleria</span>
+            <span>Invia Dati per Verifica</span>
           </button>
         </form>
       </div>
     </div>
 
-    <!-- B. EMPTY / PLACEHOLDER STATE (Default, shown when onboarding is completed but folder is empty) -->
+    <!-- 2. WAITING STATE CONTAINER (onboarding_completed = true, documents_approved = false) -->
+    <div class="waiting-container" id="waiting-panel">
+      <section class="dashboard-card" style="border-color: rgba(255, 193, 7, 0.25);">
+        <div class="card-icon" style="color: var(--accent-yellow);">⏳</div>
+        <h2 class="card-title">Dati Ricevuti. In attesa di verifica</h2>
+        <p class="card-text">
+          Grazie per aver inviato i tuoi dati anagrafici e la copia del documento di riconoscimento. 
+        </p>
+        <p class="card-text" style="color: var(--text-secondary);">
+          Lo studio sta esaminando le informazioni caricate per abilitare in sicurezza il tuo profilo. Riceverai una notifica via email non appena il tuo spazio privato sarà attivo con le fotografie disponibili.
+        </p>
+        <a href="home.html" class="btn-home">Torna al Portfolio Pubblico</a>
+      </section>
+    </div>
+
+    <!-- 3. EMPTY / PLACEHOLDER STATE (onboarding & documents approved but folder is empty) -->
     <div class="dashboard-container" id="empty-state-panel">
       <section class="dashboard-card">
         <div class="card-icon">📁</div>
@@ -574,7 +663,7 @@
       </section>
     </div>
 
-    <!-- C. ACTIVE STATE (Loaded proof grid) -->
+    <!-- 4. ACTIVE STATE (Loaded proof grid, shown when documents_approved is true) -->
     <div class="gallery-section" id="gallery-panel">
       <div class="gallery-grid" id="gallery-grid-body">
         <!-- Rendered dynamically -->
@@ -625,10 +714,10 @@
         currentUser = session.user;
         document.getElementById("client-email").textContent = currentUser.email;
 
-        // Verify if user is approved and get onboarding status
+        // Verify if user is approved and get onboarding and document verification status
         const { data: profile, error } = await supabaseClient
           .from('profiles')
-          .select('is_approved, onboarding_completed')
+          .select('is_approved, onboarding_completed, documents_approved')
           .eq('id', currentUser.id)
           .single();
 
@@ -640,18 +729,26 @@
 
         document.body.style.opacity = "1";
 
-        // Check if onboarding is completed
+        // Access Gate matching the 3-state onboarding flow
         if (!profile.onboarding_completed) {
-          // Show Onboarding Form, hide gallery panels
+          // State 1: Show Form
           document.getElementById("onboarding-panel").style.display = "block";
+          document.getElementById("waiting-panel").style.display = "none";
+          document.getElementById("empty-state-panel").style.display = "none";
+          document.getElementById("gallery-panel").style.display = "none";
+        } else if (!profile.documents_approved) {
+          // State 2: Show Waiting Screen
+          document.getElementById("onboarding-panel").style.display = "none";
+          document.getElementById("waiting-panel").style.display = "block";
           document.getElementById("empty-state-panel").style.display = "none";
           document.getElementById("gallery-panel").style.display = "none";
         } else {
-          // Show gallery dashboard, hide onboarding form
+          // State 3: Show Gallery
           document.getElementById("onboarding-panel").style.display = "none";
+          document.getElementById("waiting-panel").style.display = "none";
           document.getElementById("empty-state-panel").style.display = "block";
           
-          // Load client photos/media from Supabase Storage
+          // Load photos
           loadClientPhotos();
         }
 
@@ -661,13 +758,44 @@
       }
     }
 
-    // Update file input labels
-    function updateFileLabel(input, labelId) {
-      const label = document.getElementById(labelId);
-      if (input.files && input.files.length > 0) {
-        label.textContent = `Selezionato: ${input.files[0].name}`;
-        label.style.color = "#A5D6A7";
+    // Dynamically adjust label text for Codice Fiscale / Tax VAT number depending on nationality selection
+    function toggleNationalityFields(nationality) {
+      const label = document.getElementById("label-tax-vat");
+      const input = document.getElementById("onb-taxvat");
+      if (nationality === "Italiana") {
+        label.textContent = "Codice Fiscale (o P.IVA se Azienda)";
+        input.placeholder = "es. Codice Fiscale o P.IVA italiana";
       } else {
+        label.textContent = "Tax Number o VAT Number";
+        input.placeholder = "es. Codice fiscale estero o VAT id";
+      }
+    }
+
+    // Handle document copy selection and render live local preview inside document card
+    function handleFilePreview(input, boxId, iconId, labelId) {
+      const file = input.files[0];
+      const box = document.getElementById(boxId);
+      const icon = document.getElementById(iconId);
+      const label = document.getElementById(labelId);
+
+      if (file) {
+        label.textContent = `Selezionato: ${file.name}`;
+        label.style.color = "#A5D6A7";
+        
+        if (file.type.startsWith('image/')) {
+          const url = URL.createObjectURL(file);
+          box.style.backgroundImage = `url(${url})`;
+          icon.style.opacity = "0"; // Hide icon
+        } else {
+          // Fallback if uploading a PDF
+          box.style.backgroundImage = "none";
+          icon.style.opacity = "1";
+          icon.textContent = "📕";
+        }
+      } else {
+        box.style.backgroundImage = "none";
+        icon.style.opacity = "1";
+        icon.textContent = "📸";
         label.textContent = "Clicca per caricare";
         label.style.color = "var(--text-secondary)";
       }
@@ -682,11 +810,21 @@
       const spinner = document.getElementById("onb-spinner");
       
       const fullName = document.getElementById("onb-fullname").value.trim();
-      const cf = document.getElementById("onb-cf").value.trim().toUpperCase();
-      const social = document.getElementById("onb-social").value.trim();
+      const nationality = document.getElementById("onb-nationality").value;
+      const taxVat = document.getElementById("onb-taxvat").value.trim().toUpperCase();
       const dob = document.getElementById("onb-dob").value;
       const pob = document.getElementById("onb-pob").value.trim();
+      const pobProv = document.getElementById("onb-pob-prov").value.trim().toUpperCase();
+      const pobCountry = document.getElementById("onb-pob-country").value.trim();
       const address = document.getElementById("onb-address").value.trim();
+      const resCity = document.getElementById("onb-res-city").value.trim();
+      const resProv = document.getElementById("onb-res-prov").value.trim().toUpperCase();
+      const resCountry = document.getElementById("onb-res-country").value.trim();
+      const phone = document.getElementById("onb-phone").value.trim();
+      
+      const socialInsta = document.getElementById("onb-instagram").value.trim();
+      const socialFb = document.getElementById("onb-facebook").value.trim();
+      const socialOther = document.getElementById("onb-social-other").value.trim();
       
       const fileFront = document.getElementById("file-id-front").files[0];
       const fileBack = document.getElementById("file-id-back").files[0];
@@ -724,32 +862,60 @@
         const { data: { publicUrl: urlFront } } = supabaseClient.storage.from('client-proofs').getPublicUrl(pathFront);
         const { data: { publicUrl: urlBack } } = supabaseClient.storage.from('client-proofs').getPublicUrl(pathBack);
 
-        // 4. Update profiles table with personal data and mark completed
+        // 4. Update profiles table with all new detailed fields
         const { error: dbError } = await supabaseClient
           .from('profiles')
           .update({
             full_name: fullName,
-            codice_fiscale: cf,
+            nationality: nationality,
+            tax_vat_number: taxVat,
             dob: dob,
-            pob: pob,
+            pob: pob + ' (' + pobProv + ')',
+            birth_province: pobProv,
+            birth_country: pobCountry,
             address: address,
-            social_link: social,
+            residence_city: resCity,
+            residence_province: resProv,
+            residence_country: resCountry,
+            phone_number: phone,
+            social_instagram: socialInsta,
+            social_facebook: socialFb,
+            social_other: socialOther,
             id_front_url: urlFront,
             id_back_url: urlBack,
-            onboarding_completed: true
+            onboarding_completed: true,
+            documents_approved: false // Must be reviewed by Max first!
           })
           .eq('id', currentUser.id);
 
         if (dbError) throw dbError;
 
-        alert("Registrazione completata con successo! La galleria è ora sbloccata.");
+        alert("Dati inviati correttamente! Il tuo profilo è ora in fase di verifica.");
         
-        // Refresh page layout
+        // Notify Max (Administrator) via Formspree in background that a client submitted documents
+        try {
+          await fetch("https://formspree.io/f/xzdqzagg", {
+            method: "POST",
+            headers: { 
+              "Content-Type": "application/json",
+              "Accept": "application/json"
+            },
+            body: JSON.stringify({
+              subject: `Documenti caricati da ${currentUser.email} - Verifica Richiesta`,
+              email: currentUser.email,
+              message: `Il cliente ${fullName} (${currentUser.email}) ha completato l'onboarding e caricato i documenti.\nAccedi ad admin.html per verificare la scheda anagrafica ed attivare il suo spazio privato.`
+            })
+          });
+        } catch (mailErr) {
+          console.error("Formspree notify error:", mailErr);
+        }
+
+        // Refresh UI state
         checkAuth();
 
       } catch (err) {
         console.error(err);
-        alert(err.message || "Si è verificato un errore durante il salvataggio dei dati.");
+        alert(err.message || "Si è verificato un errore durante l'invio.");
         btn.disabled = false;
         spinner.style.display = "none";
       }
