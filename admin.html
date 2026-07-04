@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pannello di Controllo — Max Salvaggio Portfolio</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Cinzel:wght@500;700&display=swap" rel="stylesheet">
+  
+  <!-- Supabase CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  
+  <!-- Local Config -->
+  <script src="config.js"></script>
+
+  <style>
+    :root {
+      --bg-primary: #151718;
+      --bg-card: rgba(26, 29, 30, 0.45);
+      --border-color: rgba(255, 255, 255, 0.08);
+      --accent: #E50914; /* Rosso premium */
+      --accent-green: #4CAF50;
+      --accent-yellow: #FFC107;
+      --text-primary: #ECEFF1;
+      --text-secondary: rgba(236, 239, 241, 0.6);
+      --font-display: 'Cinzel', serif;
+      --font-body: 'Outfit', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-primary);
+      font-family: var(--font-body);
+      color: var(--text-primary);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+      opacity: 0; /* Fade-in after auth check */
+      transition: opacity 0.3s ease;
+    }
+
+    /* Header Nav */
+    header {
+      background-color: rgba(21, 23, 24, 0.8);
+      border-bottom: 1px solid var(--border-color);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      width: 100%;
+    }
+    .header-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .brand-logo {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      color: var(--text-primary);
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+    .brand-logo span {
+      color: var(--accent);
+    }
+    .admin-info {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      font-size: 0.8rem;
+    }
+    .admin-email {
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+    .btn-logout {
+      background: none;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: var(--text-primary);
+      border-radius: 20px;
+      padding: 8px 16px;
+      font-family: var(--font-body);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .btn-logout:hover {
+      background-color: var(--accent);
+      border-color: var(--accent);
+      transform: translateY(-1px);
+    }
+
+    /* Main Content */
+    main {
+      flex: 1;
+      max-width: 1200px;
+      width: 100%;
+      margin: 40px auto;
+      padding: 0 30px;
+    }
+
+    .welcome-section {
+      margin-bottom: 40px;
+    }
+    .welcome-title {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .welcome-desc {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+
+    /* Dashboard Grid */
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 35px;
+    }
+    @media (min-width: 900px) {
+      .dashboard-grid {
+        grid-template-columns: 2fr 1.2fr;
+      }
+    }
+
+    /* Card Panels */
+    .dashboard-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 30px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+    .card-title {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 25px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      padding-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    /* User Table */
+    .table-container {
+      width: 100%;
+      overflow-x: auto;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.85rem;
+    }
+    th {
+      color: var(--text-secondary);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-size: 0.72rem;
+      padding: 12px 15px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    td {
+      padding: 16px 15px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      color: var(--text-primary);
+    }
+    tr:hover td {
+      background-color: rgba(255, 255, 255, 0.01);
+    }
+
+    /* Badges */
+    .badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+    .badge-approved {
+      background-color: rgba(76, 175, 80, 0.15);
+      color: #A5D6A7;
+      border: 1px solid rgba(76, 175, 80, 0.3);
+    }
+    .badge-pending {
+      background-color: rgba(255, 193, 7, 0.15);
+      color: #FFE082;
+      border: 1px solid rgba(255, 193, 7, 0.3);
+    }
+
+    /* Action Buttons inside Table */
+    .btn-action {
+      background: none;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: var(--text-primary);
+      border-radius: 4px;
+      padding: 6px 12px;
+      font-family: var(--font-body);
+      font-size: 0.72rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .btn-approve {
+      border-color: rgba(76, 175, 80, 0.3);
+      color: #A5D6A7;
+    }
+    .btn-approve:hover {
+      background-color: var(--accent-green);
+      border-color: var(--accent-green);
+      color: #fff;
+    }
+    .btn-suspend {
+      border-color: rgba(229, 9, 20, 0.3);
+      color: #FF8A80;
+    }
+    .btn-suspend:hover {
+      background-color: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+
+    /* SQL Assistant / Instructions */
+    .sql-code-box {
+      background-color: rgba(0, 0, 0, 0.25);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 4px;
+      padding: 15px;
+      font-family: monospace;
+      font-size: 0.75rem;
+      color: rgba(236, 239, 241, 0.85);
+      overflow-x: auto;
+      margin-top: 15px;
+      white-space: pre;
+      line-height: 1.4;
+    }
+    .instruction-step {
+      font-size: 0.85rem;
+      line-height: 1.6;
+      color: var(--text-secondary);
+      margin-bottom: 18px;
+    }
+    .instruction-step strong {
+      color: var(--text-primary);
+    }
+
+    /* Notification message if database is empty */
+    .empty-state {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--text-secondary);
+      font-size: 0.88rem;
+    }
+
+    .btn-refresh {
+      background: none;
+      border: none;
+      color: var(--accent);
+      cursor: pointer;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .btn-refresh:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="header-container">
+      <a href="home.html" class="brand-logo">Max Salvaggio <span>Admin</span></a>
+      
+      <div class="admin-info">
+        <span class="admin-email" id="admin-email">Verifica sessione...</span>
+        <button class="btn-logout" onclick="handleLogout()">Log Out</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="welcome-section">
+      <h1 class="welcome-title">Area Amministrazione</h1>
+      <p class="welcome-desc">Gestisci le autorizzazioni di accesso per le sezioni protette del tuo portfolio.</p>
+    </div>
+
+    <div class="dashboard-grid">
+      <!-- Left Panel: User list and controls -->
+      <section class="dashboard-card">
+        <h2 class="card-title">
+          <span>Utenti Registrati</span>
+          <button class="btn-refresh" onclick="loadProfiles()">Aggiorna</button>
+        </h2>
+
+        <div class="table-container">
+          <table id="users-table">
+            <thead>
+              <tr>
+                <th>Indirizzo Email</th>
+                <th>Data Iscrizione</th>
+                <th>Stato</th>
+                <th style="text-align: right;">Azioni</th>
+              </tr>
+            </thead>
+            <tbody id="users-list-body">
+              <tr>
+                <td colspan="4" class="empty-state">Caricamento degli utenti in corso...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Right Panel: SQL Assistant and setup instructions -->
+      <section class="dashboard-card">
+        <h2 class="card-title">Assistente SQL Supabase</h2>
+        
+        <div class="instruction-step">
+          <p><strong>Configura il tuo Database:</strong></p>
+          <p>Se non l'hai ancora fatto, accedi a Supabase, apri l'<strong>SQL Editor</strong> e incolla questo script per creare la tabella ed attivare l'approvazione automatica:</p>
+        </div>
+
+        <div class="sql-code-box">-- 1. Crea la tabella dei profili
+create table public.profiles (
+  id uuid references auth.users on delete cascade primary key,
+  email text not null,
+  is_approved boolean default false,
+  created_at timestamp with time zone default timezone('utc'::text, now()) not null
+);
+
+-- 2. Abilita la lettura pubblica
+alter table public.profiles enable row level security;
+create policy "Lettura pubblica profili" on public.profiles
+  for select using (true);
+create policy "Modifica profili per amministratori" on public.profiles
+  for update using (true);
+
+-- 3. Crea la funzione di trigger
+create or replace function public.handle_new_user()
+returns trigger as $$
+begin
+  insert into public.profiles (id, email, is_approved)
+  values (new.id, new.email, false);
+  return new;
+end;
+$$ language plpgsql security definer;
+
+-- 4. Attiva il trigger
+create trigger on_auth_user_created
+  after insert on auth.users
+  for each row execute procedure public.handle_new_user();</div>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    let supabase = null;
+    let currentUser = null;
+
+    // Check if configuration parameters are set
+    const isConfigured = typeof config !== 'undefined' && 
+                         config.SUPABASE_URL && 
+                         config.SUPABASE_ANON_KEY && 
+                         !config.SUPABASE_URL.includes("your-project-id") &&
+                         !config.SUPABASE_ANON_KEY.includes("your-supabase-anon-key");
+
+    if (isConfigured) {
+      supabase = supabase.createClient(config.SUPABASE_URL, config.SUPABASE_ANON_KEY);
+    } else {
+      alert("⚠️  Supabase non è configurato. Inserisci le tue credenziali nel file config.js!");
+      window.location.href = "login.html";
+    }
+
+    // Check Auth Status on Load
+    async function checkAuth() {
+      if (!supabase) return;
+
+      try {
+        const { data: { session } } = await supabase.auth.getSession();
+        
+        if (!session) {
+          window.location.href = "login.html";
+          return;
+        }
+
+        currentUser = session.user;
+        document.getElementById("admin-email").textContent = currentUser.email;
+
+        // Double check approval status of the current logged-in user
+        const { data: profile, error } = await supabase
+          .from('profiles')
+          .select('is_approved')
+          .eq('id', currentUser.id)
+          .single();
+
+        if (error || !profile || !profile.is_approved) {
+          // Force logout if they are not approved in the DB
+          await supabase.auth.signOut();
+          window.location.href = "login.html";
+          return;
+        }
+
+        // Show dashboard content (fade-in body)
+        document.body.style.opacity = "1";
+        
+        // Load the list of users
+        loadProfiles();
+      } catch (err) {
+        console.error("Auth check error:", err);
+        window.location.href = "login.html";
+      }
+    }
+
+    // Load registered user profiles
+    async function loadProfiles() {
+      if (!supabase) return;
+      
+      const tbody = document.getElementById("users-list-body");
+      
+      try {
+        const { data: profiles, error } = await supabase
+          .from('profiles')
+          .select('*')
+          .order('created_at', { ascending: false });
+
+        if (error) {
+          console.error("Profiles fetch error:", error);
+          tbody.innerHTML = `
+            <tr>
+              <td colspan="4" class="empty-state" style="color: #FF8A80;">
+                ⚠️ Impossibile caricare gli utenti.<br>
+                Assicurati di aver eseguito lo script SQL in Supabase per creare la tabella 'profiles'.
+              </td>
+            </tr>
+          `;
+          return;
+        }
+
+        if (!profiles || profiles.length === 0) {
+          tbody.innerHTML = `
+            <tr>
+              <td colspan="4" class="empty-state">Nessun utente registrato al momento.</td>
+            </tr>
+          `;
+          return;
+        }
+
+        tbody.innerHTML = "";
+        
+        profiles.forEach(user => {
+          const row = document.createElement("tr");
+          
+          const date = new Date(user.created_at).toLocaleDateString('it-IT', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+          });
+
+          const statusBadge = user.is_approved 
+            ? `<span class="badge badge-approved">Approvato</span>`
+            : `<span class="badge badge-pending">In Attesa</span>`;
+
+          // Generate action button
+          const actionBtn = user.is_approved
+            ? `<button class="btn-action btn-suspend" onclick="toggleApproval('${user.id}', false)">Sospendi</button>`
+            : `<button class="btn-action btn-approve" onclick="toggleApproval('${user.id}', true)">Approva</button>`;
+
+          row.innerHTML = `
+            <td>${user.email}</td>
+            <td>${date}</td>
+            <td>${statusBadge}</td>
+            <td style="text-align: right;">
+              <!-- Non permettere all'utente amministratore connesso di autosospendersi -->
+              ${user.id === currentUser.id ? '<span style="font-size:0.75rem;color:rgba(255,255,255,0.2)">Il tuo Profilo</span>' : actionBtn}
+            </td>
+          `;
+          tbody.appendChild(row);
+        });
+
+      } catch (err) {
+        console.error("Load profiles err:", err);
+      }
+    }
+
+    // Toggle approval status (Approve / Suspend)
+    async function toggleApproval(userId, approve) {
+      if (!supabase) return;
+
+      try {
+        const { error } = await supabase
+          .from('profiles')
+          .update({ is_approved: approve })
+          .eq('id', userId);
+
+        if (error) {
+          alert("Errore durante l'aggiornamento dell'utente: " + error.message);
+          return;
+        }
+
+        // Reload user list
+        loadProfiles();
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    // Log Out
+    async function handleLogout() {
+      if (!supabase) return;
+      
+      try {
+        await supabase.auth.signOut();
+        window.location.href = "login.html";
+      } catch (err) {
+        console.error("Logout error:", err);
+      }
+    }
+
+    // Run auth check on load
+    window.onload = checkAuth;
+  </script>
+</body>
+</html>

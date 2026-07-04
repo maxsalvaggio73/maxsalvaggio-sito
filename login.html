@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Area Riservata — Max Salvaggio Portfolio</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Cinzel:wght@500;700&display=swap" rel="stylesheet">
+  
+  <!-- Supabase CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  
+  <!-- Local Config -->
+  <script src="config.js"></script>
+
+  <style>
+    :root {
+      --bg-primary: #151718;
+      --bg-card: rgba(26, 29, 30, 0.45);
+      --border-color: rgba(255, 255, 255, 0.08);
+      --accent: #E50914; /* Rosso premium */
+      --text-primary: #ECEFF1;
+      --text-secondary: rgba(236, 239, 241, 0.6);
+      --font-display: 'Cinzel', serif;
+      --font-body: 'Outfit', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-primary);
+      font-family: var(--font-body);
+      color: var(--text-primary);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Red Glow background effect */
+    body::before {
+      content: "";
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(229, 9, 20, 0.1) 0%, rgba(229, 9, 20, 0) 70%);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Warning Banner */
+    .setup-banner {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background-color: #FFA000;
+      color: #000;
+      padding: 12px 24px;
+      text-align: center;
+      font-size: 0.85rem;
+      font-weight: 600;
+      z-index: 100;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    }
+    .setup-banner a {
+      color: #000;
+      text-decoration: underline;
+      margin-left: 5px;
+    }
+
+    /* Main Container */
+    .login-container {
+      width: 100%;
+      max-width: 420px;
+      padding: 20px;
+      z-index: 10;
+    }
+
+    /* Logo / Title */
+    .brand-header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .brand-logo {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      color: var(--text-primary);
+      text-decoration: none;
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 5px;
+      transition: color 0.3s ease;
+    }
+    .brand-logo:hover {
+      color: var(--accent);
+    }
+    .brand-subtitle {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+    }
+
+    /* Glassmorphism Card */
+    .login-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 40px 30px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+    }
+
+    /* Tabs for Toggle */
+    .tabs-header {
+      display: flex;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      margin-bottom: 30px;
+      gap: 20px;
+    }
+    .tab-btn {
+      background: none;
+      border: none;
+      color: var(--text-secondary);
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      padding: 10px 0;
+      cursor: pointer;
+      position: relative;
+      text-transform: uppercase;
+      transition: color 0.3s ease;
+    }
+    .tab-btn:hover {
+      color: var(--text-primary);
+    }
+    .tab-btn.active {
+      color: var(--text-primary);
+    }
+    .tab-btn.active::after {
+      content: "";
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background-color: var(--accent);
+    }
+
+    /* Form Fields */
+    .form-group {
+      margin-bottom: 22px;
+    }
+    .form-label {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      margin-bottom: 8px;
+    }
+    .form-input {
+      width: 100%;
+      background-color: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      color: var(--text-primary);
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      padding: 12px 16px;
+      outline: none;
+      transition: all 0.3s ease;
+    }
+    .form-input:focus {
+      border-color: rgba(229, 9, 20, 0.5);
+      background-color: rgba(255, 255, 255, 0.05);
+      box-shadow: 0 0 10px rgba(229, 9, 20, 0.15);
+    }
+
+    /* Error / Alert Boxes */
+    .alert-box {
+      display: none;
+      border-radius: 4px;
+      padding: 12px 16px;
+      font-size: 0.82rem;
+      margin-bottom: 22px;
+      line-height: 1.4;
+      font-weight: 500;
+    }
+    .alert-danger {
+      background-color: rgba(229, 9, 20, 0.15);
+      border: 1px solid rgba(229, 9, 20, 0.3);
+      color: #FF8A80;
+      display: none;
+    }
+    .alert-success {
+      background-color: rgba(76, 175, 80, 0.15);
+      border: 1px solid rgba(76, 175, 80, 0.3);
+      color: #A5D6A7;
+      display: none;
+    }
+
+    /* Buttons */
+    .btn-submit {
+      width: 100%;
+      background-color: var(--accent);
+      color: #FFFFFF;
+      border: 1px solid var(--accent);
+      border-radius: 4px;
+      padding: 14px 20px;
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .btn-submit:hover {
+      background-color: #B20710;
+      border-color: #B20710;
+      transform: translateY(-1px);
+      box-shadow: 0 5px 15px rgba(229, 9, 20, 0.3);
+    }
+    .btn-submit:disabled {
+      background-color: rgba(229, 9, 20, 0.4);
+      border-color: transparent;
+      color: rgba(255, 255, 255, 0.5);
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    /* Spinner */
+    .spinner {
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-radius: 50%;
+      border-top-color: #fff;
+      animation: spin 0.8s linear infinite;
+      display: none;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Forms container switch */
+    .form-panel {
+      display: none;
+    }
+    .form-panel.active {
+      display: block;
+    }
+
+    /* Footer link */
+    .back-home {
+      display: block;
+      text-align: center;
+      margin-top: 25px;
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      color: var(--text-secondary);
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: color 0.3s ease;
+    }
+    .back-home:hover {
+      color: var(--text-primary);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Warning Banner for unconfigured Supabase keys -->
+  <div class="setup-banner" id="setup-banner">
+    ⚠️  <strong>Supabase non configurato:</strong> Configura i parametri reali di connessione nel file <code>config.js</code> per attivare l'autenticazione.
+  </div>
+
+  <div class="login-container">
+    <div class="brand-header">
+      <a href="home.html" class="brand-logo">Max Salvaggio</a>
+      <span class="brand-subtitle">Area Riservata</span>
+    </div>
+
+    <div class="login-card">
+      <div class="tabs-header">
+        <button class="tab-btn active" id="tab-login" onclick="switchTab('login')">Accedi</button>
+        <button class="tab-btn" id="tab-signup" onclick="switchTab('signup')">Registrati</button>
+      </div>
+
+      <!-- General alerts -->
+      <div class="alert-box alert-danger" id="error-alert"></div>
+      <div class="alert-box alert-success" id="success-alert"></div>
+
+      <!-- LOGIN FORM -->
+      <form id="form-login" class="form-panel active" onsubmit="handleLogin(event)">
+        <div class="form-group">
+          <label class="form-label" for="login-email">Indirizzo Email</label>
+          <input type="email" id="login-email" class="form-input" required autocomplete="email" placeholder="nome@esempio.com">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="login-password">Password</label>
+          <input type="password" id="login-password" class="form-input" required autocomplete="current-password" placeholder="••••••••">
+        </div>
+        <button type="submit" class="btn-submit" id="btn-login-submit">
+          <span class="spinner" id="login-spinner"></span>
+          <span>Accedi</span>
+        </button>
+      </form>
+
+      <!-- SIGNUP FORM -->
+      <form id="form-signup" class="form-panel" onsubmit="handleSignup(event)">
+        <div class="form-group">
+          <label class="form-label" for="signup-email">Indirizzo Email</label>
+          <input type="email" id="signup-email" class="form-input" required autocomplete="email" placeholder="nome@esempio.com">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="signup-password">Password (min. 6 caratteri)</label>
+          <input type="password" id="signup-password" class="form-input" required minlength="6" autocomplete="new-password" placeholder="••••••••">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="signup-confirm">Conferma Password</label>
+          <input type="password" id="signup-confirm" class="form-input" required minlength="6" autocomplete="new-password" placeholder="••••••••">
+        </div>
+        <button type="submit" class="btn-submit" id="btn-signup-submit">
+          <span class="spinner" id="signup-spinner"></span>
+          <span>Richiedi Accesso</span>
+        </button>
+      </form>
+    </div>
+
+    <a href="home.html" class="back-home">&larr; Torna al Portfolio</a>
+  </div>
+
+  <script>
+    // Initialize Supabase Client
+    let supabase = null;
+    const banner = document.getElementById("setup-banner");
+
+    // Check if configuration parameters are set and not default placeholders
+    const isConfigured = typeof config !== 'undefined' && 
+                         config.SUPABASE_URL && 
+                         config.SUPABASE_ANON_KEY && 
+                         !config.SUPABASE_URL.includes("your-project-id") &&
+                         !config.SUPABASE_ANON_KEY.includes("your-supabase-anon-key");
+
+    if (isConfigured) {
+      supabase = supabase.createClient(config.SUPABASE_URL, config.SUPABASE_ANON_KEY);
+    } else {
+      banner.style.display = "block";
+      document.getElementById("btn-login-submit").disabled = true;
+      document.getElementById("btn-signup-submit").disabled = true;
+    }
+
+    // Toggle Tabs
+    function switchTab(type) {
+      // Clear alert messages
+      hideAlerts();
+      
+      const tabLogin = document.getElementById("tab-login");
+      const tabSignup = document.getElementById("tab-signup");
+      const formLogin = document.getElementById("form-login");
+      const formSignup = document.getElementById("form-signup");
+
+      if (type === 'login') {
+        tabLogin.classList.add("active");
+        tabSignup.classList.remove("active");
+        formLogin.classList.add("active");
+        formSignup.classList.remove("active");
+      } else {
+        tabLogin.classList.remove("active");
+        tabSignup.classList.add("active");
+        formLogin.classList.remove("active");
+        formSignup.classList.add("active");
+      }
+    }
+
+    function showAlert(type, message) {
+      const errorBox = document.getElementById("error-alert");
+      const successBox = document.getElementById("success-alert");
+      
+      hideAlerts();
+
+      if (type === 'error') {
+        errorBox.textContent = message;
+        errorBox.style.display = "block";
+      } else {
+        successBox.textContent = message;
+        successBox.style.display = "block";
+      }
+    }
+
+    function hideAlerts() {
+      document.getElementById("error-alert").style.display = "none";
+      document.getElementById("success-alert").style.display = "none";
+    }
+
+    // Handle Login Submission
+    async function handleLogin(event) {
+      event.preventDefault();
+      if (!supabase) return;
+
+      hideAlerts();
+
+      const email = document.getElementById("login-email").value.trim();
+      const password = document.getElementById("login-password").value;
+      const btn = document.getElementById("btn-login-submit");
+      const spinner = document.getElementById("login-spinner");
+
+      // Loading state
+      btn.disabled = true;
+      spinner.style.display = "inline-block";
+
+      try {
+        const { data, error } = await supabase.auth.signInWithPassword({
+          email: email,
+          password: password
+        });
+
+        if (error) {
+          let msg = "Credenziali non valide. Riprova.";
+          if (error.message.includes("Invalid login credentials")) {
+            msg = "Email o password errate.";
+          } else if (error.message.includes("Email not confirmed")) {
+            msg = "L'indirizzo email non è ancora stato confermato.";
+          } else {
+            msg = error.message;
+          }
+          showAlert('error', msg);
+          btn.disabled = false;
+          spinner.style.display = "none";
+          return;
+        }
+
+        const user = data.user;
+
+        // Query the profiles table to see if user is approved
+        const { data: profile, error: profileError } = await supabase
+          .from('profiles')
+          .select('is_approved')
+          .eq('id', user.id)
+          .single();
+
+        if (profileError) {
+          console.error("Errore query profilo:", profileError);
+          // If profile table query fails (probably doesn't exist yet)
+          await supabase.auth.signOut();
+          showAlert('error', "Accesso negato. Tabella 'profiles' non configurata in Supabase. Esegui lo script SQL fornito!");
+          btn.disabled = false;
+          spinner.style.display = "none";
+          return;
+        }
+
+        if (!profile || !profile.is_approved) {
+          // Log out immediately to prevent active session
+          await supabase.auth.signOut();
+          showAlert('error', "Accesso negato. Il tuo account è in attesa di essere approvato dall'amministratore.");
+          btn.disabled = false;
+          spinner.style.display = "none";
+        } else {
+          // Success: redirect to admin panel
+          window.location.href = "admin.html";
+        }
+      } catch (err) {
+        console.error(err);
+        showAlert('error', "Si è verificato un errore durante l'accesso.");
+        btn.disabled = false;
+        spinner.style.display = "none";
+      }
+    }
+
+    // Handle Signup Submission (Registration request)
+    async function handleSignup(event) {
+      event.preventDefault();
+      if (!supabase) return;
+
+      hideAlerts();
+
+      const email = document.getElementById("signup-email").value.trim();
+      const password = document.getElementById("signup-password").value;
+      const confirm = document.getElementById("signup-confirm").value;
+      const btn = document.getElementById("btn-signup-submit");
+      const spinner = document.getElementById("signup-spinner");
+
+      // Validations
+      if (password !== confirm) {
+        showAlert('error', "Le password inserite non coincidono.");
+        return;
+      }
+
+      if (password.length < 6) {
+        showAlert('error', "La password deve contenere almeno 6 caratteri.");
+        return;
+      }
+
+      // Loading state
+      btn.disabled = true;
+      spinner.style.display = "inline-block";
+
+      try {
+        const { data, error } = await supabase.auth.signUp({
+          email: email,
+          password: password
+        });
+
+        if (error) {
+          let msg = error.message;
+          if (error.message.includes("User already registered")) {
+            msg = "Questo indirizzo email risulta già registrato.";
+          }
+          showAlert('error', msg);
+          btn.disabled = false;
+          spinner.style.display = "none";
+          return;
+        }
+
+        // Notify Administrator via Formspree in background
+        try {
+          await fetch("https://formspree.io/f/xzdqzagg", {
+            method: "POST",
+            headers: { 
+              "Content-Type": "application/json",
+              "Accept": "application/json"
+            },
+            body: JSON.stringify({
+              subject: "Nuova Richiesta Registrazione Area Riservata",
+              email: email,
+              message: `Un utente ha richiesto l'accesso all'area riservata.\nEmail richiedente: ${email}\n\nAccedi al pannello Supabase per approvare l'utente nella tabella 'profiles'.`
+            })
+          });
+        } catch (mailErr) {
+          console.error("Errore notifica Formspree:", mailErr);
+        }
+
+        showAlert('success', "Richiesta inviata! Riceverai una notifica email quando l'amministratore confermerà l'accesso. Controlla la tua casella per confermare l'indirizzo email se richiesto.");
+        
+        // Reset fields
+        document.getElementById("signup-email").value = "";
+        document.getElementById("signup-password").value = "";
+        document.getElementById("signup-confirm").value = "";
+        
+        btn.disabled = false;
+        spinner.style.display = "none";
+      } catch (err) {
+        console.error(err);
+        showAlert('error', "Si è verificato un errore durante l'invio della richiesta.");
+        btn.disabled = false;
+        spinner.style.display = "none";
+      }
+    }
+  </script>
+</body>
+</html>
