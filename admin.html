@@ -279,6 +279,77 @@
       color: var(--accent);
     }
 
+    /* Client Personal Details Card */
+    .client-info-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 22px 25px;
+      margin-bottom: 30px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    .info-card-header {
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 15px;
+      color: var(--text-primary);
+      border-bottom: 1px solid rgba(255,255,255,0.03);
+      padding-bottom: 8px;
+    }
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 15px;
+    }
+    @media (min-width: 750px) {
+      .info-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+    .info-item {
+      font-size: 0.82rem;
+      line-height: 1.5;
+    }
+    .info-item strong {
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      font-size: 0.68rem;
+      display: block;
+      margin-bottom: 2px;
+      letter-spacing: 0.05em;
+    }
+    .info-item span {
+      color: var(--text-primary);
+      font-weight: 500;
+    }
+    .info-documents {
+      display: flex;
+      gap: 12px;
+      margin-top: 10px;
+    }
+    .btn-doc {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-color);
+      color: var(--text-primary);
+      border-radius: 4px;
+      padding: 6px 12px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .btn-doc:hover {
+      background-color: var(--accent);
+      border-color: var(--accent);
+    }
+
     /* Drag & Drop Upload Zone */
     .upload-zone {
       border: 2px dashed rgba(255, 255, 255, 0.1);
@@ -406,6 +477,102 @@
       color: #fff;
       border-color: var(--accent);
     }
+
+    /* Buttons inside form */
+    .btn-submit {
+      width: 100%;
+      background-color: var(--accent);
+      color: #FFFFFF;
+      border: 1px solid var(--accent);
+      border-radius: 4px;
+      padding: 14px 20px;
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .btn-submit:hover {
+      background-color: #B20710;
+      border-color: #B20710;
+      transform: translateY(-1px);
+      box-shadow: 0 5px 15px rgba(229, 9, 20, 0.3);
+    }
+    .btn-submit:disabled {
+      background-color: rgba(229, 9, 20, 0.4);
+      border-color: transparent;
+      color: rgba(255, 255, 255, 0.5);
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    /* Spinner */
+    .spinner {
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-radius: 50%;
+      border-top-color: #fff;
+      animation: spin 0.8s linear infinite;
+      display: none;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* SQL Assistant / Instructions */
+    .sql-code-box {
+      background-color: rgba(0, 0, 0, 0.25);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 4px;
+      padding: 15px;
+      font-family: monospace;
+      font-size: 0.75rem;
+      color: rgba(236, 239, 241, 0.85);
+      overflow-x: auto;
+      margin-top: 15px;
+      white-space: pre;
+      line-height: 1.4;
+    }
+    .instruction-step {
+      font-size: 0.85rem;
+      line-height: 1.6;
+      color: var(--text-secondary);
+      margin-bottom: 18px;
+    }
+    .instruction-step strong {
+      color: var(--text-primary);
+    }
+
+    /* Notification message if database is empty */
+    .empty-state {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--text-secondary);
+      font-size: 0.88rem;
+    }
+
+    .btn-refresh {
+      background: none;
+      border: none;
+      color: var(--accent);
+      cursor: pointer;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .btn-refresh:hover {
+      text-decoration: underline;
+    }
   </style>
 </head>
 <body>
@@ -473,9 +640,19 @@
       <div class="dashboard-card" style="text-align: left; padding: 25px;">
         <h3 style="font-family: var(--font-display); font-size: 0.9rem; text-transform: uppercase; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px; margin-bottom: 15px;">Guida SQL e Regole di Sicurezza</h3>
         <p style="font-size: 0.8rem; line-height: 1.5; margin-bottom: 15px;">Assicurati che la tabella <code>profiles</code> e le politiche di sicurezza dello Storage siano state configurate. Se necessario, esegui questa query in Supabase:</p>
-        <div class="sql-code-box">-- 1. Aggiunge le colonne necessarie
-alter table public.profiles add column if not exists is_admin boolean default false;
-alter table public.profiles add column if not exists file_order jsonb default '[]'::jsonb;
+        <div class="sql-code-box">-- 1. Aggiunge le colonne necessarie alla tabella profiles (anagrafiche + ordine file)
+alter table public.profiles 
+  add column if not exists is_admin boolean default false,
+  add column if not exists file_order jsonb default '[]'::jsonb,
+  add column if not exists full_name text,
+  add column if not exists codice_fiscale text,
+  add column if not exists dob date,
+  add column if not exists pob text,
+  add column if not exists address text,
+  add column if not exists id_front_url text,
+  add column if not exists id_back_url text,
+  add column if not exists social_link text,
+  add column if not exists onboarding_completed boolean default false;
 
 -- 2. Permette agli amministratori di gestire lo storage client-proofs
 create policy "Admins can select files" on storage.objects for select using (
@@ -486,6 +663,13 @@ create policy "Admins can insert files" on storage.objects for insert with check
 );
 create policy "Admins can delete files" on storage.objects for delete using (
   bucket_id = 'client-proofs' and (select is_admin from public.profiles where id = auth.uid()) = true
+);
+
+-- 3. Permette ai clienti approvati di leggere solo la propria cartella
+create policy "Clients can select own files" on storage.objects for select using (
+  bucket_id = 'client-proofs' and
+  (select is_approved from public.profiles where id = auth.uid()) = true and
+  name like (select email from public.profiles where id = auth.uid()) || '/%'
 );</div>
       </div>
     </div>
@@ -496,6 +680,11 @@ create policy "Admins can delete files" on storage.objects for delete using (
       <div class="workspace-header">
         <h2 class="workspace-title">Spazio Clienti: <span id="active-client-title">...</span></h2>
         <button class="btn-action btn-suspend" style="border-radius: 20px;" onclick="closeClientWorkspace()">Chiudi Area</button>
+      </div>
+
+      <!-- Client Registry Sheet Panel (Details shown dynamically) -->
+      <div class="client-info-card" id="client-info-card-box">
+        <!-- Rendered dynamically -->
       </div>
 
       <!-- Drag & Drop Upload Zone -->
@@ -708,7 +897,7 @@ create policy "Admins can delete files" on storage.objects for delete using (
     }
 
     // Select Client and open Workspace
-    function selectClient(email) {
+    async function selectClient(email) {
       activeClientEmail = email;
       
       // Update active states in sidebar
@@ -727,8 +916,91 @@ create policy "Admins can delete files" on storage.objects for delete using (
       document.getElementById("client-panel").style.display = "flex";
       document.getElementById("active-client-title").textContent = email;
 
+      // Load client personal info
+      await loadClientInfo(email);
+
       // Load client files
       loadClientFiles(email);
+    }
+
+    // Fetch and display client personal details
+    async function loadClientInfo(email) {
+      if (!supabaseClient) return;
+      const box = document.getElementById("client-info-card-box");
+      box.innerHTML = '<span style="font-size:0.8rem;color:var(--text-secondary)">Caricamento dati personali...</span>';
+
+      try {
+        const { data: profile, error } = await supabaseClient
+          .from('profiles')
+          .select('*')
+          .eq('email', email)
+          .single();
+
+        if (error || !profile) {
+          box.innerHTML = '<span style="font-size:0.8rem;color:#FF8A80">Errore nel caricamento dei dati personali del cliente.</span>';
+          return;
+        }
+
+        if (!profile.onboarding_completed) {
+          box.innerHTML = `
+            <div style="background-color: rgba(255, 193, 7, 0.08); border: 1px solid rgba(255, 193, 7, 0.25); border-radius: 4px; padding: 12px 15px; font-size: 0.8rem; color: #FFE082; display: flex; align-items: center; gap: 8px;">
+              <span>⚠️</span>
+              <span><strong>In attesa di verifica identità:</strong> Il cliente non ha ancora completato l'inserimento dei dati personali e dei documenti di riconoscimento.</span>
+            </div>
+          `;
+          return;
+        }
+
+        // Format Date of Birth
+        const dobFormatted = profile.dob 
+          ? new Date(profile.dob).toLocaleDateString('it-IT', { day: '2-digit', month: '2-digit', year: 'numeric' })
+          : 'Non indicata';
+
+        // Format social link
+        let socialLinkHtml = 'Nessuno';
+        if (profile.social_link) {
+          const isUrl = profile.social_link.startsWith('http');
+          const href = isUrl ? profile.social_link : `https://instagram.com/${profile.social_link.replace('@', '')}`;
+          socialLinkHtml = `<a href="${href}" target="_blank" style="color: var(--accent); text-decoration: underline;">${profile.social_link}</a>`;
+        }
+
+        box.innerHTML = `
+          <div class="info-card-header">Scheda Anagrafica e Identità Cliente</div>
+          <div class="info-grid">
+            <div class="info-item">
+              <strong>Nome & Cognome</strong>
+              <span>${profile.full_name || 'N/D'}</span>
+            </div>
+            <div class="info-item">
+              <strong>Codice Fiscale</strong>
+              <span>${profile.codice_fiscale || 'N/D'}</span>
+            </div>
+            <div class="info-item">
+              <strong>Data e Luogo di Nascita</strong>
+              <span>Nato il ${dobFormatted} a ${profile.pob || 'N/D'}</span>
+            </div>
+            <div class="info-item">
+              <strong>Indirizzo di Residenza</strong>
+              <span>${profile.address || 'N/D'}</span>
+            </div>
+            <div class="info-item">
+              <strong>Social Media</strong>
+              <span>${socialLinkHtml}</span>
+            </div>
+            <div class="info-item">
+              <strong>Copia Documento (Fronte/Retro)</strong>
+              <div class="info-documents">
+                <a href="${profile.id_front_url}" target="_blank" class="btn-doc">👁️ Visualizza Fronte</a>
+                <a href="${profile.id_back_url}" target="_blank" class="btn-doc">👁️ Visualizza Retro</a>
+              </div>
+            </div>
+          </div>
+        `;
+
+      } catch (err) {
+        console.error(err);
+        box.innerHTML = '<span style="font-size:0.8rem;color:#FF8A80">Errore durante la lettura delle anagrafiche.</span>';
+      }
     }
 
     // Close workspace and return to welcome panel
@@ -776,8 +1048,8 @@ create policy "Admins can delete files" on storage.objects for delete using (
           return;
         }
 
-        // Filter system placeholders
-        let activeFiles = files.filter(f => f.name !== '.emptyFolderPlaceholder' && f.name !== '.DS_Store');
+        // Filter system placeholders and documents folder
+        let activeFiles = files.filter(f => f.name !== '.emptyFolderPlaceholder' && f.name !== '.DS_Store' && f.name !== 'documents');
 
         if (!activeFiles || activeFiles.length === 0) {
           gridBody.innerHTML = '<div class="empty-state" style="grid-column:1/-1;">Nessun file condiviso con questo cliente.</div>';

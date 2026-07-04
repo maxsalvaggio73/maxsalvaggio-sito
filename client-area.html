@@ -124,10 +124,161 @@
       font-weight: 600;
     }
 
-    /* Empty/Placeholder State */
+    /* ========================================================
+       ONBOARDING FORM DESIGN
+       ======================================================== */
+    .onboarding-container {
+      display: none; /* Shown dynamically if onboarding is not completed */
+      max-width: 680px;
+      margin: 0 auto 50px auto;
+    }
+    .onboarding-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 40px 30px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+    .onboarding-title {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      color: var(--text-primary);
+    }
+    .onboarding-desc {
+      font-size: 0.82rem;
+      line-height: 1.5;
+      color: var(--text-secondary);
+      margin-bottom: 30px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+    @media (min-width: 600px) {
+      .form-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+      .grid-span-2 {
+        grid-column: span 2;
+      }
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .form-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+    }
+    .form-input {
+      width: 100%;
+      background-color: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      color: var(--text-primary);
+      font-family: var(--font-body);
+      font-size: 0.88rem;
+      padding: 12px 16px;
+      outline: none;
+      transition: all 0.3s ease;
+    }
+    .form-input:focus {
+      border-color: rgba(229, 9, 20, 0.5);
+      background-color: rgba(255, 255, 255, 0.04);
+    }
+
+    /* Document upload boxes */
+    .document-upload-box {
+      border: 1px dashed rgba(255, 255, 255, 0.15);
+      border-radius: 4px;
+      padding: 18px 12px;
+      text-align: center;
+      cursor: pointer;
+      background-color: rgba(255, 255, 255, 0.005);
+      transition: all 0.25s ease;
+    }
+    .document-upload-box:hover {
+      border-color: rgba(229, 9, 20, 0.4);
+      background-color: rgba(229, 9, 20, 0.01);
+    }
+    .upload-box-icon {
+      font-size: 1.5rem;
+      margin-bottom: 6px;
+      display: block;
+    }
+    .upload-box-text {
+      font-size: 0.72rem;
+      color: var(--text-secondary);
+    }
+
+    /* Buttons */
+    .btn-submit {
+      width: 100%;
+      background-color: var(--accent);
+      color: #FFFFFF;
+      border: 1px solid var(--accent);
+      border-radius: 4px;
+      padding: 14px 20px;
+      font-family: var(--font-body);
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      margin-top: 15px;
+    }
+    .btn-submit:hover {
+      background-color: #B20710;
+      border-color: #B20710;
+      transform: translateY(-1px);
+      box-shadow: 0 5px 15px rgba(229, 9, 20, 0.3);
+    }
+    .btn-submit:disabled {
+      background-color: rgba(229, 9, 20, 0.4);
+      border-color: transparent;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .spinner {
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-radius: 50%;
+      border-top-color: #fff;
+      animation: spin 0.8s linear infinite;
+      display: none;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* ========================================================
+       GALLERY DESIGNS (Shown after onboarding is complete)
+       ======================================================== */
     .dashboard-container {
       max-width: 800px;
       margin: 0 auto;
+      display: none; /* Controlled dynamically */
     }
     .dashboard-card {
       background: var(--bg-card);
@@ -180,9 +331,8 @@
       border-color: var(--text-primary);
     }
 
-    /* Client Proofing Grid (Active state) */
     .gallery-section {
-      display: none; /* Shown dynamically if images are loaded */
+      display: none; /* Controlled dynamically */
     }
     .gallery-grid {
       display: grid;
@@ -256,7 +406,6 @@
       background-color: #B20710;
     }
 
-    /* Client Captions (Information under the image card) */
     .gallery-caption {
       padding: 15px;
       background: rgba(0, 0, 0, 0.15);
@@ -339,7 +488,78 @@
       <p class="welcome-desc">Accesso protetto per <span class="welcome-user-email" id="client-email">...</span></p>
     </div>
 
-    <!-- 1. EMPTY / PLACEHOLDER STATE (Default) -->
+    <!-- A. ONBOARDING CONTAINER (Shown when onboarding_completed is false) -->
+    <div class="onboarding-container" id="onboarding-panel">
+      <div class="onboarding-card">
+        <h2 class="onboarding-title">Verifica Identità Cliente</h2>
+        <p class="onboarding-desc">
+          Per poter visualizzare ed esaminare il materiale fotografico caricato per te, la legge e le normative contrattuali richiedono l'inserimento dei tuoi dati anagrafici e il caricamento di una copia del tuo documento di riconoscimento.
+        </p>
+
+        <form id="onboarding-form" onsubmit="handleOnboardingSubmit(event)">
+          <div class="form-grid">
+            
+            <div class="form-group grid-span-2">
+              <label class="form-label" for="onb-fullname">Nome e Cognome Completo</label>
+              <input type="text" id="onb-fullname" class="form-input" required placeholder="come indicato sul tuo documento">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="onb-cf">Codice Fiscale</label>
+              <input type="text" id="onb-cf" class="form-input" required placeholder="es. RSSMRA80A01H501U">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="onb-social">Profilo Social (Instagram/Web)</label>
+              <input type="text" id="onb-social" class="form-input" placeholder="es. @tuonome o link sito">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="onb-dob">Data di Nascita</label>
+              <input type="date" id="onb-dob" class="form-input" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="onb-pob">Luogo di Nascita</label>
+              <input type="text" id="onb-pob" class="form-input" required placeholder="Città (Provincia)">
+            </div>
+
+            <div class="form-group grid-span-2">
+              <label class="form-label" for="onb-address">Indirizzo di Residenza</label>
+              <input type="text" id="onb-address" class="form-input" required placeholder="Via/Piazza, Civico, Città, CAP">
+            </div>
+
+            <!-- Upload ID Front -->
+            <div class="form-group">
+              <label class="form-label">Documento d'Identità - FRONTE</label>
+              <div class="document-upload-box" onclick="document.getElementById('file-id-front').click()">
+                <span class="upload-box-icon">📸</span>
+                <span class="upload-box-text" id="label-id-front">Clicca per caricare il Fronte</span>
+                <input type="file" id="file-id-front" style="display: none;" accept="image/*,application/pdf" required onchange="updateFileLabel(this, 'label-id-front')">
+              </div>
+            </div>
+
+            <!-- Upload ID Back -->
+            <div class="form-group">
+              <label class="form-label">Documento d'Identità - RETRO</label>
+              <div class="document-upload-box" onclick="document.getElementById('file-id-back').click()">
+                <span class="upload-box-icon">📸</span>
+                <span class="upload-box-text" id="label-id-back">Clicca per caricare il Retro</span>
+                <input type="file" id="file-id-back" style="display: none;" accept="image/*,application/pdf" required onchange="updateFileLabel(this, 'label-id-back')">
+              </div>
+            </div>
+
+          </div>
+
+          <button type="submit" class="btn-submit" id="btn-onboarding-submit">
+            <span class="spinner" id="onb-spinner"></span>
+            <span>Invia e Sblocca Galleria</span>
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- B. EMPTY / PLACEHOLDER STATE (Default, shown when onboarding is completed but folder is empty) -->
     <div class="dashboard-container" id="empty-state-panel">
       <section class="dashboard-card">
         <div class="card-icon">📁</div>
@@ -354,7 +574,7 @@
       </section>
     </div>
 
-    <!-- 2. ACTIVE STATE (Loaded proof grid) -->
+    <!-- C. ACTIVE STATE (Loaded proof grid) -->
     <div class="gallery-section" id="gallery-panel">
       <div class="gallery-grid" id="gallery-grid-body">
         <!-- Rendered dynamically -->
@@ -405,28 +625,133 @@
         currentUser = session.user;
         document.getElementById("client-email").textContent = currentUser.email;
 
-        // Verify if user is approved in profiles table
+        // Verify if user is approved and get onboarding status
         const { data: profile, error } = await supabaseClient
           .from('profiles')
-          .select('is_approved')
+          .select('is_approved, onboarding_completed')
           .eq('id', currentUser.id)
           .single();
 
         if (error || !profile || !profile.is_approved) {
-          // Log out immediately if not approved in DB
           await supabaseClient.auth.signOut();
           window.location.href = "login.html";
           return;
         }
 
-        // Show page content (fade-in body)
         document.body.style.opacity = "1";
 
-        // Load client photos/media from Supabase Storage
-        loadClientPhotos();
+        // Check if onboarding is completed
+        if (!profile.onboarding_completed) {
+          // Show Onboarding Form, hide gallery panels
+          document.getElementById("onboarding-panel").style.display = "block";
+          document.getElementById("empty-state-panel").style.display = "none";
+          document.getElementById("gallery-panel").style.display = "none";
+        } else {
+          // Show gallery dashboard, hide onboarding form
+          document.getElementById("onboarding-panel").style.display = "none";
+          document.getElementById("empty-state-panel").style.display = "block";
+          
+          // Load client photos/media from Supabase Storage
+          loadClientPhotos();
+        }
+
       } catch (err) {
         console.error("Auth check error:", err);
         window.location.href = "login.html";
+      }
+    }
+
+    // Update file input labels
+    function updateFileLabel(input, labelId) {
+      const label = document.getElementById(labelId);
+      if (input.files && input.files.length > 0) {
+        label.textContent = `Selezionato: ${input.files[0].name}`;
+        label.style.color = "#A5D6A7";
+      } else {
+        label.textContent = "Clicca per caricare";
+        label.style.color = "var(--text-secondary)";
+      }
+    }
+
+    // Onboarding Form Submission Logic
+    async function handleOnboardingSubmit(event) {
+      event.preventDefault();
+      if (!supabaseClient || !currentUser) return;
+
+      const btn = document.getElementById("btn-onboarding-submit");
+      const spinner = document.getElementById("onb-spinner");
+      
+      const fullName = document.getElementById("onb-fullname").value.trim();
+      const cf = document.getElementById("onb-cf").value.trim().toUpperCase();
+      const social = document.getElementById("onb-social").value.trim();
+      const dob = document.getElementById("onb-dob").value;
+      const pob = document.getElementById("onb-pob").value.trim();
+      const address = document.getElementById("onb-address").value.trim();
+      
+      const fileFront = document.getElementById("file-id-front").files[0];
+      const fileBack = document.getElementById("file-id-back").files[0];
+
+      if (!fileFront || !fileBack) {
+        alert("Carica sia il fronte che il retro del tuo documento.");
+        return;
+      }
+
+      btn.disabled = true;
+      spinner.style.display = "inline-block";
+
+      try {
+        const folderName = currentUser.email.trim();
+        
+        // 1. Upload ID card front file
+        const extFront = fileFront.name.split('.').pop();
+        const pathFront = `${folderName}/documents/id_front.${extFront}`;
+        const { error: errFront } = await supabaseClient.storage
+          .from('client-proofs')
+          .upload(pathFront, fileFront, { upsert: true });
+
+        if (errFront) throw new Error("Errore durante il caricamento del documento (Fronte): " + errFront.message);
+
+        // 2. Upload ID card back file
+        const extBack = fileBack.name.split('.').pop();
+        const pathBack = `${folderName}/documents/id_back.${extBack}`;
+        const { error: errBack } = await supabaseClient.storage
+          .from('client-proofs')
+          .upload(pathBack, fileBack, { upsert: true });
+
+        if (errBack) throw new Error("Errore durante il caricamento del documento (Retro): " + errBack.message);
+
+        // 3. Get Public URLs for both files
+        const { data: { publicUrl: urlFront } } = supabaseClient.storage.from('client-proofs').getPublicUrl(pathFront);
+        const { data: { publicUrl: urlBack } } = supabaseClient.storage.from('client-proofs').getPublicUrl(pathBack);
+
+        // 4. Update profiles table with personal data and mark completed
+        const { error: dbError } = await supabaseClient
+          .from('profiles')
+          .update({
+            full_name: fullName,
+            codice_fiscale: cf,
+            dob: dob,
+            pob: pob,
+            address: address,
+            social_link: social,
+            id_front_url: urlFront,
+            id_back_url: urlBack,
+            onboarding_completed: true
+          })
+          .eq('id', currentUser.id);
+
+        if (dbError) throw dbError;
+
+        alert("Registrazione completata con successo! La galleria è ora sbloccata.");
+        
+        // Refresh page layout
+        checkAuth();
+
+      } catch (err) {
+        console.error(err);
+        alert(err.message || "Si è verificato un errore durante il salvataggio dei dati.");
+        btn.disabled = false;
+        spinner.style.display = "none";
       }
     }
 
@@ -462,8 +787,8 @@
           return;
         }
 
-        // Filter out empty placeholders (e.g. .emptyFolderPlaceholder)
-        let imageFiles = files.filter(f => f.name !== '.emptyFolderPlaceholder' && f.name !== '.DS_Store');
+        // Filter out empty placeholders and documents folder
+        let imageFiles = files.filter(f => f.name !== '.emptyFolderPlaceholder' && f.name !== '.DS_Store' && f.name !== 'documents');
 
         if (!imageFiles || imageFiles.length === 0) {
           statusMsg.textContent = "Al momento la tua cartella privata è vuota. Contatta lo studio per caricare il tuo materiale.";
