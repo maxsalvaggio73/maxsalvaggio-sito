@@ -21,6 +21,3 @@
 # Ignore OS metadata
 .DS_Store
 Thumbs.db
-
-# Ignore Supabase local config containing API keys
-config.js
