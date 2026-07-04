@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pannello di Controllo — Max Salvaggio Portfolio</title>
+  <title>Pannello Amministrazione — Max Salvaggio Portfolio</title>
   
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -18,9 +18,10 @@
 
   <style>
     :root {
-      --bg-primary: #151718;
+      --bg-primary: #121415;
+      --bg-sidebar: #191b1c;
       --bg-card: rgba(26, 29, 30, 0.45);
-      --border-color: rgba(255, 255, 255, 0.08);
+      --border-color: rgba(255, 255, 255, 0.06);
       --accent: #E50914; /* Rosso premium */
       --accent-green: #4CAF50;
       --accent-yellow: #FFC107;
@@ -40,32 +41,45 @@
       background-color: var(--bg-primary);
       font-family: var(--font-body);
       color: var(--text-primary);
-      min-height: 100vh;
+      height: 100vh;
       display: flex;
-      flex-direction: column;
-      overflow-x: hidden;
+      overflow: hidden;
       opacity: 0; /* Fade-in after auth check */
       transition: opacity 0.3s ease;
     }
 
-    /* Header Nav */
-    header {
-      background-color: rgba(21, 23, 24, 0.8);
-      border-bottom: 1px solid var(--border-color);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      position: sticky;
-      top: 0;
-      z-index: 50;
-      width: 100%;
+    /* Custom scrollbars */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
     }
-    .header-container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 15px 30px;
+    ::-webkit-scrollbar-track {
+      background: rgba(0,0,0,0.1);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(255,255,255,0.1);
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(255,255,255,0.25);
+    }
+
+    /* ========================================================
+       SIDEBAR LAYOUT (Left Side)
+       ======================================================== */
+    aside {
+      width: 340px;
+      background-color: var(--bg-sidebar);
+      border-right: 1px solid var(--border-color);
       display: flex;
-      justify-content: space-between;
-      align-items: center;
+      flex-direction: column;
+      height: 100%;
+      flex-shrink: 0;
+    }
+
+    .sidebar-header {
+      padding: 25px 20px;
+      border-bottom: 1px solid var(--border-color);
     }
     .brand-logo {
       font-family: var(--font-display);
@@ -75,371 +89,311 @@
       color: var(--text-primary);
       text-decoration: none;
       text-transform: uppercase;
+      display: block;
+      margin-bottom: 6px;
     }
     .brand-logo span {
       color: var(--accent);
     }
-    .admin-info {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-      font-size: 0.8rem;
-    }
-    .admin-email {
-      color: var(--text-secondary);
-      font-weight: 500;
-    }
-    .btn-logout {
-      background: none;
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      color: var(--text-primary);
-      border-radius: 20px;
-      padding: 8px 16px;
-      font-family: var(--font-body);
+    .admin-session {
       font-size: 0.72rem;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-    .btn-logout:hover {
-      background-color: var(--accent);
-      border-color: var(--accent);
-      transform: translateY(-1px);
-    }
-
-    /* Main Content */
-    main {
-      flex: 1;
-      max-width: 1200px;
-      width: 100%;
-      margin: 40px auto;
-      padding: 0 30px;
-    }
-
-    .welcome-section {
-      margin-bottom: 40px;
-    }
-    .welcome-title {
-      font-family: var(--font-display);
-      font-size: 1.8rem;
-      font-weight: 700;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      margin-bottom: 8px;
-    }
-    .welcome-desc {
-      font-size: 0.9rem;
       color: var(--text-secondary);
+      word-break: break-all;
     }
 
-    /* Dashboard Grid */
-    .dashboard-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 35px;
-      margin-bottom: 40px;
-    }
-    @media (min-width: 950px) {
-      .dashboard-grid {
-        grid-template-columns: 1fr 1.2fr;
-      }
+    /* Sidebar Content Sections */
+    .sidebar-menu {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
     }
 
-    /* Card Panels */
-    .dashboard-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      border-radius: 8px;
-      padding: 30px;
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
+    .menu-section {
+      padding: 0 20px;
     }
-    .card-title {
+    .menu-section-title {
       font-family: var(--font-display);
-      font-size: 1.1rem;
+      font-size: 0.78rem;
       font-weight: 700;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      margin-bottom: 25px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-      padding-bottom: 12px;
+      color: var(--text-secondary);
+      margin-bottom: 15px;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
 
-    /* Form Fields styling */
-    .form-group {
-      margin-bottom: 20px;
-    }
-    .form-label {
-      display: block;
-      font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--text-secondary);
-      margin-bottom: 8px;
-    }
-    .form-input {
-      width: 100%;
-      background-color: rgba(0, 0, 0, 0.25);
-      border: 1px solid var(--border-color);
-      border-radius: 4px;
-      color: var(--text-primary);
-      font-family: var(--font-body);
-      font-size: 0.9rem;
-      padding: 12px 16px;
-      outline: none;
-      transition: all 0.3s ease;
-    }
-    .form-input:focus {
-      border-color: rgba(229, 9, 20, 0.5);
-    }
-
-    /* User Table */
-    .table-container {
-      width: 100%;
-      overflow-x: auto;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      text-align: left;
-      font-size: 0.85rem;
-    }
-    th {
-      color: var(--text-secondary);
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      font-size: 0.72rem;
-      padding: 12px 15px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    }
-    td {
-      padding: 16px 15px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-      color: var(--text-primary);
-    }
-    tr:hover td {
-      background-color: rgba(255, 255, 255, 0.01);
-    }
-
-    /* Badges */
-    .badge {
-      display: inline-block;
-      padding: 4px 10px;
-      border-radius: 20px;
-      font-size: 0.72rem;
-      font-weight: 600;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-    }
-    .badge-approved {
-      background-color: rgba(76, 175, 80, 0.15);
-      color: #A5D6A7;
-      border: 1px solid rgba(76, 175, 80, 0.3);
-    }
-    .badge-pending {
-      background-color: rgba(255, 193, 7, 0.15);
-      color: #FFE082;
-      border: 1px solid rgba(255, 193, 7, 0.3);
-    }
-
-    /* Action Buttons inside Table */
-    .btn-action {
-      background: none;
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      color: var(--text-primary);
-      border-radius: 4px;
-      padding: 6px 12px;
-      font-family: var(--font-body);
-      font-size: 0.72rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.25s ease;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-    .btn-approve {
-      border-color: rgba(76, 175, 80, 0.3);
-      color: #A5D6A7;
-    }
-    .btn-approve:hover {
-      background-color: var(--accent-green);
-      border-color: var(--accent-green);
-      color: #fff;
-    }
-    .btn-suspend {
-      border-color: rgba(229, 9, 20, 0.3);
-      color: #FF8A80;
-    }
-    .btn-suspend:hover {
-      background-color: var(--accent);
-      border-color: var(--accent);
-      color: #fff;
-    }
-
-    /* Buttons */
-    .btn-submit {
-      width: 100%;
-      background-color: var(--accent);
-      color: #FFFFFF;
-      border: 1px solid var(--accent);
-      border-radius: 4px;
-      padding: 14px 20px;
-      font-family: var(--font-body);
-      font-size: 0.85rem;
-      font-weight: 600;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 10px;
-      margin-top: 10px;
-    }
-    .btn-submit:hover {
-      background-color: #B20710;
-      border-color: #B20710;
-      transform: translateY(-1px);
-      box-shadow: 0 5px 15px rgba(229, 9, 20, 0.3);
-    }
-    .btn-submit:disabled {
-      background-color: rgba(229, 9, 20, 0.4);
-      border-color: transparent;
-      color: rgba(255, 255, 255, 0.5);
-      cursor: not-allowed;
-      transform: none;
-      box-shadow: none;
-    }
-
-    /* Spinner */
-    .spinner {
-      width: 16px;
-      height: 16px;
-      border: 2px solid rgba(255,255,255,0.3);
-      border-radius: 50%;
-      border-top-color: #fff;
-      animation: spin 0.8s linear infinite;
-      display: none;
-    }
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-
-    /* SQL Assistant / Instructions */
-    .sql-code-box {
-      background-color: rgba(0, 0, 0, 0.25);
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      border-radius: 4px;
-      padding: 15px;
-      font-family: monospace;
-      font-size: 0.75rem;
-      color: rgba(236, 239, 241, 0.85);
-      overflow-x: auto;
-      margin-top: 15px;
-      white-space: pre;
-      line-height: 1.4;
-    }
-    .instruction-step {
-      font-size: 0.85rem;
-      line-height: 1.6;
-      color: var(--text-secondary);
-      margin-bottom: 18px;
-    }
-    .instruction-step strong {
-      color: var(--text-primary);
-    }
-
-    /* Notification message if database is empty */
-    .empty-state {
-      text-align: center;
-      padding: 40px 20px;
-      color: var(--text-secondary);
-      font-size: 0.88rem;
-    }
-
-    .btn-refresh {
-      background: none;
-      border: none;
-      color: var(--accent);
-      cursor: pointer;
-      font-size: 0.8rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-    .btn-refresh:hover {
-      text-decoration: underline;
-    }
-
-    /* DRAGGABLE GRID FOR SHOWN FILES (Instead of simple list table) */
-    .admin-gallery-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-      gap: 20px;
-      margin-top: 20px;
-    }
-    .admin-gallery-card {
-      background: rgba(255, 255, 255, 0.02);
-      border: 1px solid var(--border-color);
-      border-radius: 6px;
-      padding: 12px;
+    /* Compact User / Client list items */
+    .client-list {
       display: flex;
       flex-direction: column;
       gap: 8px;
+    }
+    .client-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: rgba(255, 255, 255, 0.01);
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      padding: 10px 12px;
+      font-size: 0.8rem;
+      transition: all 0.25s ease;
+      cursor: pointer;
+    }
+    .client-item:hover {
+      background-color: rgba(255, 255, 255, 0.03);
+      border-color: rgba(255, 255, 255, 0.1);
+    }
+    .client-item.active {
+      background-color: rgba(229, 9, 20, 0.08);
+      border-color: rgba(229, 9, 20, 0.4);
+      color: #fff;
+    }
+    .client-email-text {
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+      flex: 1;
+      margin-right: 10px;
+    }
+
+    /* Small badges inside list */
+    .mini-badge {
+      font-size: 0.6rem;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 10px;
+      text-transform: uppercase;
+    }
+    .mini-badge-pending {
+      background-color: rgba(255, 193, 7, 0.15);
+      color: #FFE082;
+      border: 1px solid rgba(255, 193, 7, 0.2);
+    }
+    .mini-badge-admin {
+      background-color: rgba(229, 9, 20, 0.15);
+      color: #FF8A80;
+      border: 1px solid rgba(229, 9, 20, 0.25);
+    }
+
+    /* Small action buttons in list */
+    .btn-mini-action {
+      background: none;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: var(--text-primary);
+      font-size: 0.65rem;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 3px;
+      cursor: pointer;
+      text-transform: uppercase;
+      transition: all 0.2s;
+    }
+    .btn-mini-approve {
+      border-color: rgba(76, 175, 80, 0.3);
+      color: #A5D6A7;
+    }
+    .btn-mini-approve:hover {
+      background-color: var(--accent-green);
+      color: #fff;
+      border-color: var(--accent-green);
+    }
+    .btn-mini-suspend {
+      border-color: rgba(229, 9, 20, 0.3);
+      color: #FF8A80;
+    }
+    .btn-mini-suspend:hover {
+      background-color: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+
+    /* Sidebar Footer */
+    .sidebar-footer {
+      padding: 20px;
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    /* ========================================================
+       MAIN WORKSPACE LAYOUT (Right Side)
+       ======================================================== */
+    main {
+      flex: 1;
+      height: 100%;
+      overflow-y: auto;
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Welcome / Empty workspace panel */
+    .welcome-workspace {
+      margin: auto;
+      max-width: 680px;
+      text-align: center;
+    }
+    .welcome-workspace h2 {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .welcome-workspace p {
+      font-size: 0.92rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 30px;
+    }
+
+    /* Active Client Workspace */
+    .client-workspace {
+      display: none; /* Shown dynamically when client is active */
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .workspace-header {
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 20px;
+      margin-bottom: 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .workspace-title {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+    .workspace-title span {
+      color: var(--accent);
+    }
+
+    /* Drag & Drop Upload Zone */
+    .upload-zone {
+      border: 2px dashed rgba(255, 255, 255, 0.1);
+      border-radius: 6px;
+      padding: 25px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      background-color: rgba(255, 255, 255, 0.005);
+      margin-bottom: 30px;
+    }
+    .upload-zone:hover {
+      border-color: rgba(229, 9, 20, 0.4);
+      background-color: rgba(229, 9, 20, 0.01);
+    }
+    .upload-zone-text {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+    }
+
+    /* Section Subheadings */
+    .section-subheading {
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255,255,255,0.03);
+      padding-bottom: 10px;
+    }
+
+    /* ========================================================
+       DRAGGABLE MULTI-COLUMN LIGHTROOM GRID
+       ======================================================== */
+    .admin-gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+      gap: 20px;
+    }
+
+    .admin-gallery-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 5px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
       cursor: grab;
       position: relative;
-      transition: border-color 0.3s, transform 0.3s;
-      user-select: none;
+      transition: border-color 0.25s, transform 0.25s;
     }
     .admin-gallery-card:active {
       cursor: grabbing;
     }
     .admin-gallery-card:hover {
       border-color: rgba(229, 9, 20, 0.4);
+      transform: translateY(-2px);
+    }
+
+    .admin-card-preview-wrapper {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 3 / 2;
+      overflow: hidden;
+      background-color: rgba(0, 0, 0, 0.3);
     }
     .admin-card-preview {
       width: 100%;
-      aspect-ratio: 3/2;
+      height: 100%;
       object-fit: cover;
-      border-radius: 4px;
-      background-color: rgba(0, 0, 0, 0.2);
+    }
+
+    .admin-card-caption {
+      padding: 12px;
+      background-color: rgba(0, 0, 0, 0.15);
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 10px;
+      border-top: 1px solid rgba(255, 255, 255, 0.02);
     }
     .admin-card-info {
-      font-size: 0.72rem;
-      color: var(--text-secondary);
       display: flex;
       flex-direction: column;
       gap: 3px;
-      word-break: break-all;
     }
     .admin-card-title {
+      font-size: 0.72rem;
+      font-weight: 600;
       color: var(--text-primary);
-      font-weight: 500;
-      line-height: 1.2;
+      word-break: break-all;
+      line-height: 1.3;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
     }
     .admin-card-meta {
-      font-size: 0.65rem;
-      opacity: 0.8;
+      font-size: 0.62rem;
+      color: var(--text-secondary);
     }
+
     .admin-card-actions {
       display: flex;
       justify-content: flex-end;
-      margin-top: 5px;
     }
     .btn-card-delete {
       background: none;
-      border: 1px solid rgba(229, 9, 20, 0.3);
+      border: 1px solid rgba(229, 9, 20, 0.2);
       color: #FF8A80;
-      font-size: 0.65rem;
+      font-size: 0.62rem;
       padding: 4px 8px;
       border-radius: 3px;
       cursor: pointer;
@@ -456,109 +410,74 @@
 </head>
 <body>
 
-  <header>
-    <div class="header-container">
+  <!-- ========================================================
+       LEFT SIDEBAR
+       ======================================================== -->
+  <aside>
+    <div class="sidebar-header">
       <a href="home.html" class="brand-logo">Max Salvaggio <span>Admin</span></a>
-      
-      <div class="admin-info">
-        <span class="admin-email" id="admin-email">Verifica sessione...</span>
-        <button class="btn-logout" onclick="handleLogout()">Log Out</button>
-      </div>
+      <div class="admin-session" id="admin-email">Verifica sessione...</div>
     </div>
-  </header>
 
+    <div class="sidebar-menu">
+      
+      <!-- Section 1: Sign up requests (Pending Approval) -->
+      <div class="menu-section" id="section-requests" style="display: none;">
+        <div class="menu-section-title">
+          <span>Richieste Accesso</span>
+          <span style="font-size: 0.65rem; color: var(--accent-yellow);" id="requests-count">0</span>
+        </div>
+        <div class="client-list" id="requests-list-body">
+          <!-- Pending users rendered here -->
+        </div>
+      </div>
+
+      <!-- Section 2: Active Clients -->
+      <div class="menu-section">
+        <div class="menu-section-title">
+          <span>Clienti Attivi</span>
+        </div>
+        <div class="client-list" id="clients-list-body">
+          <div class="empty-state" style="font-size: 0.75rem; padding: 10px 0;">Nessun cliente attivo.</div>
+        </div>
+      </div>
+
+      <!-- Section 3: Administrators -->
+      <div class="menu-section">
+        <div class="menu-section-title">
+          <span>Amministratori</span>
+        </div>
+        <div class="client-list" id="admins-list-body">
+          <!-- Admins rendered here -->
+        </div>
+      </div>
+
+    </div>
+
+    <div class="sidebar-footer">
+      <button class="btn-refresh" onclick="loadProfiles()">Aggiorna Dati</button>
+      <button class="btn-logout" onclick="handleLogout()">Log Out</button>
+    </div>
+  </aside>
+
+  <!-- ========================================================
+       MAIN WORKSPACE
+       ======================================================== -->
   <main>
-    <div class="welcome-section">
-      <h1 class="welcome-title">Area Amministrazione</h1>
-      <p class="welcome-desc">Gestisci le autorizzazioni di accesso e condividi file, provini, PDF o video per ciascun cliente.</p>
-    </div>
-
-    <div class="dashboard-grid">
-      <!-- 1. LEFT PANEL: Registered Users -->
-      <section class="dashboard-card">
-        <h2 class="card-title">
-          <span>Utenti Registrati</span>
-          <button class="btn-refresh" onclick="loadProfiles()">Aggiorna</button>
-        </h2>
-
-        <div class="table-container">
-          <table id="users-table">
-            <thead>
-              <tr>
-                <th>Indirizzo Email</th>
-                <th>Data Iscrizione</th>
-                <th>Stato</th>
-                <th style="text-align: right;">Azioni</th>
-              </tr>
-            </thead>
-            <tbody id="users-list-body">
-              <tr>
-                <td colspan="4" class="empty-state">Caricamento degli utenti in corso...</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
-
-      <!-- 2. RIGHT PANEL: Client File Manager -->
-      <section class="dashboard-card">
-        <h2 class="card-title">Condivisione File Clienti</h2>
-        
-        <div class="form-group">
-          <label class="form-label" for="client-select">Seleziona Cliente</label>
-          <select id="client-select" class="form-input" onchange="onClientSelected()">
-            <option value="">-- Seleziona un cliente registrato --</option>
-          </select>
-        </div>
-
-        <!-- File upload and list container (shown when a client is selected) -->
-        <div id="upload-controls-section" style="display: none;">
-          
-          <div class="form-group">
-            <label class="form-label">Carica File (Foto, Video, PDF, Audio, Documenti)</label>
-            <div id="drop-zone" style="border: 2px dashed rgba(255, 255, 255, 0.15); border-radius: 6px; padding: 30px 15px; text-align: center; cursor: pointer; transition: all 0.3s;" ondragover="event.preventDefault(); this.style.borderColor='var(--accent)';" ondragleave="this.style.borderColor='rgba(255, 255, 255, 0.15)';" ondrop="handleFileDrop(event)">
-              <span id="drop-zone-text" style="font-size:0.85rem; color:var(--text-secondary);">Trascina qui i file oppure clicca per selezionare</span>
-              <input type="file" id="file-input" style="display: none;" onchange="handleFileSelect(event)" multiple>
-            </div>
-            <div id="selected-files-list" style="margin-top: 10px; font-size: 0.78rem; color: var(--accent); word-break: break-all;"></div>
-          </div>
-
-          <button id="btn-upload-file" class="btn-submit" style="margin-top: 10px; display: none;" onclick="startFileUpload()">
-            <span class="spinner" id="upload-spinner"></span>
-            <span>Carica file selezionati</span>
-          </button>
-
-          <div style="display: flex; justify-content: space-between; align-items: center; margin: 35px 0 15px 0; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">
-            <h3 style="font-family:var(--font-display); font-size:0.85rem; letter-spacing:0.1em; text-transform:uppercase;">File Condivisi (Sposta per riordinare)</h3>
-            <span style="font-size: 0.65rem; color: var(--text-secondary);">Trascina le schede per riordinarle</span>
-          </div>
-          
-          <div id="files-grid-container" class="admin-gallery-grid">
-            <!-- Rendered dynamically -->
-          </div>
-
-        </div>
-        
-        <div id="no-client-selected-message" class="empty-state">
-          Seleziona un cliente registrato dal menu a tendina sopra per visualizzare, caricare o eliminare i suoi file.
-        </div>
-      </section>
-    </div>
-
-    <!-- 3. BOTTOM PANEL: SQL Setup Assistant -->
-    <section class="dashboard-card" style="margin-top: 30px;">
-      <h2 class="card-title">Assistente SQL Supabase</h2>
+    
+    <!-- WELCOME VIEW (No client active) -->
+    <div class="welcome-workspace" id="welcome-panel">
+      <h2>Benvenuto nel Pannello Admin</h2>
+      <p>Seleziona un cliente attivo dalla lista a sinistra per visualizzare, caricare o riordinare il materiale a lui condiviso. Le richieste di accesso in attesa compariranno in cima alla barra laterale.</p>
       
-      <div class="instruction-step">
-        <p><strong>Configurazione Regole e Tabelle:</strong></p>
-        <p>Esegui questo script nell'<strong>SQL Editor</strong> per aggiornare la tabella <code>profiles</code> con le colonne per l'amministrazione e l'ordine dei file, ed abilitare le politiche dello storage:</p>
-      </div>
-
-      <div class="sql-code-box">-- 1. Aggiunge le colonne is_admin e file_order (se non esistono)
+      <div class="dashboard-card" style="text-align: left; padding: 25px;">
+        <h3 style="font-family: var(--font-display); font-size: 0.9rem; text-transform: uppercase; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px; margin-bottom: 15px;">Guida SQL e Regole di Sicurezza</h3>
+        <p style="font-size: 0.8rem; line-height: 1.5; margin-bottom: 15px;">Assicurati che la tabella <code>profiles</code> e le politiche di sicurezza dello Storage siano state configurate. Se necessario, esegui questa query in Supabase:</p>
+        <div class="sql-code-box">-- 1. Aggiunge le colonne necessarie
 alter table public.profiles add column if not exists is_admin boolean default false;
 alter table public.profiles add column if not exists file_order jsonb default '[]'::jsonb;
 
--- 2. Permette agli amministratori (is_admin = true) di gestire lo storage client-proofs
+-- 2. Permette agli amministratori di gestire lo storage client-proofs
 create policy "Admins can select files" on storage.objects for select using (
   bucket_id = 'client-proofs' and (select is_admin from public.profiles where id = auth.uid()) = true
 );
@@ -567,20 +486,49 @@ create policy "Admins can insert files" on storage.objects for insert with check
 );
 create policy "Admins can delete files" on storage.objects for delete using (
   bucket_id = 'client-proofs' and (select is_admin from public.profiles where id = auth.uid()) = true
-);
-
--- 3. Permette ai clienti approvati di leggere solo la propria cartella
-create policy "Clients can select own files" on storage.objects for select using (
-  bucket_id = 'client-proofs' and
-  (select is_approved from public.profiles where id = auth.uid()) = true and
-  name like (select email from public.profiles where id = auth.uid()) || '/%'
 );</div>
-    </section>
+      </div>
+    </div>
+
+    <!-- CLIENT WORKSPACE VIEW (Active when a client is selected) -->
+    <div class="client-workspace" id="client-panel">
+      
+      <div class="workspace-header">
+        <h2 class="workspace-title">Spazio Clienti: <span id="active-client-title">...</span></h2>
+        <button class="btn-action btn-suspend" style="border-radius: 20px;" onclick="closeClientWorkspace()">Chiudi Area</button>
+      </div>
+
+      <!-- Drag & Drop Upload Zone -->
+      <div class="upload-zone" id="drop-zone">
+        <span class="upload-zone-text" id="drop-zone-text">Trascina qui le foto, video, PDF o audio per caricarli all'istante o clicca per sfogliare</span>
+        <input type="file" id="file-input" style="display: none;" onchange="handleFileSelect(event)" multiple>
+        <div id="selected-files-list" style="margin-top: 10px; font-size: 0.78rem; color: var(--accent); font-weight: 500; word-break: break-all;"></div>
+      </div>
+
+      <button id="btn-upload-file" class="btn-submit" style="margin-bottom: 30px; display: none;" onclick="startFileUpload()">
+        <span class="spinner" id="upload-spinner"></span>
+        <span>Carica file selezionati nel cloud</span>
+      </button>
+
+      <!-- Grid Title -->
+      <div class="section-subheading">
+        <span>File Condivisi</span>
+        <span style="font-size: 0.65rem; color: var(--text-secondary); text-transform: none;">Sposta le schede per cambiare l'ordine visualizzato dal cliente</span>
+      </div>
+
+      <!-- Draggable Proof Grid -->
+      <div class="admin-gallery-grid" id="files-grid-container">
+        <!-- Rendered dynamically -->
+      </div>
+
+    </div>
+
   </main>
 
   <script>
     let supabaseClient = null;
     let currentUser = null;
+    let activeClientEmail = null;
     let filesToUpload = [];
     let draggedItem = null;
 
@@ -621,26 +569,20 @@ create policy "Clients can select own files" on storage.objects for select using
           .single();
 
         if (error || !profile || !profile.is_approved) {
-          // Force logout if they are not approved in the DB
           await supabaseClient.auth.signOut();
           window.location.href = "login.html";
           return;
         }
 
         if (!profile.is_admin) {
-          // Redirect approved non-admin users to the client area
           window.location.href = "client-area.html";
           return;
         }
 
-        // Show dashboard content (fade-in body)
         document.body.style.opacity = "1";
         
-        // Load the list of users
+        // Load the sidebar lists
         loadProfiles();
-
-        // Load the dropdown list of clients
-        loadClientDropdown();
 
       } catch (err) {
         console.error("Auth check error:", err);
@@ -648,12 +590,15 @@ create policy "Clients can select own files" on storage.objects for select using
       }
     }
 
-    // Load registered user profiles
+    // Load registered user profiles and group them in the sidebar
     async function loadProfiles() {
       if (!supabaseClient) return;
       
-      const tbody = document.getElementById("users-list-body");
-      
+      const reqList = document.getElementById("requests-list-body");
+      const clientList = document.getElementById("clients-list-body");
+      const adminList = document.getElementById("admins-list-body");
+      const reqSection = document.getElementById("section-requests");
+
       try {
         const { data: profiles, error } = await supabaseClient
           .from('profiles')
@@ -662,63 +607,64 @@ create policy "Clients can select own files" on storage.objects for select using
 
         if (error) {
           console.error("Profiles fetch error:", error);
-          tbody.innerHTML = `
-            <tr>
-              <td colspan="4" class="empty-state" style="color: #FF8A80;">
-                ⚠️ Impossibile caricare gli utenti.<br>
-                Assicurati di aver eseguito lo script SQL in Supabase per creare la tabella 'profiles'.
-              </td>
-            </tr>
-          `;
           return;
         }
 
-        if (!profiles || profiles.length === 0) {
-          tbody.innerHTML = `
-            <tr>
-              <td colspan="4" class="empty-state">Nessun utente registrato al momento.</td>
-            </tr>
-          `;
-          return;
-        }
+        // Reset lists
+        reqList.innerHTML = "";
+        clientList.innerHTML = "";
+        adminList.innerHTML = "";
 
-        tbody.innerHTML = "";
-        
+        let pendingCount = 0;
+        let clientCount = 0;
+
         profiles.forEach(user => {
-          const row = document.createElement("tr");
+          const item = document.createElement("div");
+          item.className = "client-item";
           
-          const date = new Date(user.created_at).toLocaleDateString('it-IT', {
-            day: '2-digit',
-            month: '2-digit',
-            year: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit'
-          });
-
-          const statusBadge = user.is_approved 
-            ? `<span class="badge badge-approved">Approvato</span>`
-            : `<span class="badge badge-pending">In Attesa</span>`;
-
-          const roleBadge = user.is_admin
-            ? `<span class="badge" style="background-color: rgba(229, 9, 20, 0.15); color: #FF8A80; border: 1px solid rgba(229, 9, 20, 0.3); font-size: 0.65rem; margin-left: 8px;">Admin</span>`
-            : `<span class="badge" style="background-color: rgba(255,255,255,0.05); color: var(--text-secondary); border: 1px solid rgba(255,255,255,0.1); font-size: 0.65rem; margin-left: 8px;">Cliente</span>`;
-
-          // Generate action button
-          const actionBtn = user.is_approved
-            ? `<button class="btn-action btn-suspend" onclick="toggleApproval('${user.id}', false)">Sospendi</button>`
-            : `<button class="btn-action btn-approve" onclick="toggleApproval('${user.id}', true)">Approva</button>`;
-
-          row.innerHTML = `
-            <td style="display: flex; align-items: center; border-bottom: 1px solid rgba(255, 255, 255, 0.04);">${user.email} ${roleBadge}</td>
-            <td>${date}</td>
-            <td>${statusBadge}</td>
-            <td style="text-align: right;">
-              <!-- Non permettere all'utente amministratore connesso di autosospendersi -->
-              ${user.id === currentUser.id ? '<span style="font-size:0.75rem;color:rgba(255,255,255,0.2)">Il tuo Profilo</span>' : actionBtn}
-            </td>
-          `;
-          tbody.appendChild(row);
+          if (!user.is_approved) {
+            // PENDING REQUEST
+            pendingCount++;
+            item.innerHTML = `
+              <span class="client-email-text" title="${user.email}">${user.email}</span>
+              <button class="btn-mini-action btn-mini-approve" onclick="toggleApproval(event, '${user.id}', true)">Approva</button>
+            `;
+            reqList.appendChild(item);
+          } else if (user.is_admin) {
+            // ADMIN USER
+            item.style.cursor = "default";
+            item.innerHTML = `
+              <span class="client-email-text" title="${user.email}">${user.email}</span>
+              <span class="mini-badge mini-badge-admin">Admin</span>
+            `;
+            adminList.appendChild(item);
+          } else {
+            // ACTIVE CLIENT
+            clientCount++;
+            // Check if active
+            const isActive = activeClientEmail === user.email;
+            if (isActive) item.classList.add("active");
+            
+            item.onclick = () => selectClient(user.email);
+            item.innerHTML = `
+              <span class="client-email-text" title="${user.email}">${user.email}</span>
+              <button class="btn-mini-action btn-mini-suspend" onclick="toggleApproval(event, '${user.id}', false)">Sospendi</button>
+            `;
+            clientList.appendChild(item);
+          }
         });
+
+        // Toggle sign up requests section visibility
+        if (pendingCount > 0) {
+          reqSection.style.display = "block";
+          document.getElementById("requests-count").textContent = pendingCount;
+        } else {
+          reqSection.style.display = "none";
+        }
+
+        if (clientCount === 0) {
+          clientList.innerHTML = '<div class="empty-state" style="font-size: 0.75rem; padding: 10px 0;">Nessun cliente attivo.</div>';
+        }
 
       } catch (err) {
         console.error("Load profiles err:", err);
@@ -726,7 +672,9 @@ create policy "Clients can select own files" on storage.objects for select using
     }
 
     // Toggle approval status (Approve / Suspend)
-    async function toggleApproval(userId, approve) {
+    async function toggleApproval(event, userId, approve) {
+      // Prevent triggering click on client selection
+      event.stopPropagation();
       if (!supabaseClient) return;
 
       try {
@@ -740,72 +688,61 @@ create policy "Clients can select own files" on storage.objects for select using
           return;
         }
 
-        // Reload user list and dropdown
+        // Close workspace if active client gets suspended
+        if (!approve) {
+          const { data: suspendedUser } = await supabaseClient
+            .from('profiles')
+            .select('email')
+            .eq('id', userId)
+            .single();
+          if (suspendedUser && suspendedUser.email === activeClientEmail) {
+            closeClientWorkspace();
+          }
+        }
+
+        // Reload data
         loadProfiles();
-        loadClientDropdown();
       } catch (err) {
         console.error(err);
       }
     }
 
-    // Populates dropdown selector with approved non-admin clients
-    async function loadClientDropdown() {
-      if (!supabaseClient) return;
-      const select = document.getElementById("client-select");
-      const currentSelected = select.value;
-
-      try {
-        const { data: clients, error } = await supabaseClient
-          .from('profiles')
-          .select('email')
-          .eq('is_approved', true)
-          .eq('is_admin', false)
-          .order('email');
-
-        if (error) {
-          console.error("Error loading dropdown:", error);
-          return;
+    // Select Client and open Workspace
+    function selectClient(email) {
+      activeClientEmail = email;
+      
+      // Update active states in sidebar
+      const items = document.querySelectorAll("#clients-list-body .client-item");
+      items.forEach(item => {
+        const text = item.querySelector(".client-email-text").textContent;
+        if (text === email) {
+          item.classList.add("active");
+        } else {
+          item.classList.remove("active");
         }
+      });
 
-        select.innerHTML = '<option value="">-- Seleziona un cliente registrato --</option>';
-        clients.forEach(c => {
-          const opt = document.createElement("option");
-          opt.value = c.email;
-          opt.textContent = c.email;
-          select.appendChild(opt);
-        });
+      // Show workspace panel
+      document.getElementById("welcome-panel").style.display = "none";
+      document.getElementById("client-panel").style.display = "flex";
+      document.getElementById("active-client-title").textContent = email;
 
-        // Restore selection if still exists
-        if (currentSelected) {
-          select.value = currentSelected;
-        }
-      } catch (err) {
-        console.error(err);
-      }
+      // Load client files
+      loadClientFiles(email);
     }
 
-    // Handle Client Select change
-    function onClientSelected() {
-      const select = document.getElementById("client-select");
-      const controls = document.getElementById("upload-controls-section");
-      const placeholder = document.getElementById("no-client-selected-message");
-
-      // Reset selected queue
-      filesToUpload = [];
-      document.getElementById("selected-files-list").textContent = "";
-      document.getElementById("btn-upload-file").style.display = "none";
-
-      if (select.value) {
-        controls.style.display = "block";
-        placeholder.style.display = "none";
-        loadClientFiles(select.value);
-      } else {
-        controls.style.display = "none";
-        placeholder.style.display = "block";
-      }
+    // Close workspace and return to welcome panel
+    function closeClientWorkspace() {
+      activeClientEmail = null;
+      document.getElementById("welcome-panel").style.display = "block";
+      document.getElementById("client-panel").style.display = "none";
+      
+      // Clear active states in sidebar
+      const items = document.querySelectorAll("#clients-list-body .client-item");
+      items.forEach(item => item.classList.remove("active"));
     }
 
-    // Load files shared with the selected client and arrange them
+    // Load files shared with the selected client from Supabase Storage
     async function loadClientFiles(email) {
       if (!supabaseClient) return;
 
@@ -897,7 +834,7 @@ create policy "Clients can select own files" on storage.objects for select using
           } else {
             const icon = isAudio ? "🎵" : (ext === 'pdf' ? "📕" : "📄");
             previewHtml = `
-              <div class="admin-card-preview" style="display:flex; justify-content:center; align-items:center; font-size:2rem; background: rgba(255,255,255,0.01);">
+              <div class="admin-card-preview" style="display:flex; justify-content:center; align-items:center; font-size:2rem; background: rgba(0,0,0,0.2);">
                 ${icon}
               </div>
             `;
@@ -907,14 +844,18 @@ create policy "Clients can select own files" on storage.objects for select using
           const elementId = `dims-${index}`;
 
           card.innerHTML = `
-            ${previewHtml}
-            <div class="admin-card-info">
-              <span class="admin-card-title">${file.name}</span>
-              <span class="admin-card-meta">Peso: ${sizeStr}</span>
-              <span class="admin-card-meta" id="${elementId}">Dimensioni: Calcolo...</span>
+            <div class="admin-card-preview-wrapper">
+              ${previewHtml}
             </div>
-            <div class="admin-card-actions">
-              <button class="btn-card-delete" onclick="deleteClientFile('${email}', '${file.name}')">Elimina</button>
+            <div class="admin-card-caption">
+              <div class="admin-card-info">
+                <span class="admin-card-title" title="${file.name}">${file.name}</span>
+                <span class="admin-card-meta">Peso: ${sizeStr}</span>
+                <span class="admin-card-meta" id="${elementId}">Dimensioni: Calcolo...</span>
+              </div>
+              <div class="admin-card-actions">
+                <button class="btn-card-delete" onclick="deleteClientFile('${email}', '${file.name}')">Elimina</button>
+              </div>
             </div>
           `;
 
@@ -948,7 +889,6 @@ create policy "Clients can select own files" on storage.objects for select using
               if (el) el.textContent = "Dimensioni: N/D";
             };
           } else {
-            // Audio/PDF/Docs don't have visual dimensions
             const el = document.getElementById(elementId);
             if (el) el.style.display = "none";
           }
@@ -999,10 +939,7 @@ create policy "Clients can select own files" on storage.objects for select using
 
     // Save order changes to profile file_order column
     async function saveNewOrder() {
-      if (!supabaseClient) return;
-
-      const email = document.getElementById("client-select").value;
-      if (!email) return;
+      if (!supabaseClient || !activeClientEmail) return;
 
       const cards = document.querySelectorAll(".admin-gallery-card");
       const orderArray = Array.from(cards).map(c => c.getAttribute("data-filename"));
@@ -1011,7 +948,7 @@ create policy "Clients can select own files" on storage.objects for select using
         const { error } = await supabaseClient
           .from('profiles')
           .update({ file_order: orderArray })
-          .eq('email', email);
+          .eq('email', activeClientEmail);
 
         if (error) {
           console.error("Error saving file order:", error);
@@ -1037,7 +974,7 @@ create policy "Clients can select own files" on storage.objects for select using
     function handleFileDrop(event) {
       event.preventDefault();
       const dropZone = document.getElementById("drop-zone");
-      dropZone.style.borderColor = "rgba(255, 255, 255, 0.15)";
+      dropZone.style.borderColor = "rgba(255, 255, 255, 0.1)";
       
       const files = event.dataTransfer.files;
       addFilesToQueue(files);
@@ -1054,10 +991,7 @@ create policy "Clients can select own files" on storage.objects for select using
 
     // Upload queued files to Supabase Storage client folder
     async function startFileUpload() {
-      if (!supabaseClient || filesToUpload.length === 0) return;
-
-      const email = document.getElementById("client-select").value;
-      if (!email) return;
+      if (!supabaseClient || filesToUpload.length === 0 || !activeClientEmail) return;
 
       const btn = document.getElementById("btn-upload-file");
       const spinner = document.getElementById("upload-spinner");
@@ -1067,7 +1001,7 @@ create policy "Clients can select own files" on storage.objects for select using
 
       try {
         for (const file of filesToUpload) {
-          const filePath = `${email}/${file.name}`;
+          const filePath = `${activeClientEmail}/${file.name}`;
           const { error } = await supabaseClient
             .storage
             .from('client-proofs')
@@ -1089,7 +1023,7 @@ create policy "Clients can select own files" on storage.objects for select using
         btn.style.display = "none";
         
         // Reload list and refresh profile file_order list
-        await loadClientFiles(email);
+        await loadClientFiles(activeClientEmail);
         await saveNewOrder();
       } catch (err) {
         console.error(err);
