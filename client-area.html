@@ -547,7 +547,7 @@
             <div class="form-group"><label class="form-label" id="label-tax-vat" for="onb-taxvat">Codice Fiscale / P.IVA</label><input type="text" id="onb-taxvat" class="form-input" required placeholder="Codice Fiscale (o P.IVA)"></div>
             
             <!-- Company specific fields, hidden by default -->
-            <div id="company-fields" style="display:none; grid-column: span 2; display: contents;">
+            <div id="company-fields" style="display: none; grid-column: span 2;">
               <div class="form-group"><label class="form-label" for="company-name">Ragione Sociale / Nome Azienda</label><input type="text" id="company-name" class="form-input" placeholder="Nome dell'azienda"></div>
               <div class="form-group"><label class="form-label" for="company-vat">Partita IVA</label><input type="text" id="company-vat" class="form-input" placeholder="IT12345678901"></div>
             </div>
@@ -631,6 +631,29 @@
                 <span class="upload-box-icon" id="icon-back">📸</span>
                 <span class="upload-box-text" id="label-id-back">Clicca per caricare il Retro</span>
                 <input type="file" id="file-id-back" style="display: none;" accept="image/*,application/pdf" required onchange="handleFilePreview(this, 'preview-box-back', 'icon-back', 'label-id-back')">
+              </div>
+            </div>
+
+            <!-- Codice Fiscale uploads for Privato, wrapped in a div supporting toggle -->
+            <div id="codice-fiscale-upload-fields" style="display: contents;">
+              <!-- Upload CF Front with visual preview -->
+              <div class="form-group">
+                <label class="form-label">Codice Fiscale - FRONTE</label>
+                <div class="document-upload-box" id="preview-box-cf-front" onclick="document.getElementById('file-cf-front').click()">
+                  <span class="upload-box-icon" id="icon-cf-front">📸</span>
+                  <span class="upload-box-text" id="label-cf-front">Clicca per caricare il Fronte</span>
+                  <input type="file" id="file-cf-front" style="display: none;" accept="image/*,application/pdf" required onchange="handleFilePreview(this, 'preview-box-cf-front', 'icon-cf-front', 'label-cf-front')">
+                </div>
+              </div>
+ 
+              <!-- Upload CF Back with visual preview -->
+              <div class="form-group">
+                <label class="form-label">Codice Fiscale - RETRO</label>
+                <div class="document-upload-box" id="preview-box-cf-back" onclick="document.getElementById('file-cf-back').click()">
+                  <span class="upload-box-icon" id="icon-cf-back">📸</span>
+                  <span class="upload-box-text" id="label-cf-back">Clicca per caricare il Retro</span>
+                  <input type="file" id="file-cf-back" style="display: none;" accept="image/*,application/pdf" required onchange="handleFilePreview(this, 'preview-box-cf-back', 'icon-cf-back', 'label-cf-back')">
+                </div>
               </div>
             </div>
 
@@ -783,6 +806,7 @@
         // Access Gate matching the 3-state onboarding flow
         if (!profile.onboarding_completed) {
           // State 1: Show Form
+          toggleCompanyFields('privato');
           document.getElementById("onboarding-panel").style.display = "block";
           document.getElementById("waiting-panel").style.display = "none";
           document.getElementById("empty-state-panel").style.display = "none";
@@ -806,6 +830,36 @@
       } catch (err) {
         console.error("Auth check error:", err);
         window.location.href = "login.html";
+      }
+    }
+
+    // Toggle company and Codice Fiscale upload fields depending on client type selection
+    function toggleCompanyFields(value) {
+      const companyFields = document.getElementById("company-fields");
+      const cfUploadFields = document.getElementById("codice-fiscale-upload-fields");
+      const companyNameInput = document.getElementById("company-name");
+      const companyVatInput = document.getElementById("company-vat");
+      const cfFrontInput = document.getElementById("file-cf-front");
+      const cfBackInput = document.getElementById("file-cf-back");
+
+      if (value === "azienda") {
+        companyFields.style.display = "contents";
+        cfUploadFields.style.display = "none";
+        
+        companyNameInput.required = true;
+        companyVatInput.required = true;
+        
+        cfFrontInput.required = false;
+        cfBackInput.required = false;
+      } else {
+        companyFields.style.display = "none";
+        cfUploadFields.style.display = "contents";
+        
+        companyNameInput.required = false;
+        companyVatInput.required = false;
+        
+        cfFrontInput.required = true;
+        cfBackInput.required = true;
       }
     }
 
@@ -863,6 +917,11 @@
       const fullName = document.getElementById("onb-fullname").value.trim();
       const nationality = document.getElementById("onb-nationality").value;
       const taxVat = document.getElementById("onb-taxvat").value.trim().toUpperCase();
+      
+      const clientType = document.querySelector('input[name="client-type"]:checked').value;
+      const companyName = document.getElementById("company-name").value.trim();
+      const companyVat = document.getElementById("company-vat").value.trim().toUpperCase();
+
       const dob = document.getElementById("onb-dob").value;
       const pob = document.getElementById("onb-pob").value.trim();
       const pobProv = document.getElementById("onb-pob-prov").value.trim().toUpperCase();
@@ -879,9 +938,17 @@
       
       const fileFront = document.getElementById("file-id-front").files[0];
       const fileBack = document.getElementById("file-id-back").files[0];
+      
+      const fileCfFront = document.getElementById("file-cf-front").files[0];
+      const fileCfBack = document.getElementById("file-cf-back").files[0];
 
       if (!fileFront || !fileBack) {
-        alert("Carica sia il fronte che il retro del tuo documento.");
+        alert("Carica sia il fronte che il retro del tuo documento d'identità.");
+        return;
+      }
+
+      if (clientType === 'privato' && (!fileCfFront || !fileCfBack)) {
+        alert("Carica sia il fronte che il retro del tuo codice fiscale.");
         return;
       }
 
@@ -898,7 +965,7 @@
           .from('client-proofs')
           .upload(pathFront, fileFront, { upsert: true });
 
-        if (errFront) throw new Error("Errore durante il caricamento del documento (Fronte): " + errFront.message);
+        if (errFront) throw new Error("Errore durante il caricamento del documento d'identità (Fronte): " + errFront.message);
 
         // 2. Upload ID card back file
         const extBack = fileBack.name.split('.').pop();
@@ -907,16 +974,45 @@
           .from('client-proofs')
           .upload(pathBack, fileBack, { upsert: true });
 
-        if (errBack) throw new Error("Errore durante il caricamento del documento (Retro): " + errBack.message);
+        if (errBack) throw new Error("Errore durante il caricamento del documento d'identità (Retro): " + errBack.message);
 
-        // 3. Get Public URLs for both files
+        // 3. Get Public URLs for ID files
         const { data: { publicUrl: urlFront } } = supabaseClient.storage.from('client-proofs').getPublicUrl(pathFront);
         const { data: { publicUrl: urlBack } } = supabaseClient.storage.from('client-proofs').getPublicUrl(pathBack);
 
-        // 4. Update profiles table with all new detailed fields
+        // 4. Upload Codice Fiscale if Privato
+        let urlCfFront = null;
+        let urlCfBack = null;
+        if (clientType === 'privato') {
+          const extCfFront = fileCfFront.name.split('.').pop();
+          const pathCfFront = `${folderName}/documents/cf_front.${extCfFront}`;
+          const { error: errCfFront } = await supabaseClient.storage
+            .from('client-proofs')
+            .upload(pathCfFront, fileCfFront, { upsert: true });
+
+          if (errCfFront) throw new Error("Errore durante il caricamento del codice fiscale (Fronte): " + errCfFront.message);
+
+          const extCfBack = fileCfBack.name.split('.').pop();
+          const pathCfBack = `${folderName}/documents/cf_back.${extCfBack}`;
+          const { error: errCfBack } = await supabaseClient.storage
+            .from('client-proofs')
+            .upload(pathCfBack, fileCfBack, { upsert: true });
+
+          if (errCfBack) throw new Error("Errore durante il caricamento del codice fiscale (Retro): " + errCfBack.message);
+
+          const { data: { publicUrl: publicUrlCfFront } } = supabaseClient.storage.from('client-proofs').getPublicUrl(pathCfFront);
+          const { data: { publicUrl: publicUrlCfBack } } = supabaseClient.storage.from('client-proofs').getPublicUrl(pathCfBack);
+          urlCfFront = publicUrlCfFront;
+          urlCfBack = publicUrlCfBack;
+        }
+
+        // 5. Update profiles table with all new detailed fields
         const { error: dbError } = await supabaseClient
           .from('profiles')
           .update({
+            client_type: clientType,
+            company_name: clientType === 'azienda' ? companyName : null,
+            company_vat: clientType === 'azienda' ? companyVat : null,
             full_name: fullName,
             nationality: nationality,
             tax_vat_number: taxVat,
@@ -934,6 +1030,8 @@
             social_other: socialOther,
             id_front_url: urlFront,
             id_back_url: urlBack,
+            cf_front_url: urlCfFront,
+            cf_back_url: urlCfBack,
             onboarding_completed: true,
             documents_approved: false // Must be reviewed by Max first!
           })
@@ -945,6 +1043,7 @@
         
         // Notify Max (Administrator) via Formspree in background that a client submitted documents
         try {
+          const clientDesc = clientType === 'azienda' ? `Azienda: ${companyName}` : 'Privato';
           await fetch("https://formspree.io/f/xzdqzagg", {
             method: "POST",
             headers: { 
@@ -952,9 +1051,9 @@
               "Accept": "application/json"
             },
             body: JSON.stringify({
-              subject: `Documenti caricati da ${currentUser.email} - Verifica Richiesta`,
+              subject: `Documenti caricati da ${currentUser.email} (${clientDesc}) - Verifica Richiesta`,
               email: currentUser.email,
-              message: `Il cliente ${fullName} (${currentUser.email}) ha completato l'onboarding e caricato i documenti.\nAccedi ad admin.html per verificare la scheda anagrafica ed attivare il suo spazio privato.`
+              message: `Il cliente ${fullName} (${currentUser.email}) ha completato l'onboarding come ${clientDesc} e caricato i documenti.\nAccedi ad admin.html per verificare la scheda anagrafica ed attivare il suo spazio privato.`
             })
           });
         } catch (mailErr) {

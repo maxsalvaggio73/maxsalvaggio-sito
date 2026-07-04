@@ -1172,12 +1172,57 @@ create policy "Clients can update own files" on storage.objects for update using
           `;
         }
 
+        // Build client type html
+        let clientTypeHtml = `
+          <div class="info-item">
+            <strong>Tipo Cliente</strong>
+            <span>${profile.client_type ? profile.client_type.toUpperCase() : 'PRIVATO'}</span>
+          </div>
+        `;
+        if (profile.client_type === 'azienda') {
+          clientTypeHtml += `
+            <div class="info-item">
+              <strong>Ragione Sociale</strong>
+              <span>${profile.company_name || 'N/D'}</span>
+            </div>
+            <div class="info-item">
+              <strong>Partita IVA</strong>
+              <span>${profile.company_vat || 'N/D'}</span>
+            </div>
+          `;
+        }
+
+        // Build Codice Fiscale previews if available
+        let cfDocumentsHtml = "";
+        if (profile.client_type !== 'azienda' && (profile.cf_front_url || profile.cf_back_url)) {
+          cfDocumentsHtml = `
+            <div class="info-item grid-span-all" style="border-top:1px solid rgba(255,255,255,0.03); padding-top:15px; margin-top:5px;">
+              <strong>Allegati Codice Fiscale (Clicca per ingrandire)</strong>
+              <div class="info-documents">
+                ${profile.cf_front_url ? `
+                  <div class="admin-doc-preview-wrapper" onclick="window.open('${profile.cf_front_url}', '_blank')">
+                    <img src="${profile.cf_front_url}" class="admin-doc-preview-img" alt="Fronte Codice Fiscale">
+                    <span class="admin-doc-label">Fronte Codice Fiscale</span>
+                  </div>
+                ` : ''}
+                ${profile.cf_back_url ? `
+                  <div class="admin-doc-preview-wrapper" onclick="window.open('${profile.cf_back_url}', '_blank')">
+                    <img src="${profile.cf_back_url}" class="admin-doc-preview-img" alt="Retro Codice Fiscale">
+                    <span class="admin-doc-label">Retro Codice Fiscale</span>
+                  </div>
+                ` : ''}
+              </div>
+            </div>
+          `;
+        }
+
         box.innerHTML = `
           <div class="info-card-header">
             <span>Scheda Anagrafica e Identità Cliente</span>
             <div>${actionBtnHtml}</div>
           </div>
           <div class="info-grid">
+            ${clientTypeHtml}
             <div class="info-item">
               <strong>Nome & Cognome</strong>
               <span>${profile.full_name || 'N/D'}</span>
@@ -1233,6 +1278,7 @@ create policy "Clients can update own files" on storage.objects for update using
                 </div>
               </div>
             </div>
+            ${cfDocumentsHtml}
           </div>
         `;
 
