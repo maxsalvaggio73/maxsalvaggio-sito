@@ -1189,6 +1189,18 @@ create policy "Clients can update own files" on storage.objects for update using
               <strong>Partita IVA</strong>
               <span>${profile.company_vat || 'N/D'}</span>
             </div>
+            <div class="info-item">
+              <strong>Referente Aziendale</strong>
+              <span>${profile.representative_name || 'N/D'}</span>
+            </div>
+            <div class="info-item">
+              <strong>Mansione Referente</strong>
+              <span>${profile.representative_role || 'N/D'}</span>
+            </div>
+            <div class="info-item">
+              <strong>Email Personale Referente</strong>
+              <span>${profile.representative_email ? `<a href="mailto:${profile.representative_email}" style="color:var(--accent); text-decoration:underline;">${profile.representative_email}</a>` : 'N/D'}</span>
+            </div>
           `;
         }
 
@@ -1234,6 +1246,14 @@ create policy "Clients can update own files" on storage.objects for update using
             <div class="info-item">
               <strong>Codice Fiscale / Tax ID / VAT</strong>
               <span>${profile.tax_vat_number || 'N/D'}</span>
+            </div>
+            <div class="info-item">
+              <strong>Sito Web</strong>
+              <span>${profile.website ? `<a href="${profile.website.startsWith('http') ? profile.website : 'https://' + profile.website}" target="_blank" style="color:var(--accent); text-decoration:underline;">${profile.website}</a>` : 'N/D'}</span>
+            </div>
+            <div class="info-item">
+              <strong>Settore Merceologico</strong>
+              <span>${profile.business_sector || 'N/D'}</span>
             </div>
             <div class="info-item">
               <strong>Nascita</strong>

@@ -546,10 +546,28 @@
 
             <div class="form-group"><label class="form-label" id="label-tax-vat" for="onb-taxvat">Codice Fiscale / P.IVA</label><input type="text" id="onb-taxvat" class="form-input" required placeholder="Codice Fiscale (o P.IVA)"></div>
             
+            <div class="form-group">
+              <label class="form-label" id="label-website" for="onb-website">Sito Web</label>
+              <input type="url" id="onb-website" class="form-input" placeholder="es. https://www.nomesito.com">
+            </div>
+            
+            <div class="form-group grid-span-2">
+              <label class="form-label" id="label-sector" for="onb-sector">Settore Merceologico / Attività</label>
+              <input type="text" id="onb-sector" class="form-input" placeholder="es. Moda, Editoria, Pubblicità...">
+            </div>
+
             <!-- Company specific fields, hidden by default -->
             <div id="company-fields" style="display: none; grid-column: span 2;">
               <div class="form-group"><label class="form-label" for="company-name">Ragione Sociale / Nome Azienda</label><input type="text" id="company-name" class="form-input" placeholder="Nome dell'azienda"></div>
               <div class="form-group"><label class="form-label" for="company-vat">Partita IVA</label><input type="text" id="company-vat" class="form-input" placeholder="IT12345678901"></div>
+              
+              <!-- Referente Details -->
+              <div class="form-group grid-span-2" style="margin-top: 10px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 15px;">
+                <span class="form-label" style="margin-bottom: 5px; display: block; font-weight:600;">Dati Referente / Responsabile Aziendale</span>
+              </div>
+              <div class="form-group"><label class="form-label" for="rep-name">Nome e Cognome Referente</label><input type="text" id="rep-name" class="form-input" placeholder="es. Mario Rossi"></div>
+              <div class="form-group"><label class="form-label" for="rep-role">Mansione / Ruolo Referente</label><input type="text" id="rep-role" class="form-input" placeholder="es. Direttore Marketing"></div>
+              <div class="form-group grid-span-2"><label class="form-label" for="rep-email">Email Personale Referente</label><input type="email" id="rep-email" class="form-input" placeholder="mario.rossi@esempio.com"></div>
             </div>
 
             <div class="form-group"><label class="form-label" for="onb-dob">Data di Nascita</label><input type="date" id="onb-dob" class="form-input" required></div>
@@ -837,10 +855,20 @@
     function toggleCompanyFields(value) {
       const companyFields = document.getElementById("company-fields");
       const cfUploadFields = document.getElementById("codice-fiscale-upload-fields");
+      
       const companyNameInput = document.getElementById("company-name");
       const companyVatInput = document.getElementById("company-vat");
+      const repNameInput = document.getElementById("rep-name");
+      const repRoleInput = document.getElementById("rep-role");
+      const repEmailInput = document.getElementById("rep-email");
+
       const cfFrontInput = document.getElementById("file-cf-front");
       const cfBackInput = document.getElementById("file-cf-back");
+
+      const websiteInput = document.getElementById("onb-website");
+      const websiteLabel = document.getElementById("label-website");
+      const sectorInput = document.getElementById("onb-sector");
+      const sectorLabel = document.getElementById("label-sector");
 
       if (value === "azienda") {
         companyFields.style.display = "contents";
@@ -848,18 +876,44 @@
         
         companyNameInput.required = true;
         companyVatInput.required = true;
+        repNameInput.required = true;
+        repRoleInput.required = true;
+        repEmailInput.required = true;
         
         cfFrontInput.required = false;
         cfBackInput.required = false;
+
+        // Website (Required for Azienda)
+        websiteInput.required = true;
+        websiteLabel.innerHTML = 'Sito Web <span style="color:var(--accent)">*</span>';
+        websiteInput.placeholder = "es. https://www.azienda.com (Obbligatorio)";
+
+        // Sector (Required for Azienda)
+        sectorInput.required = true;
+        sectorLabel.innerHTML = 'Settore Merceologico <span style="color:var(--accent)">*</span>';
+        sectorInput.placeholder = "es. Moda, Design, Pubblicità (Obbligatorio)";
       } else {
         companyFields.style.display = "none";
         cfUploadFields.style.display = "contents";
         
         companyNameInput.required = false;
         companyVatInput.required = false;
+        repNameInput.required = false;
+        repRoleInput.required = false;
+        repEmailInput.required = false;
         
         cfFrontInput.required = true;
         cfBackInput.required = true;
+
+        // Website (Optional for Privato)
+        websiteInput.required = false;
+        websiteLabel.innerHTML = 'Sito Web (Facoltativo)';
+        websiteInput.placeholder = "es. https://www.miosito.com (Opzionale)";
+
+        // Sector (Optional for Privato)
+        sectorInput.required = false;
+        sectorLabel.innerHTML = 'Settore Merceologico / Attività (Facoltativo)';
+        sectorInput.placeholder = "es. Fotografo, Modello, Studente (Opzionale)";
       }
     }
 
@@ -921,6 +975,13 @@
       const clientType = document.querySelector('input[name="client-type"]:checked').value;
       const companyName = document.getElementById("company-name").value.trim();
       const companyVat = document.getElementById("company-vat").value.trim().toUpperCase();
+      
+      const repName = document.getElementById("rep-name").value.trim();
+      const repRole = document.getElementById("rep-role").value.trim();
+      const repEmail = document.getElementById("rep-email").value.trim();
+
+      const website = document.getElementById("onb-website").value.trim();
+      const sector = document.getElementById("onb-sector").value.trim();
 
       const dob = document.getElementById("onb-dob").value;
       const pob = document.getElementById("onb-pob").value.trim();
@@ -1013,6 +1074,11 @@
             client_type: clientType,
             company_name: clientType === 'azienda' ? companyName : null,
             company_vat: clientType === 'azienda' ? companyVat : null,
+            representative_name: clientType === 'azienda' ? repName : null,
+            representative_role: clientType === 'azienda' ? repRole : null,
+            representative_email: clientType === 'azienda' ? repEmail : null,
+            website: website || null,
+            business_sector: sector || null,
             full_name: fullName,
             nationality: nationality,
             tax_vat_number: taxVat,

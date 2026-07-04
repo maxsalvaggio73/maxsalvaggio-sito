@@ -338,6 +338,10 @@
           <input type="email" id="signup-email" class="form-input" required autocomplete="email" placeholder="nome@esempio.com">
         </div>
         <div class="form-group">
+          <label class="form-label" for="signup-email-confirm">Conferma Indirizzo Email</label>
+          <input type="email" id="signup-email-confirm" class="form-input" required autocomplete="email" placeholder="nome@esempio.com">
+        </div>
+        <div class="form-group">
           <label class="form-label" for="signup-password">Password (min. 6 caratteri)</label>
           <input type="password" id="signup-password" class="form-input" required minlength="6" autocomplete="new-password" placeholder="••••••••">
         </div>
@@ -575,10 +579,16 @@
       hideAlerts();
 
       const email = document.getElementById("signup-email").value.trim();
+      const emailConfirm = document.getElementById("signup-email-confirm").value.trim();
       const password = document.getElementById("signup-password").value;
       const confirm = document.getElementById("signup-confirm").value;
       const btn = document.getElementById("btn-signup-submit");
       const spinner = document.getElementById("signup-spinner");
+
+      if (email.toLowerCase() !== emailConfirm.toLowerCase()) {
+        showAlert('error', "Gli indirizzi email inseriti non coincidono.");
+        return;
+      }
 
       if (password !== confirm) {
         showAlert('error', "Le password inserite non coincidono.");
@@ -631,6 +641,7 @@
         showAlert('success', "Richiesta inviata! Riceverai una notifica email quando l'amministratore confermerà l'accesso. Controlla la tua casella per confermare l'indirizzo email se richiesto.");
         
         document.getElementById("signup-email").value = "";
+        document.getElementById("signup-email-confirm").value = "";
         document.getElementById("signup-password").value = "";
         document.getElementById("signup-confirm").value = "";
         
