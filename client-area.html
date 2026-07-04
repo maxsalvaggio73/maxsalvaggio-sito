@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Area Clienti — Max Salvaggio Portfolio</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Cinzel:wght@500;700&display=swap" rel="stylesheet">
+  
+  <!-- Supabase CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  
+  <!-- Local Config -->
+  <script src="config.js"></script>
+
+  <style>
+    :root {
+      --bg-primary: #151718;
+      --bg-card: rgba(26, 29, 30, 0.45);
+      --border-color: rgba(255, 255, 255, 0.08);
+      --accent: #E50914; /* Rosso premium */
+      --text-primary: #ECEFF1;
+      --text-secondary: rgba(236, 239, 241, 0.6);
+      --font-display: 'Cinzel', serif;
+      --font-body: 'Outfit', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-primary);
+      font-family: var(--font-body);
+      color: var(--text-primary);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+      opacity: 0; /* Fade-in after auth check */
+      transition: opacity 0.3s ease;
+    }
+
+    /* Header Nav */
+    header {
+      background-color: rgba(21, 23, 24, 0.8);
+      border-bottom: 1px solid var(--border-color);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      width: 100%;
+    }
+    .header-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .brand-logo {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      color: var(--text-primary);
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+    .btn-logout {
+      background: none;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: var(--text-primary);
+      border-radius: 20px;
+      padding: 8px 16px;
+      font-family: var(--font-body);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .btn-logout:hover {
+      background-color: var(--accent);
+      border-color: var(--accent);
+      transform: translateY(-1px);
+    }
+
+    /* Main Content */
+    main {
+      flex: 1;
+      max-width: 1200px;
+      width: 100%;
+      margin: 40px auto;
+      padding: 0 30px;
+    }
+
+    .welcome-section {
+      margin-bottom: 40px;
+      text-align: center;
+    }
+    .welcome-title {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .welcome-desc {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+    .welcome-user-email {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    /* Main Dashboard Cards */
+    .dashboard-container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .dashboard-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 40px 30px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .card-icon {
+      font-size: 2.5rem;
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
+    .card-title {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 15px;
+    }
+    .card-text {
+      font-size: 0.92rem;
+      line-height: 1.6;
+      color: var(--text-secondary);
+      margin-bottom: 25px;
+    }
+
+    /* Back home button */
+    .btn-home {
+      display: inline-block;
+      background-color: transparent;
+      color: var(--text-primary);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 4px;
+      padding: 12px 24px;
+      font-family: var(--font-body);
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+    .btn-home:hover {
+      background-color: var(--text-primary);
+      color: #000;
+      border-color: var(--text-primary);
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="header-container">
+      <a href="home.html" class="brand-logo">Max Salvaggio</a>
+      <button class="btn-logout" onclick="handleLogout()">Esci</button>
+    </div>
+  </header>
+
+  <main>
+    <div class="welcome-section">
+      <h1 class="welcome-title">Area Clienti</h1>
+      <p class="welcome-desc">Accesso protetto per <span class="welcome-user-email" id="client-email">...</span></p>
+    </div>
+
+    <div class="dashboard-container">
+      <!-- Welcome Panel -->
+      <section class="dashboard-card">
+        <div class="card-icon">📁</div>
+        <h2 class="card-title">I tuoi Scatti e Provini</h2>
+        <p class="card-text">
+          Benvenuto nella tua area riservata privata. Qui potrai esaminare i provini dei tuoi servizi fotografici, scaricare gli scatti ad alta risoluzione selezionati e collaborare con lo studio per la scelta delle immagini finali.
+        </p>
+        <p class="card-text" style="font-style: italic; color: rgba(255, 255, 255, 0.3);">
+          Al momento non ci sono provini attivi o file condivisi per il tuo profilo. Contatta lo studio per caricare il tuo materiale.
+        </p>
+        <a href="home.html" class="btn-home">Torna al Portfolio Pubblico</a>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    let supabaseClient = null;
+    let currentUser = null;
+
+    // Check if configuration parameters are set
+    const isConfigured = typeof config !== 'undefined' && 
+                         config.SUPABASE_URL && 
+                         config.SUPABASE_ANON_KEY && 
+                         !config.SUPABASE_URL.includes("your-project-id") &&
+                         !config.SUPABASE_ANON_KEY.includes("your-supabase-anon-key");
+
+    if (isConfigured) {
+      supabaseClient = supabase.createClient(config.SUPABASE_URL, config.SUPABASE_ANON_KEY);
+    } else {
+      alert("⚠️  Connessione Supabase non configurata in config.js.");
+      window.location.href = "login.html";
+    }
+
+    // Check Auth Status on Load
+    async function checkAuth() {
+      if (!supabaseClient) return;
+
+      try {
+        const { data: { session } } = await supabaseClient.auth.getSession();
+        
+        if (!session) {
+          window.location.href = "login.html";
+          return;
+        }
+
+        currentUser = session.user;
+        document.getElementById("client-email").textContent = currentUser.email;
+
+        // Verify if user is approved in profiles table
+        const { data: profile, error } = await supabaseClient
+          .from('profiles')
+          .select('is_approved')
+          .eq('id', currentUser.id)
+          .single();
+
+        if (error || !profile || !profile.is_approved) {
+          // Log out immediately if not approved in DB
+          await supabaseClient.auth.signOut();
+          window.location.href = "login.html";
+          return;
+        }
+
+        // Show page content (fade-in body)
+        document.body.style.opacity = "1";
+      } catch (err) {
+        console.error("Auth check error:", err);
+        window.location.href = "login.html";
+      }
+    }
+
+    // Log Out
+    async function handleLogout() {
+      if (!supabaseClient) return;
+      
+      try {
+        await supabaseClient.auth.signOut();
+        window.location.href = "login.html";
+      } catch (err) {
+        console.error("Logout error:", err);
+      }
+    }
+
+    // Run auth check on load
+    window.onload = checkAuth;
+  </script>
+</body>
+</html>

@@ -361,6 +361,7 @@ create table public.profiles (
   id uuid references auth.users on delete cascade primary key,
   email text not null,
   is_approved boolean default false,
+  is_admin boolean default false, -- Campo ruolo amministratore
   created_at timestamp with time zone default timezone('utc'::text, now()) not null
 );
 
@@ -425,7 +426,7 @@ create trigger on_auth_user_created
         // Double check approval status of the current logged-in user
         const { data: profile, error } = await supabaseClient
           .from('profiles')
-          .select('is_approved')
+          .select('is_approved, is_admin')
           .eq('id', currentUser.id)
           .single();
 
@@ -433,6 +434,12 @@ create trigger on_auth_user_created
           // Force logout if they are not approved in the DB
           await supabaseClient.auth.signOut();
           window.location.href = "login.html";
+          return;
+        }
+
+        if (!profile.is_admin) {
+          // Redirect approved non-admin users to the client area
+          window.location.href = "client-area.html";
           return;
         }
 
@@ -498,13 +505,17 @@ create trigger on_auth_user_created
             ? `<span class="badge badge-approved">Approvato</span>`
             : `<span class="badge badge-pending">In Attesa</span>`;
 
+          const roleBadge = user.is_admin
+            ? `<span class="badge" style="background-color: rgba(229, 9, 20, 0.15); color: #FF8A80; border: 1px solid rgba(229, 9, 20, 0.3); font-size: 0.65rem; margin-left: 8px;">Admin</span>`
+            : `<span class="badge" style="background-color: rgba(255,255,255,0.05); color: var(--text-secondary); border: 1px solid rgba(255,255,255,0.1); font-size: 0.65rem; margin-left: 8px;">Cliente</span>`;
+
           // Generate action button
           const actionBtn = user.is_approved
             ? `<button class="btn-action btn-suspend" onclick="toggleApproval('${user.id}', false)">Sospendi</button>`
             : `<button class="btn-action btn-approve" onclick="toggleApproval('${user.id}', true)">Approva</button>`;
 
           row.innerHTML = `
-            <td>${user.email}</td>
+            <td style="display: flex; align-items: center; border-bottom: 1px solid rgba(255, 255, 255, 0.04);">${user.email} ${roleBadge}</td>
             <td>${date}</td>
             <td>${statusBadge}</td>
             <td style="text-align: right;">

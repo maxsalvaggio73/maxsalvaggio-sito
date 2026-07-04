@@ -461,10 +461,10 @@
 
         const user = data.user;
 
-        // Query the profiles table to see if user is approved
+        // Query the profiles table to see if user is approved and check their role
         const { data: profile, error: profileError } = await supabaseClient
           .from('profiles')
-          .select('is_approved')
+          .select('is_approved, is_admin')
           .eq('id', user.id)
           .single();
 
@@ -485,8 +485,12 @@
           btn.disabled = false;
           spinner.style.display = "none";
         } else {
-          // Success: redirect to admin panel
-          window.location.href = "admin.html";
+          // Redirect based on administrative role
+          if (profile.is_admin) {
+            window.location.href = "admin.html";
+          } else {
+            window.location.href = "client-area.html";
+          }
         }
       } catch (err) {
         console.error(err);
