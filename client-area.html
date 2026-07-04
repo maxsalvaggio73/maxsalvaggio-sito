@@ -187,7 +187,7 @@
     .gallery-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 25px;
+      gap: 30px;
       margin-bottom: 40px;
     }
     .gallery-item {
@@ -196,14 +196,22 @@
       border-radius: 6px;
       overflow: hidden;
       position: relative;
-      aspect-ratio: 3 / 2;
       box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
       transition: transform 0.3s ease, border-color 0.3s ease;
       cursor: pointer;
+      display: flex;
+      flex-direction: column;
     }
     .gallery-item:hover {
       transform: translateY(-4px);
       border-color: rgba(229, 9, 20, 0.4);
+    }
+    .gallery-preview-container {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 3 / 2;
+      overflow: hidden;
+      background-color: rgba(0, 0, 0, 0.2);
     }
     .gallery-img {
       width: 100%;
@@ -229,15 +237,6 @@
     .gallery-item:hover .gallery-overlay {
       opacity: 1;
     }
-    .img-title {
-      font-size: 0.8rem;
-      font-weight: 500;
-      color: var(--text-primary);
-      margin-bottom: 10px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
     .btn-download-item {
       align-self: flex-start;
       background-color: var(--accent);
@@ -255,6 +254,30 @@
     }
     .btn-download-item:hover {
       background-color: #B20710;
+    }
+
+    /* Client Captions (Information under the image card) */
+    .gallery-caption {
+      padding: 15px;
+      background: rgba(0, 0, 0, 0.15);
+      border-top: 1px solid rgba(255, 255, 255, 0.03);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .caption-title {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      word-break: break-all;
+      line-height: 1.2;
+    }
+    .caption-meta {
+      font-size: 0.68rem;
+      color: var(--text-secondary);
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
     }
 
     /* Lightbox overlay */
@@ -418,7 +441,16 @@
       const gridBody = document.getElementById("gallery-grid-body");
 
       try {
-        // List files in the bucket 'client-proofs' under the client folder (email)
+        // 1. Fetch file order array from client profile
+        const { data: profile } = await supabaseClient
+          .from('profiles')
+          .select('file_order')
+          .eq('email', folderName)
+          .single();
+
+        const fileOrder = profile?.file_order || [];
+
+        // 2. List files in the bucket 'client-proofs' under the client folder (email)
         const { data: files, error } = await supabaseClient
           .storage
           .from('client-proofs')
@@ -431,17 +463,27 @@
         }
 
         // Filter out empty placeholders (e.g. .emptyFolderPlaceholder)
-        const imageFiles = files.filter(f => f.name !== '.emptyFolderPlaceholder' && f.name !== '.DS_Store');
+        let imageFiles = files.filter(f => f.name !== '.emptyFolderPlaceholder' && f.name !== '.DS_Store');
 
         if (!imageFiles || imageFiles.length === 0) {
           statusMsg.textContent = "Al momento la tua cartella privata è vuota. Contatta lo studio per caricare il tuo materiale.";
           return;
         }
 
+        // 3. Sort files according to saved file_order array
+        imageFiles.sort((a, b) => {
+          const idxA = fileOrder.indexOf(a.name);
+          const idxB = fileOrder.indexOf(b.name);
+          if (idxA === -1 && idxB === -1) return 0;
+          if (idxA === -1) return 1;
+          if (idxB === -1) return -1;
+          return idxA - idxB;
+        });
+
         // If files exist, build the grid
         gridBody.innerHTML = "";
         
-        imageFiles.forEach(file => {
+        imageFiles.forEach((file, index) => {
           // Fetch the public URL of the file
           const { data: { publicUrl } } = supabaseClient
             .storage
@@ -455,57 +497,91 @@
           const isAudio = ['mp3', 'wav', 'ogg'].includes(ext);
           const isPdf = ext === 'pdf';
 
+          // Size formatting
+          const sizeKB = (file.metadata?.size / 1024) || 0;
+          const sizeStr = sizeKB > 1024
+            ? (sizeKB / 1024).toFixed(2) + " MB"
+            : sizeKB.toFixed(1) + " KB";
+
+          // Element ID for dimensions
+          const elementId = `client-dims-${index}`;
+
           // Create item card
           const card = document.createElement("div");
           card.className = "gallery-item";
 
+          let previewHtml = "";
+          let clickHandler = "";
+
           if (isImage) {
-            card.onclick = () => openLightbox(publicUrl, 'image');
-            card.innerHTML = `
-              <img src="${publicUrl}" alt="${file.name}" class="gallery-img" loading="lazy">
-              <div class="gallery-overlay">
-                <span class="img-title">${file.name}</span>
-                <a href="${publicUrl}" download="${file.name}" class="btn-download-item" onclick="event.stopPropagation()">Scarica</a>
-              </div>
-            `;
+            clickHandler = `onclick="openLightbox('${publicUrl}', 'image')"`;
+            previewHtml = `<img src="${publicUrl}" alt="${file.name}" class="gallery-img" loading="lazy">`;
           } else if (isVideo) {
-            card.onclick = () => openLightbox(publicUrl, 'video');
-            card.innerHTML = `
-              <video src="${publicUrl}" class="gallery-img" style="object-fit: cover;" preload="metadata" muted loop onmouseover="this.play()" onmouseout="this.pause()"></video>
-              <div class="gallery-overlay" style="opacity: 1; background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 50%);">
-                <span class="img-title">🎥 ${file.name}</span>
-                <a href="${publicUrl}" download="${file.name}" class="btn-download-item" onclick="event.stopPropagation()">Scarica</a>
-              </div>
-            `;
+            clickHandler = `onclick="openLightbox('${publicUrl}', 'video')"`;
+            previewHtml = `<video src="${publicUrl}" class="gallery-img" style="object-fit: cover;" preload="metadata" muted loop onmouseover="this.play()" onmouseout="this.pause()"></video>`;
           } else if (isAudio) {
-            card.onclick = () => openLightbox(publicUrl, 'audio');
-            card.innerHTML = `
+            clickHandler = `onclick="openLightbox('${publicUrl}', 'audio')"`;
+            previewHtml = `
               <div class="gallery-img" style="display:flex; flex-direction:column; justify-content:center; align-items:center; background-color:rgba(255,255,255,0.02); height:100%;">
-                <span style="font-size:2.5rem; margin-bottom:10px;">🎵</span>
-                <span style="font-size:0.75rem; color:var(--text-secondary); max-width:80%; text-align:center; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${file.name}</span>
-              </div>
-              <div class="gallery-overlay" style="opacity: 1; background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 50%);">
-                <span class="img-title">${file.name}</span>
-                <a href="${publicUrl}" download="${file.name}" class="btn-download-item" onclick="event.stopPropagation()">Scarica</a>
+                <span style="font-size:2.5rem;">🎵</span>
               </div>
             `;
           } else {
             // Document, PDF or ZIP
             const docIcon = isPdf ? "📕" : "📄";
-            card.onclick = () => window.open(publicUrl, '_blank');
-            card.innerHTML = `
+            clickHandler = `onclick="window.open('${publicUrl}', '_blank')"`;
+            previewHtml = `
               <div class="gallery-img" style="display:flex; flex-direction:column; justify-content:center; align-items:center; background-color:rgba(255,255,255,0.02); height:100%;">
-                <span style="font-size:2.5rem; margin-bottom:10px;">${docIcon}</span>
-                <span style="font-size:0.75rem; color:var(--text-secondary); max-width:80%; text-align:center; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${file.name}</span>
-              </div>
-              <div class="gallery-overlay" style="opacity: 1; background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 50%);">
-                <span class="img-title">${file.name}</span>
-                <a href="${publicUrl}" download="${file.name}" class="btn-download-item" onclick="event.stopPropagation()" target="_blank">Scarica</a>
+                <span style="font-size:2.5rem;">${docIcon}</span>
               </div>
             `;
           }
 
+          card.innerHTML = `
+            <div class="gallery-preview-container" ${clickHandler}>
+              ${previewHtml}
+              <div class="gallery-overlay">
+                <a href="${publicUrl}" download="${file.name}" class="btn-download-item" onclick="event.stopPropagation()">Scarica</a>
+              </div>
+            </div>
+            <div class="gallery-caption" ${clickHandler}>
+              <span class="caption-title">${file.name}</span>
+              <div class="caption-meta">
+                <span>Peso: ${sizeStr}</span>
+                <span id="${elementId}">Dimensioni: Calcolo...</span>
+              </div>
+            </div>
+          `;
+
           gridBody.appendChild(card);
+
+          // Render dimensions dynamically for images and videos
+          if (isImage) {
+            const img = new Image();
+            img.src = publicUrl;
+            img.onload = () => {
+              const el = document.getElementById(elementId);
+              if (el) el.textContent = `Dimensioni: ${img.naturalWidth} x ${img.naturalHeight} px`;
+            };
+            img.onerror = () => {
+              const el = document.getElementById(elementId);
+              if (el) el.textContent = "Dimensioni: N/D";
+            };
+          } else if (isVideo) {
+            const vid = document.createElement("video");
+            vid.src = publicUrl;
+            vid.onloadedmetadata = () => {
+              const el = document.getElementById(elementId);
+              if (el) el.textContent = `Dimensioni: ${vid.videoWidth} x ${vid.videoHeight} px`;
+            };
+            vid.onerror = () => {
+              const el = document.getElementById(elementId);
+              if (el) el.textContent = "Dimensioni: N/D";
+            };
+          } else {
+            const el = document.getElementById(elementId);
+            if (el) el.style.display = "none";
+          }
         });
 
         // Toggle panels
