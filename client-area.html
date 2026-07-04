@@ -520,28 +520,28 @@
         <form id="onboarding-form" onsubmit="handleOnboardingSubmit(event)">
           <div class="form-grid">
             
-            <div class="form-group grid-span-2">
-              <label class="form-label" for="onb-fullname">Nome e Cognome Completo</label>
-              <input type="text" id="onb-fullname" class="form-input" required placeholder="come indicato sul tuo documento d'identità">
+            <div class="form-group grid-span-2"><label class="form-label" for="onb-fullname">Nome e Cognome Completo</label><input type="text" id="onb-fullname" class="form-input" required placeholder="come indicato sul tuo documento d'identità"></div>
+            
+            <div class="form-group"><label class="form-label" for="onb-nationality">Nazionalità</label><select id="onb-nationality" class="form-input" required onchange="toggleNationalityFields(this.value)"><option value="Italiana">Italiana</option><option value="Estera">Estera</option></select></div>
+
+            <!-- Client type selection -->
+            <div class="form-group">
+              <span class="form-label">Tipo di Cliente</span>
+              <div style="display:flex; gap:1rem; margin-top:0.5rem;">
+                <label><input type="radio" name="client-type" value="privato" checked onchange="toggleCompanyFields(this.value)"> Privato</label>
+                <label><input type="radio" name="client-type" value="azienda" onchange="toggleCompanyFields(this.value)"> Azienda</label>
+              </div>
             </div>
 
-            <div class="form-group">
-              <label class="form-label" for="onb-nationality">Nazionalità</label>
-              <select id="onb-nationality" class="form-input" required onchange="toggleNationalityFields(this.value)">
-                <option value="Italiana">Italiana</option>
-                <option value="Estera">Estera</option>
-              </select>
+            <div class="form-group"><label class="form-label" id="label-tax-vat" for="onb-taxvat">Codice Fiscale / P.IVA</label><input type="text" id="onb-taxvat" class="form-input" required placeholder="Codice Fiscale (o P.IVA)"></div>
+            
+            <!-- Company specific fields, hidden by default -->
+            <div id="company-fields" style="display:none; grid-column: span 2; display: contents;">
+              <div class="form-group"><label class="form-label" for="company-name">Ragione Sociale / Nome Azienda</label><input type="text" id="company-name" class="form-input" placeholder="Nome dell'azienda"></div>
+              <div class="form-group"><label class="form-label" for="company-vat">Partita IVA</label><input type="text" id="company-vat" class="form-input" placeholder="IT12345678901"></div>
             </div>
 
-            <div class="form-group">
-              <label class="form-label" id="label-tax-vat" for="onb-taxvat">Codice Fiscale / P.IVA</label>
-              <input type="text" id="onb-taxvat" class="form-input" required placeholder="Codice Fiscale (o P.IVA)">
-            </div>
-
-            <div class="form-group">
-              <label class="form-label" for="onb-dob">Data di Nascita</label>
-              <input type="date" id="onb-dob" class="form-input" required>
-            </div>
+            <div class="form-group"><label class="form-label" for="onb-dob">Data di Nascita</label><input type="date" id="onb-dob" class="form-input" required></div>
 
             <div class="form-group">
               <label class="form-label" for="onb-pob">Comune / Luogo di Nascita</label>
