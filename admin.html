@@ -139,10 +139,11 @@
       display: grid;
       grid-template-columns: 1fr;
       gap: 35px;
+      margin-bottom: 40px;
     }
-    @media (min-width: 900px) {
+    @media (min-width: 950px) {
       .dashboard-grid {
-        grid-template-columns: 2fr 1.2fr;
+        grid-template-columns: 1fr 1fr;
       }
     }
 
@@ -168,6 +169,35 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+    }
+
+    /* Form Fields styling */
+    .form-group {
+      margin-bottom: 20px;
+    }
+    .form-label {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      margin-bottom: 8px;
+    }
+    .form-input {
+      width: 100%;
+      background-color: rgba(0, 0, 0, 0.25);
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      color: var(--text-primary);
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      padding: 12px 16px;
+      outline: none;
+      transition: all 0.3s ease;
+    }
+    .form-input:focus {
+      border-color: rgba(229, 9, 20, 0.5);
     }
 
     /* User Table */
@@ -254,6 +284,56 @@
       color: #fff;
     }
 
+    /* Buttons */
+    .btn-submit {
+      width: 100%;
+      background-color: var(--accent);
+      color: #FFFFFF;
+      border: 1px solid var(--accent);
+      border-radius: 4px;
+      padding: 14px 20px;
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .btn-submit:hover {
+      background-color: #B20710;
+      border-color: #B20710;
+      transform: translateY(-1px);
+      box-shadow: 0 5px 15px rgba(229, 9, 20, 0.3);
+    }
+    .btn-submit:disabled {
+      background-color: rgba(229, 9, 20, 0.4);
+      border-color: transparent;
+      color: rgba(255, 255, 255, 0.5);
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    /* Spinner */
+    .spinner {
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-radius: 50%;
+      border-top-color: #fff;
+      animation: spin 0.8s linear infinite;
+      display: none;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
     /* SQL Assistant / Instructions */
     .sql-code-box {
       background-color: rgba(0, 0, 0, 0.25);
@@ -317,11 +397,11 @@
   <main>
     <div class="welcome-section">
       <h1 class="welcome-title">Area Amministrazione</h1>
-      <p class="welcome-desc">Gestisci le autorizzazioni di accesso per le sezioni protette del tuo portfolio.</p>
+      <p class="welcome-desc">Gestisci le autorizzazioni di accesso e condividi file, provini, PDF o video per ciascun cliente.</p>
     </div>
 
     <div class="dashboard-grid">
-      <!-- Left Panel: User list and controls -->
+      <!-- 1. LEFT PANEL: Registered Users -->
       <section class="dashboard-card">
         <h2 class="card-title">
           <span>Utenti Registrati</span>
@@ -347,52 +427,95 @@
         </div>
       </section>
 
-      <!-- Right Panel: SQL Assistant and setup instructions -->
+      <!-- 2. RIGHT PANEL: Client File Manager -->
       <section class="dashboard-card">
-        <h2 class="card-title">Assistente SQL Supabase</h2>
+        <h2 class="card-title">Condivisione File Clienti</h2>
         
-        <div class="instruction-step">
-          <p><strong>Configura il tuo Database:</strong></p>
-          <p>Se non l'hai ancora fatto, accedi a Supabase, apri l'<strong>SQL Editor</strong> e incolla questo script per creare la tabella ed attivare l'approvazione automatica:</p>
+        <div class="form-group">
+          <label class="form-label" for="client-select">Seleziona Cliente</label>
+          <select id="client-select" class="form-input" onchange="onClientSelected()">
+            <option value="">-- Seleziona un cliente registrato --</option>
+          </select>
         </div>
 
-        <div class="sql-code-box">-- 1. Crea la tabella dei profili
-create table public.profiles (
-  id uuid references auth.users on delete cascade primary key,
-  email text not null,
-  is_approved boolean default false,
-  is_admin boolean default false, -- Campo ruolo amministratore
-  created_at timestamp with time zone default timezone('utc'::text, now()) not null
-);
+        <!-- File upload and list container (shown when a client is selected) -->
+        <div id="upload-controls-section" style="display: none;">
+          
+          <div class="form-group">
+            <label class="form-label">Carica File (Foto, Video, PDF, Audio, Documenti)</label>
+            <div id="drop-zone" style="border: 2px dashed rgba(255, 255, 255, 0.15); border-radius: 6px; padding: 30px 15px; text-align: center; cursor: pointer; transition: all 0.3s;" ondragover="event.preventDefault(); this.style.borderColor='var(--accent)';" ondragleave="this.style.borderColor='rgba(255, 255, 255, 0.15)';" ondrop="handleFileDrop(event)">
+              <span id="drop-zone-text" style="font-size:0.85rem; color:var(--text-secondary);">Trascina qui i file oppure clicca per selezionare</span>
+              <input type="file" id="file-input" style="display: none;" onchange="handleFileSelect(event)" multiple>
+            </div>
+            <div id="selected-files-list" style="margin-top: 10px; font-size: 0.78rem; color: var(--accent); word-break: break-all;"></div>
+          </div>
 
--- 2. Abilita la lettura pubblica
-alter table public.profiles enable row level security;
-create policy "Lettura pubblica profili" on public.profiles
-  for select using (true);
-create policy "Modifica profili per amministratori" on public.profiles
-  for update using (true);
+          <button id="btn-upload-file" class="btn-submit" style="margin-top: 10px; display: none;" onclick="startFileUpload()">
+            <span class="spinner" id="upload-spinner"></span>
+            <span>Carica file selezionati</span>
+          </button>
 
--- 3. Crea la funzione di trigger
-create or replace function public.handle_new_user()
-returns trigger as $$
-begin
-  insert into public.profiles (id, email, is_approved)
-  values (new.id, new.email, false);
-  return new;
-end;
-$$ language plpgsql security definer;
+          <h3 style="font-family:var(--font-display); font-size:0.85rem; letter-spacing:0.1em; text-transform:uppercase; margin: 35px 0 15px 0; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">File Attualmente Condivisi</h3>
+          
+          <div class="table-container">
+            <table id="files-table">
+              <thead>
+                <tr>
+                  <th>Nome File</th>
+                  <th>Dimensione</th>
+                  <th style="text-align: right;">Azione</th>
+                </tr>
+              </thead>
+              <tbody id="files-list-body">
+                <tr>
+                  <td colspan="3" class="empty-state">Nessun file condiviso con questo cliente.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
 
--- 4. Attiva il trigger
-create trigger on_auth_user_created
-  after insert on auth.users
-  for each row execute procedure public.handle_new_user();</div>
+        </div>
+        
+        <div id="no-client-selected-message" class="empty-state">
+          Seleziona un cliente registrato dal menu a tendina sopra per visualizzare, caricare o eliminare i suoi file.
+        </div>
       </section>
     </div>
+
+    <!-- 3. BOTTOM PANEL: SQL Setup Assistant -->
+    <section class="dashboard-card" style="margin-top: 30px;">
+      <h2 class="card-title">Assistente SQL Supabase</h2>
+      
+      <div class="instruction-step">
+        <p><strong>Configurazione Regole di Sicurezza Storage:</strong></p>
+        <p>Dopo aver creato un bucket pubblico su Supabase denominato <strong><code>client-proofs</code></strong>, esegui questo script nell'<strong>SQL Editor</strong> per abilitare la gestione dei file agli amministratori e limitare la lettura ai rispettivi clienti:</p>
+      </div>
+
+      <div class="sql-code-box">-- ========================================================
+-- REGOLAZIONI DI SICUREZZA PER LO STORAGE DEI PROVINI
+-- ========================================================
+
+-- 1. Permette agli amministratori (is_admin = true) di gestire qualsiasi operazione
+create policy "Gestione totale file per amministratori" on storage.objects
+  for all using (
+    bucket_id = 'client-proofs' and
+    (select is_admin from public.profiles where id = auth.uid()) = true
+  );
+
+-- 2. Permette ai clienti approvati di leggere solo la propria cartella personale
+create policy "Lettura cartella personale per clienti" on storage.objects
+  for select using (
+    bucket_id = 'client-proofs' and
+    (select is_approved from public.profiles where id = auth.uid()) = true and
+    name like (select email from public.profiles where id = auth.uid()) || '/%'
+  );</div>
+    </section>
   </main>
 
   <script>
     let supabaseClient = null;
     let currentUser = null;
+    let filesToUpload = [];
 
     // Check if configuration parameters are set
     const isConfigured = typeof config !== 'undefined' && 
@@ -448,6 +571,10 @@ create trigger on_auth_user_created
         
         // Load the list of users
         loadProfiles();
+
+        // Load the dropdown list of clients
+        loadClientDropdown();
+
       } catch (err) {
         console.error("Auth check error:", err);
         window.location.href = "login.html";
@@ -546,8 +673,237 @@ create trigger on_auth_user_created
           return;
         }
 
-        // Reload user list
+        // Reload user list and dropdown
         loadProfiles();
+        loadClientDropdown();
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    // Populates dropdown selector with approved non-admin clients
+    async function loadClientDropdown() {
+      if (!supabaseClient) return;
+      const select = document.getElementById("client-select");
+      const currentSelected = select.value;
+
+      try {
+        const { data: clients, error } = await supabaseClient
+          .from('profiles')
+          .select('email')
+          .eq('is_approved', true)
+          .eq('is_admin', false)
+          .order('email');
+
+        if (error) {
+          console.error("Error loading dropdown:", error);
+          return;
+        }
+
+        select.innerHTML = '<option value="">-- Seleziona un cliente registrato --</option>';
+        clients.forEach(c => {
+          const opt = document.createElement("option");
+          opt.value = c.email;
+          opt.textContent = c.email;
+          select.appendChild(opt);
+        });
+
+        // Restore selection if still exists
+        if (currentSelected) {
+          select.value = currentSelected;
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    // Handle Client Select change
+    function onClientSelected() {
+      const select = document.getElementById("client-select");
+      const controls = document.getElementById("upload-controls-section");
+      const placeholder = document.getElementById("no-client-selected-message");
+
+      // Reset selected queue
+      filesToUpload = [];
+      document.getElementById("selected-files-list").textContent = "";
+      document.getElementById("btn-upload-file").style.display = "none";
+
+      if (select.value) {
+        controls.style.display = "block";
+        placeholder.style.display = "none";
+        loadClientFiles(select.value);
+      } else {
+        controls.style.display = "none";
+        placeholder.style.display = "block";
+      }
+    }
+
+    // Load files shared with the selected client from Supabase Storage
+    async function loadClientFiles(email) {
+      if (!supabaseClient) return;
+
+      const tbody = document.getElementById("files-list-body");
+      tbody.innerHTML = '<tr><td colspan="3" class="empty-state">Caricamento file condivisi...</td></tr>';
+
+      try {
+        const { data: files, error } = await supabaseClient
+          .storage
+          .from('client-proofs')
+          .list(email);
+
+        if (error) {
+          console.error("Storage list error:", error);
+          tbody.innerHTML = `
+            <tr>
+              <td colspan="3" class="empty-state" style="color:#FF8A80;">
+                ⚠️ Errore durante il caricamento del materiale.<br>
+                Assicurati di aver creato il bucket <strong>client-proofs</strong> e applicato le politiche SQL.
+              </td>
+            </tr>
+          `;
+          return;
+        }
+
+        // Filter out system files
+        const activeFiles = files.filter(f => f.name !== '.emptyFolderPlaceholder' && f.name !== '.DS_Store');
+
+        if (!activeFiles || activeFiles.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="3" class="empty-state">Nessun file condiviso con questo cliente.</td></tr>';
+          return;
+        }
+
+        tbody.innerHTML = "";
+        
+        activeFiles.forEach(file => {
+          const row = document.createElement("tr");
+
+          // Size formatting
+          const sizeKB = (file.metadata?.size / 1024) || 0;
+          const sizeStr = sizeKB > 1024
+            ? (sizeKB / 1024).toFixed(2) + " MB"
+            : sizeKB.toFixed(1) + " KB";
+
+          // Icon resolver
+          const ext = file.name.split('.').pop().toLowerCase();
+          let icon = "📄";
+          if (['jpg', 'jpeg', 'png', 'webp', 'gif'].includes(ext)) icon = "🖼️";
+          if (['mp4', 'mov', 'webm'].includes(ext)) icon = "🎥";
+          if (['mp3', 'wav', 'ogg'].includes(ext)) icon = "🎵";
+          if (ext === 'pdf') icon = "📕";
+
+          row.innerHTML = `
+            <td><span style="margin-right:8px;">${icon}</span>${file.name}</td>
+            <td>${sizeStr}</td>
+            <td style="text-align: right;">
+              <button class="btn-action btn-suspend" onclick="deleteClientFile('${email}', '${file.name}')">Elimina</button>
+            </td>
+          `;
+          tbody.appendChild(row);
+        });
+
+      } catch (err) {
+        console.error("loadClientFiles err:", err);
+      }
+    }
+
+    // Drag and Drop Zone event attachments
+    document.addEventListener("DOMContentLoaded", () => {
+      const dropZone = document.getElementById("drop-zone");
+      if (dropZone) {
+        dropZone.onclick = () => document.getElementById("file-input").click();
+      }
+    });
+
+    function handleFileSelect(event) {
+      const files = event.target.files;
+      addFilesToQueue(files);
+    }
+
+    function handleFileDrop(event) {
+      event.preventDefault();
+      const dropZone = document.getElementById("drop-zone");
+      dropZone.style.borderColor = "rgba(255, 255, 255, 0.15)";
+      
+      const files = event.dataTransfer.files;
+      addFilesToQueue(files);
+    }
+
+    function addFilesToQueue(files) {
+      if (!files || files.length === 0) return;
+      
+      filesToUpload = Array.from(files);
+      const names = filesToUpload.map(f => f.name).join(", ");
+      document.getElementById("selected-files-list").textContent = `Selezionati per l'upload: ${filesToUpload.length} file (${names})`;
+      document.getElementById("btn-upload-file").style.display = "flex";
+    }
+
+    // Upload queued files to Supabase Storage client folder
+    async function startFileUpload() {
+      if (!supabaseClient || filesToUpload.length === 0) return;
+
+      const email = document.getElementById("client-select").value;
+      if (!email) return;
+
+      const btn = document.getElementById("btn-upload-file");
+      const spinner = document.getElementById("upload-spinner");
+
+      btn.disabled = true;
+      spinner.style.display = "inline-block";
+
+      try {
+        for (const file of filesToUpload) {
+          const filePath = `${email}/${file.name}`;
+          const { error } = await supabaseClient
+            .storage
+            .from('client-proofs')
+            .upload(filePath, file, {
+              upsert: true // Overwrite if it already exists
+            });
+
+          if (error) {
+            alert(`Errore durante il caricamento di ${file.name}: ${error.message}`);
+            btn.disabled = false;
+            spinner.style.display = "none";
+            return;
+          }
+        }
+
+        alert("File caricati con successo!");
+        filesToUpload = [];
+        document.getElementById("selected-files-list").textContent = "";
+        btn.style.display = "none";
+        
+        // Reload list
+        loadClientFiles(email);
+      } catch (err) {
+        console.error(err);
+        alert("Si è verificato un errore durante il caricamento.");
+      } finally {
+        btn.disabled = false;
+        spinner.style.display = "none";
+      }
+    }
+
+    // Delete a specific file from client folder
+    async function deleteClientFile(email, filename) {
+      if (!supabaseClient) return;
+
+      const confirmDelete = confirm(`Sei sicuro di voler eliminare definitivamente il file "${filename}" per questo cliente?`);
+      if (!confirmDelete) return;
+
+      try {
+        const { error } = await supabaseClient
+          .storage
+          .from('client-proofs')
+          .remove([`${email}/${filename}`]);
+
+        if (error) {
+          alert("Impossibile eliminare il file: " + error.message);
+          return;
+        }
+
+        // Reload file table
+        loadClientFiles(email);
       } catch (err) {
         console.error(err);
       }

@@ -224,6 +224,7 @@
       flex-direction: column;
       justify-content: flex-end;
       padding: 15px;
+      z-index: 2;
     }
     .gallery-item:hover .gallery-overlay {
       opacity: 1;
@@ -281,6 +282,7 @@
       object-fit: contain;
       box-shadow: 0 20px 60px rgba(0,0,0,0.8);
       border: 1px solid rgba(255,255,255,0.05);
+      display: none;
     }
     .lightbox-close {
       position: absolute;
@@ -292,6 +294,7 @@
       font-size: 2rem;
       cursor: pointer;
       transition: color 0.2s;
+      z-index: 1100;
     }
     .lightbox-close:hover {
       color: var(--text-primary);
@@ -336,10 +339,14 @@
     </div>
   </main>
 
-  <!-- Built-in Lightbox Preview -->
+  <!-- Built-in Lightbox Preview supporting Images, Video, and Audio -->
   <div class="lightbox-overlay" id="lightbox" onclick="closeLightbox()">
     <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
-    <img src="" alt="Preview Scatto" class="lightbox-img" id="lightbox-img" onclick="event.stopPropagation()">
+    <div id="lightbox-content" onclick="event.stopPropagation()" style="max-width:90%; max-height:85%; display:flex; justify-content:center; align-items:center;">
+      <img src="" alt="Preview" class="lightbox-img" id="lightbox-img">
+      <video src="" controls class="lightbox-img" id="lightbox-video" style="outline:none; max-width:100%; max-height:80vh;"></video>
+      <audio src="" controls id="lightbox-audio" style="display:none; width:320px; outline:none;"></audio>
+    </div>
   </div>
 
   <script>
@@ -392,7 +399,7 @@
         // Show page content (fade-in body)
         document.body.style.opacity = "1";
 
-        // Load client photos from Supabase Storage
+        // Load client photos/media from Supabase Storage
         loadClientPhotos();
       } catch (err) {
         console.error("Auth check error:", err);
@@ -441,18 +448,62 @@
             .from('client-proofs')
             .getPublicUrl(folderName + '/' + file.name);
 
+          // Get file type extension
+          const ext = file.name.split('.').pop().toLowerCase();
+          const isImage = ['jpg', 'jpeg', 'png', 'webp', 'gif'].includes(ext);
+          const isVideo = ['mp4', 'mov', 'webm'].includes(ext);
+          const isAudio = ['mp3', 'wav', 'ogg'].includes(ext);
+          const isPdf = ext === 'pdf';
+
           // Create item card
           const card = document.createElement("div");
           card.className = "gallery-item";
-          card.onclick = () => openLightbox(publicUrl);
 
-          card.innerHTML = `
-            <img src="${publicUrl}" alt="${file.name}" class="gallery-img" loading="lazy">
-            <div class="gallery-overlay">
-              <span class="img-title">${file.name}</span>
-              <a href="${publicUrl}" download="${file.name}" class="btn-download-item" onclick="event.stopPropagation()">Scarica</a>
-            </div>
-          `;
+          if (isImage) {
+            card.onclick = () => openLightbox(publicUrl, 'image');
+            card.innerHTML = `
+              <img src="${publicUrl}" alt="${file.name}" class="gallery-img" loading="lazy">
+              <div class="gallery-overlay">
+                <span class="img-title">${file.name}</span>
+                <a href="${publicUrl}" download="${file.name}" class="btn-download-item" onclick="event.stopPropagation()">Scarica</a>
+              </div>
+            `;
+          } else if (isVideo) {
+            card.onclick = () => openLightbox(publicUrl, 'video');
+            card.innerHTML = `
+              <video src="${publicUrl}" class="gallery-img" style="object-fit: cover;" preload="metadata" muted loop onmouseover="this.play()" onmouseout="this.pause()"></video>
+              <div class="gallery-overlay" style="opacity: 1; background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 50%);">
+                <span class="img-title">🎥 ${file.name}</span>
+                <a href="${publicUrl}" download="${file.name}" class="btn-download-item" onclick="event.stopPropagation()">Scarica</a>
+              </div>
+            `;
+          } else if (isAudio) {
+            card.onclick = () => openLightbox(publicUrl, 'audio');
+            card.innerHTML = `
+              <div class="gallery-img" style="display:flex; flex-direction:column; justify-content:center; align-items:center; background-color:rgba(255,255,255,0.02); height:100%;">
+                <span style="font-size:2.5rem; margin-bottom:10px;">🎵</span>
+                <span style="font-size:0.75rem; color:var(--text-secondary); max-width:80%; text-align:center; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${file.name}</span>
+              </div>
+              <div class="gallery-overlay" style="opacity: 1; background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 50%);">
+                <span class="img-title">${file.name}</span>
+                <a href="${publicUrl}" download="${file.name}" class="btn-download-item" onclick="event.stopPropagation()">Scarica</a>
+              </div>
+            `;
+          } else {
+            // Document, PDF or ZIP
+            const docIcon = isPdf ? "📕" : "📄";
+            card.onclick = () => window.open(publicUrl, '_blank');
+            card.innerHTML = `
+              <div class="gallery-img" style="display:flex; flex-direction:column; justify-content:center; align-items:center; background-color:rgba(255,255,255,0.02); height:100%;">
+                <span style="font-size:2.5rem; margin-bottom:10px;">${docIcon}</span>
+                <span style="font-size:0.75rem; color:var(--text-secondary); max-width:80%; text-align:center; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${file.name}</span>
+              </div>
+              <div class="gallery-overlay" style="opacity: 1; background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 50%);">
+                <span class="img-title">${file.name}</span>
+                <a href="${publicUrl}" download="${file.name}" class="btn-download-item" onclick="event.stopPropagation()" target="_blank">Scarica</a>
+              </div>
+            `;
+          }
 
           gridBody.appendChild(card);
         });
@@ -467,16 +518,45 @@
       }
     }
 
-    // Lightbox Controls
-    function openLightbox(url) {
+    // Lightbox Controls supporting different formats
+    function openLightbox(url, type) {
       const lightbox = document.getElementById("lightbox");
-      const lightboxImg = document.getElementById("lightbox-img");
-      lightboxImg.src = url;
+      const img = document.getElementById("lightbox-img");
+      const video = document.getElementById("lightbox-video");
+      const audio = document.getElementById("lightbox-audio");
+
+      // Hide all elements
+      img.style.display = "none";
+      video.style.display = "none";
+      audio.style.display = "none";
+
+      if (type === 'image') {
+        img.src = url;
+        img.style.display = "block";
+      } else if (type === 'video') {
+        video.src = url;
+        video.style.display = "block";
+        video.play();
+      } else if (type === 'audio') {
+        audio.src = url;
+        audio.style.display = "block";
+        audio.play();
+      }
+
       lightbox.classList.add("active");
     }
 
     function closeLightbox() {
       const lightbox = document.getElementById("lightbox");
+      const video = document.getElementById("lightbox-video");
+      const audio = document.getElementById("lightbox-audio");
+
+      // Reset src to stop media playback
+      video.pause();
+      video.src = "";
+      audio.pause();
+      audio.src = "";
+
       lightbox.classList.remove("active");
     }
 
