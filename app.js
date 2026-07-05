@@ -26,6 +26,8 @@ document.addEventListener("DOMContentLoaded", () => {
   let previousSectionId = "overview";
   let lightboxImages = [];
   let lightboxIndex = 0;
+  let touchStartX = 0;
+  let touchStartY = 0;
   
   // Pagination State for Overview Grid
   const OVERVIEW_BATCH_SIZE = 24;
@@ -1035,6 +1037,10 @@ document.addEventListener("DOMContentLoaded", () => {
     lightboxNext.addEventListener("click", nextLightbox);
     document.addEventListener("keydown", handleLightboxKeys);
     
+    // Touch swipe listeners for mobile/tablet devices
+    lightbox.addEventListener("touchstart", handleTouchStart, { passive: true });
+    lightbox.addEventListener("touchend", handleTouchEnd, { passive: true });
+    
     // Close on background click
     lightbox.addEventListener("click", handleLightboxBgClick);
   }
@@ -1055,6 +1061,11 @@ document.addEventListener("DOMContentLoaded", () => {
     lightboxPrev.removeEventListener("click", prevLightbox);
     lightboxNext.removeEventListener("click", nextLightbox);
     document.removeEventListener("keydown", handleLightboxKeys);
+    
+    // Touch swipe listeners removal
+    lightbox.removeEventListener("touchstart", handleTouchStart);
+    lightbox.removeEventListener("touchend", handleTouchEnd);
+    
     lightbox.removeEventListener("click", handleLightboxBgClick);
   }
 
@@ -1235,6 +1246,33 @@ document.addEventListener("DOMContentLoaded", () => {
     
     if (!clickedInsideImage && !clickedNavs) {
       closeLightbox();
+    }
+  }
+
+  function handleTouchStart(e) {
+    if (e.touches && e.touches.length > 0) {
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+    }
+  }
+
+  function handleTouchEnd(e) {
+    if (e.changedTouches && e.changedTouches.length > 0) {
+      const touchEndX = e.changedTouches[0].clientX;
+      const touchEndY = e.changedTouches[0].clientY;
+      
+      const diffX = touchEndX - touchStartX;
+      const diffY = touchEndY - touchStartY;
+      
+      // Check if horizontal swipe magnitude is greater than vertical (prevents swipe on vertical scroll/drag)
+      // and satisfies swipe threshold of 45px
+      if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 45) {
+        if (diffX > 0) {
+          prevLightbox(); // Swipe right -> previous photo
+        } else {
+          nextLightbox(); // Swipe left -> next photo
+        }
+      }
     }
   }
 
