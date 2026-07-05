@@ -62,7 +62,8 @@ document.addEventListener("DOMContentLoaded", () => {
       "body-form",
       "portraits-beauty",
       "film-work",
-      "bio-contact"
+      "bio-contact",
+      "unpublished-research"
     ];
     
     if (initialHash && validSections.includes(initialHash)) {
@@ -134,8 +135,14 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function switchSection(targetId, animate = true) {
+    let sectionId = targetId;
+
+    if (targetId === "unpublished-research") {
+      sectionId = "editorials";
+    }
+
     const currentActive = document.querySelector(".spa-section.active");
-    const targetSection = document.getElementById(targetId);
+    const targetSection = document.getElementById(sectionId);
     if (!targetSection) return;
 
     // Update state
@@ -152,14 +159,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Update parent dropdown toggle active states
     const archiveToggles = document.querySelectorAll('[data-dropdown="archive"]');
-    const archiveSections = ["editorials", "campaigns-fashion", "campaigns-lingerie", "campaigns-swimwear"];
+    const archiveSections = ["editorials", "campaigns-fashion", "campaigns-lingerie", "campaigns-swimwear", "unpublished-research"];
     if (archiveSections.includes(targetId)) {
       archiveToggles.forEach(toggle => toggle.classList.add("active"));
     } else {
       archiveToggles.forEach(toggle => toggle.classList.remove("active"));
     }
 
-    if (currentActive && currentActive.id === targetId) {
+    if (currentActive && currentActive.id === sectionId && targetId !== "editorials" && targetId !== "unpublished-research") {
       return;
     }
 
@@ -179,6 +186,10 @@ document.addEventListener("DOMContentLoaded", () => {
         targetSection.style.opacity = "1";
         targetSection.style.transform = "translateY(0)";
         
+        if (targetId === "unpublished-research") {
+          showUnpublishedResearchDirectly();
+        }
+        
         // Scroll to top
         window.scrollTo({ top: 0, behavior: "smooth" });
       }, 400);
@@ -196,10 +207,14 @@ document.addEventListener("DOMContentLoaded", () => {
       targetSection.classList.add("active");
       targetSection.style.opacity = "1";
       targetSection.style.transform = "translateY(0)";
+
+      if (targetId === "unpublished-research") {
+        showUnpublishedResearchDirectly();
+      }
     }
     
     // Close detail view of editorial when leaving the editorials tab
-    if (targetId !== "editorials") {
+    if (targetId !== "unpublished-research") {
       resetEditorialDetails();
     }
   }
@@ -391,33 +406,7 @@ document.addEventListener("DOMContentLoaded", () => {
         showEditorialProject(project);
       });
       grid.appendChild(card);
-    });
-
-    // Render unpublished research as a special project card
-    if (portfolioData.editorials.unpublished_research && portfolioData.editorials.unpublished_research.length > 0) {
-      const unpublishedImages = portfolioData.editorials.unpublished_research;
-      
-      // Seleziona la cover ottimale (orizzontale) anche per gli inediti
-      let coverImg = unpublishedImages.find(img => img.is_horizontal && !img.url.toLowerCase().includes("cover"));
-      if (!coverImg) {
-        coverImg = unpublishedImages.find(img => img.is_horizontal);
-      }
-      if (!coverImg) {
-        coverImg = unpublishedImages[0];
-      }
-
-      const card = createEditorialCard("Unpublished Research", coverImg.url, () => {
-        showEditorialProject({
-          title: "Unpublished Research",
-          id: "unpublished-research",
-          place: "",
-          magazine: "",
-          images: unpublishedImages
-        });
-      });
-      grid.appendChild(card);
-    }
-  }
+    });  }
 
   function createEditorialCard(title, coverUrl, clickCallback) {
     const card = document.createElement("div");
@@ -583,9 +572,28 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Return to editorials covers grid
+  // Return to editorials covers grid or hash redirect
   const btnBackEditorials = document.getElementById("btn-back-editorials");
   if (btnBackEditorials) {
-    btnBackEditorials.addEventListener("click", resetEditorialDetails);
+    btnBackEditorials.addEventListener("click", () => {
+      if (window.location.hash === "#editorials") {
+        resetEditorialDetails();
+      } else {
+        window.location.hash = "editorials";
+      }
+    });
+  }
+
+  function showUnpublishedResearchDirectly() {
+    if (typeof portfolioData !== "undefined" && portfolioData.editorials && portfolioData.editorials.unpublished_research) {
+      showEditorialProject({
+        title: "Unpublished Research",
+        id: "unpublished-research",
+        place: "",
+        magazine: "",
+        images: portfolioData.editorials.unpublished_research
+      });
+    }
   }
 
   function resetEditorialDetails() {
