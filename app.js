@@ -874,14 +874,45 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  function generateCuratedUnpublishedResearchList(images) {
+    if (!images || images.length === 0) return [];
+
+    const giacomoImages = [];
+    const marcoImages = [];
+    const remainingImages = [];
+
+    images.forEach(img => {
+      const url = img.url.toLowerCase();
+      if (url.includes("giacomo-cavalli")) {
+        giacomoImages.push(img);
+      } else if (url.includes("portraits-milano")) {
+        // Marco Di Carlo photos are identified by the portraits-milano keyword (not Giacomo Cavalli)
+        marcoImages.push(img);
+      } else {
+        remainingImages.push(img);
+      }
+    });
+
+    // Fisher-Yates shuffle for the remaining images (street style)
+    for (let i = remainingImages.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      const temp = remainingImages[i];
+      remainingImages[i] = remainingImages[j];
+      remainingImages[j] = temp;
+    }
+
+    return [...giacomoImages, ...marcoImages, ...remainingImages];
+  }
+
   function showUnpublishedResearchDirectly() {
     if (typeof portfolioData !== "undefined" && portfolioData.editorials && portfolioData.editorials.unpublished_research) {
+      const curatedList = generateCuratedUnpublishedResearchList(portfolioData.editorials.unpublished_research);
       showEditorialProject({
         title: "Unpublished Research",
         id: "unpublished-research",
         place: "",
         magazine: "",
-        images: portfolioData.editorials.unpublished_research
+        images: curatedList
       });
     }
   }
