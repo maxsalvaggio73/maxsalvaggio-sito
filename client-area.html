@@ -15,6 +15,9 @@
   
   <!-- Local Config -->
   <script src="config.js"></script>
+  
+  <!-- Portfolio Database -->
+  <script src="archive-data.js"></script>
 
   <!-- Main Portfolio Stylesheet -->
   <link rel="stylesheet" href="styles.css">
@@ -468,7 +471,14 @@
   }
   </style>
 
-  <header>
+  <!-- DYNAMIC BACKGROUND -->
+  <div id="mosaic-bg">
+    <div id="mosaic-canvas-wrapper"></div>
+  </div>
+  <div id="mosaic-overlay"></div>
+
+  <div id="page-wrapper">
+    <header>
     <div class="header-container">
       <button class="hamburger" id="hamburger" aria-label="Toggle Menu" aria-expanded="false">
         <span></span>
@@ -525,7 +535,7 @@
     </nav>
   </div>
 
-  <main>
+  <main class="glass-card" style="margin: 40px auto; max-width: 1200px;">
     <div class="welcome-section">
       <h1 class="welcome-title">Area Clienti</h1>
       <p class="welcome-desc">Accesso protetto per <span class="welcome-user-email" id="client-email">...</span></p>
@@ -743,6 +753,11 @@
       <audio src="" controls id="lightbox-audio" style="display:none; width:320px; outline:none;"></audio>
     </div>
   </div>
+
+  <div class="footer-credit">
+    © <span id="year"></span> Max Salvaggio. All rights reserved.
+  </div>
+</div>
 
   <script>
     let supabaseClient = null;
@@ -1394,6 +1409,187 @@
           arrow.style.transform = mobileSubmenu.classList.contains("open") ? "rotate(180deg)" : "rotate(0deg)";
         }
       });
+    }
+
+    // Dynamic Mosaic Background Engine
+    (function buildMosaic() {
+      const wrapper = document.getElementById('mosaic-canvas-wrapper');
+      if (!wrapper) return;
+
+      // Extract all images from portfolioData
+      const ALL_IMAGES = [];
+      if (typeof portfolioData !== 'undefined') {
+        if (portfolioData.overview) {
+          portfolioData.overview.forEach(img => ALL_IMAGES.push(img.url));
+        }
+        if (portfolioData.campaigns) {
+          if (portfolioData.campaigns.fashion) portfolioData.campaigns.fashion.forEach(img => ALL_IMAGES.push(img.url));
+          if (portfolioData.campaigns.lingerie) portfolioData.campaigns.lingerie.forEach(img => ALL_IMAGES.push(img.url));
+          if (portfolioData.campaigns.swimwear) portfolioData.campaigns.swimwear.forEach(img => ALL_IMAGES.push(img.url));
+        }
+        if (portfolioData.editorials) {
+          if (portfolioData.editorials.projects) {
+            portfolioData.editorials.projects.forEach(proj => {
+              if (proj.images) proj.images.forEach(img => ALL_IMAGES.push(img.url));
+            });
+          }
+          if (portfolioData.editorials.unpublished_research) {
+            portfolioData.editorials.unpublished_research.forEach(img => ALL_IMAGES.push(img.url));
+          }
+        }
+        if (portfolioData.body_form) {
+          if (portfolioData.body_form.organic_sculptures) portfolioData.body_form.organic_sculptures.forEach(img => ALL_IMAGES.push(img.url));
+          if (portfolioData.body_form.raw_geometry) portfolioData.body_form.raw_geometry.forEach(img => ALL_IMAGES.push(img.url));
+        }
+      }
+
+      if (ALL_IMAGES.length === 0) return;
+
+      // Shuffle images array (Fisher-Yates)
+      function shuffle(arr) {
+        const a = [...arr];
+        for (let i = a.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [a[i], a[j]] = [a[j], a[i]];
+        }
+        return a;
+      }
+
+      const CANVAS_W = 3840;
+      const CANVAS_H = 2160;
+
+      const PORTRAIT_W  = 340;
+      const PORTRAIT_H  = 440;
+      const LANDSCAPE_W = 480;
+      const LANDSCAPE_H = 320;
+      const GAP = 4;
+
+      const tiles = [];
+      let cursorY = 0;
+
+      const shuffled = shuffle(ALL_IMAGES);
+      let imgIdx = 0;
+
+      function nextImg() {
+        const url = shuffled[imgIdx % shuffled.length];
+        imgIdx++;
+        return url;
+      }
+
+      while (cursorY < CANVAS_H + PORTRAIT_H) {
+        let cursorX = 0;
+        const rowStyle = Math.random() > 0.5 ? 'portrait' : 'mixed';
+        const rowTiles = [];
+
+        while (cursorX < CANVAS_W) {
+          let tw, th;
+          if (rowStyle === 'portrait') {
+            tw = PORTRAIT_W;
+            th = PORTRAIT_H;
+          } else {
+            if (Math.random() < 0.4) {
+              tw = LANDSCAPE_W;
+              th = LANDSCAPE_H;
+            } else {
+              tw = PORTRAIT_W;
+              th = PORTRAIT_H;
+            }
+          }
+
+          if (cursorX + tw > CANVAS_W) {
+            tw = CANVAS_W - cursorX;
+          }
+
+          rowTiles.push({ x: cursorX, y: cursorY, w: tw, h: th, url: nextImg() });
+          cursorX += tw + GAP;
+        }
+
+        const rowH = Math.max(...rowTiles.map(t => t.h));
+        rowTiles.forEach(t => { t.h = rowH; });
+
+        tiles.push(...rowTiles);
+        cursorY += rowH + GAP;
+      }
+
+      wrapper.style.width  = CANVAS_W + 'px';
+      wrapper.style.height = cursorY + 'px';
+      wrapper.style.position = 'absolute';
+
+      tiles.forEach(t => {
+        const tile = document.createElement('div');
+        tile.className = 'mosaic-tile';
+        tile.style.cssText = `
+          position: absolute;
+          left: ${t.x}px;
+          top: ${t.y}px;
+          width: ${t.w}px;
+          height: ${t.h}px;
+        `;
+
+        const img = document.createElement('img');
+        img.src = t.url;
+        img.alt = '';
+        img.loading = 'lazy';
+        img.decoding = 'async';
+        tile.appendChild(img);
+        wrapper.appendChild(tile);
+      });
+
+      function scaleMosaic() {
+        const vw = window.innerWidth;
+        const vh = window.innerHeight;
+        const scaleX = vw / CANVAS_W;
+        const scaleY = vh / cursorY;
+        const scale  = Math.max(scaleX, scaleY);
+
+        const scaledW = CANVAS_W * scale;
+        const scaledH = cursorY * scale;
+
+        const offsetX = (vw - scaledW) / 2;
+        const offsetY = (vh - scaledH) / 2;
+
+        wrapper.style.transformOrigin = '0 0';
+        wrapper.style.transform = `translate(${offsetX}px, ${offsetY}px) scale(${scale})`;
+      }
+
+      scaleMosaic();
+      window.addEventListener('resize', scaleMosaic);
+
+      let driftX = 0, driftY = 0;
+      let targetX = 0, targetY = 0;
+      const MAX_DRIFT = 40;
+
+      setInterval(() => {
+        targetX = (Math.random() * 2 - 1) * MAX_DRIFT;
+        targetY = (Math.random() * 2 - 1) * MAX_DRIFT;
+      }, 6000);
+
+      function animateDrift() {
+        driftX += (targetX - driftX) * 0.005;
+        driftY += (targetY - driftY) * 0.005;
+
+        const vw = window.innerWidth;
+        const vh = window.innerHeight;
+        const scaleX = vw / CANVAS_W;
+        const scaleY = vh / cursorY;
+        const scale  = Math.max(scaleX, scaleY);
+
+        const scaledW = CANVAS_W * scale;
+        const scaledH = cursorY * scale;
+        const offsetX = (vw - scaledW) / 2 + driftX;
+        const offsetY = (vh - scaledH) / 2 + driftY;
+
+        wrapper.style.transform = `translate(${offsetX}px, ${offsetY}px) scale(${scale})`;
+        requestAnimationFrame(animateDrift);
+      }
+
+      requestAnimationFrame(animateDrift);
+    })();
+
+    // Set copyright year
+    const yearEl = document.getElementById('year');
+    if (yearEl) {
+      yearEl.textContent = new Date().getFullYear();
     }
 
     document.addEventListener("DOMContentLoaded", checkAuth);
