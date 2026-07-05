@@ -318,7 +318,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Create standard gallery item with lazy image fade-in and hover background trigger
   function createGalleryItem(img, index, imagesList, tag) {
     const item = document.createElement("div");
-    const isOverviewStyle = ["OVERVIEW", "FASHION", "LINGERIE", "SWIMMWEAR", "BODY & FORM", "EDITORIALS"].includes(tag);
+    const isOverviewStyle = ["OVERVIEW", "FASHION", "LINGERIE", "SWIMMWEAR", "BODY & FORM", "EDITORIALS", "PORTRAITS", "BEAUTY", "PET & PORTRAITS"].includes(tag);
     
     // Use overview-item for Overview and Campaigns sections (smaller, no text, original aspect ratios)
     // and gallery-item for other sections
