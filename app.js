@@ -47,6 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initTabs();
   initContactForm();
   initCursorTracker();
+  shuffleBackground();
 
   // ==========================================
   // 1. SPA ROUTING & SECTION TRANSITIONS
@@ -249,6 +250,29 @@ document.addEventListener("DOMContentLoaded", () => {
     // Close detail view of editorial when leaving the editorials tab
     if (targetId !== "unpublished-research") {
       resetEditorialDetails();
+    }
+
+    // Shuffle background when entering the overview section (home) from another section
+    if (targetId === "overview" && previousSectionId !== "overview") {
+      shuffleBackground();
+    }
+  }
+
+  function shuffleBackground() {
+    if (typeof portfolioData !== "undefined" && 
+        portfolioData.body_and_form && 
+        portfolioData.body_and_form.organic_sculptures && 
+        portfolioData.body_and_form.organic_sculptures.length > 0) {
+      
+      const items = portfolioData.body_and_form.organic_sculptures;
+      const randomIndex = Math.floor(Math.random() * items.length);
+      const selectedItem = items[randomIndex];
+      const imageUrl = selectedItem.url;
+      
+      const bgElement = document.getElementById("mosaic-bg");
+      if (bgElement) {
+        bgElement.style.backgroundImage = `url('${imageUrl}')`;
+      }
     }
   }
 
