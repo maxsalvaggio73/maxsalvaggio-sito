@@ -444,6 +444,22 @@ document.addEventListener("DOMContentLoaded", () => {
     const detailTitle = document.getElementById("editorial-detail-title");
     const detailGrid = document.getElementById("editorial-detail-grid");
 
+    // Hide the section title "Editorials" at the top
+    const sectionTitle = document.querySelector("#editorials .section-title");
+    if (sectionTitle) {
+      sectionTitle.style.display = "none";
+    }
+
+    // Update back button text based on project type
+    const btnBack = document.getElementById("btn-back-editorials");
+    if (btnBack) {
+      if (project.id === "unpublished-research") {
+        btnBack.innerHTML = "&larr; Back to Archive";
+      } else {
+        btnBack.innerHTML = "&larr; Back to Editorials";
+      }
+    }
+
     const mag = project.magazine || "";
     const placeStr = project.place ? ` &mdash; ${project.place}` : "";
     detailTitle.innerHTML = `
@@ -609,6 +625,12 @@ document.addEventListener("DOMContentLoaded", () => {
       detailView.classList.remove("active");
       detailView.classList.add("hidden");
       detailView.style.display = "none";
+      
+      // Restore the section title "Editorials" at the top
+      const sectionTitle = document.querySelector("#editorials .section-title");
+      if (sectionTitle) {
+        sectionTitle.style.display = "block";
+      }
       
       listView.style.display = "block";
       listView.classList.remove("hidden");
