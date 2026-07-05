@@ -1265,7 +1265,7 @@ footer {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 50px;
-  align-items: start;
+  align-items: stretch;
   max-width: 1200px;
   margin: 0 auto;
 }
@@ -1275,19 +1275,28 @@ footer {
     grid-template-columns: 1fr;
     gap: 30px;
   }
-  .profile-img-large {
+  .bio-text-column {
+    height: auto !important;
+  }
+  .profile-frame-large {
     height: 500px !important;
+  }
+  .profile-img-large {
+    height: 100% !important;
   }
 }
 
 .bio-text-column {
   display: flex;
   flex-direction: column;
-  gap: 35px;
+  justify-content: space-between;
+  height: 900px;
+  box-sizing: border-box;
 }
 
 .profile-frame-large {
   width: 100%;
+  height: 900px;
   border-radius: 4px;
   overflow: hidden;
   box-shadow: 0 15px 40px rgba(0,0,0,0.5);
@@ -1296,7 +1305,7 @@ footer {
 
 .profile-img-large {
   width: 100%;
-  height: 900px;
+  height: 100%;
   object-fit: cover;
   display: block;
   filter: grayscale(1) brightness(0.85);
@@ -1315,6 +1324,9 @@ footer {
   flex-direction: column;
   gap: 15px;
   font-weight: 300;
+}
+.bio-text p:not(.signature) {
+  text-align: justify;
 }
 .bio-text .lead-text {
   font-size: 0.92rem;
