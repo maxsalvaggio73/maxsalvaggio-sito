@@ -1,387 +1,943 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Max Salvaggio — Photography &amp; Creative Direction</title>
-  <meta name="description" content="Sito ufficiale di Max Salvaggio, fotografo di moda, commerciale, lingerie, swimwear e portraits. Direzione creativa a Milano.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800;900&amp;family=Outfit:wght@300;400;500;600;700&amp;family=Montserrat:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Max Salvaggio — Coming Soon</title>
+  <meta name="description" content="Il nuovo sito di Max Salvaggio è in arrivo. Fotografo di moda, lingerie, swimwear e commercial. Contattaci per informazioni." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@300;400;700;900&family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    :root {
+      --anthracite: #2D3032;
+      --accent: #ff3366;
+      --font-display: 'Epilogue', sans-serif;
+      --font-body: 'Outfit', sans-serif;
+      /* Vetro fumé */
+      --card-bg: rgba(18, 18, 20, 0.42);
+      --card-border: rgba(255, 255, 255, 0.09);
+      --card-text: rgba(255, 255, 255, 0.92);
+      --card-muted: rgba(255, 255, 255, 0.42);
+      --input-bg: rgba(255, 255, 255, 0.055);
+      --input-border: rgba(255, 255, 255, 0.14);
+      --input-focus-border: rgba(255, 255, 255, 0.55);
+      --input-focus-shadow: rgba(255, 255, 255, 0.06);
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      font-family: var(--font-body);
+      background: var(--anthracite);
+    }
+
+    /* ===== MOSAIC BACKGROUND ===== */
+    #mosaic-bg {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    /* The actual mosaic canvas — rendered at 4K logical size, scaled to cover viewport */
+    #mosaic-canvas-wrapper {
+      position: absolute;
+      /* Will be sized & positioned by JS to always cover the viewport at cover ratio */
+      top: 0;
+      left: 0;
+      display: flex;
+      flex-wrap: wrap;
+      align-content: flex-start;
+      /* 4K target grid: width will be set by JS */
+    }
+
+    .mosaic-tile {
+      flex-shrink: 0;
+      overflow: hidden;
+      display: block;
+    }
+
+    .mosaic-tile img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: brightness(0.82) saturate(0.9);
+      transition: filter 0.4s ease;
+    }
+
+    /* Smooth slow pan animation */
+    @keyframes mosaicDrift {
+      0%   { transform: translate(0, 0); }
+      25%  { transform: translate(-1%, -0.5%); }
+      50%  { transform: translate(-2%, -1%); }
+      75%  { transform: translate(-1%, -0.5%); }
+      100% { transform: translate(0, 0); }
+    }
+
+    /* Dark gradient overlay on top of mosaic */
+    #mosaic-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      background:
+        radial-gradient(ellipse 80% 70% at 50% 50%, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.78) 100%),
+        linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.15) 40%, rgba(0,0,0,0.6) 100%);
+      pointer-events: none;
+    }
+
+    /* Subtle mosaic shimmer vignette */
+    #mosaic-overlay::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 50% 50% at 50% 50%, transparent 30%, rgba(0,0,0,0.3) 100%);
+    }
+
+    /* ===== PAGE LAYOUT ===== */
+    #page-wrapper {
+      position: relative;
+      z-index: 2;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 30px 20px;
+    }
+
+    /* ===== LOGO / HEADER ===== */
+    .cs-logo {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: clamp(1.4rem, 3.5vw, 2.6rem);
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: #ffffff;
+      text-align: center;
+      margin-bottom: 8px;
+      text-shadow: 0 2px 20px rgba(0,0,0,0.6);
+      transform: translateX(0.2em); /* offset for letter-spacing centering */
+    }
+
+    .cs-tagline {
+      font-family: var(--font-body);
+      font-size: clamp(0.7rem, 1.5vw, 0.85rem);
+      font-weight: 300;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    /* ===== VETRO FUMÉ CARD ===== */
+    .glass-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(18px) saturate(1.4) brightness(0.85);
+      -webkit-backdrop-filter: blur(18px) saturate(1.4) brightness(0.85);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: clamp(30px, 5vw, 52px) clamp(28px, 5vw, 56px);
+      width: 100%;
+      max-width: 500px;
+      box-shadow:
+        0 24px 60px rgba(0, 0, 0, 0.50),
+        0 1px 0 rgba(255,255,255,0.10) inset;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Riga luminosa sottile sul bordo superiore */
+    .glass-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 10%;
+      right: 10%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.30), transparent);
+    }
+
+    .card-headline {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: clamp(1.4rem, 2.8vw, 1.9rem);
+      color: var(--card-text);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 6px;
+      line-height: 1.1;
+    }
+
+    .card-sub {
+      font-size: 0.78rem;
+      color: var(--card-muted);
+      letter-spacing: 0.08em;
+      margin-bottom: 30px;
+      font-weight: 300;
+    }
+
+    /* Linea separatore elegante sotto il titolo */
+    .card-divider {
+      width: 36px;
+      height: 1px;
+      background: rgba(255,255,255,0.25);
+      margin: 0 0 28px 0;
+    }
+
+    /* ===== FORM ===== */
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .form-group label {
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--card-muted);
+      padding-left: 1px;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      background: var(--input-bg);
+      border: none;
+      border-bottom: 1px solid var(--input-border);
+      border-radius: 0;
+      color: var(--card-text);
+      font-family: var(--font-body);
+      font-size: 0.90rem;
+      font-weight: 300;
+      padding: 10px 2px;
+      outline: none;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+      width: 100%;
+      resize: none;
+    }
+
+    .form-group input::placeholder,
+    .form-group textarea::placeholder {
+      color: rgba(255, 255, 255, 0.20);
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-bottom-color: var(--input-focus-border);
+      box-shadow: 0 1px 0 var(--input-focus-border);
+    }
+
+    .form-group textarea {
+      min-height: 90px;
+      max-height: 160px;
+    }
+
+    /* Hidden honeypot field for Formspree spam protection */
+    .form-honey {
+      display: none;
+    }
+
+    /* ===== SUBMIT BUTTON — Ghost outline bianco su vetro fumé ===== */
+    .btn-submit {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: transparent;
+      color: rgba(255,255,255,0.88);
+      border: 1px solid rgba(255,255,255,0.28);
+      border-radius: 8px;
+      font-family: var(--font-body);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      padding: 14px 28px;
+      cursor: pointer;
+      overflow: hidden;
+      transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease, transform 0.25s ease;
+      margin-top: 8px;
+      width: 100%;
+    }
+
+    .btn-submit::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(255,255,255,0.06);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .btn-submit:hover {
+      background: rgba(255,255,255,0.10);
+      border-color: rgba(255,255,255,0.55);
+      color: #ffffff;
+      transform: translateY(-1px);
+    }
+
+    .btn-submit:hover::before {
+      opacity: 1;
+    }
+
+    .btn-submit:active {
+      transform: translateY(0);
+    }
+
+    .btn-submit:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* Spinner */
+    .btn-spinner {
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(255,255,255,0.4);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      display: none;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .btn-submit.loading .btn-spinner { display: block; }
+    .btn-submit.loading .btn-text { display: none; }
+
+    /* ===== SUCCESS MESSAGE ===== */
+    .success-msg {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 14px;
+      padding: 12px 0;
+    }
+
+    .success-msg.visible {
+      display: flex;
+    }
+
+    .success-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #00c47a, #00a061);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 24px rgba(0,196,122,0.35);
+    }
+
+    .success-icon svg {
+      width: 26px;
+      height: 26px;
+      stroke: #fff;
+      fill: none;
+      stroke-width: 2.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .success-title {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: 1.2rem;
+      color: var(--card-text);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .success-body {
+      font-size: 0.82rem;
+      color: var(--card-muted);
+      line-height: 1.7;
+      max-width: 300px;
+    }
+
+    /* ===== FOOTER CREDIT ===== */
+    .cs-footer {
+      position: fixed;
+      bottom: 24px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      z-index: 3;
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.2);
+      font-weight: 400;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 560px) {
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+
+      .cs-logo {
+        font-size: 1.2rem;
+      }
+
+      body {
+        overflow-y: auto;
+      }
+      html, body {
+        height: auto;
+        min-height: 100vh;
+      }
+      #mosaic-bg, #mosaic-overlay {
+        position: fixed;
+        height: 100vh;
+      }
+      #page-wrapper {
+        min-height: 100vh;
+        height: auto;
+        padding: 40px 16px 80px;
+        overflow: visible;
+      }
+    }
+  </style>
 </head>
 <body>
 
   <!-- MOSAIC BACKGROUND -->
-  <div id="mosaic-bg"></div>
+  <div id="mosaic-bg">
+    <div id="mosaic-canvas-wrapper"></div>
+  </div>
 
   <!-- DARK OVERLAY -->
   <div id="mosaic-overlay"></div>
 
-  <!-- PREMIUM CURSOR TRACKER GLOW EFFECT -->
-  <div id="custom-glow"></div>
-
+  <!-- PAGE CONTENT -->
   <div id="page-wrapper">
-    <!-- HEADER -->
-    <header>
-    <button class="hamburger" id="hamburger" aria-label="Toggle Menu" aria-expanded="false">
-      <span></span>
-      <span></span>
-      <span></span>
-    </button>
-    
-    <div class="header-logo-tagline-container">
-      <a href="#overview" id="brand-logo" class="cs-logo-link">
-        <h1 class="cs-logo">Max Salvaggio</h1>
-      </a>
-      <p class="cs-tagline">Photography &amp; Creative Direction</p>
-    </div>
-    
-    <nav aria-label="Main Navigation">
-      <ul class="nav-menu">
-          <li><a href="#overview" class="nav-link active" data-section="overview">Overview</a></li>
-          <li><a href="#portraits-beauty" class="nav-link" data-section="portraits-beauty">Portraits &amp; Beauty</a></li>
-          <li><a href="#body-form" class="nav-link" data-section="body-form">Body &amp; Form</a></li>
-          <li class="dropdown">
-            <a href="#archive" class="nav-link dropdown-toggle" data-section="archive" data-dropdown="archive">Archive <span class="arrow">&#9662;</span></a>
-            <ul class="dropdown-menu">
-              <li><a href="#editorials" class="nav-link" data-section="editorials">Editorials</a></li>
-              <li><a href="#campaigns-fashion" class="nav-link" data-section="campaigns-fashion">Fashion</a></li>
-              <li><a href="#campaigns-lingerie" class="nav-link" data-section="campaigns-lingerie">Lingerie</a></li>
-              <li><a href="#campaigns-swimwear" class="nav-link" data-section="campaigns-swimwear">Swimwear</a></li>
-              <li><a href="#unpublished-research" class="nav-link" data-section="unpublished-research">Unpublished Research</a></li>
-            </ul>
-          </li>
-          <li><a href="#bio" class="nav-link" data-section="bio">BIO</a></li>
-          <li><a href="#contact" class="nav-link" data-section="contact">CONTACT</a></li>
-          <li><a href="client-area.html" class="nav-link">Area riservata</a></li>
-        </ul>
-    </nav>
-  </header>
 
-  <!-- OVERLAY MOBILE NAVIGATION -->
-  <div class="mobile-nav-overlay" id="mobile-nav-overlay">
-    <nav aria-label="Mobile Navigation">
-      <ul class="mobile-nav-list">
-          <li><a href="#overview" class="mobile-nav-link active" data-section="overview">Overview</a></li>
-          <li><a href="#portraits-beauty" class="mobile-nav-link" data-section="portraits-beauty">Portraits &amp; Beauty</a></li>
-          <li><a href="#body-form" class="mobile-nav-link" data-section="body-form">Body &amp; Form</a></li>
-          <li class="mobile-dropdown">
-            <span class="mobile-nav-link mobile-dropdown-toggle" data-dropdown="archive">Archive <span class="arrow">&#9662;</span></span>
-            <ul class="mobile-submenu">
-              <li><a href="#editorials" class="mobile-nav-link" data-section="editorials">Editorials</a></li>
-              <li><a href="#campaigns-fashion" class="mobile-nav-link" data-section="campaigns-fashion">Fashion</a></li>
-              <li><a href="#campaigns-lingerie" class="mobile-nav-link" data-section="campaigns-lingerie">Lingerie</a></li>
-              <li><a href="#campaigns-swimwear" class="mobile-nav-link" data-section="campaigns-swimwear">Swimwear</a></li>
-              <li><a href="#unpublished-research" class="mobile-nav-link" data-section="unpublished-research">Unpublished Research</a></li>
-            </ul>
-          </li>
-          <li><a href="#bio" class="mobile-nav-link" data-section="bio">BIO</a></li>
-          <li><a href="#contact" class="mobile-nav-link" data-section="contact">CONTACT</a></li>
-          <li><a href="client-area.html" class="mobile-nav-link" data-section="client-area">Area riservata</a></li>
-        </ul>
-    </nav>
-  </div>
+    <p class="cs-logo">Max Salvaggio</p>
+    <p class="cs-tagline">Photography &amp; Creative Direction</p>
 
-  <!-- MAIN INTERACTIVE VIEW AREA -->
-  <main>
-    
-    <!-- OVERVIEW SECTION -->
-    <section id="section-overview" class="spa-section active">
-      <h1 class="section-title">Overview</h1>
-      <div class="gallery-grid" id="overview-grid">
-        <!-- Rendered Dynamically via app.js -->
-      </div>
-      <div class="load-more-container" id="overview-load-more-container" style="display:none; text-align:center; margin-top:40px;">
-        <button class="btn-load-more" id="btn-overview-load-more">Load More Works &nbsp;&darr;</button>
-      </div>
-    </section>
+    <div class="glass-card">
 
-    <!-- ARCHIVE SECTION -->
-    <section id="section-archive" class="spa-section">
-      <h1 class="section-title">Archive</h1>
-      <div class="editorial-covers-grid" id="archive-categories-grid">
-        <!-- Rendered Dynamically via app.js -->
-      </div>
-    </section>
+      <h1 class="card-headline">Coming Soon</h1>
+      <p class="card-sub">Scrivici un messaggio — ti risponderemo al più presto.</p>
+      <div class="card-divider"></div>
 
-    <!-- EDITORIALS SECTION -->
-    <section id="section-editorials" class="spa-section">
-      <div class="section-header">
-        <button class="btn-back btn-archive-back">&larr; Archive</button>
-        <h1 class="section-title">Editorials</h1>
-      </div>
-      
-      <!-- List of Editorials (Grid of Covers) -->
-      <div id="editorials-list-view">
-        <div class="editorial-covers-grid" id="editorials-grid">
-          <!-- Rendered Dynamically via app.js -->
+      <!-- SUCCESS STATE -->
+      <div class="success-msg" id="success-message">
+        <div class="success-icon">
+          <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
         </div>
+        <p class="success-title">Messaggio Inviato!</p>
+        <p class="success-body">Grazie per averci contattato. Ti risponderemo il prima possibile.</p>
       </div>
-      
-      <!-- Project Detail Gallery (Hidden by default) -->
-      <div class="project-detail-view hidden" id="editorial-detail-view">
-        <div class="detail-header">
-          <button class="btn-back" id="btn-back-editorials">&larr; Back to Editorials</button>
-          <h2 class="detail-title" id="editorial-detail-title">Project Name</h2>
-        </div>
-        <div class="overview-style-grid" id="editorial-detail-grid">
-          <!-- Rendered Dynamically via app.js -->
-        </div>
-      </div>
-    </section>
 
-    <!-- FASHION SECTION -->
-    <section id="section-campaigns-fashion" class="spa-section">
-      <div class="section-header">
-        <button class="btn-back btn-archive-back">&larr; Archive</button>
-        <h1 class="section-title">Fashion</h1>
-      </div>
-      <div class="overview-style-grid" id="campaigns-fashion-grid"></div>
-    </section>
+      <!-- CONTACT FORM — Formspree -->
+      <!-- ⚠️  ISTRUZIONI: sostituisci YOUR_FORM_ID con il tuo ID Formspree (es. xpwdgnkl) -->
+      <!-- Registrati gratis su https://formspree.io/new  -->
+      <form
+        id="contact-form"
+        class="contact-form"
+        action="https://formspree.io/f/xzdqzagg"
+        method="POST"
+        novalidate
+      >
+        <!-- Honeypot anti-spam -->
+        <input type="text" name="_gotcha" class="form-honey" tabindex="-1" autocomplete="off" />
+        <!-- Redirect disabilitato — gestiamo noi il feedback -->
+        <input type="hidden" name="_next" value="" />
 
-    <!-- LINGERIE SECTION -->
-    <section id="section-campaigns-lingerie" class="spa-section">
-      <div class="section-header">
-        <button class="btn-back btn-archive-back">&larr; Archive</button>
-        <h1 class="section-title">Lingerie</h1>
-      </div>
-      <div class="overview-style-grid" id="campaigns-lingerie-grid"></div>
-    </section>
-
-    <!-- SWIMWEAR SECTION -->
-    <section id="section-campaigns-swimwear" class="spa-section">
-      <div class="section-header">
-        <button class="btn-back btn-archive-back">&larr; Archive</button>
-        <h1 class="section-title">Swimwear</h1>
-      </div>
-      <div class="overview-style-grid" id="campaigns-swimwear-grid"></div>
-    </section>
-
-    <!-- BODY & FORM SECTION -->
-    <section id="section-body-form" class="spa-section">
-      <h1 class="section-title">Body &amp; Form</h1>
-      <div class="section-tabs">
-        <button class="tab-link active" data-tab="body-organic">Organic Sculptures</button>
-        <button class="tab-link" data-tab="body-shadows">Shadows &amp; Graphic Intimacy</button>
-      </div>
-      
-      <div id="body-organic" class="tab-content active">
-        <div class="overview-style-grid" id="body-organic-grid"></div>
-      </div>
-      <div id="body-shadows" class="tab-content">
-        <div class="overview-style-grid" id="body-shadows-grid"></div>
-      </div>
-    </section>
-
-    <!-- PORTRAITS & BEAUTY SECTION -->
-    <section id="section-portraits-beauty" class="spa-section">
-      <h1 class="section-title">Portraits &amp; Beauty</h1>
-      <div class="section-tabs">
-        <button class="tab-link active" data-tab="pb-portraits">Portraits</button>
-        <button class="tab-link" data-tab="pb-beauty">Beauty</button>
-        <button class="tab-link" data-tab="pb-pets">Pets &amp; Portraits</button>
-      </div>
-      
-      <div id="pb-portraits" class="tab-content active">
-        <div class="overview-style-grid" id="pb-portraits-grid"></div>
-      </div>
-      <div id="pb-beauty" class="tab-content">
-        <div class="overview-style-grid" id="pb-beauty-grid"></div>
-      </div>
-      <div id="pb-pets" class="tab-content">
-        <div class="overview-style-grid" id="pb-pets-grid"></div>
-      </div>
-    </section>
-
-    <!-- FILM WORK SECTION -->
-    <section id="section-film-work" class="spa-section">
-      <h1 class="section-title">Film Work</h1>
-      <div class="video-grid">
-        
-        <!-- Video 1 -->
-        <div class="video-card">
-          <div class="video-aspect">
-            <div class="video-placeholder-bg" style="background-image: url('0 OVERVIEW/max-salvaggio-fotografo-beauty-002.jpg')"></div>
-            <div class="video-overlay">
-              <svg class="play-icon" viewBox="0 0 24 24">
-                <polygon points="5 3 19 12 5 21 5 3"/>
-              </svg>
-            </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="first-name">Nome</label>
+            <input
+              type="text"
+              id="first-name"
+              name="nome"
+              placeholder="Mario"
+              required
+              autocomplete="given-name"
+            />
           </div>
-          <div class="video-info">
-            <h3 class="video-title">Commercial Film Showreel</h3>
-            <p class="video-meta">Director's Cut — 2026</p>
+          <div class="form-group">
+            <label for="last-name">Cognome</label>
+            <input
+              type="text"
+              id="last-name"
+              name="cognome"
+              placeholder="Rossi"
+              required
+              autocomplete="family-name"
+            />
           </div>
         </div>
 
-        <!-- Video 2 -->
-        <div class="video-card">
-          <div class="video-aspect">
-            <div class="video-placeholder-bg" style="background-image: url('0 OVERVIEW/max-salvaggio-fotografo-beauty-005.jpg')"></div>
-            <div class="video-overlay">
-              <svg class="play-icon" viewBox="0 0 24 24">
-                <polygon points="5 3 19 12 5 21 5 3"/>
-              </svg>
-            </div>
-          </div>
-          <div class="video-info">
-            <h3 class="video-title">Fashion Location Motion</h3>
-            <p class="video-meta">Campaign Film — Ibiza</p>
-          </div>
+        <div class="form-group">
+          <label for="email">Indirizzo Email</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="mario@esempio.it"
+            required
+            autocomplete="email"
+          />
         </div>
 
-        <!-- Video 3 -->
-        <div class="video-card">
-          <div class="video-aspect">
-            <div class="video-placeholder-bg" style="background-image: url('0 OVERVIEW/max-salvaggio-fotografo-beauty-006.jpg')"></div>
-            <div class="video-overlay">
-              <svg class="play-icon" viewBox="0 0 24 24">
-                <polygon points="5 3 19 12 5 21 5 3"/>
-              </svg>
-            </div>
-          </div>
-          <div class="video-info">
-            <h3 class="video-title">Shadows &amp; Light Study</h3>
-            <p class="video-meta">Artistic Short — Milano Studio</p>
-          </div>
+        <div class="form-group">
+          <label for="message">Messaggio</label>
+          <textarea
+            id="message"
+            name="messaggio"
+            placeholder="Scrivi qui il tuo messaggio…"
+            required
+          ></textarea>
         </div>
 
-      </div>
-    </section>
+        <button type="submit" class="btn-submit" id="submit-btn">
+          <span class="btn-text">Invia Messaggio &nbsp;→</span>
+          <span class="btn-spinner"></span>
+        </button>
 
-    <!-- BIO SECTION -->
-    <section id="section-bio" class="spa-section">
-      <h1 class="section-title">BIO</h1>
-      <div class="bio-container-split">
-        <!-- Left Column: Biography & Info -->
-        <div class="bio-text-column">
-          <div class="bio-text">
-            <p class="lead-text">I come from Marsala, a beautiful city by the sea, on the marvelous island of Sicily. I got my first camera at the age of 9 and ever since that moment, I've been unable to live without it. It has always been my "box of beauty", the best way to capture all the moments when I've realized what light is doing to things, and to keep them forever.</p>
-            <p>The camera sent me into a kind of rapture; I felt a calling, guiding me towards a new way of watching. After Palermo and the university of architecture, I decided to go to Milan to be closer to the world of fashion; I started to live on both sides of the camera lens, working passionately to achieve my dreams.</p>
-            <p>I kept finding new connections between my emotions and the lighting which I use in my sets. I began to build every shoot around the affinities of the moment and the sensations generated by the incredible relationship between me and my muse. This is the special interaction which produces the right conditions to create my style.</p>
-            <p>Since 1998 while maintaining its base in Milan, Max has decided to explore the world, traveling to wherever he could best realize his visions.</p>
-            <p class="signature">With Love, Max</p>
-          </div>
-          
-          <div class="info-blocks">
-            <div class="info-block">
-              <h3>Clients</h3>
-              <p>Campari, Lamborghini, Longines, Dee Ocleppo, Morellato, Levante</p>
-            </div>
-            <div class="info-block">
-              <h3>Publications</h3>
-              <p>Photo Italia, Grazia, Marieclaire, Max, LRM, Ocean drive</p>
-            </div>
-          </div>
-        </div>
-        
-        <!-- Right Column: Photograph -->
-        <div class="bio-image-column">
-          <div class="profile-frame-large">
-            <img src="5 BIO &amp; CONTACT/Max_portrait_swiss_TAZY1752_bw.jpg" alt="Max Salvaggio" class="profile-img-large">
-          </div>
-        </div>
-      </div>
-    </section>
+      </form>
 
-    <!-- CONTACT SECTION -->
-    <section id="section-contact" class="spa-section">
-      <h1 class="section-title">CONTACT</h1>
-      <div class="contact-container">
-        <div class="contact-form-glass-card">
-          <h3>Get In Touch</h3>
-          <form id="contact-form" action="https://formspree.io/f/xzdqzagg" method="POST" class="contact-form" novalidate>
-            <input type="text" name="_gotcha" class="form-honey" tabindex="-1" autocomplete="off" />
-            
-            <div class="form-row">
-              <div class="form-group">
-                <label for="first-name">Nome</label>
-                <input type="text" id="first-name" name="nome" placeholder="Mario" required autocomplete="given-name" />
-              </div>
-              <div class="form-group">
-                <label for="last-name">Cognome</label>
-                <input type="text" id="last-name" name="cognome" placeholder="Rossi" required autocomplete="family-name" />
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label for="email">Indirizzo Email</label>
-              <input type="email" id="email" name="email" placeholder="mario@esempio.it" required autocomplete="email" />
-            </div>
-
-            <div class="form-group">
-              <label for="message">Messaggio</label>
-              <textarea id="message" name="messaggio" placeholder="Scrivi qui il tuo messaggio…" required></textarea>
-            </div>
-
-            <button type="submit" class="btn-submit" id="submit-btn">
-              <span class="btn-text">Invia Messaggio &nbsp;&rarr;</span>
-              <span class="btn-spinner"></span>
-            </button>
-          </form>
-          <div class="form-success-message" id="form-success">
-            <svg viewBox="0 0 24 24" class="success-icon">
-              <polyline points="20 6 9 17 4 12"/>
-            </svg>
-            <span>Messaggio inviato con successo! Ti risponderemo al più presto.</span>
-          </div>
-        </div>
-
-        <div class="direct-contacts">
-          <a href="https://wa.me/393358043444" target="_blank" rel="noopener" class="contact-link">WhatsApp</a>
-          <span class="divider">|</span>
-          <a href="https://instagram.com/maxsalvaggio" target="_blank" rel="noopener" class="contact-link">Instagram</a>
-          <span class="divider">|</span>
-          <a href="mailto:info@maxsalvaggio.com" class="contact-link">info@maxsalvaggio.com</a>
-        </div>
-      </div>
-    </section>
-
-  </main>
-
-  <!-- IMMERSIVE LIGHTBOX OVERLAY -->
-  <div class="lightbox" id="lightbox" aria-hidden="true" role="dialog">
-    <button class="lightbox-close" id="lightbox-close" aria-label="Chiudi">&times;</button>
-    <div class="lightbox-container">
-      <button class="lightbox-nav prev-btn" id="lightbox-prev" aria-label="Immagine Precedente">&#10094;</button>
-      
-      <div class="lightbox-wrapper">
-        <div class="lightbox-img-holder">
-          <img id="lightbox-img" src="" alt="">
-        </div>
-        <div class="lightbox-caption">
-          <span class="caption-title" id="lightbox-title">Immagine</span>
-          <span class="caption-tag" id="lightbox-tag">Tag</span>
-        </div>
-      </div>
-      
-      <button class="lightbox-nav next-btn" id="lightbox-next" aria-label="Immagine Successiva">&#10095;</button>
     </div>
   </div>
 
   <!-- FOOTER -->
-  <footer>
-    <a href="#" class="back-to-top" id="btn-back-to-top">
-      <span>Back To Top</span>
-      <svg viewBox="0 0 320 512">
-        <path d="M177 159.7l136 136c9.4 9.4 9.4 24.6 0 33.9l-22.6 22.6c-9.4 9.4-24.6 9.4-33.9 0L160 255.9l-96.4 96.4c-9.4 9.4-24.6 9.4-33.9 0L7 329.7c-9.4-9.4-9.4-24.6 0-33.9l136-136c9.4-9.5 24.6-9.5 34 0z"/>
-      </svg>
-    </a>
-    <div class="footer-socials">
-      <a href="https://instagram.com/maxsalvaggio" target="_blank" rel="noopener" class="social-icon">Instagram</a>
-      <a href="#" class="social-icon">Facebook</a>
-      <a href="#" class="social-icon">LinkedIn</a>
-    </div>
-    <div class="footer-bottom">
-      <p>&copy; 2026 Max Salvaggio. All Rights Reserved. Custom Webmaster Architecture.</p>
-      <p style="opacity:0.35; font-size: 0.65rem; margin-top: 5px; letter-spacing:0.1em;">P. IVA 01662261203 | <a href="login.html" style="color: inherit; text-decoration: none; opacity: 0.65; transition: opacity 0.3s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.65">Area Riservata</a></p>
-    </div>
+  <footer class="cs-footer">
+    &copy; <span id="year"></span> Max Salvaggio — All Rights Reserved
   </footer>
 
-  </div>
+  <!-- ===== MOSAIC ENGINE ===== -->
+  <script>
+    // ——————————————————————————————
+    // ALL IMAGES from the archive (auto-generated list)
+    // ——————————————————————————————
+    const ALL_IMAGES = [
+      // COMMERCIAL
+      "Max Salvaggio Archivio/COMMERCIAL/MAX_SALVAGGIO_Vivienne_Westwood_062.jpg",
+      "Max Salvaggio Archivio/COMMERCIAL/MAX_SALVAGGIO_Vivienne_Westwood_063.jpg",
+      "Max Salvaggio Archivio/COMMERCIAL/Max_Salvaggio_Campari_60A32X40_ok.jpg",
+      "Max Salvaggio Archivio/COMMERCIAL/Max_Salvaggio_Dee_Ocleppo_0020_KR_30x20.jpg",
+      "Max Salvaggio Archivio/COMMERCIAL/Max_Salvaggio_Dee_Ocleppo_0041_KR.jpg",
+      "Max Salvaggio Archivio/COMMERCIAL/Max_Salvaggio_Dee_Ocleppo_0053_KR.jpg",
+      "Max Salvaggio Archivio/COMMERCIAL/Max_Salvaggio_Dee_Ocleppo_0056_KR_30x20.jpg",
+      "Max Salvaggio Archivio/COMMERCIAL/Max_Salvaggio_Dee_Ocleppo_0075_KR.jpg",
+      "Max Salvaggio Archivio/COMMERCIAL/Max_Salvaggio_Dee_Ocleppo_0138_KR_30x20.jpg",
+      "Max Salvaggio Archivio/COMMERCIAL/Max_Salvaggio_Dee_Ocleppo_0173_KR_30x20.jpg",
+      "Max Salvaggio Archivio/COMMERCIAL/Max_Salvaggio_Jacob_Cohen_Y6B5766_HR.jpg",
+      "Max Salvaggio Archivio/COMMERCIAL/Max_Salvaggio_Jacob_Cohen_Y6B6040_HR.jpg",
+      "Max Salvaggio Archivio/COMMERCIAL/Max_Salvaggio_Longines_10.jpg",
+      "Max Salvaggio Archivio/COMMERCIAL/Max_Salvaggio_Longines_14.jpg",
+      "Max Salvaggio Archivio/COMMERCIAL/Max_Salvaggio_Longines_26.jpg",
+      "Max Salvaggio Archivio/COMMERCIAL/Max_Salvaggio_Longines_27.jpg",
+      "Max Salvaggio Archivio/COMMERCIAL/Max_Salvaggio_Longines_29.jpg",
+      "Max Salvaggio Archivio/COMMERCIAL/Max_Salvaggio_Longines_31.jpg",
+      "Max Salvaggio Archivio/COMMERCIAL/Max_Salvaggio_Longines_33.jpg",
+      "Max Salvaggio Archivio/COMMERCIAL/Max_Salvaggio_Longines_34.jpg",
+      "Max Salvaggio Archivio/COMMERCIAL/Max_Salvaggio_Longines_38.jpg",
+      "Max Salvaggio Archivio/COMMERCIAL/Max_Salvaggio_Longines_49.jpg",
+      "Max Salvaggio Archivio/COMMERCIAL/Max_Salvaggio_Longines_50.jpg",
+      "Max Salvaggio Archivio/COMMERCIAL/Max_Salvaggio_Longines_53.jpg",
+      "Max Salvaggio Archivio/COMMERCIAL/Max_Salvaggio_Longines_60.jpg",
+      "Max Salvaggio Archivio/COMMERCIAL/Max_Salvaggio_Longines_66.jpg",
+      "Max Salvaggio Archivio/COMMERCIAL/Max_Salvaggio_Longines_68.jpg",
+      "Max Salvaggio Archivio/COMMERCIAL/Max_Salvaggio_Luciano_Padovan_237R_X.jpg",
+      "Max Salvaggio Archivio/COMMERCIAL/Max_Salvaggio_Luciano_Padovan_309R_X.jpg",
+      "Max Salvaggio Archivio/COMMERCIAL/Max_Salvaggio_Luciano_Padovan_347R_X.jpg",
+      "Max Salvaggio Archivio/COMMERCIAL/Max_Salvaggio_NY_SHEES_CHINA_NY_SET5_BROBR_00009.jpg",
+      "Max Salvaggio Archivio/COMMERCIAL/Max_Salvaggio_NY_set12_bull_000008K_1Rt22x30-BW-1.jpg",
+      "Max Salvaggio Archivio/COMMERCIAL/max_salvaggio_md_0144ZSA_20X30_W.jpg",
+      // FASHION – LOCATION
+      "Max Salvaggio Archivio/FASHION \u2013 LOCATION/MAX_SALVAGGIO_078.jpg",
+      "Max Salvaggio Archivio/FASHION \u2013 LOCATION/MAX_SALVAGGIO_Grazia_E_tu_di che_specie_sei_026.jpg",
+      "Max Salvaggio Archivio/FASHION \u2013 LOCATION/MAX_SALVAGGIO_Grazia_Mito Futuro_020.jpg",
+      "Max Salvaggio Archivio/FASHION \u2013 LOCATION/MAX_SALVAGGIO_Grazia_Mito Futuro_022.jpg",
+      "Max Salvaggio Archivio/FASHION \u2013 LOCATION/Max_Salvaggio_Grazia_Cambodia_VOriente_a0095bwG.jpg",
+      "Max Salvaggio Archivio/FASHION \u2013 LOCATION/Max_Salvaggio_Grazia_Cambodia_VOriente_a055e.jpg",
+      "Max Salvaggio Archivio/FASHION \u2013 LOCATION/Max_Salvaggio_Grazia_Cambodia_VOriente_a_055a.jpg",
+      "Max Salvaggio Archivio/FASHION \u2013 LOCATION/Max_Salvaggio_Grazia_E_tu_di che_specie_sei_46.jpg",
+      "Max Salvaggio Archivio/FASHION \u2013 LOCATION/Max_Salvaggio_Grazia_HKong_Giungla_012.jpg",
+      "Max Salvaggio Archivio/FASHION \u2013 LOCATION/Max_Salvaggio_Grazia_HKong_Giungla_3458.jpg",
+      "Max Salvaggio Archivio/FASHION \u2013 LOCATION/Max_Salvaggio_Grazia_Leggerezza_a.jpg",
+      "Max Salvaggio Archivio/FASHION \u2013 LOCATION/Max_Salvaggio_Grazia_Leggerezza_a_1.jpg",
+      "Max Salvaggio Archivio/FASHION \u2013 LOCATION/Max_Salvaggio_Grazia_Leggerezza_a_2.jpg",
+      "Max Salvaggio Archivio/FASHION \u2013 LOCATION/Max_Salvaggio_Grazia_Vietnam_Stile_057.jpg",
+      "Max Salvaggio Archivio/FASHION \u2013 LOCATION/Max_Salvaggio_Grazia_Vietnam_Stile_060.jpg",
+      "Max Salvaggio Archivio/FASHION \u2013 LOCATION/Max_Salvaggio_Jamaica_HTropic_036b.jpg",
+      "Max Salvaggio Archivio/FASHION \u2013 LOCATION/Max_Salvaggio_Madagascar_0305KR.jpg",
+      "Max Salvaggio Archivio/FASHION \u2013 LOCATION/Max_Salvaggio_Madagascar_Village-0648KRC2.jpg",
+      "Max Salvaggio Archivio/FASHION \u2013 LOCATION/Max_Salvaggio_Mexico_Etnico_037.jpg",
+      "Max Salvaggio Archivio/FASHION \u2013 LOCATION/Max_Salvaggio_Mexico_Etnico_039.jpg",
+      "Max Salvaggio Archivio/FASHION \u2013 LOCATION/Max_Salvaggio_Mexico_Etnico_042.jpg",
+      "Max Salvaggio Archivio/FASHION \u2013 LOCATION/Max_Salvaggio_edit_Grazia_H-Kong_017.jpg",
+      "Max Salvaggio Archivio/FASHION \u2013 LOCATION/Max_Salvaggio_edit_Grazia_H-Kong_6B7488.jpg",
+      "Max Salvaggio Archivio/FASHION \u2013 LOCATION/Max_Salvaggio_edit_Grazia_H-Kong_Y6B7928.jpg",
+      "Max Salvaggio Archivio/FASHION \u2013 LOCATION/Max_Salvaggio_edit_Grazia_H-Kong_Y6B8172.jpg",
+      "Max Salvaggio Archivio/FASHION \u2013 LOCATION/Max_Salvaggio_edit_Grazia_Hong-Kong-001.jpg",
+      "Max Salvaggio Archivio/FASHION \u2013 LOCATION/Max_Salvaggio_edit_Grazia_Hong-Kong-002.jpg",
+      "Max Salvaggio Archivio/FASHION \u2013 LOCATION/Max_Salvaggio_edit_Grazia_Hong-Kong_a_018.jpg",
+      "Max Salvaggio Archivio/FASHION \u2013 LOCATION/Max_Salvaggio_edit_Grazia_Hong-Kong_a_1988K-2.jpg",
+      "Max Salvaggio Archivio/FASHION \u2013 LOCATION/Max_Salvaggio_edit_Grazia_Kenya_Safari_046.jpg",
+      "Max Salvaggio Archivio/FASHION \u2013 LOCATION/Max_Salvaggio_edit_Grazia_Kenya_Safari_048.jpg",
+      "Max Salvaggio Archivio/FASHION \u2013 LOCATION/Max_Salvaggio_edit_Grazia_Shanghai-146-1.jpg",
+      "Max Salvaggio Archivio/FASHION \u2013 LOCATION/Max_Salvaggio_edit_Grazia_Shanghai-161-1.jpg",
+      "Max Salvaggio Archivio/FASHION \u2013 LOCATION/Max_Salvaggio_effetto_leggerezza_a035.jpg",
+      "Max Salvaggio Archivio/FASHION \u2013 LOCATION/Max_Salvaggio_effetto_leggerezza_b08.jpg",
+      // FASHION-STUDIO
+      "Max Salvaggio Archivio/FASHION-STUDIO/MAX_SALVAGGIO_061b.jpg",
+      "Max Salvaggio Archivio/FASHION-STUDIO/MAX_SALVAGGIO_Screaming_a_067.jpg",
+      "Max Salvaggio Archivio/FASHION-STUDIO/MAX_SALVAGGIO_Screaming_b_0410R-23x30-1.jpg",
+      "Max Salvaggio Archivio/FASHION-STUDIO/MAX_SALVAGGIO_Y6B7970k-R.jpg",
+      "Max Salvaggio Archivio/FASHION-STUDIO/Max_Salvaggio_Anzhelika_121k-R-24x30-print_OK.jpeg",
+      "Max Salvaggio Archivio/FASHION-STUDIO/Max_Salvaggio_CK_4689xcrop.jpg",
+      "Max Salvaggio Archivio/FASHION-STUDIO/Max_Salvaggio_Fluidity_11.jpg",
+      "Max Salvaggio Archivio/FASHION-STUDIO/Max_Salvaggio_Fluidity_14.jpg",
+      "Max Salvaggio Archivio/FASHION-STUDIO/Max_Salvaggio_Keila_MXS_0180kR_42x52_Bw_view.jpg",
+      "Max Salvaggio Archivio/FASHION-STUDIO/Max_Salvaggio_Keila_MXS_0754kxR_24x30_view-1.jpg",
+      "Max Salvaggio Archivio/FASHION-STUDIO/Max_Salvaggio_Madagascar_editorialLingerieKatia_0323KR20x30.jpg",
+      "Max Salvaggio Archivio/FASHION-STUDIO/Max_Salvaggio_Sovrapposizioni_08.jpg",
+      "Max Salvaggio Archivio/FASHION-STUDIO/Max_Salvaggio_Sovrapposizioni_11.jpg",
+      "Max Salvaggio Archivio/FASHION-STUDIO/Max_Salvaggio_plusbelle0338_w.jpg",
+      // LINGERIE
+      "Max Salvaggio Archivio/LINGERIE/Max Salvaggio_lingerie_billi_jazz_1814.jpg",
+      "Max Salvaggio Archivio/LINGERIE/Max-Salvaggio-Portfolio-Lingerie_2-10-1024x683.jpg",
+      "Max Salvaggio Archivio/LINGERIE/Max-Salvaggio-Portfolio-Lingerie_2-2-1024x683.jpg",
+      "Max Salvaggio Archivio/LINGERIE/Max-Salvaggio-Portfolio-Lingerie_2-24-1024x748.jpg",
+      "Max Salvaggio Archivio/LINGERIE/Max-Salvaggio-Portfolio-Lingerie_2-28.jpg",
+      "Max Salvaggio Archivio/LINGERIE/Max-Salvaggio-Portfolio-Lingerie_2-5-1024x683.jpg",
+      "Max Salvaggio Archivio/LINGERIE/Max-Salvaggio-Portfolio-Lingerie_2-9.jpg",
+      "Max Salvaggio Archivio/LINGERIE/Max-Salvaggio-Portfolio-Lingerie_Origamami_H1024.jpg",
+      "Max Salvaggio Archivio/LINGERIE/Max-Salvaggio-Portfolio-Lingerie_Origamami_H1025.jpg",
+      "Max Salvaggio Archivio/LINGERIE/Max-Salvaggio-Portfolio-Lingerie_Origamami_H1026.jpg",
+      // MENSWEAR
+      "Max Salvaggio Archivio/MENSWEAR/Max_Salvaggio_\u00a9_Fashion_Man_w_001.jpg",
+      "Max Salvaggio Archivio/MENSWEAR/Max_Salvaggio_\u00a9_Fashion_Man_w_003.jpg",
+      "Max Salvaggio Archivio/MENSWEAR/Max_Salvaggio_\u00a9_Fashion_Man_w_006.jpg",
+      "Max Salvaggio Archivio/MENSWEAR/Max_Salvaggio_\u00a9_Fashion_Man_w_009.jpg",
+      "Max Salvaggio Archivio/MENSWEAR/Max_Salvaggio_\u00a9_Fashion_Man_w_014.jpg",
+      "Max Salvaggio Archivio/MENSWEAR/Max_Salvaggio_\u00a9_Fashion_Man_w_025.jpg",
+      "Max Salvaggio Archivio/MENSWEAR/Max_Salvaggio_\u00a9_Fashion_Man_w_027.jpg",
+      "Max Salvaggio Archivio/MENSWEAR/Max_Salvaggio_\u00a9_Fashion_Man_w_054.jpg",
+      "Max Salvaggio Archivio/MENSWEAR/Max_Salvaggio_\u00a9_Fashion_Man_w_055.jpg",
+      "Max Salvaggio Archivio/MENSWEAR/Max_Salvaggio_\u00a9_Fashion_Man_w_058.jpg",
+      "Max Salvaggio Archivio/MENSWEAR/Max_Salvaggio_\u00a9_Fashion_Man_w_060.jpg",
+      "Max Salvaggio Archivio/MENSWEAR/Max_Salvaggio_\u00a9_Fashion_Man_w_062.jpg",
+      "Max Salvaggio Archivio/MENSWEAR/Max_Salvaggio_\u00a9_Fashion_Man_w_063.jpg",
+      "Max Salvaggio Archivio/MENSWEAR/Max_Salvaggio_\u00a9_Fashion_Man_w_069.jpg",
+      "Max Salvaggio Archivio/MENSWEAR/Max_Salvaggio_\u00a9_Fashion_Man_w_071.jpg",
+      "Max Salvaggio Archivio/MENSWEAR/Max_Salvaggio_\u00a9_Fashion_Man_w_074.jpg",
+      "Max Salvaggio Archivio/MENSWEAR/Max_Salvaggio_\u00a9_Fashion_Man_w_077.jpg",
+      "Max Salvaggio Archivio/MENSWEAR/Max_Salvaggio_\u00a9_Fashion_Man_w_079.jpg",
+      "Max Salvaggio Archivio/MENSWEAR/Max_Salvaggio_\u00a9_Lapo_Bellini_684_BW_R_20x30.jpg",
+      "Max Salvaggio Archivio/MENSWEAR/Max_Salvaggio_\u00a9_Mattia_Zaccheo_229_bw.jpg",
+      "Max Salvaggio Archivio/MENSWEAR/Max_Salvaggio_\u00a9_Mattia_Zaccheo_677_bw.jpg",
+      "Max Salvaggio Archivio/MENSWEAR/Max_Salvaggio_\u00a9_Simone_Di_Dia_205_R_BW.jpg",
+      "Max Salvaggio Archivio/MENSWEAR/Max_Salvaggio_\u00a9_Simone_Di_Dia_Y6B4713_k_R_20x30.jpg",
+      "Max Salvaggio Archivio/MENSWEAR/Max_Salvaggio_\u00a9_Simone_Di_Dia_Y6B4730_bw.jpg",
+      "Max Salvaggio Archivio/MENSWEAR/Max_Salvaggio_\u00a9_Simone_Di_Dia_Y6B4864_bw_R_20x30.jpg",
+      // SWIMMWEAR
+      "Max Salvaggio Archivio/SWIMMWEAR/MAX_SALVAGGIO_Kenya_050.jpg",
+      "Max Salvaggio Archivio/SWIMMWEAR/MAX_SALVAGGIO_Kenya_056-1.jpg",
+      "Max Salvaggio Archivio/SWIMMWEAR/Max_Salvaggio_Swimwear_Beachwear_002.jpg",
+      "Max Salvaggio Archivio/SWIMMWEAR/Max_Salvaggio_Swimwear_Beachwear_005.jpg",
+      "Max Salvaggio Archivio/SWIMMWEAR/Max_Salvaggio_Swimwear_Beachwear_007.jpg",
+      "Max Salvaggio Archivio/SWIMMWEAR/Max_Salvaggio_Swimwear_Beachwear_018.jpg",
+      "Max Salvaggio Archivio/SWIMMWEAR/Max_Salvaggio_Swimwear_Beachwear_030.jpg",
+      "Max Salvaggio Archivio/SWIMMWEAR/Max_Salvaggio_Swimwear_Beachwear_032.jpg",
+      "Max Salvaggio Archivio/SWIMMWEAR/Max_Salvaggio_Swimwear_Beachwear_034.jpg",
+      "Max Salvaggio Archivio/SWIMMWEAR/Max_Salvaggio_Swimwear_Beachwear_036.jpg",
+      "Max Salvaggio Archivio/SWIMMWEAR/Max_Salvaggio_Swimwear_Beachwear_078.jpg",
+      "Max Salvaggio Archivio/SWIMMWEAR/Max_Salvaggio_Swimwear_Beachwear_089.jpg",
+      "Max Salvaggio Archivio/SWIMMWEAR/Max_Salvaggio_Swimwear_Beachwear_094.jpg",
+      "Max Salvaggio Archivio/SWIMMWEAR/Max_Salvaggio_Swimwear_Beachwear_095.jpg",
+      "Max Salvaggio Archivio/SWIMMWEAR/Max_Salvaggio_Swimwear_Beachwear_098.jpg",
+      "Max Salvaggio Archivio/SWIMMWEAR/Max_Salvaggio_Swimwear_Beachwear_099.jpg",
+      "Max Salvaggio Archivio/SWIMMWEAR/Max_Salvaggio_Swimwear_Beachwear_100.jpg",
+      "Max Salvaggio Archivio/SWIMMWEAR/Max_Salvaggio_Swimwear_Beachwear_101.jpg",
+      "Max Salvaggio Archivio/SWIMMWEAR/Max_Salvaggio_Swimwear_Beachwear_106.jpg",
+      "Max Salvaggio Archivio/SWIMMWEAR/Max_Salvaggio_Swimwear_Beachwear_107.jpg",
+      "Max Salvaggio Archivio/SWIMMWEAR/Max_Salvaggio_Swimwear_Beachwear_114.jpg",
+      "Max Salvaggio Archivio/SWIMMWEAR/Max_Salvaggio_Swimwear_Beachwear_118.jpg",
+      "Max Salvaggio Archivio/SWIMMWEAR/Max_Salvaggio_Swimwear_Beachwear_121.jpg",
+      "Max Salvaggio Archivio/SWIMMWEAR/Max_Salvaggio_Swimwear_Beachwear_123.jpg",
+      "Max Salvaggio Archivio/SWIMMWEAR/Max_Salvaggio_Swimwear_Beachwear_126.jpg",
+      "Max Salvaggio Archivio/SWIMMWEAR/Max_Salvaggio_Swimwear_Beachwear_127.jpg",
+      "Max Salvaggio Archivio/SWIMMWEAR/Max_Salvaggio_edit_Grazia_01.jpg",
+      "Max Salvaggio Archivio/SWIMMWEAR/Max_Salvaggio_edit_Grazia_031.jpg",
+      "Max Salvaggio Archivio/SWIMMWEAR/Max_Salvaggio_edit_Grazia_082.jpg",
+      "Max Salvaggio Archivio/SWIMMWEAR/Max_Salvaggio_edit_Grazia_8044.jpg",
+      "Max Salvaggio Archivio/SWIMMWEAR/Max_Salvaggio_edit_Grazia_Kenya_Bianco_1247b.jpg",
+      "Max Salvaggio Archivio/SWIMMWEAR/Max_Salvaggio_edit_Grazia_Kenya_Bianco_301-RT.jpg",
+      "Max Salvaggio Archivio/SWIMMWEAR/Max_Salvaggio_edit_Grazia_Kenya_Bianco_770c.jpg",
+      "Max Salvaggio Archivio/SWIMMWEAR/Max_Salvaggio_giorno_da_sirena_01.jpg",
+      "Max Salvaggio Archivio/SWIMMWEAR/Max_Salvaggio_giorno_da_sirena_067.jpg",
+    ];
 
-  <script src="archive-data.js"></script>
-  <script src="app.js"></script>
+    // ——————————————————————————————
+    // MOSAIC ENGINE
+    // ——————————————————————————————
+    (function buildMosaic() {
+      const wrapper = document.getElementById('mosaic-canvas-wrapper');
+
+      // Shuffle images array (Fisher-Yates)
+      function shuffle(arr) {
+        const a = [...arr];
+        for (let i = a.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [a[i], a[j]] = [a[j], a[i]];
+        }
+        return a;
+      }
+
+      // ── Mosaic layout parameters ──────────────────────────────────
+      // We define a virtual 4K canvas (3840×2160).
+      // We tile it with cells; each cell can be portrait or landscape.
+      // The wrapper is scaled via CSS transform to always cover the viewport.
+
+      const CANVAS_W = 3840;
+      const CANVAS_H = 2160;
+
+      // Cell sizes (px on the virtual canvas)
+      const PORTRAIT_W  = 340;  // portrait tile
+      const PORTRAIT_H  = 440;
+      const LANDSCAPE_W = 480;  // landscape tile
+      const LANDSCAPE_H = 320;
+      const GAP = 4;            // inter-tile gap
+
+      // Build rows of tiles until we fill CANVAS_H
+      const tiles = [];          // [{x, y, w, h, imgUrl}]
+      let cursorY = 0;
+
+      const shuffled = shuffle(ALL_IMAGES);
+      let imgIdx = 0;
+
+      // Helper: pick next image (cycling)
+      function nextImg() {
+        const url = shuffled[imgIdx % shuffled.length];
+        imgIdx++;
+        return url;
+      }
+
+      // Build row by row
+      while (cursorY < CANVAS_H + PORTRAIT_H) {
+        let cursorX = 0;
+        // Alternate row style
+        const rowStyle = Math.random() > 0.5 ? 'portrait' : 'mixed';
+        const rowTiles = [];
+
+        while (cursorX < CANVAS_W) {
+          // Decide tile type
+          let tw, th;
+          if (rowStyle === 'portrait') {
+            tw = PORTRAIT_W;
+            th = PORTRAIT_H;
+          } else {
+            // 40% chance landscape, 60% portrait in mixed rows
+            if (Math.random() < 0.4) {
+              tw = LANDSCAPE_W;
+              th = LANDSCAPE_H;
+            } else {
+              tw = PORTRAIT_W;
+              th = PORTRAIT_H;
+            }
+          }
+
+          // Don't exceed canvas width — stretch last tile to fill
+          if (cursorX + tw > CANVAS_W) {
+            tw = CANVAS_W - cursorX;
+          }
+
+          rowTiles.push({ x: cursorX, y: cursorY, w: tw, h: th, url: nextImg() });
+          cursorX += tw + GAP;
+        }
+
+        // Normalize row height to the tallest tile in the row
+        const rowH = Math.max(...rowTiles.map(t => t.h));
+        rowTiles.forEach(t => { t.h = rowH; });
+
+        tiles.push(...rowTiles);
+        cursorY += rowH + GAP;
+      }
+
+      // ── Render tiles ──────────────────────────────────────────────
+      // The wrapper is position:absolute inside #mosaic-bg
+      // We'll set wrapper to CANVAS_W x cursorY and then scale it
+      wrapper.style.width  = CANVAS_W + 'px';
+      wrapper.style.height = cursorY + 'px';
+      wrapper.style.position = 'absolute';
+
+      tiles.forEach(t => {
+        const tile = document.createElement('div');
+        tile.className = 'mosaic-tile';
+        tile.style.cssText = `
+          position: absolute;
+          left: ${t.x}px;
+          top: ${t.y}px;
+          width: ${t.w}px;
+          height: ${t.h}px;
+        `;
+
+        const img = document.createElement('img');
+        img.src = t.url;
+        img.alt = '';
+        img.loading = 'lazy';
+        img.decoding = 'async';
+        tile.appendChild(img);
+        wrapper.appendChild(tile);
+      });
+
+      // ── Scale wrapper to cover viewport (like background-size: cover) ──
+      function scaleMosaic() {
+        const vw = window.innerWidth;
+        const vh = window.innerHeight;
+        const scaleX = vw / CANVAS_W;
+        const scaleY = vh / cursorY;
+        const scale  = Math.max(scaleX, scaleY); // cover semantics
+
+        const scaledW = CANVAS_W * scale;
+        const scaledH = cursorY * scale;
+
+        // Center the scaled canvas
+        const offsetX = (vw - scaledW) / 2;
+        const offsetY = (vh - scaledH) / 2;
+
+        wrapper.style.transformOrigin = '0 0';
+        wrapper.style.transform = `translate(${offsetX}px, ${offsetY}px) scale(${scale})`;
+      }
+
+      scaleMosaic();
+      window.addEventListener('resize', scaleMosaic);
+
+      // ── Slow drift animation ──────────────────────────────────────
+      let driftX = 0, driftY = 0;
+      let targetX = 0, targetY = 0;
+      const MAX_DRIFT = 40; // pixels in virtual canvas units
+
+      setInterval(() => {
+        targetX = (Math.random() * 2 - 1) * MAX_DRIFT;
+        targetY = (Math.random() * 2 - 1) * MAX_DRIFT;
+      }, 6000);
+
+      function animateDrift() {
+        driftX += (targetX - driftX) * 0.005;
+        driftY += (targetY - driftY) * 0.005;
+
+        const vw = window.innerWidth;
+        const vh = window.innerHeight;
+        const scaleX = vw / CANVAS_W;
+        const scaleY = vh / cursorY;
+        const scale  = Math.max(scaleX, scaleY);
+
+        const scaledW = CANVAS_W * scale;
+        const scaledH = cursorY * scale;
+        const offsetX = (vw - scaledW) / 2 + driftX;
+        const offsetY = (vh - scaledH) / 2 + driftY;
+
+        wrapper.style.transform = `translate(${offsetX}px, ${offsetY}px) scale(${scale})`;
+        requestAnimationFrame(animateDrift);
+      }
+
+      requestAnimationFrame(animateDrift);
+    })();
+
+    // ——————————————————————————————
+    // FORM LOGIC (Formspree AJAX)
+    // ——————————————————————————————
+    const form       = document.getElementById('contact-form');
+    const submitBtn  = document.getElementById('submit-btn');
+    const successMsg = document.getElementById('success-message');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      // Basic client-side validation
+      const fields = form.querySelectorAll('[required]');
+      let valid = true;
+      fields.forEach(f => {
+        f.style.borderColor = '';
+        if (!f.value.trim()) {
+          f.style.borderColor = 'rgba(255,51,102,0.7)';
+          valid = false;
+        }
+      });
+      if (!valid) return;
+
+      // Check Formspree ID has been set
+      const action = form.action;
+      if (action.includes('YOUR_FORM_ID')) {
+        alert('⚠️  Imposta il tuo ID Formspree nell\'attributo action del form.\nRegistrati su https://formspree.io e sostituisci YOUR_FORM_ID.');
+        return;
+      }
+
+      // Loading state
+      submitBtn.classList.add('loading');
+      submitBtn.disabled = true;
+
+      try {
+        const data = new FormData(form);
+        const res = await fetch(action, {
+          method: 'POST',
+          body: data,
+          headers: { 'Accept': 'application/json' }
+        });
+
+        if (res.ok) {
+          // Show success
+          form.style.display = 'none';
+          successMsg.classList.add('visible');
+        } else {
+          const json = await res.json();
+          const msg = (json.errors || []).map(e => e.message).join(', ') || 'Errore nell\'invio. Riprova.';
+          alert('❌ ' + msg);
+          submitBtn.classList.remove('loading');
+          submitBtn.disabled = false;
+        }
+      } catch (err) {
+        alert('❌ Errore di rete. Controlla la connessione e riprova.');
+        submitBtn.classList.remove('loading');
+        submitBtn.disabled = false;
+      }
+    });
+
+    // ——————————————————————————————
+    // FOOTER YEAR
+    // ——————————————————————————————
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+
 </body>
 </html>
