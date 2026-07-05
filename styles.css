@@ -105,8 +105,7 @@ body {
 
 /* --- HEADER --- */
 header {
-  position: sticky;
-  top: 0;
+  position: relative; /* relative positioning to solve flexbox alignment quirks and title overlap */
   width: 100%;
   padding: 25px 5%;
   z-index: 10;
@@ -349,7 +348,8 @@ header {
 main {
   flex: 1;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: flex-start;
   align-items: center;
   padding: 60px 20px 100px 20px;
   z-index: 3;
