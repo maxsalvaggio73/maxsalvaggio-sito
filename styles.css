@@ -972,7 +972,7 @@ footer {
   width: auto;
   object-fit: contain;
   display: block;
-  transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+  transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.4s ease;
 }
 .editorial-card-overlay {
   position: absolute;

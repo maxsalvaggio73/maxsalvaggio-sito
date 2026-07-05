@@ -393,74 +393,228 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Render Archive landing page Categories Grid with random shuffle covers
+  // Render Archive landing page Categories Grid with random shuffle and chromatic coherence
   function renderArchiveGrid() {
     const grid = document.getElementById("archive-categories-grid");
     if (!grid) return;
 
     grid.innerHTML = "";
 
-    // Helper to get a random image from a list with fallback
-    const getRandomImage = (imagesList) => {
-      if (imagesList && imagesList.length > 0) {
-        const idx = Math.floor(Math.random() * imagesList.length);
-        return imagesList[idx];
-      }
-      return null;
-    };
-
-    // Flatten all editorials images
-    const editorialsImages = [];
-    if (portfolioData.editorials && portfolioData.editorials.projects) {
-      portfolioData.editorials.projects.forEach(p => {
-        if (p.images) {
-          editorialsImages.push(...p.images);
-        }
-      });
-    }
-
-    const edCover = getRandomImage(editorialsImages) || (portfolioData.editorials.projects[0] && portfolioData.editorials.projects[0].images[0]);
-    const fashionCover = getRandomImage(portfolioData.campaigns.fashion) || portfolioData.campaigns.fashion[0];
-    const lingerieCover = getRandomImage(portfolioData.campaigns.lingerie) || portfolioData.campaigns.lingerie[0];
-    const swimwearCover = getRandomImage(portfolioData.campaigns.swimwear) || portfolioData.campaigns.swimwear[0];
-    const unpublishedCover = getRandomImage(portfolioData.editorials.unpublished_research) || portfolioData.editorials.unpublished_research[0];
-
+    // 1. Initial Render with first image of each category for instant load
     const categories = [
       {
+        id: "editorials",
         title: "Editorials",
         hash: "editorials",
-        coverUrl: edCover ? edCover.url : ""
+        coverUrl: portfolioData.editorials.projects[0].images[0].url
       },
       {
+        id: "fashion",
         title: "Fashion",
         hash: "campaigns-fashion",
-        coverUrl: fashionCover ? fashionCover.url : ""
+        coverUrl: portfolioData.campaigns.fashion[0].url
       },
       {
+        id: "lingerie",
         title: "Lingerie",
         hash: "campaigns-lingerie",
-        coverUrl: lingerieCover ? lingerieCover.url : ""
+        coverUrl: portfolioData.campaigns.lingerie[0].url
       },
       {
+        id: "swimwear",
         title: "Swimwear",
         hash: "campaigns-swimwear",
-        coverUrl: swimwearCover ? swimwearCover.url : ""
+        coverUrl: portfolioData.campaigns.swimwear[0].url
       },
       {
+        id: "unpublished-research",
         title: "Unpublished Research",
         hash: "unpublished-research",
-        coverUrl: unpublishedCover ? unpublishedCover.url : ""
+        coverUrl: portfolioData.editorials.unpublished_research[0].url
       }
     ];
 
+    const cardsMap = {};
+
     categories.forEach(cat => {
-      if (cat.coverUrl) {
-        const card = createArchiveCategoryCard(cat.title, cat.coverUrl, () => {
-          window.location.hash = cat.hash;
-        });
-        grid.appendChild(card);
+      const card = createArchiveCategoryCard(cat.title, cat.coverUrl, () => {
+        window.location.hash = cat.hash;
+      });
+      const img = card.querySelector(".editorial-card-img");
+      if (img) {
+        cardsMap[cat.id] = img;
       }
+      grid.appendChild(card);
     });
+
+    // 2. Select a random target theme
+    const themes = ["BW", "COLOR_WARM", "COLOR_COOL"];
+    const targetTheme = themes[Math.floor(Math.random() * themes.length)];
+
+    // 3. Helper to get N random items from a list
+    const getRandomSubarray = (arr, size) => {
+      if (!arr || arr.length === 0) return [];
+      const shuffled = arr.slice(0);
+      let i = arr.length;
+      const tempSize = Math.min(size, i);
+      const min = i - tempSize;
+      while (i-- > min) {
+        const index = Math.floor((i + 1) * Math.random());
+        const temp = shuffled[index];
+        shuffled[index] = shuffled[i];
+        shuffled[i] = temp;
+      }
+      return shuffled.slice(min);
+    };
+
+    // Gather candidate pools
+    const editorialsImages = [];
+    portfolioData.editorials.projects.forEach(p => {
+      if (p.images) editorialsImages.push(...p.images);
+    });
+
+    const pools = {
+      "editorials": getRandomSubarray(editorialsImages, 8),
+      "fashion": getRandomSubarray(portfolioData.campaigns.fashion, 8),
+      "lingerie": getRandomSubarray(portfolioData.campaigns.lingerie, 8),
+      "swimwear": getRandomSubarray(portfolioData.campaigns.swimwear, 8),
+      "unpublished-research": getRandomSubarray(portfolioData.editorials.unpublished_research, 8)
+    };
+
+    // 4. Color analysis function (asynchronous using temporary HTML Canvas)
+    const analyzeImageColor = (imgObj) => {
+      return new Promise((resolve) => {
+        const url = imgObj.url;
+        const img = new Image();
+        img.crossOrigin = "Anonymous";
+        img.onload = () => {
+          const canvas = document.createElement("canvas");
+          canvas.width = 5;
+          canvas.height = 5;
+          const ctx = canvas.getContext("2d");
+          ctx.drawImage(img, 0, 0, 5, 5);
+          try {
+            const data = ctx.getImageData(0, 0, 5, 5).data;
+            let sumR = 0, sumG = 0, sumB = 0;
+            for (let i = 0; i < data.length; i += 4) {
+              sumR += data[i];
+              sumG += data[i+1];
+              sumB += data[i+2];
+            }
+            const r = sumR / 25;
+            const g = sumG / 25;
+            const b = sumB / 25;
+            
+            // RGB to HSL conversion
+            const rNorm = r / 255;
+            const gNorm = g / 255;
+            const bNorm = b / 255;
+            const max = Math.max(rNorm, gNorm, bNorm);
+            const min = Math.min(rNorm, gNorm, bNorm);
+            let h, s, l = (max + min) / 2;
+            
+            if (max === min) {
+              h = s = 0;
+            } else {
+              const d = max - min;
+              s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+              switch (max) {
+                case rNorm: h = (gNorm - bNorm) / d + (gNorm < bNorm ? 6 : 0); break;
+                case gNorm: h = (bNorm - rNorm) / d + 2; break;
+                case bNorm: h = (rNorm - gNorm) / d + 4; break;
+              }
+              h /= 6;
+            }
+            
+            const hue = h * 360;
+            let type = "COLOR_WARM";
+            if (s < 0.15) {
+              type = "BW";
+            } else if (hue >= 60 && hue <= 250) {
+              type = "COLOR_COOL";
+            }
+            
+            resolve({ url, r, g, b, hue, saturation: s, lightness: l, type });
+          } catch (e) {
+            resolve({ url, type: "UNKNOWN", saturation: 0.5 });
+          }
+        };
+        img.onerror = () => {
+          resolve({ url, type: "UNKNOWN", saturation: 0.5 });
+        };
+        img.src = url;
+      });
+    };
+
+    // 5. Analyze pools and pick best matches
+    const promises = [];
+    const keys = Object.keys(pools);
+
+    keys.forEach(key => {
+      const poolPromises = pools[key].map(imgObj => {
+        return analyzeImageColor(imgObj).then(res => ({ key, res }));
+      });
+      promises.push(...poolPromises);
+    });
+
+    Promise.all(promises).then(results => {
+      const resultsByKey = {
+        "editorials": [],
+        "fashion": [],
+        "lingerie": [],
+        "swimwear": [],
+        "unpublished-research": []
+      };
+
+      results.forEach(item => {
+        resultsByKey[item.key].push(item.res);
+      });
+
+      // Sort and pick best matches based on theme
+      keys.forEach(key => {
+        const categoryResults = resultsByKey[key];
+        if (categoryResults.length === 0) return;
+
+        let bestMatch = null;
+        if (targetTheme === "BW") {
+          categoryResults.sort((a, b) => a.saturation - b.saturation);
+          bestMatch = categoryResults[0];
+        } else if (targetTheme === "COLOR_COOL") {
+          categoryResults.sort((a, b) => {
+            const aIsCool = a.type === "COLOR_COOL" ? 1 : 0;
+            const bIsCool = b.type === "COLOR_COOL" ? 1 : 0;
+            if (aIsCool !== bIsCool) return bIsCool - aIsCool;
+            return b.saturation - a.saturation;
+          });
+          bestMatch = categoryResults[0];
+        } else {
+          // COLOR_WARM
+          categoryResults.sort((a, b) => {
+            const aIsWarm = a.type === "COLOR_WARM" ? 1 : 0;
+            const bIsWarm = b.type === "COLOR_WARM" ? 1 : 0;
+            if (aIsWarm !== bIsWarm) return bIsWarm - aIsWarm;
+            return b.saturation - a.saturation;
+          });
+          bestMatch = categoryResults[0];
+        }
+
+        if (bestMatch && cardsMap[key]) {
+          updateCardImageSmoothly(cardsMap[key], bestMatch.url);
+        }
+      });
+    });
+  }
+
+  function updateCardImageSmoothly(imgElement, newSrc) {
+    if (imgElement.src.endsWith(newSrc)) return;
+    imgElement.style.opacity = "0.1";
+    
+    const temp = new Image();
+    temp.onload = () => {
+      imgElement.src = newSrc;
+      imgElement.style.opacity = "1";
+    };
+    temp.src = newSrc;
   }
 
   function createArchiveCategoryCard(title, coverUrl, clickCallback) {
