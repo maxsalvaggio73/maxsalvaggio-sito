@@ -167,7 +167,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const currentActive = document.querySelector(".spa-section.active");
-    const targetSection = document.getElementById(sectionId);
+    const targetSection = document.getElementById("section-" + sectionId);
     if (!targetSection) return;
 
     // Update state
@@ -194,7 +194,7 @@ document.addEventListener("DOMContentLoaded", () => {
       archiveToggles.forEach(toggle => toggle.classList.remove("active"));
     }
 
-    if (currentActive && currentActive.id === sectionId && targetId !== "editorials" && targetId !== "unpublished-research") {
+    if (currentActive && currentActive.id === ("section-" + sectionId) && targetId !== "editorials" && targetId !== "unpublished-research") {
       return;
     }
 
