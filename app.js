@@ -64,8 +64,14 @@ document.addEventListener("DOMContentLoaded", () => {
       "body-form",
       "portraits-beauty",
       "film-work",
-      "bio-contact",
-      "unpublished-research"
+      "bio",
+      "contact",
+      "unpublished-research",
+      "pb-portraits",
+      "pb-beauty",
+      "pb-pets",
+      "body-organic",
+      "body-shadows"
     ];
     
     if (initialHash && validSections.includes(initialHash)) {
@@ -104,24 +110,32 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
 
-    // Make clicking the Archive parent dropdown item load the Archive landing page
+    // Make clicking the parent dropdown items load their respective section
     document.querySelectorAll(".dropdown-toggle").forEach(toggle => {
       toggle.addEventListener("click", (e) => {
         e.preventDefault();
-        window.location.hash = "archive";
+        const targetSection = toggle.getAttribute("data-section");
+        if (targetSection) {
+          window.location.hash = targetSection;
+        }
       });
     });
 
     // Mobile dropdown toggle
-    const mobileDropdownToggle = document.querySelector(".mobile-dropdown-toggle");
-    const mobileSubmenu = document.querySelector(".mobile-submenu");
-    if (mobileDropdownToggle && mobileSubmenu) {
-      mobileDropdownToggle.addEventListener("click", (e) => {
+    document.querySelectorAll(".mobile-dropdown-toggle").forEach(toggle => {
+      toggle.addEventListener("click", (e) => {
         e.stopPropagation();
-        mobileDropdownToggle.classList.toggle("open");
-        mobileSubmenu.classList.toggle("open");
+        const submenu = toggle.nextElementSibling;
+        if (submenu) {
+          toggle.classList.toggle("open");
+          submenu.classList.toggle("open");
+          const arrow = toggle.querySelector(".arrow");
+          if (arrow) {
+            arrow.style.transform = submenu.classList.contains("open") ? "rotate(180deg)" : "rotate(0deg)";
+          }
+        }
       });
-    }
+    });
 
     // Brand Logo link click
     if (brandLogo) {

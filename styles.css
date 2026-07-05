@@ -1260,8 +1260,8 @@ footer {
   stroke: var(--accent);
 }
 
-/* --- BIO & CONTACT SECTION --- */
-.bio-container {
+/* --- BIO & CONTACT SECTIONS (SPLIT) --- */
+.bio-container-split {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 50px;
@@ -1269,27 +1269,44 @@ footer {
   max-width: 1200px;
   margin: 0 auto;
 }
-.bio-profile {
+
+@media (max-width: 900px) {
+  .bio-container-split {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+  .profile-img-large {
+    height: 500px !important;
+  }
+}
+
+.bio-text-column {
   display: flex;
   flex-direction: column;
-  gap: 25px;
+  gap: 35px;
 }
-.profile-frame {
+
+.profile-frame-large {
   width: 100%;
   border-radius: 4px;
   overflow: hidden;
   box-shadow: 0 15px 40px rgba(0,0,0,0.5);
   border: 1px solid rgba(255,255,255,0.05);
 }
-.profile-img {
+
+.profile-img-large {
   width: 100%;
+  height: 900px;
+  object-fit: cover;
   display: block;
   filter: grayscale(1) brightness(0.85);
   transition: filter 0.8s ease;
 }
-.profile-img:hover {
+
+.profile-img-large:hover {
   filter: grayscale(0) brightness(0.95);
 }
+
 .bio-text {
   font-size: 0.82rem;
   line-height: 1.8;
@@ -1315,11 +1332,6 @@ footer {
   margin-top: 10px;
   font-weight: 600;
 }
-.bio-details {
-  display: flex;
-  flex-direction: column;
-  gap: 35px;
-}
 .info-blocks {
   display: grid;
   grid-template-columns: 1fr;
@@ -1344,25 +1356,42 @@ footer {
   color: rgba(255,255,255,0.55);
   font-weight: 300;
 }
-.contact-form-container {
-  background: var(--bg-card);
-  border: 1px solid var(--glass-border);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  padding: 25px;
-  border-radius: 6px;
-  box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+
+/* CONTACT CONTAINER & GLASS CARD */
+.contact-container {
+  max-width: 600px;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 35px;
+  align-items: center;
 }
-.contact-form-container h3 {
+
+.contact-form-glass-card {
+  background: rgba(18, 18, 20, 0.075);
+  border: 1px solid rgba(255, 255, 255, 0.045);
+  border-radius: 12px;
+  padding: clamp(20px, 3.5vw, 40px);
+  box-shadow:
+    0 18px 45px rgba(0, 0, 0, 0.45),
+    0 1px 0 rgba(255, 255, 255, 0.06) inset;
+  backdrop-filter: blur(18px) saturate(1.4) brightness(0.85);
+  -webkit-backdrop-filter: blur(18px) saturate(1.4) brightness(0.85);
+  width: 100%;
+}
+
+.contact-form-glass-card h3 {
   font-family: var(--font-display);
-  font-size: 0.85rem;
+  font-size: 0.95rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.15em;
   color: var(--text-primary);
-  margin-bottom: 20px;
+  margin-bottom: 25px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  padding-bottom: 8px;
+  padding-bottom: 12px;
+  text-align: center;
 }
 .contact-form {
   display: flex;
