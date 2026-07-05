@@ -23,6 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // --- STATE VARIABLES ---
   let activeSectionId = "overview";
+  let previousSectionId = "overview";
   let lightboxImages = [];
   let lightboxIndex = 0;
   
@@ -146,6 +147,9 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!targetSection) return;
 
     // Update state
+    if (activeSectionId !== targetId) {
+      previousSectionId = activeSectionId;
+    }
     activeSectionId = targetId;
 
     // Update active class on nav links
@@ -450,13 +454,12 @@ document.addEventListener("DOMContentLoaded", () => {
       sectionTitle.style.display = "none";
     }
 
-    // Update back button text based on project type
     const btnBack = document.getElementById("btn-back-editorials");
     if (btnBack) {
       if (project.id === "unpublished-research") {
-        btnBack.innerHTML = "&larr; Back to Archive";
+        btnBack.innerHTML = "&larr; Archive";
       } else {
-        btnBack.innerHTML = "&larr; Back to Editorials";
+        btnBack.innerHTML = "&larr; Editorials";
       }
     }
 
@@ -587,12 +590,18 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Return to editorials covers grid
-  // Return to editorials covers grid or hash redirect
+  // Return to editorials covers grid or back to previous Archive section
   const btnBackEditorials = document.getElementById("btn-back-editorials");
   if (btnBackEditorials) {
     btnBackEditorials.addEventListener("click", () => {
-      if (window.location.hash === "#editorials") {
+      if (window.location.hash === "#unpublished-research") {
+        const archiveSections = ["editorials", "campaigns-fashion", "campaigns-lingerie", "campaigns-swimwear"];
+        if (previousSectionId && archiveSections.includes(previousSectionId)) {
+          window.location.hash = previousSectionId;
+        } else {
+          window.location.hash = "editorials";
+        }
+      } else if (window.location.hash === "#editorials") {
         resetEditorialDetails();
       } else {
         window.location.hash = "editorials";
