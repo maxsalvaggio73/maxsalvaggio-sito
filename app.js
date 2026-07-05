@@ -282,10 +282,11 @@ document.addEventListener("DOMContentLoaded", () => {
   // Create standard gallery item with lazy image fade-in and hover background trigger
   function createGalleryItem(img, index, imagesList, tag) {
     const item = document.createElement("div");
+    const isOverviewStyle = ["OVERVIEW", "FASHION", "LINGERIE", "SWIMMWEAR"].includes(tag);
     
-    // Use overview-item for Overview section (smaller, no text)
+    // Use overview-item for Overview and Campaigns sections (smaller, no text, original aspect ratios)
     // and gallery-item for other sections
-    if (tag === "OVERVIEW") {
+    if (isOverviewStyle) {
       item.classList.add("overview-item");
     } else {
       item.classList.add("gallery-item");
@@ -308,8 +309,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     item.appendChild(imageElement);
 
-    // Only add hover overlay text if NOT in the Overview section
-    if (tag !== "OVERVIEW") {
+    // Only add hover overlay text if NOT in an Overview-style section
+    if (!isOverviewStyle) {
       const overlay = document.createElement("div");
       overlay.classList.add("gallery-item-overlay");
       overlay.innerHTML = `
@@ -323,8 +324,6 @@ document.addEventListener("DOMContentLoaded", () => {
     item.addEventListener("click", () => {
       openLightbox(imagesList, index);
     });
-
-
 
     return item;
   }

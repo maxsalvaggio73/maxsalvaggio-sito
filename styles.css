@@ -1726,7 +1726,8 @@ footer {
 }
 
 /* --- OVERVIEW MOSAIC LAYOUT GRID --- */
-#overview-grid {
+#overview-grid,
+.overview-style-grid {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
