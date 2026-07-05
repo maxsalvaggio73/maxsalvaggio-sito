@@ -95,6 +95,13 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
 
+    // Prevent default on dropdown toggle clicks
+    document.querySelectorAll(".dropdown-toggle").forEach(toggle => {
+      toggle.addEventListener("click", (e) => {
+        e.preventDefault();
+      });
+    });
+
     // Mobile dropdown toggle
     const mobileDropdownToggle = document.querySelector(".mobile-dropdown-toggle");
     const mobileSubmenu = document.querySelector(".mobile-submenu");
