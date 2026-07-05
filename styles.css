@@ -924,39 +924,41 @@ footer {
 
 /* --- EDITORIAL COVERS --- */
 .editorial-covers-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 35px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0;
+  padding: 10px;
 }
 .editorial-card {
   position: relative;
-  aspect-ratio: 3 / 2; /* Formato orizzontale fisso per l'icona della griglia */
+  margin: 10px;
+  height: 200px;
+  width: auto;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 4px;
+  border-radius: 2px;
   cursor: pointer;
   background-color: transparent;
-  transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1);
 }
 .editorial-card-inner {
   position: relative;
-  max-width: 100%;
-  max-height: 100%;
+  height: 200px;
+  width: auto;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 4px;
+  border-radius: 2px;
   overflow: hidden;
-  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.5);
-  transition: box-shadow 0.4s ease;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  transition: box-shadow 0.35s ease;
 }
 .editorial-card-img {
-  max-width: 100%;
-  max-height: 100%;
+  height: 200px;
   width: auto;
-  height: auto;
-  object-fit: contain; /* Tutta la foto originale visibile senza crop o tagli */
+  object-fit: contain;
   display: block;
   transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
 }
