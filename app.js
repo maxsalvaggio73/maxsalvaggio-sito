@@ -202,6 +202,9 @@ document.addEventListener("DOMContentLoaded", () => {
         if (targetId === "unpublished-research") {
           showUnpublishedResearchDirectly();
         }
+        if (targetId === "archive") {
+          renderArchiveGrid();
+        }
         
         // Scroll to top
         window.scrollTo({ top: 0, behavior: "smooth" });
@@ -223,6 +226,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (targetId === "unpublished-research") {
         showUnpublishedResearchDirectly();
+      }
+      if (targetId === "archive") {
+        renderArchiveGrid();
       }
     }
     
@@ -387,46 +393,73 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Render Archive landing page Categories Grid
+  // Render Archive landing page Categories Grid with random shuffle covers
   function renderArchiveGrid() {
     const grid = document.getElementById("archive-categories-grid");
     if (!grid) return;
 
     grid.innerHTML = "";
 
+    // Helper to get a random image from a list with fallback
+    const getRandomImage = (imagesList) => {
+      if (imagesList && imagesList.length > 0) {
+        const idx = Math.floor(Math.random() * imagesList.length);
+        return imagesList[idx];
+      }
+      return null;
+    };
+
+    // Flatten all editorials images
+    const editorialsImages = [];
+    if (portfolioData.editorials && portfolioData.editorials.projects) {
+      portfolioData.editorials.projects.forEach(p => {
+        if (p.images) {
+          editorialsImages.push(...p.images);
+        }
+      });
+    }
+
+    const edCover = getRandomImage(editorialsImages) || (portfolioData.editorials.projects[0] && portfolioData.editorials.projects[0].images[0]);
+    const fashionCover = getRandomImage(portfolioData.campaigns.fashion) || portfolioData.campaigns.fashion[0];
+    const lingerieCover = getRandomImage(portfolioData.campaigns.lingerie) || portfolioData.campaigns.lingerie[0];
+    const swimwearCover = getRandomImage(portfolioData.campaigns.swimwear) || portfolioData.campaigns.swimwear[0];
+    const unpublishedCover = getRandomImage(portfolioData.editorials.unpublished_research) || portfolioData.editorials.unpublished_research[0];
+
     const categories = [
       {
         title: "Editorials",
         hash: "editorials",
-        coverUrl: portfolioData.editorials.projects[0].images[0].url
+        coverUrl: edCover ? edCover.url : ""
       },
       {
         title: "Fashion",
         hash: "campaigns-fashion",
-        coverUrl: portfolioData.campaigns.fashion[0].url
+        coverUrl: fashionCover ? fashionCover.url : ""
       },
       {
         title: "Lingerie",
         hash: "campaigns-lingerie",
-        coverUrl: portfolioData.campaigns.lingerie[0].url
+        coverUrl: lingerieCover ? lingerieCover.url : ""
       },
       {
         title: "Swimwear",
         hash: "campaigns-swimwear",
-        coverUrl: portfolioData.campaigns.swimwear[0].url
+        coverUrl: swimwearCover ? swimwearCover.url : ""
       },
       {
         title: "Unpublished Research",
         hash: "unpublished-research",
-        coverUrl: portfolioData.editorials.unpublished_research[0].url
+        coverUrl: unpublishedCover ? unpublishedCover.url : ""
       }
     ];
 
     categories.forEach(cat => {
-      const card = createArchiveCategoryCard(cat.title, cat.coverUrl, () => {
-        window.location.hash = cat.hash;
-      });
-      grid.appendChild(card);
+      if (cat.coverUrl) {
+        const card = createArchiveCategoryCard(cat.title, cat.coverUrl, () => {
+          window.location.hash = cat.hash;
+        });
+        grid.appendChild(card);
+      }
     });
   }
 
