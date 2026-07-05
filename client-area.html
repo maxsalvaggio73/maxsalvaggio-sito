@@ -159,7 +159,7 @@
       transition: all 0.3s ease;
     }
     .form-input:focus {
-      border-color: rgba(229, 9, 20, 0.5);
+      border-color: rgba(255, 51, 102, 0.5);
       background-color: rgba(255, 255, 255, 0.04);
     }
 
@@ -182,8 +182,8 @@
       background-position: center;
     }
     .document-upload-box:hover {
-      border-color: rgba(229, 9, 20, 0.4);
-      background-color: rgba(229, 9, 20, 0.01);
+      border-color: rgba(255, 51, 102, 0.4);
+      background-color: rgba(255, 51, 102, 0.01);
     }
     .upload-box-icon {
       font-size: 1.5rem;
@@ -220,13 +220,13 @@
       margin-top: 15px;
     }
     .btn-submit:hover {
-      background-color: #B20710;
-      border-color: #B20710;
+      background-color: #d11f4d;
+      border-color: #d11f4d;
       transform: translateY(-1px);
-      box-shadow: 0 5px 15px rgba(229, 9, 20, 0.3);
+      box-shadow: 0 5px 15px rgba(255, 51, 102, 0.3);
     }
     .btn-submit:disabled {
-      background-color: rgba(229, 9, 20, 0.4);
+      background-color: rgba(255, 51, 102, 0.4);
       border-color: transparent;
       cursor: not-allowed;
       transform: none;
@@ -337,7 +337,7 @@
     }
     .gallery-item:hover {
       transform: translateY(-4px);
-      border-color: rgba(229, 9, 20, 0.4);
+      border-color: rgba(255, 51, 102, 0.4);
     }
     .gallery-preview-container {
       position: relative;
@@ -386,7 +386,7 @@
       transition: background-color 0.2s;
     }
     .btn-download-item:hover {
-      background-color: #B20710;
+      background-color: #d11f4d;
     }
 
     .gallery-caption {
@@ -459,8 +459,8 @@
 <body>
 
   <!-- Loading Overlay to prevent black screen and show loading status -->
-  <div id="loading-overlay" style="position: fixed; inset: 0; background: #121415; display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 9999; transition: opacity 0.4s ease; font-family: 'Outfit', sans-serif; color: #ECEFF1;">
-    <div class="spinner" style="width: 40px; height: 40px; border: 3px solid rgba(255,255,255,0.1); border-top-color: #E50914; border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 20px;"></div>
+  <div id="loading-overlay" style="position: fixed; inset: 0; background: var(--bg-dark, #5A6064); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 9999; transition: opacity 0.4s ease; font-family: var(--font-body, sans-serif); color: var(--text-primary, #fff);">
+    <div class="spinner" style="width: 40px; height: 40px; border: 3px solid rgba(255,255,255,0.1); border-top-color: var(--accent, #ff3366); border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 20px;"></div>
     <div id="loading-text" style="font-size: 0.9rem; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.8;">Verifica sessione in corso...</div>
     <button id="loading-retry-btn" onclick="window.location.href='login.html'" style="display: none; margin-top: 20px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.15); color: #fff; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-size: 0.8rem; font-family: inherit; letter-spacing: 0.05em; transition: all 0.2s;">Vai al Login</button>
   </div>
