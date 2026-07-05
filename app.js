@@ -56,6 +56,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const initialHash = window.location.hash.replace("#", "");
     const validSections = [
       "overview",
+      "archive",
       "editorials",
       "campaigns-fashion",
       "campaigns-lingerie",
@@ -96,22 +97,18 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
 
-    // Archive Back Buttons click binding (takes you back out of archive to overview or previous section)
+    // Archive Back Buttons click binding (takes you back to the Archive landing page)
     document.querySelectorAll(".btn-archive-back").forEach(btn => {
       btn.addEventListener("click", () => {
-        const archiveSections = ["editorials", "campaigns-fashion", "campaigns-lingerie", "campaigns-swimwear", "unpublished-research"];
-        if (previousSectionId && !archiveSections.includes(previousSectionId)) {
-          window.location.hash = previousSectionId;
-        } else {
-          window.location.hash = "overview";
-        }
+        window.location.hash = "archive";
       });
     });
 
-    // Prevent default on dropdown toggle clicks
+    // Make clicking the Archive parent dropdown item load the Archive landing page
     document.querySelectorAll(".dropdown-toggle").forEach(toggle => {
       toggle.addEventListener("click", (e) => {
         e.preventDefault();
+        window.location.hash = "archive";
       });
     });
 
@@ -175,7 +172,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Update parent dropdown toggle active states
     const archiveToggles = document.querySelectorAll('[data-dropdown="archive"]');
-    const archiveSections = ["editorials", "campaigns-fashion", "campaigns-lingerie", "campaigns-swimwear", "unpublished-research"];
+    const archiveSections = ["editorials", "campaigns-fashion", "campaigns-lingerie", "campaigns-swimwear", "unpublished-research", "archive"];
     if (archiveSections.includes(targetId)) {
       archiveToggles.forEach(toggle => toggle.classList.add("active"));
     } else {
@@ -296,6 +293,8 @@ document.addEventListener("DOMContentLoaded", () => {
     renderGrid("pb-pets-grid", portfolioData.portraits_and_beauty.pets_and_portraits, "PET & PORTRAITS");
     
 
+    // 2.6 Archive landing page Categories Grid
+    renderArchiveGrid();
   }
 
   // Helper to render basic grids
@@ -386,6 +385,78 @@ document.addEventListener("DOMContentLoaded", () => {
         container.style.display = "none";
       }
     }
+  }
+
+  // Render Archive landing page Categories Grid
+  function renderArchiveGrid() {
+    const grid = document.getElementById("archive-categories-grid");
+    if (!grid) return;
+
+    grid.innerHTML = "";
+
+    const categories = [
+      {
+        title: "Editorials",
+        hash: "editorials",
+        coverUrl: portfolioData.editorials.projects[0].images[0].url
+      },
+      {
+        title: "Fashion",
+        hash: "campaigns-fashion",
+        coverUrl: portfolioData.campaigns.fashion[0].url
+      },
+      {
+        title: "Lingerie",
+        hash: "campaigns-lingerie",
+        coverUrl: portfolioData.campaigns.lingerie[0].url
+      },
+      {
+        title: "Swimwear",
+        hash: "campaigns-swimwear",
+        coverUrl: portfolioData.campaigns.swimwear[0].url
+      },
+      {
+        title: "Unpublished Research",
+        hash: "unpublished-research",
+        coverUrl: portfolioData.editorials.unpublished_research[0].url
+      }
+    ];
+
+    categories.forEach(cat => {
+      const card = createArchiveCategoryCard(cat.title, cat.coverUrl, () => {
+        window.location.hash = cat.hash;
+      });
+      grid.appendChild(card);
+    });
+  }
+
+  function createArchiveCategoryCard(title, coverUrl, clickCallback) {
+    const card = document.createElement("div");
+    card.classList.add("editorial-card");
+    
+    const inner = document.createElement("div");
+    inner.classList.add("editorial-card-inner");
+
+    const img = document.createElement("img");
+    img.src = coverUrl;
+    img.alt = title;
+    img.loading = "lazy";
+    img.classList.add("editorial-card-img");
+
+    const overlay = document.createElement("div");
+    overlay.classList.add("editorial-card-overlay");
+    overlay.innerHTML = `
+      <span class="editorial-card-subtitle">Archive Category</span>
+      <h2 class="editorial-card-title">${title}</h2>
+    `;
+
+    inner.appendChild(img);
+    inner.appendChild(overlay);
+    card.appendChild(inner);
+
+    card.addEventListener("click", clickCallback);
+
+    return card;
   }
 
   // Render Editorials Covers List
@@ -602,17 +673,12 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Return to editorials covers grid or back to previous Archive section
+  // Return to editorials covers grid or back to Archive page
   const btnBackEditorials = document.getElementById("btn-back-editorials");
   if (btnBackEditorials) {
     btnBackEditorials.addEventListener("click", () => {
       if (window.location.hash === "#unpublished-research") {
-        const archiveSections = ["editorials", "campaigns-fashion", "campaigns-lingerie", "campaigns-swimwear"];
-        if (previousSectionId && archiveSections.includes(previousSectionId)) {
-          window.location.hash = previousSectionId;
-        } else {
-          window.location.hash = "editorials";
-        }
+        window.location.hash = "archive";
       } else if (window.location.hash === "#editorials") {
         resetEditorialDetails();
       } else {
