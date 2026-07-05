@@ -56,14 +56,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const validSections = [
       "overview",
       "editorials",
-      "campaigns",
+      "campaigns-fashion",
+      "campaigns-lingerie",
+      "campaigns-swimwear",
       "body-form",
       "portraits-beauty",
       "film-work",
-      "bio-contact",
-      "campaigns-fashion",
-      "campaigns-lingerie",
-      "campaigns-swimwear"
+      "bio-contact"
     ];
     
     if (initialHash && validSections.includes(initialHash)) {
@@ -135,16 +134,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function switchSection(targetId, animate = true) {
-    let sectionId = targetId;
-    let tabId = null;
-
-    if (targetId.startsWith("campaigns-")) {
-      sectionId = "campaigns";
-      tabId = targetId;
-    }
-
     const currentActive = document.querySelector(".spa-section.active");
-    const targetSection = document.getElementById(sectionId);
+    const targetSection = document.getElementById(targetId);
     if (!targetSection) return;
 
     // Update state
@@ -168,19 +159,7 @@ document.addEventListener("DOMContentLoaded", () => {
       archiveToggles.forEach(toggle => toggle.classList.remove("active"));
     }
 
-    // Tab activation helper
-    const activateTab = () => {
-      if (tabId) {
-        const tabBtn = targetSection.querySelector(`.tab-link[data-tab="${tabId}"]`);
-        if (tabBtn) {
-          tabBtn.click();
-        }
-      }
-    };
-
-    if (currentActive && currentActive.id === sectionId) {
-      // If we are already on the correct section, just activate the tab (no fade animations)
-      activateTab();
+    if (currentActive && currentActive.id === targetId) {
       return;
     }
 
@@ -200,9 +179,6 @@ document.addEventListener("DOMContentLoaded", () => {
         targetSection.style.opacity = "1";
         targetSection.style.transform = "translateY(0)";
         
-        // Activate tab if needed
-        activateTab();
-        
         // Scroll to top
         window.scrollTo({ top: 0, behavior: "smooth" });
       }, 400);
@@ -220,9 +196,6 @@ document.addEventListener("DOMContentLoaded", () => {
       targetSection.classList.add("active");
       targetSection.style.opacity = "1";
       targetSection.style.transform = "translateY(0)";
-      
-      // Activate tab if needed
-      activateTab();
     }
     
     // Close detail view of editorial when leaving the editorials tab
