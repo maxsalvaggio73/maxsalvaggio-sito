@@ -16,16 +16,19 @@
   <!-- Local Config -->
   <script src="config.js"></script>
 
+  <!-- Main Portfolio Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+
   <style>
     :root {
-      --bg-primary: #151718;
-      --bg-card: rgba(26, 29, 30, 0.45);
-      --border-color: rgba(255, 255, 255, 0.08);
-      --accent: #E50914; /* Rosso premium */
-      --text-primary: #ECEFF1;
-      --text-secondary: rgba(236, 239, 241, 0.6);
-      --font-display: 'Cinzel', serif;
-      --font-body: 'Outfit', sans-serif;
+      --bg-primary: var(--bg-dark);
+      --bg-card: var(--bg-card);
+      --border-color: var(--glass-border);
+      --accent: var(--accent); /* #ff3366 */
+      --text-primary: var(--text-primary);
+      --text-secondary: var(--text-muted);
+      --font-display: var(--font-display);
+      --font-body: var(--font-body);
     }
 
     * {
@@ -41,19 +44,18 @@
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      justify-content: center;
       align-items: center;
       overflow-x: hidden;
       position: relative;
     }
 
-    /* Red Glow background effect */
+    /* Ambient Glow background effect (pink accent) */
     body::before {
       content: "";
       position: absolute;
       width: 400px;
       height: 400px;
-      background: radial-gradient(circle, rgba(229, 9, 20, 0.1) 0%, rgba(229, 9, 20, 0) 70%);
+      background: radial-gradient(circle, rgba(255, 51, 102, 0.08) 0%, rgba(255, 51, 102, 0) 70%);
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
@@ -78,40 +80,19 @@
       box-shadow: 0 4px 15px rgba(0,0,0,0.3);
     }
 
-    /* Main Container */
+    /* Main Container centered vertically below the header */
     .login-container {
       width: 100%;
       max-width: 420px;
       padding: 20px;
       z-index: 10;
+      margin: auto 0;
     }
 
     /* Logo / Title */
     .brand-header {
       text-align: center;
       margin-bottom: 30px;
-    }
-    .brand-logo {
-      font-family: var(--font-display);
-      font-size: 1.5rem;
-      font-weight: 700;
-      letter-spacing: 0.15em;
-      color: var(--text-primary);
-      text-decoration: none;
-      text-transform: uppercase;
-      display: block;
-      margin-bottom: 5px;
-      transition: color 0.3s ease;
-    }
-    .brand-logo:hover {
-      color: var(--accent);
-    }
-    .brand-subtitle {
-      font-size: 0.72rem;
-      font-weight: 500;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--text-secondary);
     }
 
     /* Glassmorphism Card */
@@ -188,9 +169,9 @@
       transition: all 0.3s ease;
     }
     .form-input:focus {
-      border-color: rgba(229, 9, 20, 0.5);
+      border-color: rgba(255, 51, 102, 0.5);
       background-color: rgba(255, 255, 255, 0.05);
-      box-shadow: 0 0 10px rgba(229, 9, 20, 0.15);
+      box-shadow: 0 0 10px rgba(255, 51, 102, 0.15);
     }
 
     /* Error / Alert Boxes */
@@ -296,10 +277,64 @@
     ⚠️  <strong>Supabase non configurato:</strong> Configura i parametri reali di connessione nel file <code>config.js</code> per attivare l'autenticazione.
   </div>
 
+  <header>
+    <div class="header-container">
+      <button class="hamburger" id="hamburger" aria-label="Toggle Menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <a href="home.html#overview" class="logo" id="brand-logo">MAX SALVAGGIO</a>
+      <div style="width: 24px; display: none;" class="spacer-hamburger"></div>
+    </div>
+    
+    <nav aria-label="Main Navigation">
+      <ul class="nav-menu">
+        <li><a href="home.html#overview" class="nav-link" data-section="overview">Overview</a></li>
+        <li><a href="home.html#portraits-beauty" class="nav-link" data-section="portraits-beauty">Portraits &amp; Beauty</a></li>
+        <li><a href="home.html#body-form" class="nav-link" data-section="body-form">Body &amp; Form</a></li>
+        <li class="dropdown">
+          <a href="home.html#archive" class="nav-link dropdown-toggle" data-section="archive" data-dropdown="archive">Archive <span class="arrow">&#9662;</span></a>
+          <ul class="dropdown-menu">
+            <li><a href="home.html#editorials" class="nav-link" data-section="editorials">Editorials</a></li>
+            <li><a href="home.html#campaigns-fashion" class="nav-link" data-section="campaigns-fashion">Fashion</a></li>
+            <li><a href="home.html#campaigns-lingerie" class="nav-link" data-section="campaigns-lingerie">Lingerie</a></li>
+            <li><a href="home.html#campaigns-swimwear" class="nav-link" data-section="campaigns-swimwear">Swimwear</a></li>
+            <li><a href="home.html#unpublished-research" class="nav-link" data-section="unpublished-research">Unpublished Research</a></li>
+          </ul>
+        </li>
+        <li><a href="home.html#bio-contact" class="nav-link" data-section="bio-contact">Bio &amp; Contact</a></li>
+        <li><a href="login.html" class="nav-link active">Area riservata</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- OVERLAY MOBILE NAVIGATION -->
+  <div class="mobile-nav-overlay" id="mobile-nav-overlay">
+    <nav aria-label="Mobile Navigation">
+      <ul class="mobile-nav-list">
+        <li><a href="home.html#overview" class="mobile-nav-link" data-section="overview">Overview</a></li>
+        <li><a href="home.html#portraits-beauty" class="mobile-nav-link" data-section="portraits-beauty">Portraits &amp; Beauty</a></li>
+        <li><a href="home.html#body-form" class="mobile-nav-link" data-section="body-form">Body &amp; Form</a></li>
+        <li class="mobile-dropdown">
+          <span class="mobile-nav-link mobile-dropdown-toggle" data-dropdown="archive">Archive <span class="arrow">&#9662;</span></span>
+          <ul class="mobile-submenu">
+            <li><a href="home.html#editorials" class="mobile-nav-link" data-section="editorials">Editorials</a></li>
+            <li><a href="home.html#campaigns-fashion" class="mobile-nav-link" data-section="campaigns-fashion">Fashion</a></li>
+            <li><a href="home.html#campaigns-lingerie" class="mobile-nav-link" data-section="campaigns-lingerie">Lingerie</a></li>
+            <li><a href="home.html#campaigns-swimwear" class="mobile-nav-link" data-section="campaigns-swimwear">Swimwear</a></li>
+            <li><a href="home.html#unpublished-research" class="mobile-nav-link" data-section="unpublished-research">Unpublished Research</a></li>
+          </ul>
+        </li>
+        <li><a href="home.html#bio-contact" class="mobile-nav-link" data-section="bio-contact">Bio &amp; Contact</a></li>
+        <li><a href="login.html" class="mobile-nav-link active" data-section="client-area">Area riservata</a></li>
+      </ul>
+    </nav>
+  </div>
+
   <div class="login-container">
-    <div class="brand-header">
-      <a href="home.html" class="brand-logo">Max Salvaggio</a>
-      <span class="brand-subtitle">Area Riservata</span>
+    <div class="brand-header" style="margin-bottom: 20px;">
+      <h2 style="font-family: var(--font-display); font-size: 1.25rem; letter-spacing: 0.15em; text-transform: uppercase; text-align: center;">Area Riservata</h2>
     </div>
 
     <div class="login-card">
@@ -732,6 +767,33 @@
         btn.disabled = false;
         spinner.style.display = "none";
       }
+    }
+
+    // Mobile menu functionality
+    const hamburger = document.getElementById("hamburger");
+    const mobileNavOverlay = document.getElementById("mobile-nav-overlay");
+    
+    if (hamburger && mobileNavOverlay) {
+      hamburger.addEventListener("click", () => {
+        const isExpanded = hamburger.getAttribute("aria-expanded") === "true";
+        hamburger.setAttribute("aria-expanded", !isExpanded);
+        mobileNavOverlay.classList.toggle("open");
+        document.body.style.overflow = mobileNavOverlay.classList.contains("open") ? "hidden" : "";
+      });
+    }
+
+    // Mobile dropdown toggle
+    const mobileDropdownToggle = document.querySelector(".mobile-dropdown-toggle");
+    const mobileSubmenu = document.querySelector(".mobile-submenu");
+    if (mobileDropdownToggle && mobileSubmenu) {
+      mobileDropdownToggle.addEventListener("click", (e) => {
+        e.stopPropagation();
+        mobileSubmenu.classList.toggle("open");
+        const arrow = mobileDropdownToggle.querySelector(".arrow");
+        if (arrow) {
+          arrow.style.transform = mobileSubmenu.classList.contains("open") ? "rotate(180deg)" : "rotate(0deg)";
+        }
+      });
     }
   </script>
 </body>
