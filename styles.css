@@ -195,6 +195,126 @@ header {
   background-color: var(--accent);
 }
 
+/* --- DROPDOWN & SUBMENU STYLES --- */
+
+/* Desktop Dropdown */
+.dropdown {
+  position: relative;
+}
+
+.dropdown-toggle {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.dropdown-toggle .arrow {
+  font-size: 0.6rem;
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+
+.dropdown:hover .dropdown-toggle .arrow {
+  transform: rotate(180deg);
+}
+
+.dropdown-menu {
+  display: block;
+  visibility: hidden;
+  opacity: 0;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-10px);
+  background: rgba(15, 15, 15, 0.95);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid var(--glass-border);
+  border-radius: 4px;
+  list-style: none;
+  padding: 12px 0;
+  min-width: 160px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+  z-index: 1000;
+  margin-top: 10px;
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
+}
+
+.dropdown:hover .dropdown-menu {
+  visibility: visible;
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+  pointer-events: auto;
+}
+
+.dropdown-menu li {
+  width: 100%;
+}
+
+.dropdown-menu .nav-link {
+  display: block;
+  padding: 8px 20px;
+  font-size: 0.7rem;
+  text-align: center;
+  width: 100%;
+  white-space: nowrap;
+}
+
+.dropdown-menu .nav-link::after {
+  display: none;
+}
+
+.dropdown-menu .nav-link:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--accent);
+}
+
+/* Mobile Dropdown & Submenu */
+.mobile-dropdown {
+  width: 100%;
+  text-align: center;
+}
+
+.mobile-dropdown-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.mobile-dropdown-toggle .arrow {
+  font-size: 1.1rem;
+  transition: transform 0.3s ease;
+}
+
+.mobile-dropdown-toggle.open .arrow {
+  transform: rotate(180deg);
+}
+
+.mobile-submenu {
+  list-style: none;
+  padding: 0;
+  margin: 15px 0 0 0;
+  display: none;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.mobile-submenu.open {
+  display: flex;
+}
+
+.mobile-submenu .mobile-nav-link {
+  font-size: 1.2rem;
+  font-family: var(--font-body);
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  padding: 5px 0;
+}
+
 /* Hamburger menu icon */
 .hamburger {
   display: none;

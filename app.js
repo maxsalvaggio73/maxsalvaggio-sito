@@ -53,7 +53,18 @@ document.addEventListener("DOMContentLoaded", () => {
   function initSPA() {
     // Handle initial load hash
     const initialHash = window.location.hash.replace("#", "");
-    const validSections = ["overview", "editorials", "campaigns", "body-form", "portraits-beauty", "film-work", "bio-contact"];
+    const validSections = [
+      "overview",
+      "editorials",
+      "campaigns",
+      "body-form",
+      "portraits-beauty",
+      "film-work",
+      "bio-contact",
+      "campaigns-fashion",
+      "campaigns-lingerie",
+      "campaigns-swimwear"
+    ];
     
     if (initialHash && validSections.includes(initialHash)) {
       activeSectionId = initialHash;
@@ -84,6 +95,17 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
 
+    // Mobile dropdown toggle
+    const mobileDropdownToggle = document.querySelector(".mobile-dropdown-toggle");
+    const mobileSubmenu = document.querySelector(".mobile-submenu");
+    if (mobileDropdownToggle && mobileSubmenu) {
+      mobileDropdownToggle.addEventListener("click", (e) => {
+        e.stopPropagation();
+        mobileDropdownToggle.classList.toggle("open");
+        mobileSubmenu.classList.toggle("open");
+      });
+    }
+
     // Brand Logo link click
     if (brandLogo) {
       brandLogo.addEventListener("click", (e) => {
@@ -106,8 +128,16 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function switchSection(targetId, animate = true) {
+    let sectionId = targetId;
+    let tabId = null;
+
+    if (targetId.startsWith("campaigns-")) {
+      sectionId = "campaigns";
+      tabId = targetId;
+    }
+
     const currentActive = document.querySelector(".spa-section.active");
-    const targetSection = document.getElementById(targetId);
+    const targetSection = document.getElementById(sectionId);
     if (!targetSection) return;
 
     // Update state
@@ -121,6 +151,31 @@ document.addEventListener("DOMContentLoaded", () => {
         link.classList.remove("active");
       }
     });
+
+    // Update parent dropdown toggle active states
+    const archiveToggles = document.querySelectorAll('[data-dropdown="archive"]');
+    const archiveSections = ["editorials", "campaigns-fashion", "campaigns-lingerie", "campaigns-swimwear"];
+    if (archiveSections.includes(targetId)) {
+      archiveToggles.forEach(toggle => toggle.classList.add("active"));
+    } else {
+      archiveToggles.forEach(toggle => toggle.classList.remove("active"));
+    }
+
+    // Tab activation helper
+    const activateTab = () => {
+      if (tabId) {
+        const tabBtn = targetSection.querySelector(`.tab-link[data-tab="${tabId}"]`);
+        if (tabBtn) {
+          tabBtn.click();
+        }
+      }
+    };
+
+    if (currentActive && currentActive.id === sectionId) {
+      // If we are already on the correct section, just activate the tab (no fade animations)
+      activateTab();
+      return;
+    }
 
     if (animate && currentActive) {
       // Fade out current
@@ -137,6 +192,9 @@ document.addEventListener("DOMContentLoaded", () => {
         targetSection.classList.add("active");
         targetSection.style.opacity = "1";
         targetSection.style.transform = "translateY(0)";
+        
+        // Activate tab if needed
+        activateTab();
         
         // Scroll to top
         window.scrollTo({ top: 0, behavior: "smooth" });
@@ -155,6 +213,9 @@ document.addEventListener("DOMContentLoaded", () => {
       targetSection.classList.add("active");
       targetSection.style.opacity = "1";
       targetSection.style.transform = "translateY(0)";
+      
+      // Activate tab if needed
+      activateTab();
     }
     
     // Close detail view of editorial when leaving the editorials tab
@@ -183,6 +244,14 @@ document.addEventListener("DOMContentLoaded", () => {
     hamburger.querySelector("span:nth-child(1)").style.transform = "none";
     hamburger.querySelector("span:nth-child(2)").style.opacity = "1";
     hamburger.querySelector("span:nth-child(3)").style.transform = "none";
+
+    // Reset mobile dropdown and submenu
+    const mobileDropdownToggle = document.querySelector(".mobile-dropdown-toggle");
+    const mobileSubmenu = document.querySelector(".mobile-submenu");
+    if (mobileDropdownToggle && mobileSubmenu) {
+      mobileDropdownToggle.classList.remove("open");
+      mobileSubmenu.classList.remove("open");
+    }
   }
 
   // ==========================================
