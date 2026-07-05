@@ -718,10 +718,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const detailTitle = document.getElementById("editorial-detail-title");
     const detailGrid = document.getElementById("editorial-detail-grid");
 
-    // Hide the section title "Editorials" at the top
-    const sectionTitle = document.querySelector("#editorials .section-title");
-    if (sectionTitle) {
-      sectionTitle.style.display = "none";
+    // Hide the section header "Editorials" at the top
+    const sectionHeader = document.querySelector("#editorials .section-header");
+    if (sectionHeader) {
+      sectionHeader.style.display = "none";
     }
 
     const btnBack = document.getElementById("btn-back-editorials");
@@ -900,10 +900,10 @@ document.addEventListener("DOMContentLoaded", () => {
       detailView.classList.add("hidden");
       detailView.style.display = "none";
       
-      // Restore the section title "Editorials" at the top
-      const sectionTitle = document.querySelector("#editorials .section-title");
-      if (sectionTitle) {
-        sectionTitle.style.display = "block";
+      // Restore the section header "Editorials" at the top
+      const sectionHeader = document.querySelector("#editorials .section-header");
+      if (sectionHeader) {
+        sectionHeader.style.display = "flex";
       }
       
       listView.style.display = "block";
