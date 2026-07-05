@@ -96,6 +96,18 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
 
+    // Archive Back Buttons click binding (takes you back out of archive to overview or previous section)
+    document.querySelectorAll(".btn-archive-back").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const archiveSections = ["editorials", "campaigns-fashion", "campaigns-lingerie", "campaigns-swimwear", "unpublished-research"];
+        if (previousSectionId && !archiveSections.includes(previousSectionId)) {
+          window.location.hash = previousSectionId;
+        } else {
+          window.location.hash = "overview";
+        }
+      });
+    });
+
     // Prevent default on dropdown toggle clicks
     document.querySelectorAll(".dropdown-toggle").forEach(toggle => {
       toggle.addEventListener("click", (e) => {

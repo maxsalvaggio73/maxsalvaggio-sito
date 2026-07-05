@@ -867,6 +867,18 @@ footer {
   background-color: var(--accent);
 }
 
+.section-header {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 50px;
+  min-height: 80px;
+}
+.section-header .section-title {
+  margin-bottom: 0;
+}
+
 /* --- TABS SYSTEM --- */
 .section-tabs {
   display: flex;
