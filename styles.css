@@ -1829,7 +1829,7 @@ footer {
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.55); /* L'ombra si espande su hover seguendo la foto */
 }
 
-/* ===== DYNAMIC MOSAIC BACKGROUND (FROM COMING SOON) ===== */
+/* ===== STATIC MOSAIC BACKGROUND ===== */
 #mosaic-bg {
   position: fixed;
   inset: 0;
@@ -1837,6 +1837,10 @@ footer {
   height: 100vh;
   overflow: hidden;
   z-index: 0;
+  background-image: url('assets/onemosaic75.jpg');
+  background-size: cover;
+  background-position: center;
+  filter: brightness(0.82) saturate(0.9);
 }
 
 #mosaic-canvas-wrapper {
