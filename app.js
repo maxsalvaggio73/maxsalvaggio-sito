@@ -25,6 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let activeSectionId = "overview";
   let previousSectionId = "overview";
   let lightboxImages = [];
+  let rawImagesSourceList = [];
   let lightboxIndex = 0;
   let touchStartX = 0;
   let touchStartY = 0;
@@ -291,22 +292,6 @@ document.addEventListener("DOMContentLoaded", () => {
           closeMobileMenu();
         } else {
           openMobileMenu();
-        }
-      });
-    }
-
-    // Backdrop click listener to close editorial details and return to editorials covers grid
-    const detailView = document.getElementById("editorial-detail-view");
-    if (detailView) {
-      detailView.addEventListener("click", (e) => {
-        // If the lightbox is currently open, do not trigger
-        if (lightbox && lightbox.classList.contains("open")) return;
-
-        const clickedImage = e.target.closest(".overview-item, .gallery-item, img");
-        const clickedInteractive = e.target.closest("button, a, .btn-back, .btn-nav-project, h2, span");
-
-        if (!clickedImage && !clickedInteractive) {
-          resetEditorialDetails();
         }
       });
     }
@@ -1264,15 +1249,92 @@ document.addEventListener("DOMContentLoaded", () => {
   // ==========================================
   // 4. UNIVERSAL LIGHTBOX ENGINE
   // ==========================================
+  function buildLightboxSlides(rawImages, isEditorials = false) {
+    const slides = [];
+    
+    if (isEditorials) {
+      const projectsList = getEditorialProjectsList();
+      projectsList.forEach((proj, projIdx) => {
+        const projImages = proj.images;
+        let i = 0;
+        while (i < projImages.length) {
+          const img = projImages[i];
+          
+          // Se ci sono due immagini verticali consecutive
+          if (!img.is_horizontal && (i + 1 < projImages.length) && !projImages[i + 1].is_horizontal) {
+            slides.push({
+              type: "pair",
+              images: [img, projImages[i + 1]],
+              parentProject: proj
+            });
+            i += 2;
+          } else {
+            slides.push({
+              type: "image",
+              image: img,
+              parentProject: proj
+            });
+            i += 1;
+          }
+        }
+        
+        // Inseriamo il box bianco di transizione al servizio fotografico successivo
+        const nextProj = projectsList[(projIdx + 1) % projectsList.length];
+        slides.push({
+          type: "transition",
+          project: nextProj
+        });
+      });
+    } else {
+      let i = 0;
+      while (i < rawImages.length) {
+        const img = rawImages[i];
+        if (!img.is_horizontal && (i + 1 < rawImages.length) && !rawImages[i + 1].is_horizontal) {
+          slides.push({
+            type: "pair",
+            images: [img, rawImages[i + 1]]
+          });
+          i += 2;
+        } else {
+          slides.push({
+            type: "image",
+            image: img
+          });
+          i += 1;
+        }
+      }
+    }
+    
+    return slides;
+  }
+
   function openLightbox(imagesList, index) {
     if (!lightbox || !imagesList || imagesList.length === 0) return;
     
-    lightboxImages = imagesList;
-    lightboxIndex = index;
+    rawImagesSourceList = imagesList;
+    
+    const isEditorials = imagesList.some(img => img.tag === "EDITORIALS");
+    const slides = buildLightboxSlides(imagesList, isEditorials);
+    
+    const clickedImg = imagesList[index];
+    let targetSlideIndex = 0;
+    for (let sIdx = 0; sIdx < slides.length; sIdx++) {
+      const slide = slides[sIdx];
+      if (slide.type === "image" && slide.image.url === clickedImg.url) {
+        targetSlideIndex = sIdx;
+        break;
+      } else if (slide.type === "pair" && (slide.images[0].url === clickedImg.url || slide.images[1].url === clickedImg.url)) {
+        targetSlideIndex = sIdx;
+        break;
+      }
+    }
+    
+    lightboxImages = slides;
+    lightboxIndex = targetSlideIndex;
 
     lightbox.classList.add("open");
     lightbox.setAttribute("aria-hidden", "false");
-    document.body.style.overflow = "hidden"; // disable background scrolling
+    document.body.style.overflow = "hidden"; // disabilita lo scorrimento dello sfondo
 
     updateLightboxContent();
 
@@ -1280,15 +1342,11 @@ document.addEventListener("DOMContentLoaded", () => {
     lightboxClose.addEventListener("click", closeLightbox);
     lightboxPrev.addEventListener("click", prevLightbox);
     lightboxNext.addEventListener("click", nextLightbox);
-    lightboxImg.addEventListener("click", nextLightbox);
     document.addEventListener("keydown", handleLightboxKeys);
     
-    // Touch swipe listeners for mobile/tablet devices
+    // Supporto touch swipe
     lightbox.addEventListener("touchstart", handleTouchStart, { passive: true });
     lightbox.addEventListener("touchend", handleTouchEnd, { passive: true });
-    
-    // Close on background click
-    lightbox.addEventListener("click", handleLightboxBgClick);
   }
 
   function closeLightbox() {
@@ -1298,89 +1356,209 @@ document.addEventListener("DOMContentLoaded", () => {
     lightbox.setAttribute("aria-hidden", "true");
     document.body.style.overflow = "";
 
-    // Clear resources
+    // Reset risorse e svuota contenitori dinamici
     lightboxImg.src = "";
     lightboxImg.classList.remove("loaded");
+    
+    const pairDiv = document.getElementById("lightbox-pair-container");
+    if (pairDiv) {
+      pairDiv.innerHTML = "";
+      pairDiv.style.display = "none";
+    }
+    const transDiv = document.getElementById("lightbox-transition-card");
+    if (transDiv) {
+      transDiv.innerHTML = "";
+      transDiv.style.display = "none";
+    }
 
-    // Remove listeners
+    // Rimozione listeners
     lightboxClose.removeEventListener("click", closeLightbox);
     lightboxPrev.removeEventListener("click", prevLightbox);
     lightboxNext.removeEventListener("click", nextLightbox);
-    lightboxImg.removeEventListener("click", nextLightbox);
     document.removeEventListener("keydown", handleLightboxKeys);
     
-    // Touch swipe listeners removal
     lightbox.removeEventListener("touchstart", handleTouchStart);
     lightbox.removeEventListener("touchend", handleTouchEnd);
-    
-    lightbox.removeEventListener("click", handleLightboxBgClick);
   }
 
   function updateLightboxContent() {
-    const currentImg = lightboxImages[lightboxIndex];
-    if (!currentImg) return;
+    const currentSlide = lightboxImages[lightboxIndex];
+    if (!currentSlide) return;
 
-    // Fade image out before switching src
+    // Animazione di sfocatura in uscita prima del cambio
     lightboxImg.style.opacity = "0";
     lightboxImg.style.transform = "scale(0.97)";
+    
+    const pairDiv = document.getElementById("lightbox-pair-container");
+    if (pairDiv) {
+      pairDiv.querySelectorAll("img").forEach(img => {
+        img.style.opacity = "0";
+        img.style.transform = "scale(0.97)";
+      });
+    }
 
     setTimeout(() => {
-      lightboxImg.src = currentImg.url;
-      lightboxImg.alt = currentImg.title;
-      
-      // Hide caption for Overview section to keep it clean and name-free
-      const isOverview = (currentImg.tag === "OVERVIEW" || activeSectionId === "overview");
-      const caption = document.querySelector(".lightbox-caption");
-      if (caption) {
-        if (isOverview) {
-          caption.style.display = "none";
-        } else {
-          caption.style.display = "flex";
-          
-          // Cerca se l'immagine fa parte di un progetto editoriale
-          const parentProject = portfolioData.editorials.projects.find(proj => 
-            proj.images.some(img => img.url === currentImg.url)
-          );
-          const isUnpublished = portfolioData.editorials.unpublished_research && 
-                                portfolioData.editorials.unpublished_research.some(img => img.url === currentImg.url);
-          
-          if (parentProject) {
-            const mag = parentProject.magazine || "Grazia";
-            const title = parentProject.title;
-            const place = parentProject.place;
-            const parts = [title, mag, place].filter(Boolean);
-            
-            lightboxTitle.textContent = parts.join(" - ");
-            lightboxTag.style.display = "none";
-          } else if (isUnpublished) {
-            lightboxTitle.textContent = "Unpublished Research";
-            lightboxTag.style.display = "none";
-          } else {
-            let groupTitle = currentImg.tag || "PORTFOLIO";
-            if (activeSectionId === "campaigns-fashion") {
-              groupTitle = "FASHION";
-            } else if (activeSectionId === "campaigns-lingerie") {
-              groupTitle = "LINGERIE";
-            } else if (activeSectionId === "campaigns-swimwear") {
-              groupTitle = "SWIMWEAR";
-            }
-            lightboxTitle.textContent = groupTitle;
-            lightboxTag.style.display = "none";
-          }
-        }
+      // Sincronizza lo stato del progetto editoriale attivo in background
+      const activeProj = currentSlide.parentProject || currentSlide.project;
+      if (activeProj && activeProj.id !== "unpublished-research") {
+        syncBackgroundProject(activeProj);
       }
 
-      lightboxImg.onload = () => {
-        lightboxImg.style.opacity = "1";
-        lightboxImg.style.transform = "scale(1)";
-      };
-      
-      // In case image was cached
-      if (lightboxImg.complete) {
-        lightboxImg.style.opacity = "1";
-        lightboxImg.style.transform = "scale(1)";
+      // Gestione diapositive per tipo
+      if (currentSlide.type === "transition") {
+        let transDiv = document.getElementById("lightbox-transition-card");
+        if (!transDiv) {
+          transDiv = document.createElement("div");
+          transDiv.id = "lightbox-transition-card";
+          lightboxImg.parentNode.appendChild(transDiv);
+        }
+        
+        transDiv.className = "lightbox-transition-card";
+        
+        const nextProj = currentSlide.project;
+        let mag = nextProj.magazine || "Grazia Italia";
+        if (mag.toLowerCase() === "grazia") {
+          mag = "Grazia Italia";
+        }
+        const title = nextProj.title;
+        const place = nextProj.place || "";
+        const subtext = [mag, place].filter(Boolean).join(", ");
+        
+        transDiv.innerHTML = `
+          <div class="transition-title">${title}</div>
+          <div class="transition-subtext">${subtext}</div>
+        `;
+        
+        lightboxImg.style.display = "none";
+        if (pairDiv) pairDiv.style.display = "none";
+        transDiv.style.display = "flex";
+        
+        // Cliccando sul box bianco si avanza
+        transDiv.onclick = (e) => {
+          e.stopPropagation();
+          nextLightbox();
+        };
+        
+        const caption = document.querySelector(".lightbox-caption");
+        if (caption) caption.style.display = "none";
+      } 
+      else if (currentSlide.type === "pair") {
+        let pairContainer = document.getElementById("lightbox-pair-container");
+        if (!pairContainer) {
+          pairContainer = document.createElement("div");
+          pairContainer.id = "lightbox-pair-container";
+          lightboxImg.parentNode.appendChild(pairContainer);
+        }
+        
+        pairContainer.className = "lightbox-pair-container";
+        pairContainer.innerHTML = `
+          <img class="lightbox-pair-img" id="lightbox-pair-img-1" src="" alt="">
+          <img class="lightbox-pair-img" id="lightbox-pair-img-2" src="" alt="">
+        `;
+        
+        const img1 = pairContainer.querySelector("#lightbox-pair-img-1");
+        const img2 = pairContainer.querySelector("#lightbox-pair-img-2");
+        
+        img1.src = currentSlide.images[0].url;
+        img1.alt = currentSlide.images[0].title || "";
+        img2.src = currentSlide.images[1].url;
+        img2.alt = currentSlide.images[1].title || "";
+        
+        lightboxImg.style.display = "none";
+        const transDiv = document.getElementById("lightbox-transition-card");
+        if (transDiv) transDiv.style.display = "none";
+        pairContainer.style.display = "flex";
+        
+        // Cliccando sulle immagini si avanza
+        img1.onclick = (e) => { e.stopPropagation(); nextLightbox(); };
+        img2.onclick = (e) => { e.stopPropagation(); nextLightbox(); };
+        
+        img1.onload = () => { img1.classList.add("loaded"); };
+        img2.onload = () => { img2.classList.add("loaded"); };
+        if (img1.complete) img1.classList.add("loaded");
+        if (img2.complete) img2.classList.add("loaded");
+        
+        updateLightboxCaption(currentSlide);
+      } 
+      else {
+        let transDiv = document.getElementById("lightbox-transition-card");
+        if (transDiv) transDiv.style.display = "none";
+        if (pairDiv) pairDiv.style.display = "none";
+        
+        lightboxImg.style.display = "block";
+        lightboxImg.src = currentSlide.image.url;
+        lightboxImg.alt = currentSlide.image.title || "";
+        
+        // Cliccando sull'immagine singola si avanza
+        lightboxImg.onclick = (e) => {
+          e.stopPropagation();
+          nextLightbox();
+        };
+        
+        lightboxImg.onload = () => {
+          lightboxImg.style.opacity = "1";
+          lightboxImg.style.transform = "scale(1)";
+        };
+        if (lightboxImg.complete) {
+          lightboxImg.style.opacity = "1";
+          lightboxImg.style.transform = "scale(1)";
+        }
+        
+        updateLightboxCaption(currentSlide);
       }
     }, 150);
+  }
+
+  function updateLightboxCaption(currentSlide) {
+    const isOverview = activeSectionId === "overview";
+    const caption = document.querySelector(".lightbox-caption");
+    if (!caption) return;
+    
+    if (isOverview) {
+      caption.style.display = "none";
+      return;
+    }
+    
+    caption.style.display = "flex";
+    
+    let parentProject = currentSlide.parentProject || null;
+    let isUnpublished = false;
+    const imgObj = currentSlide.type === "pair" ? currentSlide.images[0] : currentSlide.image;
+    
+    if (!parentProject && imgObj) {
+      parentProject = portfolioData.editorials.projects.find(proj => 
+        proj.images.some(img => img.url === imgObj.url)
+      );
+      isUnpublished = portfolioData.editorials.unpublished_research && 
+                      portfolioData.editorials.unpublished_research.some(img => img.url === imgObj.url);
+    }
+    
+    if (parentProject) {
+      let mag = parentProject.magazine || "Grazia";
+      if (mag.toLowerCase() === "grazia") {
+        mag = "Grazia Italia";
+      }
+      const title = parentProject.title;
+      const place = parentProject.place;
+      const parts = [title, mag, place].filter(Boolean);
+      
+      lightboxTitle.textContent = parts.join(" - ");
+      lightboxTag.style.display = "none";
+    } else if (isUnpublished) {
+      lightboxTitle.textContent = "Unpublished Research";
+      lightboxTag.style.display = "none";
+    } else {
+      let groupTitle = (imgObj && imgObj.tag) || "PORTFOLIO";
+      if (activeSectionId === "campaigns-fashion") {
+        groupTitle = "FASHION";
+      } else if (activeSectionId === "campaigns-lingerie") {
+        groupTitle = "LINGERIE";
+      } else if (activeSectionId === "campaigns-swimwear") {
+        groupTitle = "SWIMWEAR";
+      }
+      lightboxTitle.textContent = groupTitle;
+      lightboxTag.style.display = "none";
+    }
   }
 
   // Ottiene la lista ordinata dei progetti editoriali attivi
@@ -1498,30 +1676,10 @@ document.addEventListener("DOMContentLoaded", () => {
   function nextLightbox(e) {
     if (e) e.stopPropagation();
     
-    const currentImg = lightboxImages[lightboxIndex];
-    let parentProject = null;
-    let projectsList = [];
+    const isEditorials = rawImagesSourceList.some(img => img.tag === "EDITORIALS");
     
-    if (currentImg && currentImg.tag === "EDITORIALS") {
-      projectsList = getEditorialProjectsList();
-      parentProject = projectsList.find(proj => 
-        proj.images.some(img => img.url === currentImg.url)
-      );
-    }
-    
-    if (parentProject && lightboxIndex === lightboxImages.length - 1) {
-      // Editorials: passa alla storia successiva!
-      const parentIdx = projectsList.findIndex(p => p.id === parentProject.id);
-      const nextProject = projectsList[(parentIdx + 1) % projectsList.length];
-      
-      lightboxImages = nextProject.images;
-      lightboxIndex = 0;
-      
-      syncBackgroundProject(nextProject);
-      updateLightboxContent();
-    } else if (lightboxIndex === lightboxImages.length - 1) {
-      // Altre gallerie: passa alla tab o sezione successiva!
-      const nextTab = getNextGalleryTab(lightboxImages);
+    if (!isEditorials && lightboxIndex === lightboxImages.length - 1) {
+      const nextTab = getNextGalleryTab(rawImagesSourceList);
       if (nextTab) {
         if (nextTab.tabId) {
           const tabBtn = document.querySelector(`button[data-tab="${nextTab.tabId}"]`);
@@ -1529,7 +1687,9 @@ document.addEventListener("DOMContentLoaded", () => {
         } else if (nextTab.sectionId) {
           window.location.hash = nextTab.sectionId;
         }
-        lightboxImages = nextTab.nextList;
+        
+        rawImagesSourceList = nextTab.nextList;
+        lightboxImages = buildLightboxSlides(rawImagesSourceList, false);
         lightboxIndex = 0;
         updateLightboxContent();
       } else {
@@ -1545,30 +1705,10 @@ document.addEventListener("DOMContentLoaded", () => {
   function prevLightbox(e) {
     if (e) e.stopPropagation();
     
-    const currentImg = lightboxImages[lightboxIndex];
-    let parentProject = null;
-    let projectsList = [];
+    const isEditorials = rawImagesSourceList.some(img => img.tag === "EDITORIALS");
     
-    if (currentImg && currentImg.tag === "EDITORIALS") {
-      projectsList = getEditorialProjectsList();
-      parentProject = projectsList.find(proj => 
-        proj.images.some(img => img.url === currentImg.url)
-      );
-    }
-    
-    if (parentProject && lightboxIndex === 0) {
-      // Editorials: passa alla storia precedente!
-      const parentIdx = projectsList.findIndex(p => p.id === parentProject.id);
-      const prevProject = projectsList[(parentIdx - 1 + projectsList.length) % projectsList.length];
-      
-      lightboxImages = prevProject.images;
-      lightboxIndex = lightboxImages.length - 1;
-      
-      syncBackgroundProject(prevProject);
-      updateLightboxContent();
-    } else if (lightboxIndex === 0) {
-      // Altre gallerie: passa alla tab o sezione precedente!
-      const prevTab = getPrevGalleryTab(lightboxImages);
+    if (!isEditorials && lightboxIndex === 0) {
+      const prevTab = getPrevGalleryTab(rawImagesSourceList);
       if (prevTab) {
         if (prevTab.tabId) {
           const tabBtn = document.querySelector(`button[data-tab="${prevTab.tabId}"]`);
@@ -1576,7 +1716,9 @@ document.addEventListener("DOMContentLoaded", () => {
         } else if (prevTab.sectionId) {
           window.location.hash = prevTab.sectionId;
         }
-        lightboxImages = prevTab.prevList;
+        
+        rawImagesSourceList = prevTab.prevList;
+        lightboxImages = buildLightboxSlides(rawImagesSourceList, false);
         lightboxIndex = lightboxImages.length - 1;
         updateLightboxContent();
       } else {
@@ -1599,15 +1741,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  function handleLightboxBgClick(e) {
-    // If click is on lightbox wrapper container, background backdrop, or caption margins, close
-    const clickedInsideImage = lightboxImg.contains(e.target);
-    const clickedNavs = lightboxPrev.contains(e.target) || lightboxNext.contains(e.target) || lightboxClose.contains(e.target);
-    
-    if (!clickedInsideImage && !clickedNavs) {
-      closeLightbox();
-    }
-  }
+
 
   function handleTouchStart(e) {
     if (e.touches && e.touches.length > 0) {

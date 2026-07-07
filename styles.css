@@ -2016,3 +2016,112 @@ footer {
   }
 }
 
+/* --- LIGHTBOX PAIR IMAGES & TRANSITION CARD --- */
+.lightbox-pair-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 20px; /* distanziate 20 pixel */
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.lightbox-pair-img {
+  max-height: min(900px, 75vh);
+  max-width: calc(50% - 10px); /* due verticali affiancate */
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 2px;
+  box-shadow: 0 20px 55px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+  opacity: 0;
+  transform: scale(0.97);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.lightbox-pair-img.loaded {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.lightbox-transition-card {
+  width: 600px;
+  height: 800px; /* dimensioni 600x800 pixel */
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 40px;
+  box-shadow: 0 20px 55px rgba(0, 0, 0, 0.15);
+  text-align: center;
+  border-radius: 2px;
+  user-select: none;
+}
+
+.lightbox-transition-card .transition-title {
+  font-family: var(--font-display);
+  font-weight: 700; /* in grassetto */
+  font-size: 2rem;
+  color: #000000;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  line-height: 1.3;
+}
+
+.lightbox-transition-card .transition-subtext {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 1.1rem;
+  color: #555555;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  line-height: 1.5;
+}
+
+/* Responsiveness for transition card and paired images on mobile */
+@media (max-width: 768px) {
+  .lightbox-transition-card {
+    width: 85vw;
+    height: 113vw; /* Keep 600x800 aspect ratio */
+    max-height: 60vh;
+    padding: 20px;
+  }
+  .lightbox-transition-card .transition-title {
+    font-size: 1.4rem;
+    margin-bottom: 10px;
+  }
+  .lightbox-transition-card .transition-subtext {
+    font-size: 0.85rem;
+  }
+  .lightbox-pair-container {
+    gap: 10px; /* smaller gap on mobile */
+  }
+  .lightbox-pair-img {
+    max-width: calc(50% - 5px);
+    max-height: 65vh;
+  }
+}
+
+@media (max-height: 580px) {
+  .lightbox-transition-card {
+    width: 60vw;
+    height: 80vh; /* Fit in height */
+    padding: 15px;
+  }
+  .lightbox-transition-card .transition-title {
+    font-size: 1.1rem;
+    margin-bottom: 5px;
+  }
+  .lightbox-transition-card .transition-subtext {
+    font-size: 0.75rem;
+  }
+  .lightbox-pair-img {
+    max-height: 55vh;
+  }
+}
+
