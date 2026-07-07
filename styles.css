@@ -2101,15 +2101,6 @@ body.light-mode .social-icon-svg {
   transform: scale(1);
 }
 
-.lightbox-wrapper.has-transition {
-  max-height: none !important;
-  max-width: none !important;
-}
-.lightbox-wrapper.has-transition .lightbox-img-holder {
-  height: auto !important;
-  width: auto !important;
-}
-
 .lightbox-transition-card {
   width: 600px;
   height: 800px; /* dimensioni 600x800 pixel */

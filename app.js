@@ -1448,7 +1448,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     setTimeout(() => {
-      const lightboxWrapper = document.querySelector(".lightbox-wrapper");
       // Sincronizza lo stato del progetto editoriale attivo in background
       const activeProj = currentSlide.parentProject || currentSlide.project;
       if (activeProj && activeProj.id !== "unpublished-research") {
@@ -1457,7 +1456,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // Gestione diapositive per tipo
       if (currentSlide.type === "transition") {
-        if (lightboxWrapper) lightboxWrapper.classList.add("has-transition");
         let transDiv = document.getElementById("lightbox-transition-card");
         if (!transDiv) {
           transDiv = document.createElement("div");
@@ -1495,7 +1493,6 @@ document.addEventListener("DOMContentLoaded", () => {
         if (caption) caption.style.display = "none";
       } 
       else if (currentSlide.type === "pair") {
-        if (lightboxWrapper) lightboxWrapper.classList.remove("has-transition");
         let pairContainer = document.getElementById("lightbox-pair-container");
         if (!pairContainer) {
           pairContainer = document.createElement("div");
@@ -1534,7 +1531,6 @@ document.addEventListener("DOMContentLoaded", () => {
         updateLightboxCaption(currentSlide);
       } 
       else {
-        if (lightboxWrapper) lightboxWrapper.classList.remove("has-transition");
         let transDiv = document.getElementById("lightbox-transition-card");
         if (transDiv) transDiv.style.display = "none";
         if (pairDiv) pairDiv.style.display = "none";
