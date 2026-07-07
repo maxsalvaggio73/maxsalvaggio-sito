@@ -1,5 +1,5 @@
 // Database delle immagini generato automaticamente dallo script scan.py
-// Data di generazione: 2026-07-04T16:22:00.630611Z
+// Data di generazione: 2026-07-06T09:13:12.237924Z
 
 const portfolioData = {
   "overview": [
@@ -3771,6 +3771,22 @@ const portfolioData = {
         "width": 1728,
         "height": 2160,
         "is_horizontal": false
+      },
+      {
+        "url": "4 beauty/max-salvaggio-fotografo-portrait-cane-jessica-2-5.jpg",
+        "title": "Fotografo Portrait Cane Jessica 2 5",
+        "tag": "BEAUTY",
+        "width": 3840,
+        "height": 5760,
+        "is_horizontal": false
+      },
+      {
+        "url": "4 beauty/max-salvaggio-fotografo-portrait-cane-jessica-4.jpg",
+        "title": "Fotografo Portrait Cane Jessica 4",
+        "tag": "BEAUTY",
+        "width": 3543,
+        "height": 4724,
+        "is_horizontal": false
       }
     ],
     "pets_and_portraits": [
@@ -4100,6 +4116,30 @@ const portfolioData = {
         "tag": "PET & PORTRAITS",
         "width": 2362,
         "height": 3543,
+        "is_horizontal": false
+      },
+      {
+        "url": "4 PET and Portraits/max-salvaggio-fotografo-portrait-cane-jessica-1.jpg",
+        "title": "Fotografo Portrait Cane Jessica 1",
+        "tag": "PET & PORTRAITS",
+        "width": 3840,
+        "height": 5760,
+        "is_horizontal": false
+      },
+      {
+        "url": "4 PET and Portraits/max-salvaggio-fotografo-portrait-cane-jessica-2.jpg",
+        "title": "Fotografo Portrait Cane Jessica 2",
+        "tag": "PET & PORTRAITS",
+        "width": 3840,
+        "height": 5760,
+        "is_horizontal": false
+      },
+      {
+        "url": "4 PET and Portraits/max-salvaggio-fotografo-portrait-cane-jessica-3.jpg",
+        "title": "Fotografo Portrait Cane Jessica 3",
+        "tag": "PET & PORTRAITS",
+        "width": 3840,
+        "height": 5760,
         "is_horizontal": false
       }
     ]

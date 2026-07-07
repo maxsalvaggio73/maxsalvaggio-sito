@@ -33,23 +33,158 @@ document.addEventListener("DOMContentLoaded", () => {
   const OVERVIEW_BATCH_SIZE = 24;
   let renderedOverviewCount = 0;
 
-  // --- Shuffle Overview Data Editorially on Page Load ---
-  if (typeof portfolioData !== "undefined" && portfolioData.overview) {
-    portfolioData.overview = generateCuratedOverviewList(portfolioData.overview);
+  // --- Initialize App Async ---
+  initApp();
+
+  async function initApp() {
+    // 1. Carica i dati dal portfolio Supabase se disponibili
+    await loadSupabasePortfolioData();
+
+    // 2. Applica mescolamenti ed ordinamenti curati
+    if (typeof portfolioData !== "undefined" && portfolioData.overview) {
+      portfolioData.overview = generateCuratedOverviewList(portfolioData.overview);
+    }
+    if (typeof portfolioData !== "undefined" && portfolioData.editorials && portfolioData.editorials.projects) {
+      portfolioData.editorials.projects = shuffleProjects(portfolioData.editorials.projects);
+    }
+
+    // 3. Avvia la visualizzazione
+    initSPA();
+    initDynamicGrids();
+    initTabs();
+    initContactForm();
+    initCursorTracker();
+    shuffleBackground();
   }
 
-  // --- Shuffle Editorial Projects on Page Load ---
-  if (typeof portfolioData !== "undefined" && portfolioData.editorials && portfolioData.editorials.projects) {
-    portfolioData.editorials.projects = shuffleProjects(portfolioData.editorials.projects);
-  }
+  async function loadSupabasePortfolioData() {
+    const hasSupabase = typeof supabase !== "undefined" && 
+                        typeof config !== "undefined" && 
+                        config.SUPABASE_URL && 
+                        config.SUPABASE_ANON_KEY && 
+                        !config.SUPABASE_URL.includes("your-project-id");
+                        
+    if (!hasSupabase) {
+      console.log("Supabase non configurato per il portfolio pubblico. Caricamento database offline locale.");
+      return;
+    }
 
-  // --- Initialize App ---
-  initSPA();
-  initDynamicGrids();
-  initTabs();
-  initContactForm();
-  initCursorTracker();
-  shuffleBackground();
+    try {
+      const supabaseClient = supabase.createClient(config.SUPABASE_URL, config.SUPABASE_ANON_KEY);
+      const { data: dbRows, error } = await supabaseClient
+        .from('portfolio_items')
+        .select('*')
+        .order('position', { ascending: true });
+
+      if (error) {
+        throw error;
+      }
+
+      if (dbRows && dbRows.length > 0) {
+        console.log(`Caricate con successo ${dbRows.length} immagini dal portfolio Supabase.`);
+        
+        const newPortfolioData = {
+          overview: [],
+          editorials: {
+            projects: [],
+            unpublished_research: []
+          },
+          campaigns: {
+            fashion: [],
+            lingerie: [],
+            swimwear: []
+          },
+          body_and_form: {
+            organic_sculptures: [],
+            shadows_and_graphic_intimacy: []
+          },
+          portraits_and_beauty: {
+            portraits: [],
+            beauty: [],
+            pets_and_portraits: []
+          }
+        };
+
+        dbRows.forEach(row => {
+          const imgObj = {
+            url: row.url,
+            title: row.title,
+            width: row.width || 0,
+            height: row.height || 0,
+            is_horizontal: row.is_horizontal ?? (row.width > row.height)
+          };
+
+          switch(row.category) {
+            case 'overview':
+              imgObj.tag = 'OVERVIEW';
+              newPortfolioData.overview.push(imgObj);
+              break;
+            case 'campaigns-fashion':
+              imgObj.tag = 'CAMPAIGNS';
+              newPortfolioData.campaigns.fashion.push(imgObj);
+              break;
+            case 'campaigns-lingerie':
+              imgObj.tag = 'CAMPAIGNS';
+              newPortfolioData.campaigns.lingerie.push(imgObj);
+              break;
+            case 'campaigns-swimwear':
+              imgObj.tag = 'CAMPAIGNS';
+              newPortfolioData.campaigns.swimwear.push(imgObj);
+              break;
+            case 'body-organic':
+              imgObj.tag = 'BODY & FORM';
+              newPortfolioData.body_and_form.organic_sculptures.push(imgObj);
+              break;
+            case 'body-shadows':
+              imgObj.tag = 'BODY & FORM';
+              newPortfolioData.body_and_form.shadows_and_graphic_intimacy.push(imgObj);
+              break;
+            case 'portraits-portraits':
+              imgObj.tag = 'PORTRAITS';
+              newPortfolioData.portraits_and_beauty.portraits.push(imgObj);
+              break;
+            case 'portraits-beauty':
+              imgObj.tag = 'BEAUTY';
+              newPortfolioData.portraits_and_beauty.beauty.push(imgObj);
+              break;
+            case 'portraits-pets':
+              imgObj.tag = 'PET & PORTRAITS';
+              newPortfolioData.portraits_and_beauty.pets_and_portraits.push(imgObj);
+              break;
+            case 'editorial-unpublished':
+              imgObj.tag = 'EDITORIALS';
+              newPortfolioData.editorials.unpublished_research.push(imgObj);
+              break;
+            case 'editorial-project':
+              imgObj.tag = 'EDITORIALS';
+              if (row.project_id) {
+                let proj = newPortfolioData.editorials.projects.find(p => p.id === row.project_id);
+                if (!proj) {
+                  proj = {
+                    id: row.project_id,
+                    title: row.project_title || row.project_id,
+                    place: row.project_place || '',
+                    magazine: row.project_magazine || '',
+                    images: []
+                  };
+                  newPortfolioData.editorials.projects.push(proj);
+                }
+                proj.images.push(imgObj);
+              }
+              break;
+          }
+        });
+
+        // Assegna il nuovo database
+        window.portfolioData = newPortfolioData;
+      } else {
+        console.log("Il portfolio Supabase è vuoto. Caricamento del database locale come fallback.");
+      }
+    } catch (err) {
+      console.error("Errore durante il caricamento del portfolio da Supabase:", err);
+      console.log("Ripiego sul database locale offline.");
+    }
+  }
 
   // ==========================================
   // 1. SPA ROUTING & SECTION TRANSITIONS
