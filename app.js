@@ -1327,13 +1327,6 @@ document.addEventListener("DOMContentLoaded", () => {
             i += 1;
           }
         }
-        
-        // Inseriamo il box bianco di transizione al servizio fotografico successivo
-        const nextProj = projectsList[(projIdx + 1) % projectsList.length];
-        slides.push({
-          type: "transition",
-          project: nextProj
-        });
       });
     } else {
       let i = 0;
