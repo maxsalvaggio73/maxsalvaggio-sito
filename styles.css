@@ -468,19 +468,36 @@ footer {
 
 .footer-socials {
   display: flex;
-  gap: 25px;
+  justify-content: center;
+  align-items: center;
+  gap: 30px; /* distanziate 30 pixel l'una dall'altra */
+  margin-top: 30px; /* 30 pixel dalla base delle 3 colonne */
+  margin-bottom: 30px;
 }
 
 .social-icon {
-  color: var(--text-muted);
-  font-size: 1.2rem;
+  display: inline-flex;
   text-decoration: none;
-  transition: var(--transition-fast);
+  transition: transform 0.25s ease;
 }
 
 .social-icon:hover {
-  color: var(--text-primary);
   transform: translateY(-3px);
+}
+
+.social-icon-svg {
+  display: block;
+  transition: transform 0.25s ease, filter 0.25s ease, opacity 0.25s ease;
+  filter: grayscale(1) opacity(0.45); /* Bianco e nero e semi-trasparente */
+}
+
+body.light-mode .social-icon-svg {
+  filter: grayscale(1) opacity(0.55);
+}
+
+.social-icon:hover .social-icon-svg {
+  transform: scale(1.15); /* Ingrandita al passaggio */
+  filter: grayscale(0) opacity(1); /* Colori originali e opacità 100% */
 }
 
 .footer-bottom {
