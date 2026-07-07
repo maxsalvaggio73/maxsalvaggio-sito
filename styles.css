@@ -353,7 +353,7 @@ main {
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  padding: 15px 20px 100px 20px;
+  padding: 15px 20px 40px 20px; /* ridotto bottom padding da 100px a 40px */
   z-index: 3;
   position: relative;
 }
@@ -419,14 +419,14 @@ main {
 
 /* --- FOOTER --- */
 footer {
-  padding: 40px 5%;
+  padding: 24px 5%; /* ridotto del 40% da 40px */
   z-index: 3;
   position: relative;
   background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 100%);
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 25px;
+  gap: 15px; /* ridotto del 40% da 25px */
   border-top: 1px solid rgba(255, 255, 255, 0.03);
 }
 
@@ -471,8 +471,8 @@ footer {
   justify-content: center;
   align-items: center;
   gap: 30px; /* distanziate 30 pixel l'una dall'altra */
-  margin-top: 30px; /* 30 pixel dalla base delle 3 colonne */
-  margin-bottom: 30px;
+  margin-top: 18px; /* ridotto del 40% da 30px */
+  margin-bottom: 18px;
 }
 
 .social-icon {
@@ -1302,18 +1302,18 @@ body.light-mode .social-icon-svg {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 600px;
+  height: 450px; /* ridotto da 600px */
   width: 100%;
-  max-width: 400px; /* Stessa larghezza della foto (400px) */
+  max-width: 380px; /* ridotto da 400px */
   margin-right: auto;
   box-sizing: border-box;
 }
 
 .profile-frame-large {
   width: 100%;
-  max-width: 400px;
+  max-width: 380px; /* ridotto da 400px */
   margin-left: auto;
-  height: 600px;
+  height: 450px; /* ridotto da 600px */
   border-radius: 4px;
   overflow: hidden;
   box-shadow: 0 15px 40px rgba(0,0,0,0.5);
@@ -1334,21 +1334,21 @@ body.light-mode .social-icon-svg {
 }
 
 .bio-text {
-  font-size: 0.82rem;
-  line-height: 1.8;
+  font-size: 0.74rem; /* ridotto da 0.82rem */
+  line-height: 1.55; /* ridotto da 1.8 */
   color: rgba(255, 255, 255, 0.65);
   display: flex;
   flex-direction: column;
   justify-content: space-between; /* Giustificato in altezza */
-  height: 100%; /* Copre l'altezza di 600px della colonna */
+  height: 100%; /* Copre l'altezza della colonna */
   font-weight: 300;
 }
 .bio-text p:not(.signature) {
   text-align: justify;
 }
 .bio-text .lead-text {
-  font-size: 0.92rem;
-  line-height: 1.7;
+  font-size: 0.82rem; /* ridotto da 0.92rem */
+  line-height: 1.5; /* ridotto da 1.7 */
   color: var(--text-primary);
   font-weight: 400;
   font-family: var(--font-body);
@@ -1402,7 +1402,7 @@ body.light-mode .social-icon-svg {
   background: rgba(20, 20, 22, 0.65);
   border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 12px;
-  padding: clamp(20px, 3.5vw, 40px);
+  padding: clamp(12px, 2.5vw, 24px); /* ridotto da clamp(20px, 3.5vw, 40px) */
   box-shadow:
     0 30px 70px rgba(0, 0, 0, 0.55),
     0 1px 0 rgba(255, 255, 255, 0.15) inset;
@@ -1418,20 +1418,20 @@ body.light-mode .social-icon-svg {
   text-transform: uppercase;
   letter-spacing: 0.15em;
   color: var(--text-primary);
-  margin-bottom: 25px;
+  margin-bottom: 12px; /* ridotto da 25px */
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  padding-bottom: 12px;
+  padding-bottom: 6px; /* ridotto da 12px */
   text-align: center;
 }
 .contact-form {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 10px; /* ridotto da 16px */
 }
 .form-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 16px;
+  gap: 10px; /* ridotto da 16px */
 }
 .form-group {
   display: flex;
@@ -2515,9 +2515,9 @@ body.light-mode footer {
 .footer-nav-container {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 40px;
+  gap: 24px; /* ridotto del 40% da 40px */
   max-width: 800px;
-  margin: 30px auto; /* 30px margini da sopra e sotto */
+  margin: 18px auto; /* ridotto del 40% da 30px */
   padding: 0 20px;
   text-align: center;
 }
@@ -2532,7 +2532,7 @@ body.light-mode footer {
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 7px; /* ridotto del 40% da 12px */
 }
 .footer-nav-link {
   font-family: var(--font-body);
@@ -2578,10 +2578,10 @@ body.light-mode .footer-nav-header .footer-nav-link {
 @media (max-width: 768px) {
   .footer-nav-container {
     grid-template-columns: 1fr;
-    gap: 25px;
-    margin: 30px auto;
+    gap: 15px; /* ridotto del 40% da 25px */
+    margin: 18px auto; /* ridotto del 40% da 30px */
   }
   .footer-nav-list-links {
-    gap: 8px;
+    gap: 5px; /* ridotto del 40% da 8px */
   }
 }
