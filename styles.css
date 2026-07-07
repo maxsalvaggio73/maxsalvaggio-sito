@@ -42,19 +42,19 @@ body {
   position: relative;
 }
 
-/* Hide scrollbar for clean aesthetics but keep functionality */
+/* Custom scrollbar styled in clean editorial fashion */
 ::-webkit-scrollbar {
   width: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #000;
+  background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: #222;
+  background: rgba(114, 117, 125, 0.5); /* always visible gray */
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--accent);
+  background: #72757d; /* medium gray on hover */
 }
 
 
