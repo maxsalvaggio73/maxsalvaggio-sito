@@ -2546,6 +2546,7 @@ body.light-mode footer {
   display: flex;
   flex-direction: column;
   align-items: center;
+  height: 100%;
 }
 .footer-nav-list-links {
   list-style: none;
@@ -2554,6 +2555,7 @@ body.light-mode footer {
   display: flex;
   flex-direction: column;
   gap: 4px; /* ridotto ulteriormente */
+  height: 100%; /* permette di espandersi alla stessa altezza delle altre colonne */
 }
 .footer-nav-link {
   font-family: var(--font-body);
@@ -2582,6 +2584,15 @@ body.light-mode footer {
   color: rgba(255, 255, 255, 0.55);
 }
 
+.footer-socials-inline {
+  margin-top: auto; /* allinea alla base delle altre colonne */
+  display: flex;
+  gap: 30px; /* distanziate 30px una dall'altra */
+  justify-content: center;
+  align-items: center;
+  padding-top: 15px; /* distacco minimo di sicurezza */
+}
+
 /* Light Mode Overrides */
 body.light-mode .footer-nav-link {
   color: rgba(0, 0, 0, 0.45);
@@ -2604,5 +2615,10 @@ body.light-mode .footer-nav-header .footer-nav-link {
   }
   .footer-nav-list-links {
     gap: 3px; /* ridotto ulteriormente */
+  }
+  .footer-socials-inline {
+    margin-top: 10px !important;
+    padding-top: 5px;
+    gap: 20px;
   }
 }
