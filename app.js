@@ -71,6 +71,16 @@ document.addEventListener("DOMContentLoaded", () => {
     initSPA();
     initDynamicGrids();
     initTabs();
+    
+    // Check if there is an active tab to restore (e.g. cross-page navigation from login/client-area)
+    const storedTab = localStorage.getItem("activeTab");
+    if (storedTab) {
+      const tabButton = document.querySelector(`.tab-link[data-tab="${storedTab}"]`);
+      if (tabButton) {
+        tabButton.click();
+      }
+      localStorage.removeItem("activeTab");
+    }
     initContactForm();
     initCursorTracker();
     shuffleBackground();
@@ -252,8 +262,18 @@ document.addEventListener("DOMContentLoaded", () => {
     navLinks.forEach(link => {
       link.addEventListener("click", (e) => {
         const targetSection = link.getAttribute("data-section");
+        const targetTab = link.getAttribute("data-tab");
         if (targetSection) {
           e.preventDefault();
+          
+          if (targetTab) {
+            localStorage.setItem("activeTab", targetTab);
+            const tabButton = document.querySelector(`.tab-link[data-tab="${targetTab}"]`);
+            if (tabButton) {
+              tabButton.click();
+            }
+          }
+          
           window.location.hash = targetSection;
           closeMobileMenu();
         }
@@ -556,12 +576,14 @@ document.addEventListener("DOMContentLoaded", () => {
     hamburger.querySelector("span:nth-child(3)").style.transform = "none";
 
     // Reset mobile dropdown and submenu
-    const mobileDropdownToggle = document.querySelector(".mobile-dropdown-toggle");
-    const mobileSubmenu = document.querySelector(".mobile-submenu");
-    if (mobileDropdownToggle && mobileSubmenu) {
-      mobileDropdownToggle.classList.remove("open");
-      mobileSubmenu.classList.remove("open");
-    }
+    document.querySelectorAll(".mobile-dropdown-toggle").forEach(toggle => {
+      toggle.classList.remove("open");
+      const arrow = toggle.querySelector(".arrow");
+      if (arrow) arrow.style.transform = "rotate(0deg)";
+    });
+    document.querySelectorAll(".mobile-submenu").forEach(submenu => {
+      submenu.classList.remove("open");
+    });
   }
 
   // ==========================================

@@ -324,8 +324,21 @@
       <nav aria-label="Main Navigation">
         <ul class="nav-menu">
           <li><a href="home.html#overview" class="nav-link" data-section="overview">Overview</a></li>
-          <li><a href="home.html#portraits-beauty" class="nav-link" data-section="portraits-beauty">Portraits</a></li>
-          <li><a href="home.html#body-form" class="nav-link" data-section="body-form">Nudes</a></li>
+          <li class="dropdown">
+            <a href="home.html#portraits-beauty" class="nav-link dropdown-toggle" data-section="portraits-beauty" data-dropdown="portraits-beauty">Portraits <span class="arrow">&#9662;</span></a>
+            <ul class="dropdown-menu">
+              <li><a href="home.html#portraits-beauty" class="nav-link" data-section="portraits-beauty" data-tab="pb-portraits">Portraits</a></li>
+              <li><a href="home.html#portraits-beauty" class="nav-link" data-section="portraits-beauty" data-tab="pb-beauty">Beauty</a></li>
+              <li><a href="home.html#portraits-beauty" class="nav-link" data-section="portraits-beauty" data-tab="pb-pets">Pets &amp; Portraits</a></li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <a href="home.html#body-form" class="nav-link dropdown-toggle" data-section="body-form" data-dropdown="body-form">Nudes <span class="arrow">&#9662;</span></a>
+            <ul class="dropdown-menu">
+              <li><a href="home.html#body-form" class="nav-link" data-section="body-form" data-tab="body-organic">Organic Sculptures</a></li>
+              <li><a href="home.html#body-form" class="nav-link" data-section="body-form" data-tab="body-shadows">Shadows &amp; Graphic Intimacy</a></li>
+            </ul>
+          </li>
           <li class="dropdown">
             <a href="home.html#archive" class="nav-link dropdown-toggle" data-section="archive" data-dropdown="archive">Archive <span class="arrow">&#9662;</span></a>
             <ul class="dropdown-menu">
@@ -348,8 +361,21 @@
       <nav aria-label="Mobile Navigation">
         <ul class="mobile-nav-list">
           <li><a href="home.html#overview" class="mobile-nav-link" data-section="overview">Overview</a></li>
-          <li><a href="home.html#portraits-beauty" class="mobile-nav-link" data-section="portraits-beauty">Portraits</a></li>
-          <li><a href="home.html#body-form" class="mobile-nav-link" data-section="body-form">Nudes</a></li>
+          <li class="mobile-dropdown">
+            <span class="mobile-nav-link mobile-dropdown-toggle" data-dropdown="portraits-beauty">Portraits <span class="arrow">&#9662;</span></span>
+            <ul class="mobile-submenu">
+              <li><a href="home.html#portraits-beauty" class="mobile-nav-link" data-section="portraits-beauty" data-tab="pb-portraits">Portraits</a></li>
+              <li><a href="home.html#portraits-beauty" class="mobile-nav-link" data-section="portraits-beauty" data-tab="pb-beauty">Beauty</a></li>
+              <li><a href="home.html#portraits-beauty" class="mobile-nav-link" data-section="portraits-beauty" data-tab="pb-pets">Pets &amp; Portraits</a></li>
+            </ul>
+          </li>
+          <li class="mobile-dropdown">
+            <span class="mobile-nav-link mobile-dropdown-toggle" data-dropdown="body-form">Nudes <span class="arrow">&#9662;</span></span>
+            <ul class="mobile-submenu">
+              <li><a href="home.html#body-form" class="mobile-nav-link" data-section="body-form" data-tab="body-organic">Organic Sculptures</a></li>
+              <li><a href="home.html#body-form" class="mobile-nav-link" data-section="body-form" data-tab="body-shadows">Shadows &amp; Graphic Intimacy</a></li>
+            </ul>
+          </li>
           <li class="mobile-dropdown">
             <span class="mobile-nav-link mobile-dropdown-toggle" data-dropdown="archive">Archive <span class="arrow">&#9662;</span></span>
             <ul class="mobile-submenu">
@@ -841,19 +867,30 @@
       });
     }
 
-    // Mobile dropdown toggle
-    const mobileDropdownToggle = document.querySelector(".mobile-dropdown-toggle");
-    const mobileSubmenu = document.querySelector(".mobile-submenu");
-    if (mobileDropdownToggle && mobileSubmenu) {
-      mobileDropdownToggle.addEventListener("click", (e) => {
+    // Mobile dropdown toggle (multiple)
+    document.querySelectorAll(".mobile-dropdown-toggle").forEach(toggle => {
+      toggle.addEventListener("click", (e) => {
         e.stopPropagation();
-        mobileSubmenu.classList.toggle("open");
-        const arrow = mobileDropdownToggle.querySelector(".arrow");
-        if (arrow) {
-          arrow.style.transform = mobileSubmenu.classList.contains("open") ? "rotate(180deg)" : "rotate(0deg)";
+        const submenu = toggle.nextElementSibling;
+        if (submenu) {
+          submenu.classList.toggle("open");
+          const arrow = toggle.querySelector(".arrow");
+          if (arrow) {
+            arrow.style.transform = submenu.classList.contains("open") ? "rotate(180deg)" : "rotate(0deg)";
+          }
         }
       });
-    }
+    });
+
+    // Save active tab on dropdown click for cross-page persistence
+    document.querySelectorAll(".nav-menu a[data-tab], .mobile-nav-list a[data-tab]").forEach(link => {
+      link.addEventListener("click", () => {
+        const tab = link.getAttribute("data-tab");
+        if (tab) {
+          localStorage.setItem("activeTab", tab);
+        }
+      });
+    });
 
     // Dynamic Mosaic Background Engine
     (function buildMosaic() {
