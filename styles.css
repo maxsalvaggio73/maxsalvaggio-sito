@@ -2514,10 +2514,10 @@ body.light-mode footer {
 /* --- FOOTER MENU NAVIGATION (3 COLUMNS) --- */
 .footer-nav-container {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px; /* ridotto ulteriormente */
-  max-width: 800px;
-  margin: 12px auto; /* ridotto ulteriormente */
+  grid-template-columns: repeat(4, 1fr); /* modificato a 4 colonne */
+  gap: 12px;
+  max-width: 900px; /* allargato leggermente per accomodare 4 colonne */
+  margin: 12px auto;
   padding: 0 20px;
   text-align: center;
 }
