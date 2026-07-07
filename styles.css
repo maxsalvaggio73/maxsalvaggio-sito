@@ -1970,8 +1970,8 @@ footer {
 
 .cs-tagline {
   font-family: var(--font-body);
-  font-size: 0.66rem;
-  font-size: clamp(0.6rem, 1.26vw, 0.74rem);
+  font-size: 1rem;
+  font-size: clamp(0.9rem, 1.89vw, 1.11rem);
   font-weight: 400;
   letter-spacing: 0.45em;
   text-transform: uppercase;
@@ -2198,12 +2198,16 @@ body.light-mode #mosaic-overlay::after {
 }
 
 body.light-mode .cs-logo {
-  color: #121214;
-  text-shadow: 0 1px 4px rgba(0,0,0,0.1);
+  color: #72757d;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.05);
 }
 
 body.light-mode .cs-tagline {
-  color: rgba(0, 0, 0, 0.65);
+  color: rgba(114, 117, 125, 0.85);
+}
+
+body.light-mode .section-title {
+  color: #72757d;
 }
 
 body.light-mode .dropdown-menu {
@@ -2312,7 +2316,7 @@ body.light-mode .tab-btn {
 }
 
 body.light-mode .tab-btn.active {
-  color: #121214 !important;
+  color: #72757d !important;
 }
 
 body.light-mode .tab-btn.active::after {
@@ -2356,7 +2360,11 @@ body.light-mode #editorial-detail-view {
 }
 
 body.light-mode .project-header-info h2 {
-  color: #121214 !important;
+  color: #72757d !important;
+}
+
+body.light-mode .detail-title-main {
+  color: #72757d !important;
 }
 
 body.light-mode .project-meta {
