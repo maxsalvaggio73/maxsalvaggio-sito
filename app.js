@@ -1,4 +1,9 @@
 document.addEventListener("DOMContentLoaded", () => {
+  // Read and apply theme preference instantly
+  const currentTheme = localStorage.getItem("theme");
+  if (currentTheme === "light") {
+    document.body.classList.add("light-mode");
+  }
   
   // --- DOM ELEMENTS ---
   const sections = document.querySelectorAll(".spa-section");
@@ -20,6 +25,19 @@ document.addEventListener("DOMContentLoaded", () => {
   
   // Custom Glow
   const customGlow = document.getElementById("custom-glow");
+
+  // Theme Switch Listener
+  const themeSwitch = document.getElementById("theme-switch");
+  if (themeSwitch) {
+    themeSwitch.addEventListener("click", () => {
+      document.body.classList.toggle("light-mode");
+      if (document.body.classList.contains("light-mode")) {
+        localStorage.setItem("theme", "light");
+      } else {
+        localStorage.setItem("theme", "dark");
+      }
+    });
+  }
 
   // --- STATE VARIABLES ---
   let activeSectionId = "overview";
@@ -1799,9 +1817,10 @@ document.addEventListener("DOMContentLoaded", () => {
       const firstName = document.getElementById("first-name");
       const lastName = document.getElementById("last-name");
 
-      if (!firstName.value.strip || !firstName.value.trim() ||
-          !lastName.value.strip || !lastName.value.trim() ||
-          !emailInput.value || !messageInput.value) {
+      if (!firstName.value.trim() ||
+          !lastName.value.trim() ||
+          !emailInput.value.trim() ||
+          !messageInput.value.trim()) {
         alert("Per favore, compila tutti i campi obbligatori.");
         return;
       }

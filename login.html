@@ -300,6 +300,12 @@
     ⚠️  <strong>Supabase non configurato:</strong> Configura i parametri reali di connessione nel file <code>config.js</code> per attivare l'autenticazione.
   </div>
 
+  <!-- THEME SWITCHER -->
+  <button id="theme-switch" class="theme-switch-btn" aria-label="Cambia Tema">
+    <span class="rect-white"></span>
+    <span class="rect-black"></span>
+  </button>
+
   <div id="page-wrapper">
     <header>
       <button class="hamburger" id="hamburger" aria-label="Toggle Menu" aria-expanded="false">
@@ -462,6 +468,28 @@
 </div>
 
   <script>
+    // Read and apply theme preference instantly
+    (function applyTheme() {
+      const currentTheme = localStorage.getItem("theme");
+      if (currentTheme === "light") {
+        document.body.classList.add("light-mode");
+      }
+    })();
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const themeSwitch = document.getElementById("theme-switch");
+      if (themeSwitch) {
+        themeSwitch.addEventListener("click", () => {
+          document.body.classList.toggle("light-mode");
+          if (document.body.classList.contains("light-mode")) {
+            localStorage.setItem("theme", "light");
+          } else {
+            localStorage.setItem("theme", "dark");
+          }
+        });
+      }
+    });
+
     // Initialize Supabase Client
     let supabaseClient = null;
     const banner = document.getElementById("setup-banner");
