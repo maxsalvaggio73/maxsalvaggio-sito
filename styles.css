@@ -1951,8 +1951,8 @@ footer {
 .cs-logo {
   font-family: var(--font-display);
   font-weight: 900;
-  font-size: 1.54rem;
-  font-size: clamp(1.27rem, 3.18vw, 2.36rem);
+  font-size: 2.0rem;
+  font-size: clamp(1.65rem, 4.13vw, 3.07rem);
   letter-spacing: 0.4em;
   text-transform: uppercase;
   color: #ffffff;
@@ -2198,7 +2198,7 @@ body.light-mode #mosaic-overlay::after {
 }
 
 body.light-mode .cs-logo {
-  color: #72757d;
+  color: #000000;
   text-shadow: 0 1px 4px rgba(0,0,0,0.05);
 }
 
