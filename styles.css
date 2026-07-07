@@ -109,7 +109,7 @@ header {
   top: 0;
   width: 100%;
   padding: 12px 5%;
-  z-index: 100;
+  z-index: 150; /* aumentato per stare sopra mobile-nav-overlay */
   background: linear-gradient(to bottom, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.4) 70%, rgba(0,0,0,0) 100%);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
@@ -2027,7 +2027,7 @@ body.light-mode .social-icon-svg {
   
   .header-logo-tagline-container {
     margin-top: 5px;
-    padding: 0 40px;
+    padding: 0 60px; /* allargato per sicurezza contro la sovrapposizione con l'hamburger */
   }
 }
 
@@ -2085,6 +2085,8 @@ body.light-mode .social-icon-svg {
 .lightbox-pair-img {
   max-height: min(900px, 75vh);
   max-width: calc(50% - 10px); /* due verticali affiancate */
+  min-width: 0; /* previene overflow su Android */
+  flex-shrink: 1;
   width: auto;
   height: auto;
   object-fit: contain;
@@ -2161,6 +2163,8 @@ body.light-mode .social-icon-svg {
   .lightbox-pair-img {
     max-width: calc(50% - 8px);
     max-height: 72vh;
+    min-width: 0; /* previene overflow su Android */
+    flex-shrink: 1;
   }
 }
 
