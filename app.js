@@ -434,7 +434,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Show/hide back to top button depending on section
     const btnBackToTop = document.getElementById("btn-back-to-top");
     if (btnBackToTop) {
-      if (targetId === "contact") {
+      if (targetId === "contact" || targetId === "bio") {
         btnBackToTop.style.display = "none";
       } else {
         btnBackToTop.style.display = "flex";

@@ -93,7 +93,7 @@
     /* Main Container centered vertically below the header */
     .login-container {
       width: 100%;
-      max-width: 400px;
+      max-width: 360px; /* ridotto da 400px */
       padding: 10px;
       z-index: 10;
       margin: 0;
@@ -102,7 +102,7 @@
     /* Logo / Title */
     .brand-header {
       text-align: center;
-      margin-bottom: 15px;
+      margin-bottom: 8px; /* ridotto da 15px */
     }
 
     /* Glassmorphism Card */
@@ -110,7 +110,7 @@
       background: var(--card-bg);
       border: 1px solid var(--card-border);
       border-radius: 12px;
-      padding: clamp(12px, 2.5vw, 24px);
+      padding: 12px 18px; /* ridotto da clamp */
       box-shadow:
         0 30px 70px rgba(0, 0, 0, 0.55),
         0 1px 0 rgba(255, 255, 255, 0.15) inset;
@@ -122,8 +122,8 @@
     .tabs-header {
       display: flex;
       border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-      margin-bottom: 15px;
-      gap: 15px;
+      margin-bottom: 10px; /* ridotto da 15px */
+      gap: 10px; /* ridotto da 15px */
     }
     .tab-btn {
       background: none;
@@ -157,10 +157,10 @@
 
     /* Form Fields */
     .form-group {
-      margin-bottom: 12px;
+      margin-bottom: 8px; /* ridotto da 12px */
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: 3px; /* ridotto da 4px */
     }
     .form-label {
       display: block;
@@ -180,7 +180,7 @@
       font-family: var(--font-body);
       font-size: 0.82rem;
       font-weight: 300;
-      padding: 8px 2px;
+      padding: 5px 2px; /* ridotto da 8px */
       outline: none;
       transition: border-color 0.3s ease, box-shadow 0.3s ease;
       width: 100%;
@@ -232,7 +232,7 @@
       cursor: pointer;
       overflow: hidden;
       transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease, transform 0.25s ease;
-      margin-top: 10px;
+      margin-top: 6px; /* ridotto da 10px */
       width: 100%;
     }
     .btn-submit:hover {
