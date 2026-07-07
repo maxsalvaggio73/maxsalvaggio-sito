@@ -1266,9 +1266,15 @@ footer {
   }
   .bio-text-column {
     height: auto !important;
+    max-width: 100% !important;
+  }
+  .bio-text {
+    height: auto !important;
+    gap: 20px !important;
   }
   .profile-frame-large {
     height: 500px !important;
+    max-width: 100% !important;
   }
   .profile-img-large {
     height: 100% !important;
@@ -1280,6 +1286,9 @@ footer {
   flex-direction: column;
   justify-content: space-between;
   height: 600px;
+  width: 100%;
+  max-width: 400px; /* Stessa larghezza della foto (400px) */
+  margin-right: auto;
   box-sizing: border-box;
 }
 
@@ -1313,7 +1322,8 @@ footer {
   color: rgba(255, 255, 255, 0.65);
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  justify-content: space-between; /* Giustificato in altezza */
+  height: 100%; /* Copre l'altezza di 600px della colonna */
   font-weight: 300;
 }
 .bio-text p:not(.signature) {
@@ -1600,6 +1610,7 @@ footer {
   max-height: 80vh;
   position: relative;
   gap: 0;
+  margin: 0 auto;
 }
 .lightbox-img-holder {
   width: 100%;
