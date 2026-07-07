@@ -141,8 +141,8 @@ header {
 }
 
 .logo:hover {
-  color: var(--accent);
-  text-shadow: 0 0 15px rgba(255, 51, 102, 0.4);
+  color: #72757d;
+  text-shadow: none;
 }
 
 /* Navigation List */
@@ -1984,8 +1984,8 @@ footer {
 }
 
 .cs-logo-link:hover .cs-logo {
-  color: var(--accent);
-  text-shadow: 0 0 15px rgba(255, 51, 102, 0.4);
+  color: #72757d !important;
+  text-shadow: none !important;
 }
 
 .cs-tagline {
@@ -2491,5 +2491,80 @@ body.light-mode footer {
     right: 0;
     top: 50%;
     transform: translateY(-50%);
+  }
+}
+
+/* --- FOOTER MENU NAVIGATION (3 COLUMNS) --- */
+.footer-nav-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+  max-width: 800px;
+  margin: 30px auto; /* 30px margini da sopra e sotto */
+  padding: 0 20px;
+  text-align: center;
+}
+.footer-nav-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.footer-nav-list-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.footer-nav-link {
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-decoration: none;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.45);
+  transition: var(--transition-fast);
+}
+.footer-nav-link:hover {
+  color: var(--accent);
+}
+.footer-nav-link.sub-link {
+  text-transform: capitalize;
+  font-size: 0.68rem;
+  color: rgba(255, 255, 255, 0.3);
+  letter-spacing: 0.08em;
+}
+.footer-nav-link.sub-link:hover {
+  color: var(--accent);
+}
+.footer-nav-header .footer-nav-link {
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+/* Light Mode Overrides */
+body.light-mode .footer-nav-link {
+  color: rgba(0, 0, 0, 0.45);
+}
+body.light-mode .footer-nav-link:hover {
+  color: var(--accent);
+}
+body.light-mode .footer-nav-link.sub-link {
+  color: rgba(0, 0, 0, 0.35);
+}
+body.light-mode .footer-nav-header .footer-nav-link {
+  color: rgba(0, 0, 0, 0.65);
+}
+
+@media (max-width: 768px) {
+  .footer-nav-container {
+    grid-template-columns: 1fr;
+    gap: 25px;
+    margin: 30px auto;
+  }
+  .footer-nav-list-links {
+    gap: 8px;
   }
 }

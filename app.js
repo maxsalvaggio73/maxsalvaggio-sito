@@ -1,13 +1,13 @@
 document.addEventListener("DOMContentLoaded", () => {
   // Read and apply theme preference instantly
   const currentTheme = localStorage.getItem("theme");
-  if (currentTheme === "light") {
+  if (currentTheme !== "dark") {
     document.body.classList.add("light-mode");
   }
   
   // --- DOM ELEMENTS ---
   const sections = document.querySelectorAll(".spa-section");
-  const navLinks = document.querySelectorAll(".nav-link, .mobile-nav-link");
+  const navLinks = document.querySelectorAll(".nav-link, .mobile-nav-link, .footer-nav-link");
   const brandLogo = document.getElementById("brand-logo");
   const hamburger = document.getElementById("hamburger");
   const mobileNavOverlay = document.getElementById("mobile-nav-overlay");

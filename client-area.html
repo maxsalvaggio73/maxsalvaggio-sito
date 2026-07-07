@@ -859,6 +859,14 @@
 </div>
 
   <script>
+    // Read and apply theme preference instantly
+    (function applyTheme() {
+      const currentTheme = localStorage.getItem("theme");
+      if (currentTheme !== "dark") {
+        document.body.classList.add("light-mode");
+      }
+    })();
+
     let supabaseClient = null;
     let currentUser = null;
 
