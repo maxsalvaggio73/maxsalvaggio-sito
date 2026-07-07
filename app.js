@@ -389,28 +389,120 @@ document.addEventListener("DOMContentLoaded", () => {
       resetEditorialDetails();
     }
 
-    // Shuffle background when entering the overview section (home) from another section
-    if (targetId === "overview" && previousSectionId !== "overview") {
-      shuffleBackground();
+    // Update background when changing section
+    updateBackgroundForSection(targetId);
+  }
+
+  function changeBackgroundRandomly(imageSourceArray) {
+    if (!imageSourceArray || imageSourceArray.length === 0) return;
+    
+    // Flatten if it contains projects (i.e. images nested in objects)
+    let images = [];
+    imageSourceArray.forEach(item => {
+      if (item.images && Array.isArray(item.images)) {
+        images = images.concat(item.images);
+      } else if (item.url) {
+        images.push(item);
+      }
+    });
+
+    if (images.length === 0) return;
+    
+    const randomIndex = Math.floor(Math.random() * images.length);
+    const selectedImage = images[randomIndex];
+    const imageUrl = selectedImage.url;
+    
+    const bgElement = document.getElementById("mosaic-bg");
+    if (bgElement) {
+      bgElement.style.backgroundImage = `url('${imageUrl}')`;
+    }
+  }
+
+  function updateBackgroundForSection(targetId) {
+    if (typeof portfolioData === "undefined") return;
+    
+    switch (targetId) {
+      case "overview":
+        changeBackgroundRandomly(portfolioData.overview);
+        break;
+      case "portraits-beauty": {
+        const activeTab = document.querySelector("#section-portraits-beauty .tab-link.active");
+        const activeTabId = activeTab ? activeTab.getAttribute("data-tab") : "pb-portraits";
+        updateBackgroundForSection(activeTabId);
+        break;
+      }
+      case "pb-portraits":
+        changeBackgroundRandomly(portfolioData.portraits_and_beauty.portraits);
+        break;
+      case "pb-beauty":
+        changeBackgroundRandomly(portfolioData.portraits_and_beauty.beauty);
+        break;
+      case "pb-pets":
+        changeBackgroundRandomly(portfolioData.portraits_and_beauty.pets_and_portraits);
+        break;
+      case "body-form": {
+        const activeTab = document.querySelector("#section-body-form .tab-link.active");
+        const activeTabId = activeTab ? activeTab.getAttribute("data-tab") : "body-organic";
+        updateBackgroundForSection(activeTabId);
+        break;
+      }
+      case "body-organic":
+        changeBackgroundRandomly(portfolioData.body_and_form.organic_sculptures);
+        break;
+      case "body-shadows":
+        changeBackgroundRandomly(portfolioData.body_and_form.shadows_and_graphic_intimacy);
+        break;
+      case "archive": {
+        let allArchive = [];
+        if (portfolioData.campaigns) {
+          if (portfolioData.campaigns.fashion) allArchive = allArchive.concat(portfolioData.campaigns.fashion);
+          if (portfolioData.campaigns.lingerie) allArchive = allArchive.concat(portfolioData.campaigns.lingerie);
+          if (portfolioData.campaigns.swimwear) allArchive = allArchive.concat(portfolioData.campaigns.swimwear);
+        }
+        if (portfolioData.editorials) {
+          if (portfolioData.editorials.projects) {
+            portfolioData.editorials.projects.forEach(p => {
+              if (p.images) allArchive = allArchive.concat(p.images);
+            });
+          }
+          if (portfolioData.editorials.unpublished_research) {
+            allArchive = allArchive.concat(portfolioData.editorials.unpublished_research);
+          }
+        }
+        changeBackgroundRandomly(allArchive);
+        break;
+      }
+      case "editorials": {
+        let allEditorials = [];
+        if (portfolioData.editorials && portfolioData.editorials.projects) {
+          portfolioData.editorials.projects.forEach(p => {
+            if (p.images) allEditorials = allEditorials.concat(p.images);
+          });
+        }
+        changeBackgroundRandomly(allEditorials);
+        break;
+      }
+      case "campaigns-fashion":
+        changeBackgroundRandomly(portfolioData.campaigns.fashion);
+        break;
+      case "campaigns-lingerie":
+        changeBackgroundRandomly(portfolioData.campaigns.lingerie);
+        break;
+      case "campaigns-swimwear":
+        changeBackgroundRandomly(portfolioData.campaigns.swimwear);
+        break;
+      case "unpublished-research":
+        changeBackgroundRandomly(portfolioData.editorials.unpublished_research);
+        break;
+      default:
+        // Default fallback to overview
+        changeBackgroundRandomly(portfolioData.overview);
+        break;
     }
   }
 
   function shuffleBackground() {
-    if (typeof portfolioData !== "undefined" && 
-        portfolioData.body_and_form && 
-        portfolioData.body_and_form.organic_sculptures && 
-        portfolioData.body_and_form.organic_sculptures.length > 0) {
-      
-      const items = portfolioData.body_and_form.organic_sculptures;
-      const randomIndex = Math.floor(Math.random() * items.length);
-      const selectedItem = items[randomIndex];
-      const imageUrl = selectedItem.url;
-      
-      const bgElement = document.getElementById("mosaic-bg");
-      if (bgElement) {
-        bgElement.style.backgroundImage = `url('${imageUrl}')`;
-      }
-    }
+    updateBackgroundForSection(activeSectionId);
   }
 
   function openMobileMenu() {
@@ -462,7 +554,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // 2.3 Campaigns Tabs Grids
     renderGrid("campaigns-fashion-grid", portfolioData.campaigns.fashion, "FASHION");
     renderGrid("campaigns-lingerie-grid", portfolioData.campaigns.lingerie, "LINGERIE");
-    renderGrid("campaigns-swimwear-grid", portfolioData.campaigns.swimwear, "SWIMMWEAR");
+    renderGrid("campaigns-swimwear-grid", portfolioData.campaigns.swimwear, "SWIMWEAR");
 
     // 2.4 Body & Form Tabs Grids
     renderGrid("body-organic-grid", portfolioData.body_and_form.organic_sculptures, "BODY & FORM");
@@ -493,7 +585,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Create standard gallery item with lazy image fade-in and hover background trigger
   function createGalleryItem(img, index, imagesList, tag) {
     const item = document.createElement("div");
-    const isOverviewStyle = ["OVERVIEW", "FASHION", "LINGERIE", "SWIMMWEAR", "BODY & FORM", "EDITORIALS", "PORTRAITS", "BEAUTY", "PET & PORTRAITS"].includes(tag);
+    const isOverviewStyle = ["OVERVIEW", "FASHION", "LINGERIE", "SWIMWEAR", "BODY & FORM", "EDITORIALS", "PORTRAITS", "BEAUTY", "PET & PORTRAITS"].includes(tag);
     
     // Use overview-item for Overview and Campaigns sections (smaller, no text, original aspect ratios)
     // and gallery-item for other sections
@@ -525,8 +617,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const overlay = document.createElement("div");
       overlay.classList.add("gallery-item-overlay");
       overlay.innerHTML = `
-        <h2 class="gallery-item-title">${img.title}</h2>
-        <span class="gallery-item-meta">${tag}</span>
+        <h2 class="gallery-item-title">${tag}</h2>
       `;
       item.appendChild(overlay);
     }
@@ -1147,6 +1238,9 @@ document.addEventListener("DOMContentLoaded", () => {
           targetContent.offsetHeight; // reflow
           targetContent.classList.add("active");
         }
+
+        // Update background image for tab click
+        updateBackgroundForSection(targetTabId);
       });
     });
   }
@@ -1170,6 +1264,7 @@ document.addEventListener("DOMContentLoaded", () => {
     lightboxClose.addEventListener("click", closeLightbox);
     lightboxPrev.addEventListener("click", prevLightbox);
     lightboxNext.addEventListener("click", nextLightbox);
+    lightboxImg.addEventListener("click", nextLightbox);
     document.addEventListener("keydown", handleLightboxKeys);
     
     // Touch swipe listeners for mobile/tablet devices
@@ -1195,6 +1290,7 @@ document.addEventListener("DOMContentLoaded", () => {
     lightboxClose.removeEventListener("click", closeLightbox);
     lightboxPrev.removeEventListener("click", prevLightbox);
     lightboxNext.removeEventListener("click", nextLightbox);
+    lightboxImg.removeEventListener("click", nextLightbox);
     document.removeEventListener("keydown", handleLightboxKeys);
     
     // Touch swipe listeners removal
@@ -1244,9 +1340,16 @@ document.addEventListener("DOMContentLoaded", () => {
             lightboxTitle.textContent = "Unpublished Research";
             lightboxTag.style.display = "none";
           } else {
-            lightboxTitle.textContent = currentImg.title;
-            lightboxTag.textContent = currentImg.tag || "PORTFOLIO";
-            lightboxTag.style.display = "block";
+            let groupTitle = currentImg.tag || "PORTFOLIO";
+            if (activeSectionId === "campaigns-fashion") {
+              groupTitle = "FASHION";
+            } else if (activeSectionId === "campaigns-lingerie") {
+              groupTitle = "LINGERIE";
+            } else if (activeSectionId === "campaigns-swimwear") {
+              groupTitle = "SWIMWEAR";
+            }
+            lightboxTitle.textContent = groupTitle;
+            lightboxTag.style.display = "none";
           }
         }
       }
