@@ -1557,6 +1557,22 @@ footer {
   user-select: none;
 }
 
+/* --- LIGHTBOX HEADER LOGO --- */
+.lightbox-header {
+  position: absolute;
+  top: 12px;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  z-index: 1010;
+  pointer-events: none;
+}
+.lightbox-header .cs-logo {
+  color: #000000 !important;
+  text-shadow: none !important;
+}
+
 /* --- LIGHTBOX OVERLAY UPGRADE --- */
 .lightbox {
   position: fixed;
@@ -1769,10 +1785,11 @@ footer {
     gap: 16px;
   }
   .lightbox-wrapper {
-    max-width: 90%;
+    max-width: 95%;
   }
   .lightbox-wrapper img {
-    max-height: 60vh;
+    max-height: 72vh;
+    max-width: 100%;
   }
 }
 
@@ -1996,14 +2013,20 @@ footer {
 
 /* Custom media queries to ensure full responsiveness in horizontal landscape screens (small height) */
 @media (max-height: 580px) {
+  .lightbox-header {
+    top: 5px;
+  }
+  .lightbox-header .cs-logo {
+    font-size: 1.2rem;
+  }
   .lightbox-wrapper {
-    max-width: 90%;
-    max-height: 95vh;
-    gap: 8px;
+    max-width: 96%;
+    max-height: 98vh;
+    gap: 5px;
   }
   .lightbox-wrapper img {
-    max-height: 60vh;
-    max-width: 80vw;
+    max-height: 82vh;
+    max-width: 90vw;
   }
   .lightbox-close {
     top: 10px;
@@ -2113,8 +2136,8 @@ footer {
     gap: 10px; /* smaller gap on mobile */
   }
   .lightbox-pair-img {
-    max-width: calc(50% - 5px);
-    max-height: 65vh;
+    max-width: calc(50% - 8px);
+    max-height: 72vh;
   }
 }
 
@@ -2132,7 +2155,7 @@ footer {
     font-size: 0.75rem;
   }
   .lightbox-pair-img {
-    max-height: 55vh;
+    max-height: 80vh;
   }
 }
 
@@ -2397,8 +2420,8 @@ body.light-mode #editorial-detail-view .back-to-grid-bottom {
   border-top-color: rgba(0,0,0,0.06) !important;
 }
 
-body.light-mode .hamburger-line {
-  background-color: #121214 !important;
+body.light-mode .hamburger span {
+  background-color: #000000 !important;
 }
 
 body.light-mode .mobile-nav-overlay {
