@@ -756,76 +756,63 @@ footer {
 
 /* Fullscreen Image Preview Navigation Arrows */
 /* Queste frecce appaiono sull'overlay con sfondo RAL 7035 (Grigio Perla chiaro) */
-.nav-arrow {
+.lightbox-nav {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background: none;
-  border: none;
-  color: rgba(45, 48, 50, 0.3); /* Più minimale e semitrasparente */
-  font-size: 8rem; /* Ingrandito del 100% (da 4rem a 8rem) */
+  background-color: rgba(255, 255, 255, 0.75); /* Sfondo capsula bianca semitrasparente */
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border: 1px solid rgba(45, 48, 50, 0.1);
+  width: 32px;
+  height: 52px;
+  border-radius: 26px; /* Forma a pillola / capsula verticale */
   cursor: pointer;
-  padding: 20px;
-  transition: var(--transition-fast);
-  z-index: 210;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  color: #2D3032; /* Chevron grigio scuro */
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+  z-index: 220;
   user-select: none;
-  line-height: 1;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.15);
 }
 
 .prev-btn {
-  left: -90px;
+  left: 4%;
 }
 
 .next-btn {
-  right: -90px;
+  right: 4%;
 }
 
-.nav-arrow:hover {
-  color: #2D3032; /* Grigio Antracite pieno sull'hover */
-  transform: translateY(-50%) scale(1.1);
+.lightbox-nav:hover {
+  background-color: rgba(255, 255, 255, 0.95);
+  color: #000;
+  transform: translateY(-50%) scale(1.08);
 }
 
-.nav-arrow:active {
+.lightbox-nav:active {
   transform: translateY(-50%) scale(0.95);
 }
 
-/* Gallery drawer arrows (su sfondo antracite scuro, rimangono chiari) */
-.gallery-drawer .nav-arrow {
+/* Gallery drawer arrows (rimangono coerenti) */
+.gallery-drawer .lightbox-nav {
   color: rgba(200, 200, 200, 0.4);
 }
-.gallery-drawer .nav-arrow:hover {
+.gallery-drawer .lightbox-nav:hover {
   color: #ffffff;
 }
 
 @media (max-width: 991px) {
-  .nav-arrow {
-    font-size: 4rem; /* Ingrandito del 100% (da 2rem a 4rem) */
-    background: rgba(205, 209, 208, 0.35); /* Molto più semitrasparente */
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
-    border: 1px solid rgba(45, 48, 50, 0.08);
-    width: 90px; /* Raddoppiato da 50px a 90px */
-    height: 90px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0;
-    color: rgba(45, 48, 50, 0.45);
-  }
-  
   .prev-btn {
-    left: 15px;
+    left: 20px;
   }
   
   .next-btn {
-    right: 15px;
-  }
-  
-  .nav-arrow:hover {
-    transform: translateY(-50%) scale(1.05);
-    background: rgba(205, 209, 208, 0.65);
-    color: #2D3032;
+    right: 20px;
   }
 }
 
@@ -1292,13 +1279,15 @@ footer {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 900px;
+  height: 600px;
   box-sizing: border-box;
 }
 
 .profile-frame-large {
   width: 100%;
-  height: 900px;
+  max-width: 400px;
+  margin-left: auto;
+  height: 600px;
   border-radius: 4px;
   overflow: hidden;
   box-shadow: 0 15px 40px rgba(0,0,0,0.5);
@@ -1610,7 +1599,7 @@ footer {
   max-width: 80%;
   max-height: 80vh;
   position: relative;
-  gap: 15px;
+  gap: 0;
 }
 .lightbox-img-holder {
   width: 100%;
@@ -1638,6 +1627,7 @@ footer {
   align-items: center;
   text-align: center;
   gap: 3px;
+  margin-top: 40px; /* Posizionato a 40px sotto la base dell'immagine */
 }
 .caption-title {
   color: #2D3032;
@@ -1646,6 +1636,7 @@ footer {
   font-size: 1rem;
   letter-spacing: 0.05em;
   text-transform: uppercase;
+  white-space: nowrap; /* Forza testo su una riga */
 }
 .caption-tag {
   color: rgba(45, 48, 50, 0.4);
@@ -1653,15 +1644,6 @@ footer {
   font-weight: 600;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-}
-
-/* Override nav arrows on light gray lightbox background */
-.lightbox .nav-arrow {
-  color: rgba(45, 48, 50, 0.35);
-  font-size: 4.5rem;
-}
-.lightbox .nav-arrow:hover {
-  color: #2D3032;
 }
 
 /* --- PAGINATION & LAZY LOAD ANIMATION --- */

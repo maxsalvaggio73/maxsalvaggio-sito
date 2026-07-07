@@ -294,6 +294,22 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       });
     }
+
+    // Backdrop click listener to close editorial details and return to editorials covers grid
+    const detailView = document.getElementById("editorial-detail-view");
+    if (detailView) {
+      detailView.addEventListener("click", (e) => {
+        // If the lightbox is currently open, do not trigger
+        if (lightbox && lightbox.classList.contains("open")) return;
+
+        const clickedImage = e.target.closest(".overview-item, .gallery-item, img");
+        const clickedInteractive = e.target.closest("button, a, .btn-back, .btn-nav-project, h2, span");
+
+        if (!clickedImage && !clickedInteractive) {
+          resetEditorialDetails();
+        }
+      });
+    }
   }
 
   function switchSection(targetId, animate = true) {
@@ -1332,9 +1348,9 @@ document.addEventListener("DOMContentLoaded", () => {
             const mag = parentProject.magazine || "Grazia";
             const title = parentProject.title;
             const place = parentProject.place;
-            const parts = [mag, title, place].filter(Boolean);
+            const parts = [title, mag, place].filter(Boolean);
             
-            lightboxTitle.textContent = parts.join(" — ");
+            lightboxTitle.textContent = parts.join(" - ");
             lightboxTag.style.display = "none";
           } else if (isUnpublished) {
             lightboxTitle.textContent = "Unpublished Research";
@@ -1407,6 +1423,78 @@ document.addEventListener("DOMContentLoaded", () => {
     setupEditorialNavigation(project);
   }
 
+  function getNextGalleryTab(currentList) {
+    if (typeof portfolioData === "undefined") return null;
+
+    // Portraits & Beauty
+    if (currentList === portfolioData.portraits_and_beauty.portraits) {
+      return { nextList: portfolioData.portraits_and_beauty.beauty, tabId: "pb-beauty" };
+    }
+    if (currentList === portfolioData.portraits_and_beauty.beauty) {
+      return { nextList: portfolioData.portraits_and_beauty.pets_and_portraits, tabId: "pb-pets" };
+    }
+    if (currentList === portfolioData.portraits_and_beauty.pets_and_portraits) {
+      return { nextList: portfolioData.portraits_and_beauty.portraits, tabId: "pb-portraits" };
+    }
+
+    // Body & Form
+    if (currentList === portfolioData.body_and_form.organic_sculptures) {
+      return { nextList: portfolioData.body_and_form.shadows_and_graphic_intimacy, tabId: "body-shadows" };
+    }
+    if (currentList === portfolioData.body_and_form.shadows_and_graphic_intimacy) {
+      return { nextList: portfolioData.body_and_form.organic_sculptures, tabId: "body-organic" };
+    }
+
+    // Campaigns (Archive subpages)
+    if (currentList === portfolioData.campaigns.fashion) {
+      return { nextList: portfolioData.campaigns.lingerie, sectionId: "campaigns-lingerie" };
+    }
+    if (currentList === portfolioData.campaigns.lingerie) {
+      return { nextList: portfolioData.campaigns.swimwear, sectionId: "campaigns-swimwear" };
+    }
+    if (currentList === portfolioData.campaigns.swimwear) {
+      return { nextList: portfolioData.campaigns.fashion, sectionId: "campaigns-fashion" };
+    }
+
+    return null;
+  }
+
+  function getPrevGalleryTab(currentList) {
+    if (typeof portfolioData === "undefined") return null;
+
+    // Portraits & Beauty
+    if (currentList === portfolioData.portraits_and_beauty.portraits) {
+      return { prevList: portfolioData.portraits_and_beauty.pets_and_portraits, tabId: "pb-pets" };
+    }
+    if (currentList === portfolioData.portraits_and_beauty.beauty) {
+      return { prevList: portfolioData.portraits_and_beauty.portraits, tabId: "pb-portraits" };
+    }
+    if (currentList === portfolioData.portraits_and_beauty.pets_and_portraits) {
+      return { prevList: portfolioData.portraits_and_beauty.beauty, tabId: "pb-beauty" };
+    }
+
+    // Body & Form
+    if (currentList === portfolioData.body_and_form.organic_sculptures) {
+      return { prevList: portfolioData.body_and_form.shadows_and_graphic_intimacy, tabId: "body-shadows" };
+    }
+    if (currentList === portfolioData.body_and_form.shadows_and_graphic_intimacy) {
+      return { prevList: portfolioData.body_and_form.organic_sculptures, tabId: "body-organic" };
+    }
+
+    // Campaigns (Archive subpages)
+    if (currentList === portfolioData.campaigns.fashion) {
+      return { prevList: portfolioData.campaigns.swimwear, sectionId: "campaigns-swimwear" };
+    }
+    if (currentList === portfolioData.campaigns.lingerie) {
+      return { prevList: portfolioData.campaigns.fashion, sectionId: "campaigns-fashion" };
+    }
+    if (currentList === portfolioData.campaigns.swimwear) {
+      return { prevList: portfolioData.campaigns.lingerie, sectionId: "campaigns-lingerie" };
+    }
+
+    return null;
+  }
+
   function nextLightbox(e) {
     if (e) e.stopPropagation();
     
@@ -1422,7 +1510,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     
     if (parentProject && lightboxIndex === lightboxImages.length - 1) {
-      // Siamo all'ultima foto della storia corrente: passa alla storia successiva!
+      // Editorials: passa alla storia successiva!
       const parentIdx = projectsList.findIndex(p => p.id === parentProject.id);
       const nextProject = projectsList[(parentIdx + 1) % projectsList.length];
       
@@ -1431,6 +1519,23 @@ document.addEventListener("DOMContentLoaded", () => {
       
       syncBackgroundProject(nextProject);
       updateLightboxContent();
+    } else if (lightboxIndex === lightboxImages.length - 1) {
+      // Altre gallerie: passa alla tab o sezione successiva!
+      const nextTab = getNextGalleryTab(lightboxImages);
+      if (nextTab) {
+        if (nextTab.tabId) {
+          const tabBtn = document.querySelector(`button[data-tab="${nextTab.tabId}"]`);
+          if (tabBtn) tabBtn.click();
+        } else if (nextTab.sectionId) {
+          window.location.hash = nextTab.sectionId;
+        }
+        lightboxImages = nextTab.nextList;
+        lightboxIndex = 0;
+        updateLightboxContent();
+      } else {
+        lightboxIndex = 0;
+        updateLightboxContent();
+      }
     } else {
       lightboxIndex = (lightboxIndex + 1) % lightboxImages.length;
       updateLightboxContent();
@@ -1452,7 +1557,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     
     if (parentProject && lightboxIndex === 0) {
-      // Siamo alla prima foto della storia corrente: passa alla storia precedente!
+      // Editorials: passa alla storia precedente!
       const parentIdx = projectsList.findIndex(p => p.id === parentProject.id);
       const prevProject = projectsList[(parentIdx - 1 + projectsList.length) % projectsList.length];
       
@@ -1461,6 +1566,23 @@ document.addEventListener("DOMContentLoaded", () => {
       
       syncBackgroundProject(prevProject);
       updateLightboxContent();
+    } else if (lightboxIndex === 0) {
+      // Altre gallerie: passa alla tab o sezione precedente!
+      const prevTab = getPrevGalleryTab(lightboxImages);
+      if (prevTab) {
+        if (prevTab.tabId) {
+          const tabBtn = document.querySelector(`button[data-tab="${prevTab.tabId}"]`);
+          if (tabBtn) tabBtn.click();
+        } else if (prevTab.sectionId) {
+          window.location.hash = prevTab.sectionId;
+        }
+        lightboxImages = prevTab.prevList;
+        lightboxIndex = lightboxImages.length - 1;
+        updateLightboxContent();
+      } else {
+        lightboxIndex = lightboxImages.length - 1;
+        updateLightboxContent();
+      }
     } else {
       lightboxIndex = (lightboxIndex - 1 + lightboxImages.length) % lightboxImages.length;
       updateLightboxContent();
