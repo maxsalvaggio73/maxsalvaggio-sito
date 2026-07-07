@@ -2463,5 +2463,30 @@ body.light-mode header {
 
 body.light-mode footer {
   background: transparent !important;
+  backdrop-filter: none !important;
+  border-top-color: rgba(0, 0, 0, 0.06) !important;
 }
 
+/* --- WORKSPACE MENU NAVIGATION --- */
+.workspace-icon {
+  margin-right: 6px;
+  vertical-align: middle;
+  transform: translateY(-1.5px);
+  transition: var(--transition-fast);
+}
+
+@media (min-width: 769px) {
+  .nav-menu {
+    position: relative;
+    width: 100%;
+    padding-right: 150px;
+    box-sizing: border-box;
+  }
+  
+  .nav-workspace-item {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
