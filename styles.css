@@ -1716,15 +1716,19 @@ body.light-mode .social-icon-svg {
 .lightbox-wrapper img {
   cursor: pointer;
   max-width: 100%;
-  height: 96% !important; /* Esattamente il 96% dello spazio libero in altezza */
-  max-height: 96% !important;
-  width: auto !important;
-  object-fit: contain !important;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
   border-radius: 2px;
   box-shadow: 0 20px 55px rgba(0, 0, 0, 0.25);
   opacity: 0;
   transform: scale(0.97);
   transition: opacity 0.25s ease, transform 0.25s ease;
+}
+.lightbox-wrapper img.loaded {
+  opacity: 1 !important;
+  transform: scale(1) !important;
 }
 .lightbox-caption {
   display: flex;
@@ -2213,13 +2217,13 @@ body.light-mode .social-icon-svg {
 }
 
 .lightbox-pair-img {
-  height: 96% !important; /* Esattamente il 96% dello spazio libero in altezza */
-  max-height: 96% !important;
+  max-height: 100%;
   max-width: calc(50% - 10px); /* due verticali affiancate */
   min-width: 0; /* previene overflow su Android */
   flex-shrink: 1;
-  width: auto !important;
-  object-fit: contain !important;
+  width: auto;
+  height: auto;
+  object-fit: contain;
   border-radius: 2px;
   box-shadow: 0 20px 55px rgba(0, 0, 0, 0.25);
   cursor: pointer;
@@ -2292,8 +2296,8 @@ body.light-mode .social-icon-svg {
   }
   .lightbox-pair-img {
     max-width: calc(50% - 8px);
-    height: 96% !important;
-    max-height: 96% !important;
+    max-height: 100%;
+    height: auto;
     min-width: 0; /* previene overflow su Android */
     flex-shrink: 1;
   }
@@ -2313,8 +2317,8 @@ body.light-mode .social-icon-svg {
     font-size: 0.75rem;
   }
   .lightbox-pair-img {
-    height: 96% !important;
-    max-height: 96% !important;
+    max-height: 80vh;
+    height: auto;
   }
 }
 
