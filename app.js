@@ -365,16 +365,46 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // Update parent dropdown toggle active states
-    const archiveToggles = document.querySelectorAll('[data-dropdown="archive"]');
-    const archiveSections = ["editorials", "campaigns-fashion", "campaigns-lingerie", "campaigns-swimwear", "unpublished-research", "archive"];
-    if (archiveSections.includes(targetId)) {
-      archiveToggles.forEach(toggle => toggle.classList.add("active"));
-    } else {
-      archiveToggles.forEach(toggle => toggle.classList.remove("active"));
-    }
+    const dropdownGroups = [
+      {
+        toggleSelector: '[data-dropdown="archive"]',
+        sections: ["editorials", "campaigns-fashion", "campaigns-lingerie", "campaigns-swimwear", "unpublished-research", "archive"]
+      },
+      {
+        toggleSelector: '[data-dropdown="portraits-beauty"]',
+        sections: ["portraits-beauty"]
+      },
+      {
+        toggleSelector: '[data-dropdown="body-form"]',
+        sections: ["body-form"]
+      }
+    ];
+    dropdownGroups.forEach(group => {
+      const toggles = document.querySelectorAll(group.toggleSelector);
+      if (group.sections.includes(targetId)) {
+        toggles.forEach(t => t.classList.add("active"));
+      } else {
+        toggles.forEach(t => t.classList.remove("active"));
+      }
+    });
 
     if (currentActive && currentActive.id === ("section-" + sectionId) && targetId !== "editorials" && targetId !== "unpublished-research") {
       return;
+    }
+
+    // If navigating to portraits-beauty or body-form via a data-tab, activate that tab after transition
+    const storedTab = localStorage.getItem("activeTab");
+    if (storedTab) {
+      const triggerTab = () => {
+        const tabButton = document.querySelector(`.tab-link[data-tab="${storedTab}"]`);
+        if (tabButton) { tabButton.click(); }
+        localStorage.removeItem("activeTab");
+      };
+      if (animate) {
+        setTimeout(triggerTab, 450);
+      } else {
+        setTimeout(triggerTab, 50);
+      }
     }
 
     if (animate && currentActive) {
