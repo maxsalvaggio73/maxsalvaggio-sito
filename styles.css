@@ -1649,6 +1649,7 @@ body.light-mode .social-icon-svg {
 }
 .lightbox.open {
   display: flex;
+  opacity: 1;
 }
 .lightbox-close {
   position: absolute;
