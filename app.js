@@ -45,6 +45,8 @@ document.addEventListener("DOMContentLoaded", () => {
   let lightboxImages = [];
   let rawImagesSourceList = [];
   let lightboxIndex = 0;
+  let shouldStartZoomed = false;
+  let clickedImageUrl = "";
   let touchStartX = 0;
   let touchStartY = 0;
   
@@ -84,6 +86,7 @@ document.addEventListener("DOMContentLoaded", () => {
     initContactForm();
     initCursorTracker();
     shuffleBackground();
+    initLandscapeFullscreen();
   }
 
   async function loadSupabasePortfolioData() {
@@ -675,7 +678,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Open lightbox on click
     item.addEventListener("click", () => {
-      openLightbox(imagesList, index);
+      openLightbox(imagesList, index, true);
     });
 
     return item;
@@ -1351,10 +1354,12 @@ document.addEventListener("DOMContentLoaded", () => {
     return slides;
   }
 
-  function openLightbox(imagesList, index) {
+  function openLightbox(imagesList, index, startZoomed = false) {
     if (!lightbox || !imagesList || imagesList.length === 0) return;
     
     rawImagesSourceList = imagesList;
+    shouldStartZoomed = startZoomed;
+    clickedImageUrl = imagesList[index] ? imagesList[index].url : "";
     
     const isEditorials = imagesList.some(img => img.tag === "EDITORIALS");
     const slides = buildLightboxSlides(imagesList, isEditorials);
@@ -1399,6 +1404,13 @@ document.addEventListener("DOMContentLoaded", () => {
     lightbox.setAttribute("aria-hidden", "true");
     document.body.style.overflow = "";
 
+    // Reset zoom state
+    lightbox.classList.remove("lightbox-zoomed-active");
+    lightboxImg.classList.remove("zoomed");
+    document.querySelectorAll(".lightbox-pair-img").forEach(img => {
+      img.classList.remove("zoomed");
+    });
+
     // Reset risorse e svuota contenitori dinamici
     lightboxImg.src = "";
     lightboxImg.classList.remove("loaded");
@@ -1424,9 +1436,34 @@ document.addEventListener("DOMContentLoaded", () => {
     lightbox.removeEventListener("touchend", handleTouchEnd);
   }
 
+  function toggleZoomImage(imgEl) {
+    if (!imgEl) return;
+    const isZoomed = imgEl.classList.contains("zoomed");
+    
+    // Reset zoom state on all images first
+    lightboxImg.classList.remove("zoomed");
+    document.querySelectorAll(".lightbox-pair-img").forEach(img => {
+      img.classList.remove("zoomed");
+    });
+    
+    if (!isZoomed) {
+      imgEl.classList.add("zoomed");
+      lightbox.classList.add("lightbox-zoomed-active");
+    } else {
+      lightbox.classList.remove("lightbox-zoomed-active");
+    }
+  }
+
   function updateLightboxContent() {
     const currentSlide = lightboxImages[lightboxIndex];
     if (!currentSlide) return;
+
+    // Reset zoom classes on slide change
+    lightbox.classList.remove("lightbox-zoomed-active");
+    lightboxImg.classList.remove("zoomed");
+    document.querySelectorAll(".lightbox-pair-img").forEach(img => {
+      img.classList.remove("zoomed");
+    });
 
     // Animazione di sfocatura in uscita prima del cambio
     lightboxImg.style.opacity = "0";
@@ -1512,14 +1549,30 @@ document.addEventListener("DOMContentLoaded", () => {
         if (transDiv) transDiv.style.display = "none";
         pairContainer.style.display = "flex";
         
-        // Cliccando sulle immagini si avanza
-        img1.onclick = (e) => { e.stopPropagation(); nextLightbox(); };
-        img2.onclick = (e) => { e.stopPropagation(); nextLightbox(); };
+        // Cliccando sulle immagini si attiva lo zoom anziché avanzare
+        img1.onclick = (e) => {
+          e.stopPropagation();
+          toggleZoomImage(img1);
+        };
+        img2.onclick = (e) => {
+          e.stopPropagation();
+          toggleZoomImage(img2);
+        };
         
         img1.onload = () => { img1.classList.add("loaded"); };
         img2.onload = () => { img2.classList.add("loaded"); };
         if (img1.complete) img1.classList.add("loaded");
         if (img2.complete) img2.classList.add("loaded");
+        
+        // Gestione zoom di avvio automatico se richiesto dal click sulla miniatura
+        if (shouldStartZoomed && clickedImageUrl) {
+          if (currentSlide.images[0].url === clickedImageUrl) {
+            toggleZoomImage(img1);
+          } else if (currentSlide.images[1].url === clickedImageUrl) {
+            toggleZoomImage(img2);
+          }
+          shouldStartZoomed = false; // reset
+        }
         
         updateLightboxCaption(currentSlide);
       } 
@@ -1532,10 +1585,10 @@ document.addEventListener("DOMContentLoaded", () => {
         lightboxImg.src = currentSlide.image.url;
         lightboxImg.alt = currentSlide.image.title || "";
         
-        // Cliccando sull'immagine singola si avanza
+        // Cliccando sull'immagine singola si attiva lo zoom anziché avanzare
         lightboxImg.onclick = (e) => {
           e.stopPropagation();
-          nextLightbox();
+          toggleZoomImage(lightboxImg);
         };
         
         lightboxImg.onload = () => {
@@ -1545,6 +1598,12 @@ document.addEventListener("DOMContentLoaded", () => {
         if (lightboxImg.complete) {
           lightboxImg.style.opacity = "1";
           lightboxImg.style.transform = "scale(1)";
+        }
+        
+        // Gestione zoom di avvio automatico se richiesto dal click sulla miniatura
+        if (shouldStartZoomed && clickedImageUrl && currentSlide.image.url === clickedImageUrl) {
+          toggleZoomImage(lightboxImg);
+          shouldStartZoomed = false; // reset
         }
         
         updateLightboxCaption(currentSlide);
@@ -2145,5 +2204,42 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     return arranged;
+  }
+
+  function initLandscapeFullscreen() {
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || (window.innerWidth <= 950 && window.innerHeight <= 500);
+
+    function handleLandscape() {
+      const isLandscape = window.innerWidth > window.innerHeight;
+      if (isMobile && isLandscape) {
+        // Aumenta temporaneamente l'altezza della pagina per forzare la barra degli indirizzi a nascondersi
+        document.documentElement.style.height = 'calc(100dvh + 100px)';
+        document.body.style.height = 'calc(100dvh + 100px)';
+        
+        setTimeout(() => {
+          window.scrollTo(0, 100);
+          
+          setTimeout(() => {
+            // Ripristina l'altezza dinamica ma lascia il browser nascosto
+            document.documentElement.style.height = '100dvh';
+            document.body.style.height = '100dvh';
+          }, 300);
+        }, 150);
+      } else {
+        document.documentElement.style.height = '';
+        document.body.style.height = '';
+      }
+    }
+
+    window.addEventListener('resize', handleLandscape);
+    window.addEventListener('orientationchange', handleLandscape);
+    
+    // Attiva all'interazione dell'utente se caricano direttamente in landscape
+    document.addEventListener('touchstart', function triggerOnTouch() {
+      handleLandscape();
+      document.removeEventListener('touchstart', triggerOnTouch);
+    }, { once: true });
+
+    handleLandscape();
   }
 });
