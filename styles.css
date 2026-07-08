@@ -135,7 +135,7 @@ header {
 .logo {
   font-family: var(--font-display);
   font-weight: 900;
-  font-size: 1.26rem;
+  font-size: 0.88rem;
   letter-spacing: 0.35em;
   text-decoration: none;
   color: var(--text-primary);
@@ -325,7 +325,7 @@ header {
 }
 
 .mobile-submenu .mobile-nav-link {
-  font-size: 1.2rem;
+  font-size: 0.72rem;
   font-family: var(--font-body);
   font-weight: 500;
   letter-spacing: 0.15em;
@@ -350,6 +350,40 @@ header {
   height: 2px;
   background-color: #fff;
   transition: var(--transition-fast);
+}
+
+/* Fullscreen Toggle Button */
+.btn-fullscreen {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  color: #fff;
+  z-index: 101;
+  display: none; /* Hidden on desktop by default */
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  transition: var(--transition-fast);
+}
+
+body.light-mode .btn-fullscreen {
+  color: #2D3032;
+}
+
+.btn-fullscreen:hover {
+  transform: scale(1.15);
+  color: var(--accent);
+}
+
+@media (max-width: 768px), (max-height: 500px) and (orientation: landscape) {
+  .btn-fullscreen {
+    display: flex;
+    position: absolute;
+    top: calc(100% + 10px); /* Visualmente sotto il menù hamburger, allineato a destra */
+    right: 5%;
+  }
 }
 
 /* --- MAIN CONTENT & PORTFOLIO STACK --- */
@@ -710,7 +744,7 @@ body.light-mode .social-icon-svg {
 .mobile-nav-link {
   font-family: var(--font-display);
   font-weight: 900;
-  font-size: 2rem;
+  font-size: 1.2rem;
   text-transform: uppercase;
   color: var(--text-muted);
   text-decoration: none;
@@ -1608,23 +1642,22 @@ body.light-mode .social-icon-svg {
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  padding: 20px 0;
+  padding: 0 !important; /* Padding 0 per controllo millimetrico delle altezze */
   box-sizing: border-box;
   overflow: hidden;
   transition: opacity 0.4s ease;
 }
 .lightbox.open {
   display: flex;
-  opacity: 1;
 }
 .lightbox-close {
   position: absolute;
-  top: 20px;
-  right: 25px;
+  top: 4px;
+  right: 15px;
   background: none;
   border: none;
   color: rgba(45, 48, 50, 0.5);
-  font-size: 2.8rem;
+  font-size: 2.2rem; /* Leggermente più piccolo per bilanciare l'altezza ridotta */
   cursor: pointer;
   transition: var(--transition-fast);
   z-index: 1700; /* Stai sopra lo zoom */
@@ -1641,7 +1674,9 @@ body.light-mode .social-icon-svg {
   transform: none !important;
   text-align: center;
   width: 100%;
-  margin-bottom: 15px;
+  margin-top: 4px !important; /* Esattamente 4px dal punto più alto */
+  margin-bottom: 0 !important;
+  padding: 0 !important;
   flex-shrink: 0;
   z-index: 1010;
 }
@@ -1680,10 +1715,10 @@ body.light-mode .social-icon-svg {
 .lightbox-wrapper img {
   cursor: pointer;
   max-width: 100%;
-  max-height: 100%;
-  width: auto;
-  height: auto;
-  object-fit: contain;
+  height: 96% !important; /* Esattamente il 96% dello spazio libero in altezza */
+  max-height: 96% !important;
+  width: auto !important;
+  object-fit: contain !important;
   border-radius: 2px;
   box-shadow: 0 20px 55px rgba(0, 0, 0, 0.25);
   opacity: 0;
@@ -1696,7 +1731,9 @@ body.light-mode .social-icon-svg {
   align-items: center;
   text-align: center;
   gap: 3px;
-  margin-top: 15px; /* Spazio controllato dal flexbox */
+  margin-bottom: 4px !important; /* Esattamente 4px dal punto più basso */
+  margin-top: 0 !important;
+  padding: 0 !important;
   flex-shrink: 0;
 }
 .caption-title {
@@ -2064,8 +2101,8 @@ body.light-mode .social-icon-svg {
 .cs-logo {
   font-family: var(--font-display);
   font-weight: 900;
-  font-size: 2.0rem;
-  font-size: clamp(1.65rem, 4.13vw, 3.07rem);
+  font-size: 1.4rem;
+  font-size: clamp(1.15rem, 2.9vw, 2.15rem);
   letter-spacing: 0.4em;
   text-transform: uppercase;
   color: #ffffff;
@@ -2112,7 +2149,7 @@ body.light-mode .social-icon-svg {
   }
   
   .cs-logo {
-    font-size: clamp(1.1rem, 5vw, 1.6rem) !important;
+    font-size: clamp(0.77rem, 3.5vw, 1.12rem) !important;
     letter-spacing: 0.25em !important;
     transform: translateX(0.125em) !important;
   }
@@ -2129,7 +2166,7 @@ body.light-mode .social-icon-svg {
     top: 5px;
   }
   .lightbox-header .cs-logo {
-    font-size: 1.2rem;
+    font-size: 0.84rem !important;
   }
   .lightbox-wrapper {
     max-width: 96%;
@@ -2175,13 +2212,13 @@ body.light-mode .social-icon-svg {
 }
 
 .lightbox-pair-img {
-  max-height: 100%;
+  height: 96% !important; /* Esattamente il 96% dello spazio libero in altezza */
+  max-height: 96% !important;
   max-width: calc(50% - 10px); /* due verticali affiancate */
   min-width: 0; /* previene overflow su Android */
   flex-shrink: 1;
-  width: auto;
-  height: auto;
-  object-fit: contain;
+  width: auto !important;
+  object-fit: contain !important;
   border-radius: 2px;
   box-shadow: 0 20px 55px rgba(0, 0, 0, 0.25);
   cursor: pointer;
@@ -2254,7 +2291,8 @@ body.light-mode .social-icon-svg {
   }
   .lightbox-pair-img {
     max-width: calc(50% - 8px);
-    max-height: 100%;
+    height: 96% !important;
+    max-height: 96% !important;
     min-width: 0; /* previene overflow su Android */
     flex-shrink: 1;
   }
@@ -2274,7 +2312,8 @@ body.light-mode .social-icon-svg {
     font-size: 0.75rem;
   }
   .lightbox-pair-img {
-    max-height: 80vh;
+    height: 96% !important;
+    max-height: 96% !important;
   }
 }
 
