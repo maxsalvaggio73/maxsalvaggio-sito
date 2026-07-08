@@ -1423,7 +1423,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const swipeInfo = document.createElement("div");
       swipeInfo.className = "lightbox-swipe-info";
-      swipeInfo.textContent = "<-- SWIPE -->";
+      // Icona manina swipe sinistra-destra 10x10px
+      swipeInfo.innerHTML = `
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 80" width="10" height="10" aria-hidden="true">
+          <!-- Freccia sinistra -->
+          <polyline points="22,40 6,40" stroke="currentColor" stroke-width="10" stroke-linecap="round" fill="none"/>
+          <polyline points="6,40 18,28" stroke="currentColor" stroke-width="10" stroke-linecap="round" fill="none"/>
+          <polyline points="6,40 18,52" stroke="currentColor" stroke-width="10" stroke-linecap="round" fill="none"/>
+          <!-- Mano / dito centrale -->
+          <rect x="38" y="10" width="10" height="45" rx="5" fill="currentColor"/>
+          <rect x="51" y="18" width="10" height="37" rx="5" fill="currentColor"/>
+          <rect x="64" y="22" width="10" height="33" rx="5" fill="currentColor"/>
+          <rect x="25" y="24" width="10" height="31" rx="5" fill="currentColor"/>
+          <rect x="25" y="55" width="49" height="15" rx="7" fill="currentColor"/>
+          <!-- Freccia destra -->
+          <polyline points="78,40 94,40" stroke="currentColor" stroke-width="10" stroke-linecap="round" fill="none"/>
+          <polyline points="94,40 82,28" stroke="currentColor" stroke-width="10" stroke-linecap="round" fill="none"/>
+          <polyline points="94,40 82,52" stroke="currentColor" stroke-width="10" stroke-linecap="round" fill="none"/>
+        </svg>
+      `;
       lightboxRoot.appendChild(swipeInfo);
 
       // Auto-rimozione dopo 1.2s (durata animazione)

@@ -2769,7 +2769,7 @@ body.light-mode .footer-nav-header .footer-nav-link {
   }
 }
 
-/* === LIGHTBOX SWIPE MESSAGE - Glassmorphism Overlay === */
+/* === LIGHTBOX SWIPE ICON - Glassmorphism Overlay === */
 .lightbox-swipe-info {
   position: fixed;
   top: 50%;
@@ -2780,37 +2780,43 @@ body.light-mode .footer-nav-header .footer-nav-link {
   user-select: none;
 
   /* Glassmorphism background - dark mode */
-  background: rgba(30, 30, 30, 0.45);
+  background: rgba(20, 20, 20, 0.5);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 16px;
-  padding: 18px 32px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 50%; /* Forma circolare attorno all'icona */
+  padding: 18px; /* Spazio sufficiente attorno ai 10x10px */
 
-  /* Testo rosso 50px */
-  font-family: var(--font-display);
-  font-size: 50px;
-  font-weight: 900;
-  letter-spacing: 0.08em;
+  /* Colore icona rosso, eredita currentColor nell'SVG */
   color: #e00000;
-  text-transform: uppercase;
-  white-space: nowrap;
+
+  /* Centra l'SVG dentro il cerchio */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   /* Animazione: compare, attende, scompare in 1.2s totali */
   animation: swipe-popup 1.2s ease forwards;
 }
 
+.lightbox-swipe-info svg {
+  display: block;
+  width: 10px;
+  height: 10px;
+  flex-shrink: 0;
+}
+
 body.light-mode .lightbox-swipe-info {
-  background: rgba(220, 220, 215, 0.55);
-  border: 1px solid rgba(100, 100, 100, 0.18);
+  background: rgba(230, 225, 220, 0.6);
+  border: 1px solid rgba(100, 100, 100, 0.2);
   color: #c00000;
 }
 
 @keyframes swipe-popup {
-  0%   { opacity: 0; transform: translate(-50%, -46%); }
-  12%  { opacity: 1; transform: translate(-50%, -50%); }
-  75%  { opacity: 1; transform: translate(-50%, -50%); }
-  100% { opacity: 0; transform: translate(-50%, -54%); }
+  0%   { opacity: 0; transform: translate(-50%, -46%) scale(0.85); }
+  12%  { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  75%  { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  100% { opacity: 0; transform: translate(-50%, -54%) scale(0.85); }
 }
 
 .lightbox-zoomed-active .lightbox-swipe-info {
