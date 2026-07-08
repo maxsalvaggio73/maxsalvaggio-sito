@@ -87,7 +87,6 @@ document.addEventListener("DOMContentLoaded", () => {
     initCursorTracker();
     shuffleBackground();
     initLandscapeFullscreen();
-    initFullscreenButton();
   }
 
   async function loadSupabasePortfolioData() {
@@ -366,46 +365,16 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // Update parent dropdown toggle active states
-    const dropdownGroups = [
-      {
-        toggleSelector: '[data-dropdown="archive"]',
-        sections: ["editorials", "campaigns-fashion", "campaigns-lingerie", "campaigns-swimwear", "unpublished-research", "archive"]
-      },
-      {
-        toggleSelector: '[data-dropdown="portraits-beauty"]',
-        sections: ["portraits-beauty"]
-      },
-      {
-        toggleSelector: '[data-dropdown="body-form"]',
-        sections: ["body-form"]
-      }
-    ];
-    dropdownGroups.forEach(group => {
-      const toggles = document.querySelectorAll(group.toggleSelector);
-      if (group.sections.includes(targetId)) {
-        toggles.forEach(t => t.classList.add("active"));
-      } else {
-        toggles.forEach(t => t.classList.remove("active"));
-      }
-    });
+    const archiveToggles = document.querySelectorAll('[data-dropdown="archive"]');
+    const archiveSections = ["editorials", "campaigns-fashion", "campaigns-lingerie", "campaigns-swimwear", "unpublished-research", "archive"];
+    if (archiveSections.includes(targetId)) {
+      archiveToggles.forEach(toggle => toggle.classList.add("active"));
+    } else {
+      archiveToggles.forEach(toggle => toggle.classList.remove("active"));
+    }
 
     if (currentActive && currentActive.id === ("section-" + sectionId) && targetId !== "editorials" && targetId !== "unpublished-research") {
       return;
-    }
-
-    // If navigating to portraits-beauty or body-form via a data-tab, activate that tab after transition
-    const storedTab = localStorage.getItem("activeTab");
-    if (storedTab) {
-      const triggerTab = () => {
-        const tabButton = document.querySelector(`.tab-link[data-tab="${storedTab}"]`);
-        if (tabButton) { tabButton.click(); }
-        localStorage.removeItem("activeTab");
-      };
-      if (animate) {
-        setTimeout(triggerTab, 450);
-      } else {
-        setTimeout(triggerTab, 50);
-      }
     }
 
     if (animate && currentActive) {
@@ -1660,8 +1629,14 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function updateLightboxCaption(currentSlide) {
+    const isOverview = activeSectionId === "overview";
     const caption = document.querySelector(".lightbox-caption");
     if (!caption) return;
+    
+    if (isOverview) {
+      caption.style.display = "none";
+      return;
+    }
     
     caption.style.display = "flex";
     
@@ -1692,8 +1667,15 @@ document.addEventListener("DOMContentLoaded", () => {
       lightboxTitle.textContent = "Unpublished Research";
       lightboxTag.style.display = "none";
     } else {
-      let imageTitle = (imgObj && imgObj.title) || (imgObj && imgObj.tag) || "PORTFOLIO";
-      lightboxTitle.textContent = imageTitle;
+      let groupTitle = (imgObj && imgObj.tag) || "PORTFOLIO";
+      if (activeSectionId === "campaigns-fashion") {
+        groupTitle = "FASHION";
+      } else if (activeSectionId === "campaigns-lingerie") {
+        groupTitle = "LINGERIE";
+      } else if (activeSectionId === "campaigns-swimwear") {
+        groupTitle = "SWIMWEAR";
+      }
+      lightboxTitle.textContent = groupTitle;
       lightboxTag.style.display = "none";
     }
   }
@@ -2276,71 +2258,5 @@ document.addEventListener("DOMContentLoaded", () => {
     }, { once: true });
 
     handleLandscape();
-  }
-
-  function toggleFullscreen() {
-    if (!document.fullscreenElement && !document.webkitFullscreenElement) {
-      const docEl = document.documentElement;
-      if (docEl.requestFullscreen) {
-        docEl.requestFullscreen();
-      } else if (docEl.webkitRequestFullscreen) {
-        docEl.webkitRequestFullscreen();
-      }
-    } else {
-      if (document.exitFullscreen) {
-        document.exitFullscreen();
-      } else if (document.webkitExitFullscreen) {
-        document.webkitExitFullscreen();
-      }
-    }
-  }
-
-  function updateFullscreenIcon() {
-    const fsBtn = document.getElementById("btn-fullscreen");
-    if (!fsBtn) return;
-    const isFS = document.fullscreenElement || document.webkitFullscreenElement;
-    if (isFS) {
-      fsBtn.innerHTML = `
-        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M4 14h6v6m10-6h-6v6M4 10h6V4m10 6h-6V4" />
-        </svg>
-      `;
-    } else {
-      fsBtn.innerHTML = `
-        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3" />
-        </svg>
-      `;
-    }
-  }
-
-  function initFullscreenButton() {
-    const hamburger = document.getElementById("hamburger");
-    if (!hamburger) return;
-
-    if (document.getElementById("btn-fullscreen")) return;
-
-    const fsBtn = document.createElement("button");
-    fsBtn.id = "btn-fullscreen";
-    fsBtn.className = "btn-fullscreen";
-    fsBtn.setAttribute("aria-label", "Visualizza a Schermo Intero");
-    
-    // Default: enter fullscreen icon
-    fsBtn.innerHTML = `
-      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3" />
-      </svg>
-    `;
-
-    // Position it directly after the hamburger button
-    hamburger.parentNode.insertBefore(fsBtn, hamburger.nextSibling);
-
-    fsBtn.addEventListener("click", (e) => {
-      e.stopPropagation();
-      toggleFullscreen();
-    });
-
-    document.addEventListener("fullscreenchange", updateFullscreenIcon);
-    document.addEventListener("webkitfullscreenchange", updateFullscreenIcon);
   }
 });
