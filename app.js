@@ -1414,21 +1414,20 @@ document.addEventListener("DOMContentLoaded", () => {
     lightbox.setAttribute("aria-hidden", "false");
     document.body.style.overflow = "hidden"; // disabilita lo scorrimento dello sfondo
 
-    // Inserisce il messaggio dello swipe in sostituzione delle frecce
-    const wrapper = document.querySelector(".lightbox-wrapper");
-    if (wrapper) {
-      let swipeInfo = wrapper.querySelector(".lightbox-swipe-info");
-      if (!swipeInfo) {
-        swipeInfo = document.createElement("div");
-        swipeInfo.className = "lightbox-swipe-info";
-        swipeInfo.textContent = "<-- SWIPE -->";
-        const caption = wrapper.querySelector(".lightbox-caption");
-        if (caption) {
-          wrapper.insertBefore(swipeInfo, caption);
-        } else {
-          wrapper.appendChild(swipeInfo);
-        }
-      }
+    // Mostra il messaggio swipe come overlay glassmorphism (sempre ad ogni apertura)
+    const lightboxRoot = document.getElementById("lightbox");
+    if (lightboxRoot) {
+      // Rimuovi quello precedente se esiste (per riattivare l'animazione)
+      const oldSwipe = lightboxRoot.querySelector(".lightbox-swipe-info");
+      if (oldSwipe) oldSwipe.remove();
+
+      const swipeInfo = document.createElement("div");
+      swipeInfo.className = "lightbox-swipe-info";
+      swipeInfo.textContent = "<-- SWIPE -->";
+      lightboxRoot.appendChild(swipeInfo);
+
+      // Auto-rimozione dopo 1.2s (durata animazione)
+      setTimeout(() => { if (swipeInfo.parentNode) swipeInfo.remove(); }, 1200);
     }
 
     updateLightboxContent();

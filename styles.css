@@ -1685,12 +1685,12 @@ body.light-mode .social-icon-svg {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center; /* centrato, non space-between (i nav sono nascosti) */
   width: 100%;
   flex: 1;
-  min-height: 0; /* Consente al flex child di contrarsi correttamente */
+  min-height: 0;
   position: relative;
-  padding: 0 4%;
+  padding: 0; /* nessun padding laterale: i nav sono display:none */
   box-sizing: border-box;
 }
 .lightbox-wrapper {
@@ -1703,7 +1703,8 @@ body.light-mode .social-icon-svg {
   min-height: 0;
   position: relative;
   gap: 0;
-  margin: 0 20px;
+  margin: 0;
+  overflow: hidden;
 }
 .lightbox-img-holder {
   flex: 1;
@@ -1712,6 +1713,12 @@ body.light-mode .social-icon-svg {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+/* Rimozione esplicita di qualsiasi bordo/outline sulle immagini lightbox */
+.lightbox-wrapper img,
+.lightbox-pair-img {
+  border: none !important;
+  outline: none !important;
 }
 .lightbox-wrapper img {
   cursor: pointer;
@@ -2762,25 +2769,48 @@ body.light-mode .footer-nav-header .footer-nav-link {
   }
 }
 
-/* === LIGHTBOX SWIPE MESSAGE === */
+/* === LIGHTBOX SWIPE MESSAGE - Glassmorphism Overlay === */
 .lightbox-swipe-info {
-  font-family: var(--font-body);
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.25em;
-  color: rgba(45, 48, 50, 0.6);
-  text-align: center;
-  margin-top: 15px;
-  margin-bottom: 5px;
-  text-transform: uppercase;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2000;
+  pointer-events: none;
   user-select: none;
-  flex-shrink: 0;
-  animation: pulse-swipe 2s infinite ease-in-out;
+
+  /* Glassmorphism background - dark mode */
+  background: rgba(30, 30, 30, 0.45);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  padding: 18px 32px;
+
+  /* Testo rosso 50px */
+  font-family: var(--font-display);
+  font-size: 50px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  color: #e00000;
+  text-transform: uppercase;
+  white-space: nowrap;
+
+  /* Animazione: compare, attende, scompare in 1.2s totali */
+  animation: swipe-popup 1.2s ease forwards;
 }
 
-@keyframes pulse-swipe {
-  0%, 100% { opacity: 0.4; }
-  50% { opacity: 0.9; }
+body.light-mode .lightbox-swipe-info {
+  background: rgba(220, 220, 215, 0.55);
+  border: 1px solid rgba(100, 100, 100, 0.18);
+  color: #c00000;
+}
+
+@keyframes swipe-popup {
+  0%   { opacity: 0; transform: translate(-50%, -46%); }
+  12%  { opacity: 1; transform: translate(-50%, -50%); }
+  75%  { opacity: 1; transform: translate(-50%, -50%); }
+  100% { opacity: 0; transform: translate(-50%, -54%); }
 }
 
 .lightbox-zoomed-active .lightbox-swipe-info {
