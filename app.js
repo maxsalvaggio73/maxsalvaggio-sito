@@ -1384,6 +1384,23 @@ document.addEventListener("DOMContentLoaded", () => {
     lightbox.setAttribute("aria-hidden", "false");
     document.body.style.overflow = "hidden"; // disabilita lo scorrimento dello sfondo
 
+    // Inserisce il messaggio dello swipe in sostituzione delle frecce
+    const wrapper = document.querySelector(".lightbox-wrapper");
+    if (wrapper) {
+      let swipeInfo = wrapper.querySelector(".lightbox-swipe-info");
+      if (!swipeInfo) {
+        swipeInfo = document.createElement("div");
+        swipeInfo.className = "lightbox-swipe-info";
+        swipeInfo.textContent = "<-- SWIPE -->";
+        const caption = wrapper.querySelector(".lightbox-caption");
+        if (caption) {
+          wrapper.insertBefore(swipeInfo, caption);
+        } else {
+          wrapper.appendChild(swipeInfo);
+        }
+      }
+    }
+
     updateLightboxContent();
 
     // Event listeners
