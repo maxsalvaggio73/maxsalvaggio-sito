@@ -1414,15 +1414,33 @@ document.addEventListener("DOMContentLoaded", () => {
     lightbox.setAttribute("aria-hidden", "false");
     document.body.style.overflow = "hidden";
 
-    // Mostra l'icona swipe (emoji universalmente supportata)
+    // Mostra icona swipe (bianca, sempre ad ogni apertura)
     const oldSwipe = lightbox.querySelector(".lightbox-swipe-info");
     if (oldSwipe) oldSwipe.remove();
     const swipeInfo = document.createElement("div");
     swipeInfo.className = "lightbox-swipe-info";
-    swipeInfo.innerHTML = `&#x1F918;`; /* 🤘 — alternativa: usa testo ← → */
-    swipeInfo.textContent = "👈  👉";   /* due dita che puntano sinistra e destra */
+    swipeInfo.textContent = "👈  👉";
     lightbox.appendChild(swipeInfo);
     setTimeout(() => { if (swipeInfo.parentNode) swipeInfo.remove(); }, 1400);
+
+    // Mostra icona lente zoom con + (bottom-left, sparisce dopo 2.5s)
+    const oldZoom = lightbox.querySelector(".lightbox-zoom-hint");
+    if (oldZoom) oldZoom.remove();
+    const zoomHint = document.createElement("div");
+    zoomHint.className = "lightbox-zoom-hint";
+    zoomHint.innerHTML = `
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <!-- cerchio della lente -->
+        <circle cx="11" cy="11" r="7"/>
+        <!-- manico -->
+        <line x1="16.5" y1="16.5" x2="22" y2="22"/>
+        <!-- + al centro -->
+        <line x1="11" y1="8" x2="11" y2="14"/>
+        <line x1="8" y1="11" x2="14" y2="11"/>
+      </svg>
+    `;
+    lightbox.appendChild(zoomHint);
+    setTimeout(() => { if (zoomHint.parentNode) zoomHint.remove(); }, 2500);
 
     updateLightboxContent();
 

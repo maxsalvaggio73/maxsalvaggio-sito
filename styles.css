@@ -1615,20 +1615,30 @@ body.light-mode .social-icon-svg {
   user-select: none;
 }
 
-/* --- LIGHTBOX HEADER LOGO --- */
+/* --- LIGHTBOX HEADER LOGO + TAGLINE (uguale all'header desktop) --- */
 .lightbox-header {
   position: absolute;
-  top: 27px; /* Sincronizzato con l'header desktop (12px padding + 15px margin-top) */
+  top: 4px;
   left: 0;
   width: 100%;
   display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
   z-index: 1010;
   pointer-events: none;
+  gap: 2px;
 }
 .lightbox-header .cs-logo {
-  color: #72757d !important; /* Schiarito del 50% */
+  color: rgba(114, 117, 125, 0.85) !important;
   text-shadow: none !important;
+  margin-bottom: 0 !important;
+}
+.lightbox-header .cs-tagline {
+  color: rgba(114, 117, 125, 0.65) !important;
+  font-size: clamp(0.55rem, 1.2vw, 0.75rem) !important;
+  letter-spacing: 0.35em !important;
+  margin-bottom: 0 !important;
 }
 
 /* --- LIGHTBOX OVERLAY UPGRADE --- */
@@ -1651,36 +1661,35 @@ body.light-mode .social-icon-svg {
   display: flex;
   opacity: 1;
 }
+/* X — pulsante di chiusura in BASSO a DESTRA */
 .lightbox-close {
   position: absolute;
-  top: 4px;
-  right: 15px;
-  background: none;
-  border: none;
-  color: rgba(45, 48, 50, 0.5);
-  font-size: 2.2rem; /* Leggermente più piccolo per bilanciare l'altezza ridotta */
+  bottom: 18px;
+  right: 20px;
+  top: auto !important;
+  background: rgba(20, 20, 20, 0.45);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 50%;
+  width: 52px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 1.6rem;
   cursor: pointer;
-  transition: var(--transition-fast);
-  z-index: 1700; /* Stai sopra lo zoom */
+  transition: background 0.2s ease, transform 0.2s ease;
+  z-index: 1700;
   line-height: 1;
 }
 .lightbox-close:hover {
-  color: #2D3032;
+  background: rgba(40, 40, 40, 0.75);
+  color: #ffffff;
   transform: rotate(90deg);
 }
-.lightbox-header {
-  position: relative; /* Rimosso absolute per evitare sovrapposizioni */
-  top: auto !important;
-  left: auto !important;
-  transform: none !important;
-  text-align: center;
-  width: 100%;
-  margin-top: 4px !important; /* Esattamente 4px dal punto più alto */
-  margin-bottom: 0 !important;
-  padding: 0 !important;
-  flex-shrink: 0;
-  z-index: 1010;
-}
+
 .lightbox-container {
   display: flex;
   flex-direction: row;
@@ -2751,31 +2760,82 @@ body.light-mode .footer-nav-header .footer-nav-link {
   pointer-events: none;
   user-select: none;
 
-  /* Glassmorphism background - dark mode */
-  background: rgba(15, 15, 15, 0.55);
+  /* Glassmorphism background */
+  background: rgba(15, 15, 15, 0.5);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 50%;
   width: 72px;
   height: 72px;
 
-  /* Centra il contenuto dentro il cerchio */
+  /* Centra il contenuto */
   display: flex;
   align-items: center;
   justify-content: center;
 
-  /* Dimensione emoji */
-  font-size: 32px;
+  /* Bianco semi-trasparente */
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 30px;
   line-height: 1;
+  filter: drop-shadow(0 0 8px rgba(255,255,255,0.3));
 
-  /* Animazione: compare, attende, scompare in 1.4s */
+  /* Animazione */
   animation: swipe-popup 1.4s ease forwards;
 }
 
 body.light-mode .lightbox-swipe-info {
-  background: rgba(230, 225, 220, 0.65);
-  border: 1px solid rgba(80, 80, 80, 0.2);
+  background: rgba(40, 40, 40, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: rgba(255, 255, 255, 0.95);
+}
+
+/* === LIGHTBOX ZOOM HINT ICON - Lente con + === */
+.lightbox-zoom-hint {
+  position: fixed;
+  bottom: 18px;
+  left: 20px;
+  z-index: 1700;
+  pointer-events: none;
+  user-select: none;
+
+  /* Stesso stile glassmorphism del pulsante X */
+  background: rgba(20, 20, 20, 0.45);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 50%;
+  width: 52px;
+  height: 52px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* Scompare dopo 2.5s */
+  animation: zoom-hint-fade 2.5s ease forwards;
+}
+
+.lightbox-zoom-hint svg {
+  width: 26px;
+  height: 26px;
+  stroke: rgba(255, 255, 255, 0.85);
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Scompare dopo 2.5s dalla comparsa */
+@keyframes zoom-hint-fade {
+  0%   { opacity: 0; transform: scale(0.85); }
+  12%  { opacity: 1; transform: scale(1); }
+  70%  { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; transform: scale(0.85); }
+}
+
+.lightbox-zoomed-active .lightbox-zoom-hint {
+  display: none !important;
 }
 
 @keyframes swipe-popup {
