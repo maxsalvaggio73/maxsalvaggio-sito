@@ -1384,11 +1384,11 @@ document.addEventListener("DOMContentLoaded", () => {
     return slides;
   }
 
-  function openLightbox(imagesList, index, startZoomed = false) {
+  function openLightbox(imagesList, index) {
     if (!lightbox || !imagesList || imagesList.length === 0) return;
     
     rawImagesSourceList = imagesList;
-    shouldStartZoomed = startZoomed;
+    shouldStartZoomed = false;
     clickedImageUrl = imagesList[index] ? imagesList[index].url : "";
     
     const isEditorials = imagesList.some(img => img.tag === "EDITORIALS");
@@ -1412,53 +1412,35 @@ document.addEventListener("DOMContentLoaded", () => {
 
     lightbox.classList.add("open");
     lightbox.setAttribute("aria-hidden", "false");
-    document.body.style.overflow = "hidden"; // disabilita lo scorrimento dello sfondo
+    document.body.style.overflow = "hidden";
 
-    // Mostra il messaggio swipe come overlay glassmorphism (sempre ad ogni apertura)
-    const lightboxRoot = document.getElementById("lightbox");
-    if (lightboxRoot) {
-      // Rimuovi quello precedente se esiste (per riattivare l'animazione)
-      const oldSwipe = lightboxRoot.querySelector(".lightbox-swipe-info");
-      if (oldSwipe) oldSwipe.remove();
-
-      const swipeInfo = document.createElement("div");
-      swipeInfo.className = "lightbox-swipe-info";
-      // Icona manina swipe sinistra-destra 10x10px
-      swipeInfo.innerHTML = `
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 80" width="10" height="10" aria-hidden="true">
-          <!-- Freccia sinistra -->
-          <polyline points="22,40 6,40" stroke="currentColor" stroke-width="10" stroke-linecap="round" fill="none"/>
-          <polyline points="6,40 18,28" stroke="currentColor" stroke-width="10" stroke-linecap="round" fill="none"/>
-          <polyline points="6,40 18,52" stroke="currentColor" stroke-width="10" stroke-linecap="round" fill="none"/>
-          <!-- Mano / dito centrale -->
-          <rect x="38" y="10" width="10" height="45" rx="5" fill="currentColor"/>
-          <rect x="51" y="18" width="10" height="37" rx="5" fill="currentColor"/>
-          <rect x="64" y="22" width="10" height="33" rx="5" fill="currentColor"/>
-          <rect x="25" y="24" width="10" height="31" rx="5" fill="currentColor"/>
-          <rect x="25" y="55" width="49" height="15" rx="7" fill="currentColor"/>
-          <!-- Freccia destra -->
-          <polyline points="78,40 94,40" stroke="currentColor" stroke-width="10" stroke-linecap="round" fill="none"/>
-          <polyline points="94,40 82,28" stroke="currentColor" stroke-width="10" stroke-linecap="round" fill="none"/>
-          <polyline points="94,40 82,52" stroke="currentColor" stroke-width="10" stroke-linecap="round" fill="none"/>
-        </svg>
-      `;
-      lightboxRoot.appendChild(swipeInfo);
-
-      // Auto-rimozione dopo 1.2s (durata animazione)
-      setTimeout(() => { if (swipeInfo.parentNode) swipeInfo.remove(); }, 1200);
-    }
+    // Mostra l'icona swipe (emoji universalmente supportata)
+    const oldSwipe = lightbox.querySelector(".lightbox-swipe-info");
+    if (oldSwipe) oldSwipe.remove();
+    const swipeInfo = document.createElement("div");
+    swipeInfo.className = "lightbox-swipe-info";
+    swipeInfo.innerHTML = `&#x1F918;`; /* 🤘 — alternativa: usa testo ← → */
+    swipeInfo.textContent = "👈  👉";   /* due dita che puntano sinistra e destra */
+    lightbox.appendChild(swipeInfo);
+    setTimeout(() => { if (swipeInfo.parentNode) swipeInfo.remove(); }, 1400);
 
     updateLightboxContent();
 
-    // Event listeners
+    // Chiusura solo via X o click sullo sfondo
     lightboxClose.addEventListener("click", closeLightbox);
-    lightboxPrev.addEventListener("click", prevLightbox);
-    lightboxNext.addEventListener("click", nextLightbox);
+    lightbox.addEventListener("click", handleLightboxBackgroundClick);
     document.addEventListener("keydown", handleLightboxKeys);
     
-    // Supporto touch swipe
+    // Supporto touch swipe per navigazione
     lightbox.addEventListener("touchstart", handleTouchStart, { passive: true });
     lightbox.addEventListener("touchend", handleTouchEnd, { passive: true });
+  }
+
+  function handleLightboxBackgroundClick(e) {
+    // Chiude solo se si clicca sullo sfondo scuro, NON sull'immagine
+    if (e.target === lightbox || e.target === document.getElementById("lightbox-container-inner")) {
+      closeLightbox();
+    }
   }
 
   function closeLightbox() {
@@ -1468,53 +1450,76 @@ document.addEventListener("DOMContentLoaded", () => {
     lightbox.setAttribute("aria-hidden", "true");
     document.body.style.overflow = "";
 
-    // Reset zoom state
-    lightbox.classList.remove("lightbox-zoomed-active");
-    lightboxImg.classList.remove("zoomed");
-    document.querySelectorAll(".lightbox-pair-img").forEach(img => {
-      img.classList.remove("zoomed");
-    });
+    // Reset zoom state completo
+    resetAllZoom();
 
-    // Reset risorse e svuota contenitori dinamici
+    // Reset risorse
     lightboxImg.src = "";
+    lightboxImg.style.opacity = "0";
+    lightboxImg.style.transform = "scale(0.97)";
+    lightboxImg.style.transformOrigin = "center center";
     lightboxImg.classList.remove("loaded");
     
     const pairDiv = document.getElementById("lightbox-pair-container");
-    if (pairDiv) {
-      pairDiv.innerHTML = "";
-      pairDiv.style.display = "none";
-    }
+    if (pairDiv) { pairDiv.innerHTML = ""; pairDiv.style.display = "none"; }
     const transDiv = document.getElementById("lightbox-transition-card");
-    if (transDiv) {
-      transDiv.innerHTML = "";
-      transDiv.style.display = "none";
-    }
+    if (transDiv) { transDiv.innerHTML = ""; transDiv.style.display = "none"; }
+    const swipe = lightbox.querySelector(".lightbox-swipe-info");
+    if (swipe) swipe.remove();
 
     // Rimozione listeners
     lightboxClose.removeEventListener("click", closeLightbox);
-    lightboxPrev.removeEventListener("click", prevLightbox);
-    lightboxNext.removeEventListener("click", nextLightbox);
+    lightbox.removeEventListener("click", handleLightboxBackgroundClick);
     document.removeEventListener("keydown", handleLightboxKeys);
-    
     lightbox.removeEventListener("touchstart", handleTouchStart);
     lightbox.removeEventListener("touchend", handleTouchEnd);
   }
 
-  function toggleZoomImage(imgEl) {
+  function resetAllZoom() {
+    // Reset zoom su tutte le immagini
+    [lightboxImg, ...document.querySelectorAll(".lightbox-pair-img")].forEach(img => {
+      img.classList.remove("zoomed");
+      img.style.transform = "";
+      img.style.transformOrigin = "center center";
+      img.style.cursor = "zoom-in";
+    });
+    lightbox.classList.remove("lightbox-zoomed-active");
+  }
+
+  function toggleZoomAtPoint(imgEl, event) {
     if (!imgEl) return;
     const isZoomed = imgEl.classList.contains("zoomed");
     
-    // Reset zoom state on all images first
-    lightboxImg.classList.remove("zoomed");
-    document.querySelectorAll(".lightbox-pair-img").forEach(img => {
-      img.classList.remove("zoomed");
-    });
-    
-    if (!isZoomed) {
-      imgEl.classList.add("zoomed");
-      lightbox.classList.add("lightbox-zoomed-active");
-    } else {
+    if (isZoomed) {
+      // De-zoom: torna normale
+      imgEl.classList.remove("zoomed");
+      imgEl.style.transform = "scale(1)";
+      imgEl.style.transformOrigin = "center center";
+      imgEl.style.cursor = "zoom-in";
       lightbox.classList.remove("lightbox-zoomed-active");
+    } else {
+      // Zoom 200% centrato sul punto del click/tocco
+      const rect = imgEl.getBoundingClientRect();
+      const clientX = event.clientX ?? (event.touches ? event.touches[0].clientX : rect.left + rect.width / 2);
+      const clientY = event.clientY ?? (event.touches ? event.touches[0].clientY : rect.top + rect.height / 2);
+      const originX = ((clientX - rect.left) / rect.width) * 100;
+      const originY = ((clientY - rect.top) / rect.height) * 100;
+      
+      // Reset tutte le altre immagini prima
+      [lightboxImg, ...document.querySelectorAll(".lightbox-pair-img")].forEach(img => {
+        if (img !== imgEl) {
+          img.classList.remove("zoomed");
+          img.style.transform = "scale(1)";
+          img.style.transformOrigin = "center center";
+          img.style.cursor = "zoom-in";
+        }
+      });
+
+      imgEl.classList.add("zoomed");
+      imgEl.style.transformOrigin = `${originX}% ${originY}%`;
+      imgEl.style.transform = "scale(2)";
+      imgEl.style.cursor = "zoom-out";
+      lightbox.classList.add("lightbox-zoomed-active");
     }
   }
 
@@ -1522,12 +1527,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const currentSlide = lightboxImages[lightboxIndex];
     if (!currentSlide) return;
 
-    // Reset zoom classes on slide change
-    lightbox.classList.remove("lightbox-zoomed-active");
-    lightboxImg.classList.remove("zoomed");
-    document.querySelectorAll(".lightbox-pair-img").forEach(img => {
-      img.classList.remove("zoomed");
-    });
+    // Reset zoom completo al cambio slide
+    resetAllZoom();
 
     // Animazione di sfocatura in uscita prima del cambio
     lightboxImg.style.opacity = "0";
@@ -1613,30 +1614,22 @@ document.addEventListener("DOMContentLoaded", () => {
         if (transDiv) transDiv.style.display = "none";
         pairContainer.style.display = "flex";
         
-        // Cliccando sulle immagini si attiva lo zoom anziché avanzare
+        // Cliccando sulle immagini: zoom 200% sul punto preciso del click
         img1.onclick = (e) => {
           e.stopPropagation();
-          toggleZoomImage(img1);
+          toggleZoomAtPoint(img1, e);
         };
         img2.onclick = (e) => {
           e.stopPropagation();
-          toggleZoomImage(img2);
+          toggleZoomAtPoint(img2, e);
         };
+        img1.style.cursor = "zoom-in";
+        img2.style.cursor = "zoom-in";
         
         img1.onload = () => { img1.classList.add("loaded"); };
         img2.onload = () => { img2.classList.add("loaded"); };
         if (img1.complete) img1.classList.add("loaded");
         if (img2.complete) img2.classList.add("loaded");
-        
-        // Gestione zoom di avvio automatico se richiesto dal click sulla miniatura
-        if (shouldStartZoomed && clickedImageUrl) {
-          if (currentSlide.images[0].url === clickedImageUrl) {
-            toggleZoomImage(img1);
-          } else if (currentSlide.images[1].url === clickedImageUrl) {
-            toggleZoomImage(img2);
-          }
-          shouldStartZoomed = false; // reset
-        }
         
         updateLightboxCaption(currentSlide);
       } 
@@ -1648,11 +1641,12 @@ document.addEventListener("DOMContentLoaded", () => {
         lightboxImg.style.display = "block";
         lightboxImg.src = currentSlide.image.url;
         lightboxImg.alt = currentSlide.image.title || "";
+        lightboxImg.style.cursor = "zoom-in";
         
-        // Cliccando sull'immagine singola si attiva lo zoom anziché avanzare
+        // Click sull'immagine: zoom 200% sul punto esatto del cursore
         lightboxImg.onclick = (e) => {
           e.stopPropagation();
-          toggleZoomImage(lightboxImg);
+          toggleZoomAtPoint(lightboxImg, e);
         };
         
         lightboxImg.onload = () => {
@@ -1662,12 +1656,6 @@ document.addEventListener("DOMContentLoaded", () => {
         if (lightboxImg.complete) {
           lightboxImg.style.opacity = "1";
           lightboxImg.style.transform = "scale(1)";
-        }
-        
-        // Gestione zoom di avvio automatico se richiesto dal click sulla miniatura
-        if (shouldStartZoomed && clickedImageUrl && currentSlide.image.url === clickedImageUrl) {
-          toggleZoomImage(lightboxImg);
-          shouldStartZoomed = false; // reset
         }
         
         updateLightboxCaption(currentSlide);
