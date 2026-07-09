@@ -1627,18 +1627,21 @@ body.light-mode .social-icon-svg {
   justify-content: center;
   z-index: 1010;
   pointer-events: none;
-  gap: 2px;
+  gap: 1px;
+  padding: 0;
 }
 .lightbox-header .cs-logo {
-  color: rgba(114, 117, 125, 0.85) !important;
+  color: rgba(110, 113, 120, 0.9) !important;
   text-shadow: none !important;
-  margin-bottom: 0 !important;
+  margin: 0 !important;
+  line-height: 1.1;
 }
 .lightbox-header .cs-tagline {
-  color: rgba(114, 117, 125, 0.65) !important;
-  font-size: clamp(0.55rem, 1.2vw, 0.75rem) !important;
+  color: rgba(110, 113, 120, 0.65) !important;
+  font-size: clamp(0.5rem, 1.1vw, 0.7rem) !important;
   letter-spacing: 0.35em !important;
-  margin-bottom: 0 !important;
+  margin: 0 !important;
+  line-height: 1.2;
 }
 
 /* --- LIGHTBOX OVERLAY UPGRADE --- */
@@ -1661,33 +1664,31 @@ body.light-mode .social-icon-svg {
   display: flex;
   opacity: 1;
 }
-/* X — pulsante di chiusura in BASSO a DESTRA */
+/* X — pulsante di chiusura: posizione calcolata da JS relativa all'immagine */
 .lightbox-close {
-  position: absolute;
-  bottom: 18px;
-  right: 20px;
-  top: auto !important;
-  background: rgba(20, 20, 20, 0.45);
+  position: fixed; /* JS imposta top/right via inline style dopo getBoundingClientRect */
+  background: rgba(20, 20, 20, 0.5);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 50%;
-  width: 52px;
-  height: 52px;
+  width: 36px;
+  height: 36px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: rgba(255, 255, 255, 0.85);
-  font-size: 1.6rem;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1.3rem;
   cursor: pointer;
   transition: background 0.2s ease, transform 0.2s ease;
   z-index: 1700;
   line-height: 1;
+  padding: 0;
 }
 .lightbox-close:hover {
-  background: rgba(40, 40, 40, 0.75);
+  background: rgba(40, 40, 40, 0.85);
   color: #ffffff;
-  transform: rotate(90deg);
+  transform: rotate(90deg) scale(1.1);
 }
 
 .lightbox-container {
@@ -2790,48 +2791,43 @@ body.light-mode .lightbox-swipe-info {
   color: rgba(255, 255, 255, 0.95);
 }
 
-/* === LIGHTBOX ZOOM HINT ICON - Lente con + === */
+/* === LIGHTBOX ZOOM HINT ICON - Lente con + (posizione calcolata da JS) === */
 .lightbox-zoom-hint {
-  position: fixed;
-  bottom: 18px;
-  left: 20px;
+  position: fixed; /* JS imposta top/right via inline style */
   z-index: 1700;
   pointer-events: none;
   user-select: none;
 
-  /* Stesso stile glassmorphism del pulsante X */
-  background: rgba(20, 20, 20, 0.45);
+  background: rgba(20, 20, 20, 0.5);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 50%;
-  width: 52px;
-  height: 52px;
+  width: 36px;
+  height: 36px;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  /* Scompare dopo 2.5s */
   animation: zoom-hint-fade 2.5s ease forwards;
 }
 
 .lightbox-zoom-hint svg {
-  width: 26px;
-  height: 26px;
-  stroke: rgba(255, 255, 255, 0.85);
+  width: 20px;
+  height: 20px;
+  stroke: rgba(255, 255, 255, 0.9);
   fill: none;
   stroke-width: 2;
   stroke-linecap: round;
   stroke-linejoin: round;
 }
 
-/* Scompare dopo 2.5s dalla comparsa */
 @keyframes zoom-hint-fade {
-  0%   { opacity: 0; transform: scale(0.85); }
-  12%  { opacity: 1; transform: scale(1); }
-  70%  { opacity: 1; transform: scale(1); }
-  100% { opacity: 0; transform: scale(0.85); }
+  0%   { opacity: 0; }
+  12%  { opacity: 1; }
+  70%  { opacity: 1; }
+  100% { opacity: 0; }
 }
 
 .lightbox-zoomed-active .lightbox-zoom-hint {

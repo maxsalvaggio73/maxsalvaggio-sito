@@ -1414,7 +1414,7 @@ document.addEventListener("DOMContentLoaded", () => {
     lightbox.setAttribute("aria-hidden", "false");
     document.body.style.overflow = "hidden";
 
-    // Mostra icona swipe (bianca, sempre ad ogni apertura)
+    // Mostra icona swipe (bianca, centrata a schermo, sparisce dopo 1.4s)
     const oldSwipe = lightbox.querySelector(".lightbox-swipe-info");
     if (oldSwipe) oldSwipe.remove();
     const swipeInfo = document.createElement("div");
@@ -1423,24 +1423,7 @@ document.addEventListener("DOMContentLoaded", () => {
     lightbox.appendChild(swipeInfo);
     setTimeout(() => { if (swipeInfo.parentNode) swipeInfo.remove(); }, 1400);
 
-    // Mostra icona lente zoom con + (bottom-left, sparisce dopo 2.5s)
-    const oldZoom = lightbox.querySelector(".lightbox-zoom-hint");
-    if (oldZoom) oldZoom.remove();
-    const zoomHint = document.createElement("div");
-    zoomHint.className = "lightbox-zoom-hint";
-    zoomHint.innerHTML = `
-      <svg viewBox="0 0 24 24" aria-hidden="true">
-        <!-- cerchio della lente -->
-        <circle cx="11" cy="11" r="7"/>
-        <!-- manico -->
-        <line x1="16.5" y1="16.5" x2="22" y2="22"/>
-        <!-- + al centro -->
-        <line x1="11" y1="8" x2="11" y2="14"/>
-        <line x1="8" y1="11" x2="14" y2="11"/>
-      </svg>
-    `;
-    lightbox.appendChild(zoomHint);
-    setTimeout(() => { if (zoomHint.parentNode) zoomHint.remove(); }, 2500);
+    // zoom-hint e X vengono posizionati da positionLightboxOverlays() dopo il caricamento dell'immagine
 
     updateLightboxContent();
 
@@ -1502,6 +1485,41 @@ document.addEventListener("DOMContentLoaded", () => {
       img.style.cursor = "zoom-in";
     });
     lightbox.classList.remove("lightbox-zoomed-active");
+  }
+
+  // Posiziona X e zoom-hint relative all'immagine visibile nel lightbox
+  function positionLightboxOverlays(imgEl) {
+    if (!imgEl || !lightboxClose) return;
+    const ICON_SIZE = 36;  // diametro in px
+    const OFFSET = 4;      // distanza in px dall'immagine
+
+    // Calcola posizione attuale dell'immagine nel viewport
+    const rect = imgEl.getBoundingClientRect();
+
+    // Rimuovi e ricrea zoom-hint ad ogni slide
+    const oldZoom = lightbox.querySelector(".lightbox-zoom-hint");
+    if (oldZoom) oldZoom.remove();
+    const zoomHint = document.createElement("div");
+    zoomHint.className = "lightbox-zoom-hint";
+    zoomHint.innerHTML = `
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="11" cy="11" r="7"/>
+        <line x1="16.5" y1="16.5" x2="22" y2="22"/>
+        <line x1="11" y1="8" x2="11" y2="14"/>
+        <line x1="8" y1="11" x2="14" y2="11"/>
+      </svg>
+    `;
+    // Zoom-hint: 4px sopra il bordo superiore dell'immagine, allineata col lato destro
+    zoomHint.style.top  = `${rect.top - ICON_SIZE - OFFSET}px`;
+    zoomHint.style.left = `${rect.right - ICON_SIZE}px`;
+    lightbox.appendChild(zoomHint);
+    setTimeout(() => { if (zoomHint.parentNode) zoomHint.remove(); }, 2500);
+
+    // X: 4px sotto il bordo inferiore dell'immagine, allineata col lato destro
+    lightboxClose.style.top   = `${rect.bottom + OFFSET}px`;
+    lightboxClose.style.left  = `${rect.right - ICON_SIZE}px`;
+    lightboxClose.style.bottom = "";
+    lightboxClose.style.right  = "";
   }
 
   function toggleZoomAtPoint(imgEl, event) {
@@ -1644,9 +1662,15 @@ document.addEventListener("DOMContentLoaded", () => {
         img1.style.cursor = "zoom-in";
         img2.style.cursor = "zoom-in";
         
-        img1.onload = () => { img1.classList.add("loaded"); };
+        img1.onload = () => {
+          img1.classList.add("loaded");
+          positionLightboxOverlays(img1);
+        };
         img2.onload = () => { img2.classList.add("loaded"); };
-        if (img1.complete) img1.classList.add("loaded");
+        if (img1.complete) {
+          img1.classList.add("loaded");
+          setTimeout(() => positionLightboxOverlays(img1), 50);
+        }
         if (img2.complete) img2.classList.add("loaded");
         
         updateLightboxCaption(currentSlide);
@@ -1670,10 +1694,15 @@ document.addEventListener("DOMContentLoaded", () => {
         lightboxImg.onload = () => {
           lightboxImg.style.opacity = "1";
           lightboxImg.style.transform = "scale(1)";
+          lightboxImg.classList.add("loaded");
+          positionLightboxOverlays(lightboxImg);
         };
-        if (lightboxImg.complete) {
+        if (lightboxImg.complete && lightboxImg.naturalWidth > 0) {
           lightboxImg.style.opacity = "1";
           lightboxImg.style.transform = "scale(1)";
+          lightboxImg.classList.add("loaded");
+          // Breve delay per permettere al browser di aggiornare il layout
+          setTimeout(() => positionLightboxOverlays(lightboxImg), 50);
         }
         
         updateLightboxCaption(currentSlide);
