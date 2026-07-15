@@ -1,5 +1,5 @@
 // Database delle immagini generato automaticamente dallo script scan.py
-// Data di generazione: 2026-07-06T09:13:12.237924Z
+// Data di generazione: 2026-07-15T17:13:53.053720Z
 
 const portfolioData = {
   "overview": [
@@ -15,25 +15,9 @@ const portfolioData = {
       "url": "0 OVERVIEW/max-salvaggio-fotografo-beauty-ray-bitancourt-021.jpg",
       "title": "Fotografo Beauty Ray Bitancourt 021",
       "tag": "OVERVIEW",
-      "width": 1728,
-      "height": 2160,
+      "width": 960,
+      "height": 1200,
       "is_horizontal": false
-    },
-    {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cambodia-143.jpg",
-      "title": "Fotografo Moda Grazia Daniela De Jesus Cambodia 143",
-      "tag": "OVERVIEW",
-      "width": 692,
-      "height": 900,
-      "is_horizontal": false
-    },
-    {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-adv-bag-dee-ocleppo.jpg",
-      "title": "Fotografo Adv Bag Dee Ocleppo",
-      "tag": "OVERVIEW",
-      "width": 1562,
-      "height": 1041,
-      "is_horizontal": true
     },
     {
       "url": "0 OVERVIEW/max-salvaggio-fotografo-nudo-fine-art-003.jpg",
@@ -44,44 +28,12 @@ const portfolioData = {
       "is_horizontal": true
     },
     {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-moda-grazia-hong-kong-042.jpg",
-      "title": "Fotografo Moda Grazia Hong Kong 042",
-      "tag": "OVERVIEW",
-      "width": 1920,
-      "height": 1302,
-      "is_horizontal": true
-    },
-    {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-beauty-001.jpg",
-      "title": "Fotografo Beauty 001",
-      "tag": "OVERVIEW",
-      "width": 686,
-      "height": 1024,
-      "is_horizontal": false
-    },
-    {
       "url": "0 OVERVIEW/max-salvaggio-fotografo-lingerie-010.jpg",
       "title": "Fotografo Lingerie 010",
       "tag": "OVERVIEW",
       "width": 1500,
       "height": 1000,
       "is_horizontal": true
-    },
-    {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-polo-cavallo-Anna-001.jpg",
-      "title": "Fotografo Polo Cavallo Anna 001",
-      "tag": "OVERVIEW",
-      "width": 3648,
-      "height": 4864,
-      "is_horizontal": false
-    },
-    {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-portrait-uomo-013.jpg",
-      "title": "Fotografo Portrait Uomo 013",
-      "tag": "OVERVIEW",
-      "width": 682,
-      "height": 1024,
-      "is_horizontal": false
     },
     {
       "url": "0 OVERVIEW/max-salvaggio-fotografo-moda-grazia-egypt-081.jpg",
@@ -108,22 +60,6 @@ const portfolioData = {
       "is_horizontal": false
     },
     {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-lingerie-007.jpeg",
-      "title": "Fotografo Lingerie 007",
-      "tag": "OVERVIEW",
-      "width": 1562,
-      "height": 1018,
-      "is_horizontal": true
-    },
-    {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-mexico-088.jpeg",
-      "title": "Fotografo Moda Grazia Daniela De Jesus Mexico 088",
-      "tag": "OVERVIEW",
-      "width": 1562,
-      "height": 1041,
-      "is_horizontal": true
-    },
-    {
       "url": "0 OVERVIEW/max-salvaggio-fotografo-nudo-fine-art-009.jpg",
       "title": "Fotografo Nudo Fine Art 009",
       "tag": "OVERVIEW",
@@ -132,44 +68,12 @@ const portfolioData = {
       "is_horizontal": false
     },
     {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-polo-cavallo-Bea-001.jpg",
-      "title": "Fotografo Polo Cavallo Bea 001",
-      "tag": "OVERVIEW",
-      "width": 3876,
-      "height": 5168,
-      "is_horizontal": false
-    },
-    {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-moda-grazia-kenya-103.jpg",
-      "title": "Fotografo Moda Grazia Kenya 103",
-      "tag": "OVERVIEW",
-      "width": 1920,
-      "height": 1241,
-      "is_horizontal": true
-    },
-    {
       "url": "0 OVERVIEW/max-salvaggio-fotografo-portrait-cane-cecilia-capriotti-001.jpg",
       "title": "Fotografo Portrait Cane Cecilia Capriotti 001",
       "tag": "OVERVIEW",
-      "width": 4182,
-      "height": 5472,
+      "width": 917,
+      "height": 1200,
       "is_horizontal": false
-    },
-    {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-moda-grazia-shanghai-073.jpg",
-      "title": "Fotografo Moda Grazia Shanghai 073",
-      "tag": "OVERVIEW",
-      "width": 600,
-      "height": 900,
-      "is_horizontal": false
-    },
-    {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-swimwear-033.jpg",
-      "title": "Fotografo Swimwear 033",
-      "tag": "OVERVIEW",
-      "width": 1638,
-      "height": 1024,
-      "is_horizontal": true
     },
     {
       "url": "0 OVERVIEW/max-salvaggio-fotografo-nude-fine-art-006.jpg",
@@ -180,38 +84,6 @@ const portfolioData = {
       "is_horizontal": false
     },
     {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-beauty-002.jpg",
-      "title": "Fotografo Beauty 002",
-      "tag": "OVERVIEW",
-      "width": 1417,
-      "height": 2126,
-      "is_horizontal": false
-    },
-    {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-lingerie-023.jpg",
-      "title": "Fotografo Lingerie 023",
-      "tag": "OVERVIEW",
-      "width": 1536,
-      "height": 1024,
-      "is_horizontal": true
-    },
-    {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-moda-grazia-sicilia-097.jpg",
-      "title": "Fotografo Moda Grazia Sicilia 097",
-      "tag": "OVERVIEW",
-      "width": 5157,
-      "height": 3503,
-      "is_horizontal": true
-    },
-    {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-moda-grazia-vietnam-136.jpg",
-      "title": "Fotografo Moda Grazia Vietnam 136",
-      "tag": "OVERVIEW",
-      "width": 1350,
-      "height": 900,
-      "is_horizontal": true
-    },
-    {
       "url": "0 OVERVIEW/max-salvaggio-fotografo-moda-grazia-hong-kong-051.jpeg",
       "title": "Fotografo Moda Grazia Hong Kong 051",
       "tag": "OVERVIEW",
@@ -220,52 +92,12 @@ const portfolioData = {
       "is_horizontal": true
     },
     {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-nudo-fine-art-011.jpg",
-      "title": "Fotografo Nudo Fine Art 011",
-      "tag": "OVERVIEW",
-      "width": 1417,
-      "height": 2126,
-      "is_horizontal": false
-    },
-    {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-beauty-013.jpg",
-      "title": "Fotografo Beauty 013",
-      "tag": "OVERVIEW",
-      "width": 682,
-      "height": 1024,
-      "is_horizontal": false
-    },
-    {
       "url": "0 OVERVIEW/max-salvaggio-fotografo-moda-grazia-tulum-024.jpg",
       "title": "Fotografo Moda Grazia Tulum 024",
       "tag": "OVERVIEW",
       "width": 1518,
       "height": 1024,
       "is_horizontal": true
-    },
-    {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-polo-cavallo-Anna-006.jpg",
-      "title": "Fotografo Polo Cavallo Anna 006",
-      "tag": "OVERVIEW",
-      "width": 3648,
-      "height": 4864,
-      "is_horizontal": false
-    },
-    {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-lingerie-005.jpg",
-      "title": "Fotografo Lingerie 005",
-      "tag": "OVERVIEW",
-      "width": 680,
-      "height": 850,
-      "is_horizontal": false
-    },
-    {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cambodia-147.jpg",
-      "title": "Fotografo Moda Grazia Daniela De Jesus Cambodia 147",
-      "tag": "OVERVIEW",
-      "width": 600,
-      "height": 900,
-      "is_horizontal": false
     },
     {
       "url": "0 OVERVIEW/max-salvaggio-fotografo-swimwear-024.jpg",
@@ -284,43 +116,27 @@ const portfolioData = {
       "is_horizontal": false
     },
     {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-moda-grazia-hong-kong-043.jpeg",
-      "title": "Fotografo Moda Grazia Hong Kong 043",
+      "url": "0 OVERVIEW/max-salvaggio-fotografo-moda-grazia-cover-38.jpg",
+      "title": "Fotografo Moda Grazia Cover 38",
       "tag": "OVERVIEW",
-      "width": 1024,
-      "height": 682,
-      "is_horizontal": true
-    },
-    {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-mexico-090.jpeg",
-      "title": "Fotografo Moda Grazia Daniela De Jesus Mexico 090",
-      "tag": "OVERVIEW",
-      "width": 1562,
-      "height": 1041,
-      "is_horizontal": true
-    },
-    {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-moda-grazia-kenya-111.jpg",
-      "title": "Fotografo Moda Grazia Kenya 111",
-      "tag": "OVERVIEW",
-      "width": 1350,
-      "height": 900,
-      "is_horizontal": true
-    },
-    {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-beauty-011.jpeg",
-      "title": "Fotografo Beauty 011",
-      "tag": "OVERVIEW",
-      "width": 682,
+      "width": 785,
       "height": 1024,
       "is_horizontal": false
     },
     {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-moda-grazia-vietnam-128.jpg",
-      "title": "Fotografo Moda Grazia Vietnam 128",
+      "url": "0 OVERVIEW/max-salvaggio-fotografo-moda-grazia-cover-daniela-de-jesus-cosio-mexico-028.jpg",
+      "title": "Fotografo Moda Grazia Cover Daniela De Jesus Cosio Mexico 028",
       "tag": "OVERVIEW",
-      "width": 686,
-      "height": 900,
+      "width": 1000,
+      "height": 1301,
+      "is_horizontal": false
+    },
+    {
+      "url": "0 OVERVIEW/max-salvaggio-fotografo-moda-grazia-cover-miami-001.jpg",
+      "title": "Fotografo Moda Grazia Cover Miami 001",
+      "tag": "OVERVIEW",
+      "width": 918,
+      "height": 1200,
       "is_horizontal": false
     },
     {
@@ -332,107 +148,11 @@ const portfolioData = {
       "is_horizontal": true
     },
     {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cosio-mexico-038.jpeg",
-      "title": "Fotografo Moda Grazia Daniela De Jesus Cosio Mexico 038",
+      "url": "0 OVERVIEW/max-salvaggio-fotografo-moda-grazia-egypt-sharm-el-sheik-019.jpg",
+      "title": "Fotografo Moda Grazia Egypt Sharm El Sheik 019",
       "tag": "OVERVIEW",
-      "width": 1024,
-      "height": 667,
-      "is_horizontal": true
-    },
-    {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cosio-mexico-040.jpg",
-      "title": "Fotografo Moda Grazia Daniela De Jesus Cosio Mexico 040",
-      "tag": "OVERVIEW",
-      "width": 1920,
-      "height": 1280,
-      "is_horizontal": true
-    },
-    {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-mexico-087.jpg",
-      "title": "Fotografo Moda Grazia Daniela De Jesus Mexico 087",
-      "tag": "OVERVIEW",
-      "width": 1920,
-      "height": 1266,
-      "is_horizontal": true
-    },
-    {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-mexico-092.jpeg",
-      "title": "Fotografo Moda Grazia Daniela De Jesus Mexico 092",
-      "tag": "OVERVIEW",
-      "width": 682,
-      "height": 1024,
-      "is_horizontal": false
-    },
-    {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-mexico-095.jpeg",
-      "title": "Fotografo Moda Grazia Daniela De Jesus Mexico 095",
-      "tag": "OVERVIEW",
-      "width": 682,
-      "height": 1024,
-      "is_horizontal": false
-    },
-    {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-moda-grazia-egypt-084.jpg",
-      "title": "Fotografo Moda Grazia Egypt 084",
-      "tag": "OVERVIEW",
-      "width": 682,
-      "height": 1024,
-      "is_horizontal": false
-    },
-    {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-moda-grazia-kenya-107.jpg",
-      "title": "Fotografo Moda Grazia Kenya 107",
-      "tag": "OVERVIEW",
-      "width": 1920,
-      "height": 1280,
-      "is_horizontal": true
-    },
-    {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-moda-grazia-kenya-108.jpg",
-      "title": "Fotografo Moda Grazia Kenya 108",
-      "tag": "OVERVIEW",
-      "width": 600,
+      "width": 1350,
       "height": 900,
-      "is_horizontal": false
-    },
-    {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-moda-grazia-kenya-110.jpg",
-      "title": "Fotografo Moda Grazia Kenya 110",
-      "tag": "OVERVIEW",
-      "width": 600,
-      "height": 900,
-      "is_horizontal": false
-    },
-    {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-moda-grazia-tulum-027.jpg",
-      "title": "Fotografo Moda Grazia Tulum 027",
-      "tag": "OVERVIEW",
-      "width": 768,
-      "height": 1024,
-      "is_horizontal": false
-    },
-    {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-lingerie-001.jpg",
-      "title": "Fotografo Lingerie 001",
-      "tag": "OVERVIEW",
-      "width": 1772,
-      "height": 1181,
-      "is_horizontal": true
-    },
-    {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-lingerie-002.jpg",
-      "title": "Fotografo Lingerie 002",
-      "tag": "OVERVIEW",
-      "width": 667,
-      "height": 1000,
-      "is_horizontal": false
-    },
-    {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-lingerie-003.jpg",
-      "title": "Fotografo Lingerie 003",
-      "tag": "OVERVIEW",
-      "width": 960,
-      "height": 640,
       "is_horizontal": true
     },
     {
@@ -452,43 +172,11 @@ const portfolioData = {
       "is_horizontal": false
     },
     {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-lingerie-013.jpg",
-      "title": "Fotografo Lingerie 013",
-      "tag": "OVERVIEW",
-      "width": 1024,
-      "height": 748,
-      "is_horizontal": true
-    },
-    {
       "url": "0 OVERVIEW/max-salvaggio-fotografo-lingerie-015.jpg",
       "title": "Fotografo Lingerie 015",
       "tag": "OVERVIEW",
       "width": 1536,
       "height": 1024,
-      "is_horizontal": true
-    },
-    {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-lingerie-016.jpg",
-      "title": "Fotografo Lingerie 016",
-      "tag": "OVERVIEW",
-      "width": 1200,
-      "height": 1500,
-      "is_horizontal": false
-    },
-    {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-lingerie-017.jpg",
-      "title": "Fotografo Lingerie 017",
-      "tag": "OVERVIEW",
-      "width": 819,
-      "height": 1024,
-      "is_horizontal": false
-    },
-    {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-lingerie-018.jpg",
-      "title": "Fotografo Lingerie 018",
-      "tag": "OVERVIEW",
-      "width": 1024,
-      "height": 683,
       "is_horizontal": true
     },
     {
@@ -516,16 +204,8 @@ const portfolioData = {
       "is_horizontal": false
     },
     {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-lingerie-026.jpg",
-      "title": "Fotografo Lingerie 026",
-      "tag": "OVERVIEW",
-      "width": 1632,
-      "height": 1024,
-      "is_horizontal": true
-    },
-    {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-lingerie-027.jpg",
-      "title": "Fotografo Lingerie 027",
+      "url": "0 OVERVIEW/max-salvaggio-fotografo-lingerie-055.jpg",
+      "title": "Fotografo Lingerie 055",
       "tag": "OVERVIEW",
       "width": 1080,
       "height": 1350,
@@ -536,38 +216,6 @@ const portfolioData = {
       "title": "Fotografo Nude Fine Art 001",
       "tag": "OVERVIEW",
       "width": 682,
-      "height": 1024,
-      "is_horizontal": false
-    },
-    {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-nude-fine-art-002.jpeg",
-      "title": "Fotografo Nude Fine Art 002",
-      "tag": "OVERVIEW",
-      "width": 748,
-      "height": 1024,
-      "is_horizontal": false
-    },
-    {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-nude-fine-art-003.jpeg",
-      "title": "Fotografo Nude Fine Art 003",
-      "tag": "OVERVIEW",
-      "width": 748,
-      "height": 1024,
-      "is_horizontal": false
-    },
-    {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-nude-fine-art-004.jpeg",
-      "title": "Fotografo Nude Fine Art 004",
-      "tag": "OVERVIEW",
-      "width": 748,
-      "height": 1024,
-      "is_horizontal": false
-    },
-    {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-nude-fine-art-005.jpeg",
-      "title": "Fotografo Nude Fine Art 005",
-      "tag": "OVERVIEW",
-      "width": 748,
       "height": 1024,
       "is_horizontal": false
     },
@@ -596,14 +244,6 @@ const portfolioData = {
       "is_horizontal": false
     },
     {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-nude-fine-art-010.jpeg",
-      "title": "Fotografo Nude Fine Art 010",
-      "tag": "OVERVIEW",
-      "width": 1024,
-      "height": 726,
-      "is_horizontal": true
-    },
-    {
       "url": "0 OVERVIEW/max-salvaggio-fotografo-nude-fine-art-011.jpeg",
       "title": "Fotografo Nude Fine Art 011",
       "tag": "OVERVIEW",
@@ -617,22 +257,6 @@ const portfolioData = {
       "tag": "OVERVIEW",
       "width": 748,
       "height": 1024,
-      "is_horizontal": false
-    },
-    {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-nude-fine-art-013.jpg",
-      "title": "Fotografo Nude Fine Art 013",
-      "tag": "OVERVIEW",
-      "width": 427,
-      "height": 640,
-      "is_horizontal": false
-    },
-    {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-nude-fine-art-014.jpg",
-      "title": "Fotografo Nude Fine Art 014",
-      "tag": "OVERVIEW",
-      "width": 1191,
-      "height": 1475,
       "is_horizontal": false
     },
     {
@@ -668,27 +292,11 @@ const portfolioData = {
       "is_horizontal": false
     },
     {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-nudo-fine-art-005.jpg",
-      "title": "Fotografo Nudo Fine Art 005",
-      "tag": "OVERVIEW",
-      "width": 1417,
-      "height": 2126,
-      "is_horizontal": false
-    },
-    {
       "url": "0 OVERVIEW/max-salvaggio-fotografo-nudo-fine-art-006.jpg",
       "title": "Fotografo Nudo Fine Art 006",
       "tag": "OVERVIEW",
       "width": 778,
       "height": 1037,
-      "is_horizontal": false
-    },
-    {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-nudo-fine-art-010.jpg",
-      "title": "Fotografo Nudo Fine Art 010",
-      "tag": "OVERVIEW",
-      "width": 1417,
-      "height": 2126,
       "is_horizontal": false
     },
     {
@@ -700,46 +308,6 @@ const portfolioData = {
       "is_horizontal": true
     },
     {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-nudo-fine-art-013.jpg",
-      "title": "Fotografo Nudo Fine Art 013",
-      "tag": "OVERVIEW",
-      "width": 667,
-      "height": 1000,
-      "is_horizontal": false
-    },
-    {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-nudo-fine-art-015.jpeg",
-      "title": "Fotografo Nudo Fine Art 015",
-      "tag": "OVERVIEW",
-      "width": 748,
-      "height": 1024,
-      "is_horizontal": false
-    },
-    {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-nudo-fine-art-016.jpeg",
-      "title": "Fotografo Nudo Fine Art 016",
-      "tag": "OVERVIEW",
-      "width": 1024,
-      "height": 726,
-      "is_horizontal": true
-    },
-    {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-nudo-fine-art-017.jpeg",
-      "title": "Fotografo Nudo Fine Art 017",
-      "tag": "OVERVIEW",
-      "width": 748,
-      "height": 1024,
-      "is_horizontal": false
-    },
-    {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-nudo-fine-art-020.jpeg",
-      "title": "Fotografo Nudo Fine Art 020",
-      "tag": "OVERVIEW",
-      "width": 748,
-      "height": 1024,
-      "is_horizontal": false
-    },
-    {
       "url": "0 OVERVIEW/max-salvaggio-fotografo-nudo-fine-art-024.jpeg",
       "title": "Fotografo Nudo Fine Art 024",
       "tag": "OVERVIEW",
@@ -748,91 +316,35 @@ const portfolioData = {
       "is_horizontal": false
     },
     {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-portrait-uomo-011.jpg",
-      "title": "Fotografo Portrait Uomo 011",
-      "tag": "OVERVIEW",
-      "width": 666,
-      "height": 1000,
-      "is_horizontal": false
-    },
-    {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-portrait-uomo-012.jpg",
-      "title": "Fotografo Portrait Uomo 012",
-      "tag": "OVERVIEW",
-      "width": 666,
-      "height": 1000,
-      "is_horizontal": false
-    },
-    {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-cavallo-Naomi-Tavian-001.jpg",
+      "url": "0 OVERVIEW/max-salvaggio-fotografo-cavallo-naomi-tavian-001.jpg",
       "title": "Fotografo Cavallo Naomi Tavian 001",
       "tag": "OVERVIEW",
-      "width": 2362,
-      "height": 3543,
+      "width": 800,
+      "height": 1200,
       "is_horizontal": false
     },
     {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-cavallo-Naomi-Tavian-002.jpg",
-      "title": "Fotografo Cavallo Naomi Tavian 002",
-      "tag": "OVERVIEW",
-      "width": 2362,
-      "height": 3543,
-      "is_horizontal": false
-    },
-    {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-cavallo-Naomi-Tavian-006.jpg",
+      "url": "0 OVERVIEW/max-salvaggio-fotografo-cavallo-naomi-tavian-006.jpg",
       "title": "Fotografo Cavallo Naomi Tavian 006",
       "tag": "OVERVIEW",
-      "width": 3543,
-      "height": 2353,
+      "width": 1807,
+      "height": 1200,
       "is_horizontal": true
     },
     {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-moda-grazia-sicilia-098.jpg",
-      "title": "Fotografo Moda Grazia Sicilia 098",
+      "url": "0 OVERVIEW/max-salvaggio-fotografo-polo-cavallo-anna-006.jpg",
+      "title": "Fotografo Polo Cavallo Anna 006",
       "tag": "OVERVIEW",
-      "width": 598,
-      "height": 900,
+      "width": 900,
+      "height": 1200,
       "is_horizontal": false
     },
     {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-moda-grazia-sicilia-099.jpg",
-      "title": "Fotografo Moda Grazia Sicilia 099",
-      "tag": "OVERVIEW",
-      "width": 598,
-      "height": 900,
-      "is_horizontal": false
-    },
-    {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-moda-grazia-sicilia-100.jpg",
-      "title": "Fotografo Moda Grazia Sicilia 100",
-      "tag": "OVERVIEW",
-      "width": 598,
-      "height": 900,
-      "is_horizontal": false
-    },
-    {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-polo-cavallo-Bea-005.jpg",
+      "url": "0 OVERVIEW/max-salvaggio-fotografo-polo-cavallo-bea-005.jpg",
       "title": "Fotografo Polo Cavallo Bea 005",
       "tag": "OVERVIEW",
-      "width": 1824,
-      "height": 2432,
-      "is_horizontal": false
-    },
-    {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cambodia-138.jpg",
-      "title": "Fotografo Moda Grazia Daniela De Jesus Cambodia 138",
-      "tag": "OVERVIEW",
-      "width": 1920,
-      "height": 1236,
-      "is_horizontal": true
-    },
-    {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cambodia-139.jpg",
-      "title": "Fotografo Moda Grazia Daniela De Jesus Cambodia 139",
-      "tag": "OVERVIEW",
-      "width": 682,
-      "height": 1024,
+      "width": 900,
+      "height": 1200,
       "is_horizontal": false
     },
     {
@@ -852,187 +364,19 @@ const portfolioData = {
       "is_horizontal": false
     },
     {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-moda-grazia-vietnam-127.jpg",
-      "title": "Fotografo Moda Grazia Vietnam 127",
+      "url": "0 OVERVIEW/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-156.jpg",
+      "title": "Fotografo Moda Uomo Portraits Street Style Milano 156",
       "tag": "OVERVIEW",
-      "width": 1920,
-      "height": 1201,
-      "is_horizontal": true
-    },
-    {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-moda-grazia-vietnam-130.jpg",
-      "title": "Fotografo Moda Grazia Vietnam 130",
-      "tag": "OVERVIEW",
-      "width": 686,
-      "height": 900,
+      "width": 900,
+      "height": 1200,
       "is_horizontal": false
     },
     {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-moda-grazia-vietnam-132.jpg",
-      "title": "Fotografo Moda Grazia Vietnam 132",
+      "url": "0 OVERVIEW/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-168.jpg",
+      "title": "Fotografo Moda Uomo Portraits Street Style Milano 168",
       "tag": "OVERVIEW",
-      "width": 675,
-      "height": 900,
-      "is_horizontal": false
-    },
-    {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-moda-grazia-vietnam-135.jpg",
-      "title": "Fotografo Moda Grazia Vietnam 135",
-      "tag": "OVERVIEW",
-      "width": 686,
-      "height": 900,
-      "is_horizontal": false
-    },
-    {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-moda-grazia-hong-kong-007.jpg",
-      "title": "Fotografo Moda Grazia Hong Kong 007",
-      "tag": "OVERVIEW",
-      "width": 1920,
-      "height": 1229,
-      "is_horizontal": true
-    },
-    {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-moda-grazia-hong-kong-011.jpg",
-      "title": "Fotografo Moda Grazia Hong Kong 011",
-      "tag": "OVERVIEW",
-      "width": 1000,
-      "height": 1311,
-      "is_horizontal": false
-    },
-    {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-moda-grazia-hong-kong-012.jpeg",
-      "title": "Fotografo Moda Grazia Hong Kong 012",
-      "tag": "OVERVIEW",
-      "width": 788,
-      "height": 1024,
-      "is_horizontal": false
-    },
-    {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-moda-grazia-hong-kong-019.jpg",
-      "title": "Fotografo Moda Grazia Hong Kong 019",
-      "tag": "OVERVIEW",
-      "width": 1350,
-      "height": 900,
-      "is_horizontal": true
-    },
-    {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-moda-grazia-hong-kong-044.jpg",
-      "title": "Fotografo Moda Grazia Hong Kong 044",
-      "tag": "OVERVIEW",
-      "width": 682,
-      "height": 1024,
-      "is_horizontal": false
-    },
-    {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-moda-grazia-hong-kong-045.jpeg",
-      "title": "Fotografo Moda Grazia Hong Kong 045",
-      "tag": "OVERVIEW",
-      "width": 785,
-      "height": 1024,
-      "is_horizontal": false
-    },
-    {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-moda-grazia-hong-kong-052.jpg",
-      "title": "Fotografo Moda Grazia Hong Kong 052",
-      "tag": "OVERVIEW",
-      "width": 682,
-      "height": 1024,
-      "is_horizontal": false
-    },
-    {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-moda-grazia-hong-kong-054.jpeg",
-      "title": "Fotografo Moda Grazia Hong Kong 054",
-      "tag": "OVERVIEW",
-      "width": 1024,
-      "height": 682,
-      "is_horizontal": true
-    },
-    {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-moda-grazia-hong-kong-061.jpeg",
-      "title": "Fotografo Moda Grazia Hong Kong 061",
-      "tag": "OVERVIEW",
-      "width": 1024,
-      "height": 682,
-      "is_horizontal": true
-    },
-    {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-moda-grazia-hong-kong-067.jpeg",
-      "title": "Fotografo Moda Grazia Hong Kong 067",
-      "tag": "OVERVIEW",
-      "width": 1024,
-      "height": 652,
-      "is_horizontal": true
-    },
-    {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-moda-grazia-hong-kong-112.jpeg",
-      "title": "Fotografo Moda Grazia Hong Kong 112",
-      "tag": "OVERVIEW",
-      "width": 1024,
-      "height": 670,
-      "is_horizontal": true
-    },
-    {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-moda-grazia-hong-kong-116.jpeg",
-      "title": "Fotografo Moda Grazia Hong Kong 116",
-      "tag": "OVERVIEW",
-      "width": 1024,
-      "height": 682,
-      "is_horizontal": true
-    },
-    {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-moda-grazia-hong-kong-118.jpg",
-      "title": "Fotografo Moda Grazia Hong Kong 118",
-      "tag": "OVERVIEW",
-      "width": 682,
-      "height": 1024,
-      "is_horizontal": false
-    },
-    {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-moda-grazia-hong-kong-120.jpg",
-      "title": "Fotografo Moda Grazia Hong Kong 120",
-      "tag": "OVERVIEW",
-      "width": 682,
-      "height": 1024,
-      "is_horizontal": false
-    },
-    {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-moda-grazia-hong-kong-125.jpeg",
-      "title": "Fotografo Moda Grazia Hong Kong 125",
-      "tag": "OVERVIEW",
-      "width": 1024,
-      "height": 682,
-      "is_horizontal": true
-    },
-    {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-moda-grazia-shanghai-068.jpg",
-      "title": "Fotografo Moda Grazia Shanghai 068",
-      "tag": "OVERVIEW",
-      "width": 1562,
-      "height": 1046,
-      "is_horizontal": true
-    },
-    {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-moda-grazia-shanghai-069.jpg",
-      "title": "Fotografo Moda Grazia Shanghai 069",
-      "tag": "OVERVIEW",
-      "width": 600,
-      "height": 900,
-      "is_horizontal": false
-    },
-    {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-moda-grazia-shanghai-076.jpg",
-      "title": "Fotografo Moda Grazia Shanghai 076",
-      "tag": "OVERVIEW",
-      "width": 783,
-      "height": 1024,
-      "is_horizontal": false
-    },
-    {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-cane-francesco-007.jpg",
-      "title": "Fotografo Cane Francesco 007",
-      "tag": "OVERVIEW",
-      "width": 2362,
-      "height": 3543,
+      "width": 667,
+      "height": 1000,
       "is_horizontal": false
     },
     {
@@ -1044,27 +388,11 @@ const portfolioData = {
       "is_horizontal": false
     },
     {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-cane-pamela-010.jpg",
-      "title": "Fotografo Cane Pamela 010",
+      "url": "0 OVERVIEW/max-salvaggio-fotografo-portrait-cane-alessia-marino-003.jpg",
+      "title": "Fotografo Portrait Cane Alessia Marino 003",
       "tag": "OVERVIEW",
-      "width": 1080,
-      "height": 1440,
-      "is_horizontal": false
-    },
-    {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-portrait-cane-Alessia-003.jpg",
-      "title": "Fotografo Portrait Cane Alessia 003",
-      "tag": "OVERVIEW",
-      "width": 4104,
-      "height": 5472,
-      "is_horizontal": false
-    },
-    {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-portrait-cane-dante-vincenzo-001.jpg",
-      "title": "Fotografo Portrait Cane Dante Vincenzo 001",
-      "tag": "OVERVIEW",
-      "width": 2362,
-      "height": 3543,
+      "width": 900,
+      "height": 1200,
       "is_horizontal": false
     },
     {
@@ -1076,30 +404,6 @@ const portfolioData = {
       "is_horizontal": false
     },
     {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-beauty-005.jpg",
-      "title": "Fotografo Beauty 005",
-      "tag": "OVERVIEW",
-      "width": 819,
-      "height": 1024,
-      "is_horizontal": false
-    },
-    {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-beauty-006.jpg",
-      "title": "Fotografo Beauty 006",
-      "tag": "OVERVIEW",
-      "width": 785,
-      "height": 1024,
-      "is_horizontal": false
-    },
-    {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-beauty-008.jpg",
-      "title": "Fotografo Beauty 008",
-      "tag": "OVERVIEW",
-      "width": 567,
-      "height": 850,
-      "is_horizontal": false
-    },
-    {
       "url": "0 OVERVIEW/max-salvaggio-fotografo-beauty-012.jpg",
       "title": "Fotografo Beauty 012",
       "tag": "OVERVIEW",
@@ -1108,19 +412,19 @@ const portfolioData = {
       "is_horizontal": false
     },
     {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-beauty-014.jpg",
-      "title": "Fotografo Beauty 014",
+      "url": "0 OVERVIEW/max-salvaggio-fotografo-beauty-017.jpg",
+      "title": "Fotografo Beauty 017",
       "tag": "OVERVIEW",
-      "width": 426,
-      "height": 640,
+      "width": 800,
+      "height": 1200,
       "is_horizontal": false
     },
     {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-beauty-016.jpg",
-      "title": "Fotografo Beauty 016",
+      "url": "0 OVERVIEW/max-salvaggio-fotografo-portrait-beauty-jessica-4.jpg",
+      "title": "Fotografo Portrait Beauty Jessica 4",
       "tag": "OVERVIEW",
-      "width": 640,
-      "height": 898,
+      "width": 900,
+      "height": 1200,
       "is_horizontal": false
     },
     {
@@ -1130,6 +434,102 @@ const portfolioData = {
       "width": 1562,
       "height": 1001,
       "is_horizontal": true
+    },
+    {
+      "url": "0 OVERVIEW/max-salvaggio-fotografo-moda-jeans-re-hash002.jpg",
+      "title": "Fotografo Moda Jeans Re Hash002",
+      "tag": "OVERVIEW",
+      "width": 2092,
+      "height": 1200,
+      "is_horizontal": true
+    },
+    {
+      "url": "0 OVERVIEW/max-salvaggio-fotografo-moda-jeans-re-hash003.jpg",
+      "title": "Fotografo Moda Jeans Re Hash003",
+      "tag": "OVERVIEW",
+      "width": 800,
+      "height": 1200,
+      "is_horizontal": false
+    },
+    {
+      "url": "0 OVERVIEW/max-salvaggio-fotografo-moda-jeans-re-hash004.jpg",
+      "title": "Fotografo Moda Jeans Re Hash004",
+      "tag": "OVERVIEW",
+      "width": 800,
+      "height": 1200,
+      "is_horizontal": false
+    },
+    {
+      "url": "0 OVERVIEW/max-salvaggio-fotografo-moda-jeans-rehash_005.jpg",
+      "title": "Fotografo Moda Jeans Rehash 005",
+      "tag": "OVERVIEW",
+      "width": 900,
+      "height": 1200,
+      "is_horizontal": false
+    },
+    {
+      "url": "0 OVERVIEW/max-salvaggio-fotografo-moda-uomo-giacomo-cavalli-portraits-milano-169.jpg",
+      "title": "Fotografo Moda Uomo Giacomo Cavalli Portraits Milano 169",
+      "tag": "OVERVIEW",
+      "width": 1500,
+      "height": 1000,
+      "is_horizontal": true
+    },
+    {
+      "url": "0 OVERVIEW/max-salvaggio-fotografo-moda-uomo-portraits-milano-176.jpg",
+      "title": "Fotografo Moda Uomo Portraits Milano 176",
+      "tag": "OVERVIEW",
+      "width": 1500,
+      "height": 1000,
+      "is_horizontal": true
+    },
+    {
+      "url": "0 OVERVIEW/max-salvaggio-fotografo-moda-uomo-portraits-milano-184.jpg",
+      "title": "Fotografo Moda Uomo Portraits Milano 184",
+      "tag": "OVERVIEW",
+      "width": 667,
+      "height": 1000,
+      "is_horizontal": false
+    },
+    {
+      "url": "0 OVERVIEW/max-salvaggio-fotografo-moda-uomo-portraits-milano-192.jpg",
+      "title": "Fotografo Moda Uomo Portraits Milano 192",
+      "tag": "OVERVIEW",
+      "width": 682,
+      "height": 1024,
+      "is_horizontal": false
+    },
+    {
+      "url": "0 OVERVIEW/max-salvaggio-fotografo-moda-uomo-portraits-milano-196.jpeg",
+      "title": "Fotografo Moda Uomo Portraits Milano 196",
+      "tag": "OVERVIEW",
+      "width": 682,
+      "height": 1024,
+      "is_horizontal": false
+    },
+    {
+      "url": "0 OVERVIEW/max-salvaggio-fotografo-moda-uomo-portraits-milano-197.jpeg",
+      "title": "Fotografo Moda Uomo Portraits Milano 197",
+      "tag": "OVERVIEW",
+      "width": 682,
+      "height": 1024,
+      "is_horizontal": false
+    },
+    {
+      "url": "0 OVERVIEW/max-salvaggio-fotografo-moda-uomo-portraits-milano-199.jpeg",
+      "title": "Fotografo Moda Uomo Portraits Milano 199",
+      "tag": "OVERVIEW",
+      "width": 1024,
+      "height": 682,
+      "is_horizontal": true
+    },
+    {
+      "url": "0 OVERVIEW/max-salvaggio-fotografo-moda-uomo-portraits-milano-201.jpg",
+      "title": "Fotografo Moda Uomo Portraits Milano 201",
+      "tag": "OVERVIEW",
+      "width": 667,
+      "height": 1000,
+      "is_horizontal": false
     },
     {
       "url": "0 OVERVIEW/max-salvaggio-fotografo-swimwear-005.jpg",
@@ -1148,56 +548,8 @@ const portfolioData = {
       "is_horizontal": false
     },
     {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-swimwear-009.jpg",
-      "title": "Fotografo Swimwear 009",
-      "tag": "OVERVIEW",
-      "width": 683,
-      "height": 1024,
-      "is_horizontal": false
-    },
-    {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-swimwear-011.jpg",
-      "title": "Fotografo Swimwear 011",
-      "tag": "OVERVIEW",
-      "width": 1000,
-      "height": 1500,
-      "is_horizontal": false
-    },
-    {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-swimwear-012.jpg",
-      "title": "Fotografo Swimwear 012",
-      "tag": "OVERVIEW",
-      "width": 1536,
-      "height": 1024,
-      "is_horizontal": true
-    },
-    {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-swimwear-013.jpg",
-      "title": "Fotografo Swimwear 013",
-      "tag": "OVERVIEW",
-      "width": 819,
-      "height": 1024,
-      "is_horizontal": false
-    },
-    {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-swimwear-019.jpg",
-      "title": "Fotografo Swimwear 019",
-      "tag": "OVERVIEW",
-      "width": 751,
-      "height": 1024,
-      "is_horizontal": false
-    },
-    {
       "url": "0 OVERVIEW/max-salvaggio-fotografo-swimwear-022.jpg",
       "title": "Fotografo Swimwear 022",
-      "tag": "OVERVIEW",
-      "width": 683,
-      "height": 1024,
-      "is_horizontal": false
-    },
-    {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-swimwear-027.jpg",
-      "title": "Fotografo Swimwear 027",
       "tag": "OVERVIEW",
       "width": 683,
       "height": 1024,
@@ -1240,24 +592,32 @@ const portfolioData = {
             "url": "1 EDITORIALS/editorials/covers/max-salvaggio-fotografo-moda-grazia-cover-daniela-de-jesus-cosio-mexico-028.jpg",
             "title": "Fotografo Moda Grazia Cover Daniela De Jesus Cosio Mexico 028",
             "tag": "EDITORIALS",
-            "width": 1000,
-            "height": 1301,
+            "width": 787,
+            "height": 1024,
+            "is_horizontal": false
+          },
+          {
+            "url": "1 EDITORIALS/editorials/covers/max-salvaggio-fotografo-moda-grazia-cover-egypt-080.jpg",
+            "title": "Fotografo Moda Grazia Cover Egypt 080",
+            "tag": "EDITORIALS",
+            "width": 771,
+            "height": 1024,
             "is_horizontal": false
           },
           {
             "url": "1 EDITORIALS/editorials/covers/max-salvaggio-fotografo-moda-grazia-cover-kenya-102.jpg",
             "title": "Fotografo Moda Grazia Cover Kenya 102",
             "tag": "EDITORIALS",
-            "width": 3019,
-            "height": 3896,
+            "width": 793,
+            "height": 1024,
             "is_horizontal": false
           },
           {
-            "url": "1 EDITORIALS/editorials/covers/max-salvaggio-fotografo-moda-grazia-kenya-102.jpg",
-            "title": "Fotografo Moda Grazia Kenya 102",
+            "url": "1 EDITORIALS/editorials/covers/max-salvaggio-fotografo-moda-grazia-cover-miami-001.jpg",
+            "title": "Fotografo Moda Grazia Cover Miami 001",
             "tag": "EDITORIALS",
-            "width": 3019,
-            "height": 3896,
+            "width": 783,
+            "height": 1024,
             "is_horizontal": false
           }
         ]
@@ -1280,8 +640,8 @@ const portfolioData = {
             "url": "1 EDITORIALS/editorials/moda-grazia-viaggio-oriente/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cambodia-138.jpg",
             "title": "Fotografo Moda Grazia Daniela De Jesus Cambodia 138",
             "tag": "EDITORIALS",
-            "width": 1920,
-            "height": 1236,
+            "width": 1591,
+            "height": 1024,
             "is_horizontal": true
           },
           {
@@ -1368,8 +728,8 @@ const portfolioData = {
             "url": "1 EDITORIALS/editorials/moda-grazia-viaggio-oriente/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cambodia-149.jpg",
             "title": "Fotografo Moda Grazia Daniela De Jesus Cambodia 149",
             "tag": "EDITORIALS",
-            "width": 1000,
-            "height": 1311,
+            "width": 781,
+            "height": 1024,
             "is_horizontal": false
           },
           {
@@ -1432,16 +792,16 @@ const portfolioData = {
             "url": "1 EDITORIALS/editorials/moda-grazia-mito-futuro/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-mexico-087.jpg",
             "title": "Fotografo Moda Grazia Daniela De Jesus Mexico 087",
             "tag": "EDITORIALS",
-            "width": 1920,
-            "height": 1266,
+            "width": 1553,
+            "height": 1024,
             "is_horizontal": true
           },
           {
-            "url": "1 EDITORIALS/editorials/moda-grazia-mito-futuro/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-mexico-088.jpeg",
+            "url": "1 EDITORIALS/editorials/moda-grazia-mito-futuro/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-mexico-088.jpg",
             "title": "Fotografo Moda Grazia Daniela De Jesus Mexico 088",
             "tag": "EDITORIALS",
-            "width": 1562,
-            "height": 1041,
+            "width": 1536,
+            "height": 1024,
             "is_horizontal": true
           },
           {
@@ -1453,11 +813,11 @@ const portfolioData = {
             "is_horizontal": false
           },
           {
-            "url": "1 EDITORIALS/editorials/moda-grazia-mito-futuro/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-mexico-090.jpeg",
+            "url": "1 EDITORIALS/editorials/moda-grazia-mito-futuro/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-mexico-090.jpg",
             "title": "Fotografo Moda Grazia Daniela De Jesus Mexico 090",
             "tag": "EDITORIALS",
-            "width": 1562,
-            "height": 1041,
+            "width": 1536,
+            "height": 1024,
             "is_horizontal": true
           },
           {
@@ -1520,8 +880,8 @@ const portfolioData = {
             "url": "1 EDITORIALS/editorials/moda-grazia-nero-diverso/max-salvaggio-fotografo-moda-grazia-sicilia-097.jpg",
             "title": "Fotografo Moda Grazia Sicilia 097",
             "tag": "EDITORIALS",
-            "width": 5157,
-            "height": 3503,
+            "width": 1507,
+            "height": 1024,
             "is_horizontal": true
           },
           {
@@ -1568,16 +928,16 @@ const portfolioData = {
             "url": "1 EDITORIALS/editorials/moda-grazia-safari-chic/max-salvaggio-fotografo-moda-grazia-kenya-102.jpg",
             "title": "Fotografo Moda Grazia Kenya 102",
             "tag": "EDITORIALS",
-            "width": 3019,
-            "height": 3896,
+            "width": 793,
+            "height": 1024,
             "is_horizontal": false
           },
           {
             "url": "1 EDITORIALS/editorials/moda-grazia-safari-chic/max-salvaggio-fotografo-moda-grazia-kenya-103.jpg",
             "title": "Fotografo Moda Grazia Kenya 103",
             "tag": "EDITORIALS",
-            "width": 1920,
-            "height": 1241,
+            "width": 1584,
+            "height": 1024,
             "is_horizontal": true
           },
           {
@@ -1597,11 +957,19 @@ const portfolioData = {
             "is_horizontal": false
           },
           {
+            "url": "1 EDITORIALS/editorials/moda-grazia-safari-chic/max-salvaggio-fotografo-moda-grazia-kenya-106.jpg",
+            "title": "Fotografo Moda Grazia Kenya 106",
+            "tag": "EDITORIALS",
+            "width": 683,
+            "height": 1024,
+            "is_horizontal": false
+          },
+          {
             "url": "1 EDITORIALS/editorials/moda-grazia-safari-chic/max-salvaggio-fotografo-moda-grazia-kenya-107.jpg",
             "title": "Fotografo Moda Grazia Kenya 107",
             "tag": "EDITORIALS",
-            "width": 1920,
-            "height": 1280,
+            "width": 1536,
+            "height": 1024,
             "is_horizontal": true
           },
           {
@@ -1645,11 +1013,19 @@ const portfolioData = {
         "magazine": "Grazia",
         "images": [
           {
+            "url": "1 EDITORIALS/editorials/moda-grazia-leggerezza/max-salvaggio-fotografo-moda-grazia-cover-egypt-080.jpg",
+            "title": "Fotografo Moda Grazia Cover Egypt 080",
+            "tag": "EDITORIALS",
+            "width": 771,
+            "height": 1024,
+            "is_horizontal": false
+          },
+          {
             "url": "1 EDITORIALS/editorials/moda-grazia-leggerezza/max-salvaggio-fotografo-moda-grazia-egypt-081.jpg",
             "title": "Fotografo Moda Grazia Egypt 081",
             "tag": "EDITORIALS",
-            "width": 1562,
-            "height": 1026,
+            "width": 1559,
+            "height": 1024,
             "is_horizontal": true
           },
           {
@@ -1749,11 +1125,11 @@ const portfolioData = {
             "is_horizontal": false
           },
           {
-            "url": "1 EDITORIALS/editorials/moda-grazia-hong-kong-express/max-salvaggio-fotografo-moda-grazia-hong-kong-057.JPG",
+            "url": "1 EDITORIALS/editorials/moda-grazia-hong-kong-express/max-salvaggio-fotografo-moda-grazia-hong-kong-057.jpg",
             "title": "Fotografo Moda Grazia Hong Kong 057",
             "tag": "EDITORIALS",
-            "width": 1024,
-            "height": 1536,
+            "width": 683,
+            "height": 1024,
             "is_horizontal": false
           },
           {
@@ -1765,11 +1141,11 @@ const portfolioData = {
             "is_horizontal": false
           },
           {
-            "url": "1 EDITORIALS/editorials/moda-grazia-hong-kong-express/max-salvaggio-fotografo-moda-grazia-hong-kong-059.JPG",
+            "url": "1 EDITORIALS/editorials/moda-grazia-hong-kong-express/max-salvaggio-fotografo-moda-grazia-hong-kong-059.jpg",
             "title": "Fotografo Moda Grazia Hong Kong 059",
             "tag": "EDITORIALS",
-            "width": 5616,
-            "height": 3744,
+            "width": 1536,
+            "height": 1024,
             "is_horizontal": true
           },
           {
@@ -1821,12 +1197,12 @@ const portfolioData = {
             "is_horizontal": true
           },
           {
-            "url": "1 EDITORIALS/editorials/moda-grazia-hong-kong-express/max-salvaggio-fotografo-moda-grazia-hong-kong-066.JPG",
+            "url": "1 EDITORIALS/editorials/moda-grazia-hong-kong-express/max-salvaggio-fotografo-moda-grazia-hong-kong-066.jpg",
             "title": "Fotografo Moda Grazia Hong Kong 066",
             "tag": "EDITORIALS",
-            "width": 5616,
-            "height": 3744,
-            "is_horizontal": true
+            "width": 683,
+            "height": 1024,
+            "is_horizontal": false
           },
           {
             "url": "1 EDITORIALS/editorials/moda-grazia-hong-kong-express/max-salvaggio-fotografo-moda-grazia-hong-kong-067.jpeg",
@@ -1845,48 +1221,48 @@ const portfolioData = {
         "magazine": "Grazia",
         "images": [
           {
-            "url": "1 EDITORIALS/editorials/moda-grazia-bon_ton-grinta/max-salvaggio-fotografo-moda-grazia-hong-kong-018.jpg",
-            "title": "Fotografo Moda Grazia Hong Kong 018",
+            "url": "1 EDITORIALS/editorials/moda-grazia-bon_ton-grinta/max-salvaggio-fotografo-moda-grazia-sharm-el-sheik-egypt-018.jpg",
+            "title": "Fotografo Moda Grazia Sharm El Sheik Egypt 018",
             "tag": "EDITORIALS",
             "width": 1562,
             "height": 989,
             "is_horizontal": true
           },
           {
-            "url": "1 EDITORIALS/editorials/moda-grazia-bon_ton-grinta/max-salvaggio-fotografo-moda-grazia-hong-kong-019.jpg",
-            "title": "Fotografo Moda Grazia Hong Kong 019",
+            "url": "1 EDITORIALS/editorials/moda-grazia-bon_ton-grinta/max-salvaggio-fotografo-moda-grazia-sharm-el-sheik-egypt-019.jpg",
+            "title": "Fotografo Moda Grazia Sharm El Sheik Egypt 019",
             "tag": "EDITORIALS",
             "width": 1350,
             "height": 900,
             "is_horizontal": true
           },
           {
-            "url": "1 EDITORIALS/editorials/moda-grazia-bon_ton-grinta/max-salvaggio-fotografo-moda-grazia-hong-kong-020.jpg",
-            "title": "Fotografo Moda Grazia Hong Kong 020",
+            "url": "1 EDITORIALS/editorials/moda-grazia-bon_ton-grinta/max-salvaggio-fotografo-moda-grazia-sharm-el-sheik-egypt-020.jpg",
+            "title": "Fotografo Moda Grazia Sharm El Sheik Egypt 020",
             "tag": "EDITORIALS",
             "width": 1350,
             "height": 900,
             "is_horizontal": true
           },
           {
-            "url": "1 EDITORIALS/editorials/moda-grazia-bon_ton-grinta/max-salvaggio-fotografo-moda-grazia-hong-kong-021.jpg",
-            "title": "Fotografo Moda Grazia Hong Kong 021",
+            "url": "1 EDITORIALS/editorials/moda-grazia-bon_ton-grinta/max-salvaggio-fotografo-moda-grazia-sharm-el-sheik-egypt-021.jpg",
+            "title": "Fotografo Moda Grazia Sharm El Sheik Egypt 021",
             "tag": "EDITORIALS",
             "width": 600,
             "height": 900,
             "is_horizontal": false
           },
           {
-            "url": "1 EDITORIALS/editorials/moda-grazia-bon_ton-grinta/max-salvaggio-fotografo-moda-grazia-hong-kong-022.jpg",
-            "title": "Fotografo Moda Grazia Hong Kong 022",
+            "url": "1 EDITORIALS/editorials/moda-grazia-bon_ton-grinta/max-salvaggio-fotografo-moda-grazia-sharm-el-sheik-egypt-022.jpg",
+            "title": "Fotografo Moda Grazia Sharm El Sheik Egypt 022",
             "tag": "EDITORIALS",
             "width": 1350,
             "height": 900,
             "is_horizontal": true
           },
           {
-            "url": "1 EDITORIALS/editorials/moda-grazia-bon_ton-grinta/max-salvaggio-fotografo-moda-grazia-hong-kong-023.jpg",
-            "title": "Fotografo Moda Grazia Hong Kong 023",
+            "url": "1 EDITORIALS/editorials/moda-grazia-bon_ton-grinta/max-salvaggio-fotografo-moda-grazia-sharm-el-sheik-egypt-023.jpg",
+            "title": "Fotografo Moda Grazia Sharm El Sheik Egypt 023",
             "tag": "EDITORIALS",
             "width": 1350,
             "height": 900,
@@ -1997,14 +1373,6 @@ const portfolioData = {
             "is_horizontal": true
           },
           {
-            "url": "1 EDITORIALS/editorials/moda-grazia-seduzioni-oriente/max-salvaggio-fotografo-moda-grazia-hong-kong-124.JPG",
-            "title": "Fotografo Moda Grazia Hong Kong 124",
-            "tag": "EDITORIALS",
-            "width": 5616,
-            "height": 3744,
-            "is_horizontal": true
-          },
-          {
             "url": "1 EDITORIALS/editorials/moda-grazia-seduzioni-oriente/max-salvaggio-fotografo-moda-grazia-hong-kong-125.jpeg",
             "title": "Fotografo Moda Grazia Hong Kong 125",
             "tag": "EDITORIALS",
@@ -2032,16 +1400,16 @@ const portfolioData = {
             "url": "1 EDITORIALS/editorials/moda-grazia-etnico-dark/max-salvaggio-fotografo-moda-grazia-cover-daniela-de-jesus-cosio-mexico-028.jpg",
             "title": "Fotografo Moda Grazia Cover Daniela De Jesus Cosio Mexico 028",
             "tag": "EDITORIALS",
-            "width": 1000,
-            "height": 1301,
+            "width": 787,
+            "height": 1024,
             "is_horizontal": false
           },
           {
             "url": "1 EDITORIALS/editorials/moda-grazia-etnico-dark/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cosio-mexico-029.jpg",
             "title": "Fotografo Moda Grazia Daniela De Jesus Cosio Mexico 029",
             "tag": "EDITORIALS",
-            "width": 1920,
-            "height": 1280,
+            "width": 1536,
+            "height": 1024,
             "is_horizontal": true
           },
           {
@@ -2120,8 +1488,8 @@ const portfolioData = {
             "url": "1 EDITORIALS/editorials/moda-grazia-etnico-dark/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cosio-mexico-040.jpg",
             "title": "Fotografo Moda Grazia Daniela De Jesus Cosio Mexico 040",
             "tag": "EDITORIALS",
-            "width": 1920,
-            "height": 1280,
+            "width": 1536,
+            "height": 1024,
             "is_horizontal": true
           },
           {
@@ -2144,8 +1512,8 @@ const portfolioData = {
             "url": "1 EDITORIALS/editorials/moda-grazia-giungla-urbana/max-salvaggio-fotografo-moda-grazia-hong-kong-042.jpg",
             "title": "Fotografo Moda Grazia Hong Kong 042",
             "tag": "EDITORIALS",
-            "width": 1920,
-            "height": 1302,
+            "width": 1510,
+            "height": 1024,
             "is_horizontal": true
           },
           {
@@ -2173,43 +1541,43 @@ const portfolioData = {
             "is_horizontal": false
           },
           {
-            "url": "1 EDITORIALS/editorials/moda-grazia-giungla-urbana/max-salvaggio-fotografo-moda-grazia-hong-kong-046.JPG",
+            "url": "1 EDITORIALS/editorials/moda-grazia-giungla-urbana/max-salvaggio-fotografo-moda-grazia-hong-kong-046.jpg",
             "title": "Fotografo Moda Grazia Hong Kong 046",
             "tag": "EDITORIALS",
-            "width": 5616,
-            "height": 3744,
+            "width": 1536,
+            "height": 1024,
             "is_horizontal": true
           },
           {
-            "url": "1 EDITORIALS/editorials/moda-grazia-giungla-urbana/max-salvaggio-fotografo-moda-grazia-hong-kong-047.JPG",
+            "url": "1 EDITORIALS/editorials/moda-grazia-giungla-urbana/max-salvaggio-fotografo-moda-grazia-hong-kong-047.jpg",
             "title": "Fotografo Moda Grazia Hong Kong 047",
             "tag": "EDITORIALS",
-            "width": 5616,
-            "height": 3744,
+            "width": 1536,
+            "height": 1024,
             "is_horizontal": true
           },
           {
-            "url": "1 EDITORIALS/editorials/moda-grazia-giungla-urbana/max-salvaggio-fotografo-moda-grazia-hong-kong-048.JPG",
+            "url": "1 EDITORIALS/editorials/moda-grazia-giungla-urbana/max-salvaggio-fotografo-moda-grazia-hong-kong-048.jpg",
             "title": "Fotografo Moda Grazia Hong Kong 048",
             "tag": "EDITORIALS",
-            "width": 5616,
-            "height": 3744,
+            "width": 1536,
+            "height": 1024,
             "is_horizontal": true
           },
           {
-            "url": "1 EDITORIALS/editorials/moda-grazia-giungla-urbana/max-salvaggio-fotografo-moda-grazia-hong-kong-049.JPG",
+            "url": "1 EDITORIALS/editorials/moda-grazia-giungla-urbana/max-salvaggio-fotografo-moda-grazia-hong-kong-049.jpg",
             "title": "Fotografo Moda Grazia Hong Kong 049",
             "tag": "EDITORIALS",
-            "width": 5616,
-            "height": 3744,
+            "width": 1536,
+            "height": 1024,
             "is_horizontal": true
           },
           {
-            "url": "1 EDITORIALS/editorials/moda-grazia-giungla-urbana/max-salvaggio-fotografo-moda-grazia-hong-kong-050.JPG",
+            "url": "1 EDITORIALS/editorials/moda-grazia-giungla-urbana/max-salvaggio-fotografo-moda-grazia-hong-kong-050.jpg",
             "title": "Fotografo Moda Grazia Hong Kong 050",
             "tag": "EDITORIALS",
-            "width": 5616,
-            "height": 3744,
+            "width": 1536,
+            "height": 1024,
             "is_horizontal": true
           }
         ]
@@ -2220,6 +1588,14 @@ const portfolioData = {
         "place": "Miami",
         "magazine": "Grazia",
         "images": [
+          {
+            "url": "1 EDITORIALS/editorials/moda-grazia-dettaglio/max-salvaggio-fotografo-moda-grazia-cover-miami-001.jpg",
+            "title": "Fotografo Moda Grazia Cover Miami 001",
+            "tag": "EDITORIALS",
+            "width": 783,
+            "height": 1024,
+            "is_horizontal": false
+          },
           {
             "url": "1 EDITORIALS/editorials/moda-grazia-dettaglio/max-salvaggio-fotografo-moda-grazia-miami-002.jpg",
             "title": "Fotografo Moda Grazia Miami 002",
@@ -2269,11 +1645,11 @@ const portfolioData = {
         "magazine": "Grazia",
         "images": [
           {
-            "url": "1 EDITORIALS/editorials/moda-grazia-love-shanghai/max-salvaggio-fotografo-moda-grazia-shanghai-068.jpg",
-            "title": "Fotografo Moda Grazia Shanghai 068",
+            "url": "1 EDITORIALS/editorials/moda-grazia-love-shanghai/max-salvaggio-fotografo-moda-grazia-shanghai-068x.jpg",
+            "title": "Fotografo Moda Grazia Shanghai 068X",
             "tag": "EDITORIALS",
-            "width": 1562,
-            "height": 1046,
+            "width": 1529,
+            "height": 1024,
             "is_horizontal": true
           },
           {
@@ -2392,8 +1768,8 @@ const portfolioData = {
             "url": "1 EDITORIALS/editorials/moda-grazia-stile-romanzo/max-salvaggio-fotografo-moda-grazia-vietnam-129.jpg",
             "title": "Fotografo Moda Grazia Vietnam 129",
             "tag": "EDITORIALS",
-            "width": 1952,
-            "height": 2560,
+            "width": 781,
+            "height": 1024,
             "is_horizontal": false
           },
           {
@@ -2504,16 +1880,16 @@ const portfolioData = {
             "url": "1 EDITORIALS/editorials/moda-grazia-bianco/max-salvaggio-fotografo-moda-grazia-hong-kong-007.jpg",
             "title": "Fotografo Moda Grazia Hong Kong 007",
             "tag": "EDITORIALS",
-            "width": 1920,
-            "height": 1229,
+            "width": 1600,
+            "height": 1024,
             "is_horizontal": true
           },
           {
             "url": "1 EDITORIALS/editorials/moda-grazia-bianco/max-salvaggio-fotografo-moda-grazia-hong-kong-008.jpg",
             "title": "Fotografo Moda Grazia Hong Kong 008",
             "tag": "EDITORIALS",
-            "width": 1024,
-            "height": 1365,
+            "width": 768,
+            "height": 1024,
             "is_horizontal": false
           },
           {
@@ -2536,8 +1912,8 @@ const portfolioData = {
             "url": "1 EDITORIALS/editorials/moda-grazia-bianco/max-salvaggio-fotografo-moda-grazia-hong-kong-011.jpg",
             "title": "Fotografo Moda Grazia Hong Kong 011",
             "tag": "EDITORIALS",
-            "width": 1000,
-            "height": 1311,
+            "width": 781,
+            "height": 1024,
             "is_horizontal": false
           },
           {
@@ -2549,11 +1925,11 @@ const portfolioData = {
             "is_horizontal": false
           },
           {
-            "url": "1 EDITORIALS/editorials/moda-grazia-bianco/max-salvaggio-fotografo-moda-grazia-hong-kong-013.JPG",
+            "url": "1 EDITORIALS/editorials/moda-grazia-bianco/max-salvaggio-fotografo-moda-grazia-hong-kong-013.jpg",
             "title": "Fotografo Moda Grazia Hong Kong 013",
             "tag": "EDITORIALS",
-            "width": 5616,
-            "height": 3744,
+            "width": 1024,
+            "height": 683,
             "is_horizontal": true
           },
           {
@@ -2852,56 +2228,56 @@ const portfolioData = {
         "url": "1 EDITORIALS/unpublished_research/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-156.jpg",
         "title": "Fotografo Moda Uomo Portraits Street Style Milano 156",
         "tag": "EDITORIALS",
-        "width": 4104,
-        "height": 5472,
+        "width": 768,
+        "height": 1024,
         "is_horizontal": false
       },
       {
         "url": "1 EDITORIALS/unpublished_research/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-157.jpg",
         "title": "Fotografo Moda Uomo Portraits Street Style Milano 157",
         "tag": "EDITORIALS",
-        "width": 2825,
-        "height": 3766,
+        "width": 768,
+        "height": 1024,
         "is_horizontal": false
       },
       {
         "url": "1 EDITORIALS/unpublished_research/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-158.jpg",
         "title": "Fotografo Moda Uomo Portraits Street Style Milano 158",
         "tag": "EDITORIALS",
-        "width": 3648,
-        "height": 4864,
+        "width": 768,
+        "height": 1024,
         "is_horizontal": false
       },
       {
         "url": "1 EDITORIALS/unpublished_research/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-159.jpg",
         "title": "Fotografo Moda Uomo Portraits Street Style Milano 159",
         "tag": "EDITORIALS",
-        "width": 4104,
-        "height": 5472,
+        "width": 768,
+        "height": 1024,
         "is_horizontal": false
       },
       {
         "url": "1 EDITORIALS/unpublished_research/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-160.jpg",
         "title": "Fotografo Moda Uomo Portraits Street Style Milano 160",
         "tag": "EDITORIALS",
-        "width": 4104,
-        "height": 5472,
+        "width": 768,
+        "height": 1024,
         "is_horizontal": false
       },
       {
         "url": "1 EDITORIALS/unpublished_research/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-161.jpg",
         "title": "Fotografo Moda Uomo Portraits Street Style Milano 161",
         "tag": "EDITORIALS",
-        "width": 3876,
-        "height": 5168,
+        "width": 768,
+        "height": 1024,
         "is_horizontal": false
       },
       {
         "url": "1 EDITORIALS/unpublished_research/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-162.jpg",
         "title": "Fotografo Moda Uomo Portraits Street Style Milano 162",
         "tag": "EDITORIALS",
-        "width": 4104,
-        "height": 5472,
+        "width": 768,
+        "height": 1024,
         "is_horizontal": false
       },
       {
@@ -2957,31 +2333,71 @@ const portfolioData = {
   "campaigns": {
     "fashion": [
       {
+        "url": "2 CAMPAIGNS/FASHION/max-salvaggio-fotografo-adv-bag-dee-ocleppo.jpg",
+        "title": "Fotografo Adv Bag Dee Ocleppo",
+        "tag": "CAMPAIGNS",
+        "width": 1536,
+        "height": 1024,
+        "is_horizontal": true
+      },
+      {
         "url": "2 CAMPAIGNS/FASHION/max-salvaggio-fotografo-moda-jeans-re-hash002.jpg",
         "title": "Fotografo Moda Jeans Re Hash002",
         "tag": "CAMPAIGNS",
-        "width": 5464,
-        "height": 3134,
+        "width": 1785,
+        "height": 1024,
         "is_horizontal": true
       },
       {
         "url": "2 CAMPAIGNS/FASHION/max-salvaggio-fotografo-moda-jeans-re-hash003.jpg",
         "title": "Fotografo Moda Jeans Re Hash003",
         "tag": "CAMPAIGNS",
-        "width": 5464,
-        "height": 8192,
+        "width": 683,
+        "height": 1024,
         "is_horizontal": false
       },
       {
         "url": "2 CAMPAIGNS/FASHION/max-salvaggio-fotografo-moda-jeans-re-hash004.jpg",
         "title": "Fotografo Moda Jeans Re Hash004",
         "tag": "CAMPAIGNS",
-        "width": 4752,
-        "height": 3840,
+        "width": 1267,
+        "height": 1024,
         "is_horizontal": true
+      },
+      {
+        "url": "2 CAMPAIGNS/FASHION/max-salvaggio-fotografo-moda-jeans-re-hash004_1.jpg",
+        "title": "Fotografo Moda Jeans Re Hash004 1",
+        "tag": "CAMPAIGNS",
+        "width": 683,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "2 CAMPAIGNS/FASHION/max-salvaggio-fotografo-moda-jeans-re-hash005.jpg",
+        "title": "Fotografo Moda Jeans Re Hash005",
+        "tag": "CAMPAIGNS",
+        "width": 768,
+        "height": 1024,
+        "is_horizontal": false
       }
     ],
     "lingerie": [
+      {
+        "url": "2 CAMPAIGNS/LINGERIE/max-salvaggio-fotografo-lingerie-002.jpg",
+        "title": "Fotografo Lingerie 002",
+        "tag": "CAMPAIGNS",
+        "width": 667,
+        "height": 1000,
+        "is_horizontal": false
+      },
+      {
+        "url": "2 CAMPAIGNS/LINGERIE/max-salvaggio-fotografo-lingerie-003.jpg",
+        "title": "Fotografo Lingerie 003",
+        "tag": "CAMPAIGNS",
+        "width": 960,
+        "height": 640,
+        "is_horizontal": true
+      },
       {
         "url": "2 CAMPAIGNS/LINGERIE/max-salvaggio-fotografo-lingerie-004.jpg",
         "title": "Fotografo Lingerie 004",
@@ -2991,11 +2407,51 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
+        "url": "2 CAMPAIGNS/LINGERIE/max-salvaggio-fotografo-lingerie-005.jpg",
+        "title": "Fotografo Lingerie 005",
+        "tag": "CAMPAIGNS",
+        "width": 680,
+        "height": 850,
+        "is_horizontal": false
+      },
+      {
+        "url": "2 CAMPAIGNS/LINGERIE/max-salvaggio-fotografo-lingerie-006.jpg",
+        "title": "Fotografo Lingerie 006",
+        "tag": "CAMPAIGNS",
+        "width": 1361,
+        "height": 850,
+        "is_horizontal": true
+      },
+      {
+        "url": "2 CAMPAIGNS/LINGERIE/max-salvaggio-fotografo-lingerie-007.jpeg",
+        "title": "Fotografo Lingerie 007",
+        "tag": "CAMPAIGNS",
+        "width": 1562,
+        "height": 1018,
+        "is_horizontal": true
+      },
+      {
         "url": "2 CAMPAIGNS/LINGERIE/max-salvaggio-fotografo-lingerie-008.jpeg",
         "title": "Fotografo Lingerie 008",
         "tag": "CAMPAIGNS",
         "width": 850,
         "height": 567,
+        "is_horizontal": true
+      },
+      {
+        "url": "2 CAMPAIGNS/LINGERIE/max-salvaggio-fotografo-lingerie-009.jpg",
+        "title": "Fotografo Lingerie 009",
+        "tag": "CAMPAIGNS",
+        "width": 682,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "2 CAMPAIGNS/LINGERIE/max-salvaggio-fotografo-lingerie-010.jpg",
+        "title": "Fotografo Lingerie 010",
+        "tag": "CAMPAIGNS",
+        "width": 1500,
+        "height": 1000,
         "is_horizontal": true
       },
       {
@@ -3023,6 +2479,38 @@ const portfolioData = {
         "is_horizontal": true
       },
       {
+        "url": "2 CAMPAIGNS/LINGERIE/max-salvaggio-fotografo-lingerie-015.jpg",
+        "title": "Fotografo Lingerie 015",
+        "tag": "CAMPAIGNS",
+        "width": 1536,
+        "height": 1024,
+        "is_horizontal": true
+      },
+      {
+        "url": "2 CAMPAIGNS/LINGERIE/max-salvaggio-fotografo-lingerie-016.jpg",
+        "title": "Fotografo Lingerie 016",
+        "tag": "CAMPAIGNS",
+        "width": 819,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "2 CAMPAIGNS/LINGERIE/max-salvaggio-fotografo-lingerie-017.jpg",
+        "title": "Fotografo Lingerie 017",
+        "tag": "CAMPAIGNS",
+        "width": 819,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "2 CAMPAIGNS/LINGERIE/max-salvaggio-fotografo-lingerie-018.jpg",
+        "title": "Fotografo Lingerie 018",
+        "tag": "CAMPAIGNS",
+        "width": 1024,
+        "height": 683,
+        "is_horizontal": true
+      },
+      {
         "url": "2 CAMPAIGNS/LINGERIE/max-salvaggio-fotografo-lingerie-019.jpg",
         "title": "Fotografo Lingerie 019",
         "tag": "CAMPAIGNS",
@@ -3031,10 +2519,34 @@ const portfolioData = {
         "is_horizontal": true
       },
       {
+        "url": "2 CAMPAIGNS/LINGERIE/max-salvaggio-fotografo-lingerie-020.jpeg",
+        "title": "Fotografo Lingerie 020",
+        "tag": "CAMPAIGNS",
+        "width": 682,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "2 CAMPAIGNS/LINGERIE/max-salvaggio-fotografo-lingerie-021.jpg",
+        "title": "Fotografo Lingerie 021",
+        "tag": "CAMPAIGNS",
+        "width": 683,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
         "url": "2 CAMPAIGNS/LINGERIE/max-salvaggio-fotografo-lingerie-022.jpg",
         "title": "Fotografo Lingerie 022",
         "tag": "CAMPAIGNS",
         "width": 1195,
+        "height": 1024,
+        "is_horizontal": true
+      },
+      {
+        "url": "2 CAMPAIGNS/LINGERIE/max-salvaggio-fotografo-lingerie-023.jpg",
+        "title": "Fotografo Lingerie 023",
+        "tag": "CAMPAIGNS",
+        "width": 1536,
         "height": 1024,
         "is_horizontal": true
       },
@@ -3047,11 +2559,19 @@ const portfolioData = {
         "is_horizontal": true
       },
       {
+        "url": "2 CAMPAIGNS/LINGERIE/max-salvaggio-fotografo-lingerie-025.jpg",
+        "title": "Fotografo Lingerie 025",
+        "tag": "CAMPAIGNS",
+        "width": 772,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
         "url": "2 CAMPAIGNS/LINGERIE/max-salvaggio-fotografo-lingerie-055.jpg",
         "title": "Fotografo Lingerie 055",
         "tag": "CAMPAIGNS",
-        "width": 1080,
-        "height": 1350,
+        "width": 819,
+        "height": 1024,
         "is_horizontal": false
       }
     ],
@@ -3140,8 +2660,8 @@ const portfolioData = {
         "url": "2 CAMPAIGNS/SWIMMWEAR/max-salvaggio-fotografo-swimwear-011.jpg",
         "title": "Fotografo Swimwear 011",
         "tag": "CAMPAIGNS",
-        "width": 1000,
-        "height": 1500,
+        "width": 683,
+        "height": 1024,
         "is_horizontal": false
       },
       {
@@ -3328,56 +2848,56 @@ const portfolioData = {
         "url": "3 BODY & FORM/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-001.jpg",
         "title": "Fotografo Nudo Fine Art 001",
         "tag": "BODY & FORM",
-        "width": 1000,
-        "height": 1374,
+        "width": 745,
+        "height": 1024,
         "is_horizontal": false
       },
       {
         "url": "3 BODY & FORM/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-002.jpg",
         "title": "Fotografo Nudo Fine Art 002",
         "tag": "BODY & FORM",
-        "width": 1417,
-        "height": 2126,
+        "width": 683,
+        "height": 1024,
         "is_horizontal": false
       },
       {
         "url": "3 BODY & FORM/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-003.jpg",
         "title": "Fotografo Nudo Fine Art 003",
         "tag": "BODY & FORM",
-        "width": 2126,
-        "height": 1417,
+        "width": 1536,
+        "height": 1024,
         "is_horizontal": true
       },
       {
         "url": "3 BODY & FORM/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-004.jpg",
         "title": "Fotografo Nudo Fine Art 004",
         "tag": "BODY & FORM",
-        "width": 1417,
-        "height": 2126,
+        "width": 683,
+        "height": 1024,
         "is_horizontal": false
       },
       {
         "url": "3 BODY & FORM/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-005.jpg",
         "title": "Fotografo Nudo Fine Art 005",
         "tag": "BODY & FORM",
-        "width": 1417,
-        "height": 2126,
+        "width": 683,
+        "height": 1024,
         "is_horizontal": false
       },
       {
         "url": "3 BODY & FORM/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-006.jpg",
         "title": "Fotografo Nudo Fine Art 006",
         "tag": "BODY & FORM",
-        "width": 778,
-        "height": 1037,
+        "width": 768,
+        "height": 1024,
         "is_horizontal": false
       },
       {
         "url": "3 BODY & FORM/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-007.jpg",
         "title": "Fotografo Nudo Fine Art 007",
         "tag": "BODY & FORM",
-        "width": 3788,
-        "height": 2525,
+        "width": 1536,
+        "height": 1024,
         "is_horizontal": true
       },
       {
@@ -3392,24 +2912,24 @@ const portfolioData = {
         "url": "3 BODY & FORM/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-009.jpg",
         "title": "Fotografo Nudo Fine Art 009",
         "tag": "BODY & FORM",
-        "width": 1417,
-        "height": 2126,
+        "width": 683,
+        "height": 1024,
         "is_horizontal": false
       },
       {
         "url": "3 BODY & FORM/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-010.jpg",
         "title": "Fotografo Nudo Fine Art 010",
         "tag": "BODY & FORM",
-        "width": 1417,
-        "height": 2126,
+        "width": 683,
+        "height": 1024,
         "is_horizontal": false
       },
       {
         "url": "3 BODY & FORM/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-011.jpg",
         "title": "Fotografo Nudo Fine Art 011",
         "tag": "BODY & FORM",
-        "width": 1417,
-        "height": 2126,
+        "width": 683,
+        "height": 1024,
         "is_horizontal": false
       },
       {
@@ -3432,8 +2952,8 @@ const portfolioData = {
         "url": "3 BODY & FORM/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-014.jpg",
         "title": "Fotografo Nudo Fine Art 014",
         "tag": "BODY & FORM",
-        "width": 3788,
-        "height": 2525,
+        "width": 1536,
+        "height": 1024,
         "is_horizontal": true
       },
       {
@@ -3578,8 +3098,8 @@ const portfolioData = {
         "url": "3 BODY & FORM/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-006.jpg",
         "title": "Fotografo Nude Fine Art 006",
         "tag": "BODY & FORM",
-        "width": 780,
-        "height": 1069,
+        "width": 747,
+        "height": 1024,
         "is_horizontal": false
       },
       {
@@ -3642,16 +3162,16 @@ const portfolioData = {
         "url": "3 BODY & FORM/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-014.jpg",
         "title": "Fotografo Nude Fine Art 014",
         "tag": "BODY & FORM",
-        "width": 1191,
-        "height": 1475,
+        "width": 827,
+        "height": 1024,
         "is_horizontal": false
       },
       {
         "url": "3 BODY & FORM/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-015.jpg",
         "title": "Fotografo Nude Fine Art 015",
         "tag": "BODY & FORM",
-        "width": 983,
-        "height": 1475,
+        "width": 682,
+        "height": 1024,
         "is_horizontal": false
       }
     ]
@@ -3659,44 +3179,52 @@ const portfolioData = {
   "portraits_and_beauty": {
     "portraits": [
       {
+        "url": "4 PORTRAITS I/max-salvaggio-fotografo-portrait-001.jpg",
+        "title": "Fotografo Portrait 001",
+        "tag": "PORTRAITS",
+        "width": 683,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
         "url": "4 PORTRAITS I/max-salvaggio-fotografo-portrait-003.jpg",
         "title": "Fotografo Portrait 003",
         "tag": "PORTRAITS",
-        "width": 4096,
-        "height": 6144,
+        "width": 683,
+        "height": 1024,
         "is_horizontal": false
       },
       {
         "url": "4 PORTRAITS I/max-salvaggio-fotografo-portrait-004.jpg",
         "title": "Fotografo Portrait 004",
         "tag": "PORTRAITS",
-        "width": 4096,
-        "height": 6144,
+        "width": 683,
+        "height": 1024,
         "is_horizontal": false
       },
       {
         "url": "4 PORTRAITS I/max-salvaggio-fotografo-portrait-005.jpg",
         "title": "Fotografo Portrait 005",
         "tag": "PORTRAITS",
-        "width": 4096,
-        "height": 6144,
+        "width": 683,
+        "height": 1024,
         "is_horizontal": false
       },
       {
         "url": "4 PORTRAITS I/max-salvaggio-fotografo-portrait-006.jpg",
         "title": "Fotografo Portrait 006",
         "tag": "PORTRAITS",
-        "width": 4096,
-        "height": 6144,
+        "width": 683,
+        "height": 1024,
         "is_horizontal": false
       },
       {
         "url": "4 PORTRAITS I/max-salvaggio-fotografo-portrait-007.jpg",
         "title": "Fotografo Portrait 007",
         "tag": "PORTRAITS",
-        "width": 4368,
-        "height": 2912,
-        "is_horizontal": true
+        "width": 683,
+        "height": 1024,
+        "is_horizontal": false
       },
       {
         "url": "4 PORTRAITS I/max-salvaggio-fotografo-portrait-uomo-008.jpg",
@@ -3750,12 +3278,44 @@ const portfolioData = {
         "url": "4 PORTRAITS I/max-salvaggio-fotografo-portrait-uomo-014.jpg",
         "title": "Fotografo Portrait Uomo 014",
         "tag": "PORTRAITS",
-        "width": 1024,
-        "height": 1536,
+        "width": 683,
+        "height": 1024,
         "is_horizontal": false
       }
     ],
     "beauty": [
+      {
+        "url": "4 beauty/max-salvaggio-fotografo-beauty-001.jpg",
+        "title": "Fotografo Beauty 001",
+        "tag": "BEAUTY",
+        "width": 686,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "4 beauty/max-salvaggio-fotografo-beauty-005.jpg",
+        "title": "Fotografo Beauty 005",
+        "tag": "BEAUTY",
+        "width": 819,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "4 beauty/max-salvaggio-fotografo-beauty-006.jpg",
+        "title": "Fotografo Beauty 006",
+        "tag": "BEAUTY",
+        "width": 785,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "4 beauty/max-salvaggio-fotografo-beauty-008.jpg",
+        "title": "Fotografo Beauty 008",
+        "tag": "BEAUTY",
+        "width": 567,
+        "height": 850,
+        "is_horizontal": false
+      },
       {
         "url": "4 beauty/max-salvaggio-fotografo-beauty-009.jpg",
         "title": "Fotografo Beauty 009",
@@ -3765,381 +3325,341 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "4 beauty/max-salvaggio-fotografo-beauty-ray-bitancourt-021.jpg",
-        "title": "Fotografo Beauty Ray Bitancourt 021",
+        "url": "4 beauty/max-salvaggio-fotografo-beauty-014.jpg",
+        "title": "Fotografo Beauty 014",
         "tag": "BEAUTY",
-        "width": 1728,
-        "height": 2160,
+        "width": 426,
+        "height": 640,
         "is_horizontal": false
       },
       {
-        "url": "4 beauty/max-salvaggio-fotografo-portrait-cane-jessica-2-5.jpg",
-        "title": "Fotografo Portrait Cane Jessica 2 5",
+        "url": "4 beauty/max-salvaggio-fotografo-beauty-016.jpg",
+        "title": "Fotografo Beauty 016",
         "tag": "BEAUTY",
-        "width": 3840,
-        "height": 5760,
+        "width": 640,
+        "height": 898,
+        "is_horizontal": false
+      },
+      {
+        "url": "4 beauty/max-salvaggio-fotografo-beauty-017.jpg",
+        "title": "Fotografo Beauty 017",
+        "tag": "BEAUTY",
+        "width": 683,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "4 beauty/max-salvaggio-fotografo-beauty-018.jpg",
+        "title": "Fotografo Beauty 018",
+        "tag": "BEAUTY",
+        "width": 683,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "4 beauty/max-salvaggio-fotografo-beauty-ray-bitancourt-021.jpg",
+        "title": "Fotografo Beauty Ray Bitancourt 021",
+        "tag": "BEAUTY",
+        "width": 819,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "4 beauty/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-mexico-095.jpeg",
+        "title": "Fotografo Moda Grazia Daniela De Jesus Mexico 095",
+        "tag": "BEAUTY",
+        "width": 682,
+        "height": 1024,
         "is_horizontal": false
       },
       {
         "url": "4 beauty/max-salvaggio-fotografo-portrait-cane-jessica-4.jpg",
         "title": "Fotografo Portrait Cane Jessica 4",
         "tag": "BEAUTY",
-        "width": 3543,
-        "height": 4724,
+        "width": 768,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "4 beauty/max-salvaggio-fotografo-portrait-uomo-011.jpg",
+        "title": "Fotografo Portrait Uomo 011",
+        "tag": "BEAUTY",
+        "width": 666,
+        "height": 1000,
+        "is_horizontal": false
+      },
+      {
+        "url": "4 beauty/max-salvaggio-fotografo-portrait-uomo-012.jpg",
+        "title": "Fotografo Portrait Uomo 012",
+        "tag": "BEAUTY",
+        "width": 666,
+        "height": 1000,
+        "is_horizontal": false
+      },
+      {
+        "url": "4 beauty/max-salvaggio-fotografo-portrait-uomo-013.jpg",
+        "title": "Fotografo Portrait Uomo 013",
+        "tag": "BEAUTY",
+        "width": 682,
+        "height": 1024,
         "is_horizontal": false
       }
     ],
     "pets_and_portraits": [
       {
-        "url": "4 PET and Portraits/max-salvaggio-fotografo-cane-Alessia-001.jpg",
-        "title": "Fotografo Cane Alessia 001",
-        "tag": "PET & PORTRAITS",
-        "width": 4104,
-        "height": 5472,
-        "is_horizontal": false
-      },
-      {
-        "url": "4 PET and Portraits/max-salvaggio-fotografo-cane-Alessia-002.jpg",
-        "title": "Fotografo Cane Alessia 002",
-        "tag": "PET & PORTRAITS",
-        "width": 4104,
-        "height": 5472,
-        "is_horizontal": false
-      },
-      {
         "url": "4 PET and Portraits/max-salvaggio-fotografo-cane-Alessia-003.jpg",
         "title": "Fotografo Cane Alessia 003",
         "tag": "PET & PORTRAITS",
-        "width": 4104,
-        "height": 5472,
+        "width": 768,
+        "height": 1024,
         "is_horizontal": false
       },
       {
         "url": "4 PET and Portraits/max-salvaggio-fotografo-cane-Alessia-004.jpg",
         "title": "Fotografo Cane Alessia 004",
         "tag": "PET & PORTRAITS",
-        "width": 1080,
-        "height": 1440,
-        "is_horizontal": false
-      },
-      {
-        "url": "4 PET and Portraits/max-salvaggio-fotografo-cane-Alessia-005.jpg",
-        "title": "Fotografo Cane Alessia 005",
-        "tag": "PET & PORTRAITS",
-        "width": 3648,
-        "height": 5472,
-        "is_horizontal": false
-      },
-      {
-        "url": "4 PET and Portraits/max-salvaggio-fotografo-cane-Alessia-006.jpg",
-        "title": "Fotografo Cane Alessia 006",
-        "tag": "PET & PORTRAITS",
-        "width": 4104,
-        "height": 5472,
+        "width": 768,
+        "height": 1024,
         "is_horizontal": false
       },
       {
         "url": "4 PET and Portraits/max-salvaggio-fotografo-cane-francesco-007.jpg",
         "title": "Fotografo Cane Francesco 007",
         "tag": "PET & PORTRAITS",
-        "width": 2362,
-        "height": 3543,
+        "width": 683,
+        "height": 1024,
         "is_horizontal": false
       },
       {
         "url": "4 PET and Portraits/max-salvaggio-fotografo-cane-pamela-001.jpg",
         "title": "Fotografo Cane Pamela 001",
         "tag": "PET & PORTRAITS",
-        "width": 1152,
-        "height": 1536,
-        "is_horizontal": false
-      },
-      {
-        "url": "4 PET and Portraits/max-salvaggio-fotografo-cane-pamela-002.jpg",
-        "title": "Fotografo Cane Pamela 002",
-        "tag": "PET & PORTRAITS",
-        "width": 1152,
-        "height": 1536,
-        "is_horizontal": false
-      },
-      {
-        "url": "4 PET and Portraits/max-salvaggio-fotografo-cane-pamela-003.jpg",
-        "title": "Fotografo Cane Pamela 003",
-        "tag": "PET & PORTRAITS",
-        "width": 1152,
-        "height": 1536,
+        "width": 768,
+        "height": 1024,
         "is_horizontal": false
       },
       {
         "url": "4 PET and Portraits/max-salvaggio-fotografo-cane-pamela-005.jpg",
         "title": "Fotografo Cane Pamela 005",
         "tag": "PET & PORTRAITS",
-        "width": 1080,
-        "height": 1440,
-        "is_horizontal": false
-      },
-      {
-        "url": "4 PET and Portraits/max-salvaggio-fotografo-cane-pamela-006.jpg",
-        "title": "Fotografo Cane Pamela 006",
-        "tag": "PET & PORTRAITS",
-        "width": 1080,
-        "height": 1440,
+        "width": 768,
+        "height": 1024,
         "is_horizontal": false
       },
       {
         "url": "4 PET and Portraits/max-salvaggio-fotografo-cane-pamela-007.jpg",
         "title": "Fotografo Cane Pamela 007",
         "tag": "PET & PORTRAITS",
-        "width": 1080,
-        "height": 1440,
-        "is_horizontal": false
-      },
-      {
-        "url": "4 PET and Portraits/max-salvaggio-fotografo-cane-pamela-008.jpg",
-        "title": "Fotografo Cane Pamela 008",
-        "tag": "PET & PORTRAITS",
-        "width": 1080,
-        "height": 1440,
+        "width": 768,
+        "height": 1024,
         "is_horizontal": false
       },
       {
         "url": "4 PET and Portraits/max-salvaggio-fotografo-cane-pamela-009.jpg",
         "title": "Fotografo Cane Pamela 009",
         "tag": "PET & PORTRAITS",
-        "width": 2160,
-        "height": 1440,
+        "width": 1536,
+        "height": 1024,
         "is_horizontal": true
       },
       {
         "url": "4 PET and Portraits/max-salvaggio-fotografo-cane-pamela-010.jpg",
         "title": "Fotografo Cane Pamela 010",
         "tag": "PET & PORTRAITS",
-        "width": 1080,
-        "height": 1440,
+        "width": 768,
+        "height": 1024,
         "is_horizontal": false
       },
       {
         "url": "4 PET and Portraits/max-salvaggio-fotografo-cavallo-Naomi-Tavian-001.jpg",
         "title": "Fotografo Cavallo Naomi Tavian 001",
         "tag": "PET & PORTRAITS",
-        "width": 2362,
-        "height": 3543,
-        "is_horizontal": false
-      },
-      {
-        "url": "4 PET and Portraits/max-salvaggio-fotografo-cavallo-Naomi-Tavian-002.jpg",
-        "title": "Fotografo Cavallo Naomi Tavian 002",
-        "tag": "PET & PORTRAITS",
-        "width": 2362,
-        "height": 3543,
+        "width": 683,
+        "height": 1024,
         "is_horizontal": false
       },
       {
         "url": "4 PET and Portraits/max-salvaggio-fotografo-cavallo-Naomi-Tavian-003.jpg",
         "title": "Fotografo Cavallo Naomi Tavian 003",
         "tag": "PET & PORTRAITS",
-        "width": 2362,
-        "height": 3543,
+        "width": 683,
+        "height": 1024,
         "is_horizontal": false
       },
       {
         "url": "4 PET and Portraits/max-salvaggio-fotografo-cavallo-Naomi-Tavian-004.jpg",
         "title": "Fotografo Cavallo Naomi Tavian 004",
         "tag": "PET & PORTRAITS",
-        "width": 3543,
-        "height": 2362,
+        "width": 1536,
+        "height": 1024,
         "is_horizontal": true
       },
       {
         "url": "4 PET and Portraits/max-salvaggio-fotografo-cavallo-Naomi-Tavian-005.jpg",
         "title": "Fotografo Cavallo Naomi Tavian 005",
         "tag": "PET & PORTRAITS",
-        "width": 2362,
-        "height": 3543,
+        "width": 683,
+        "height": 1024,
         "is_horizontal": false
       },
       {
         "url": "4 PET and Portraits/max-salvaggio-fotografo-cavallo-Naomi-Tavian-006.jpg",
         "title": "Fotografo Cavallo Naomi Tavian 006",
         "tag": "PET & PORTRAITS",
-        "width": 3543,
-        "height": 2353,
+        "width": 1542,
+        "height": 1024,
         "is_horizontal": true
       },
       {
         "url": "4 PET and Portraits/max-salvaggio-fotografo-cavallo-Naomi-Tavian-007.jpg",
         "title": "Fotografo Cavallo Naomi Tavian 007",
         "tag": "PET & PORTRAITS",
-        "width": 3543,
-        "height": 2362,
+        "width": 1536,
+        "height": 1024,
         "is_horizontal": true
       },
       {
         "url": "4 PET and Portraits/max-salvaggio-fotografo-cavallo-Naomi-Tavian-008.jpg",
         "title": "Fotografo Cavallo Naomi Tavian 008",
         "tag": "PET & PORTRAITS",
-        "width": 2362,
-        "height": 3543,
+        "width": 683,
+        "height": 1024,
         "is_horizontal": false
       },
       {
         "url": "4 PET and Portraits/max-salvaggio-fotografo-cavallo-Naomi-Tavian-009.jpg",
         "title": "Fotografo Cavallo Naomi Tavian 009",
         "tag": "PET & PORTRAITS",
-        "width": 2362,
-        "height": 3543,
+        "width": 683,
+        "height": 1024,
         "is_horizontal": false
       },
       {
         "url": "4 PET and Portraits/max-salvaggio-fotografo-polo-cavallo-Anna-001.jpg",
         "title": "Fotografo Polo Cavallo Anna 001",
         "tag": "PET & PORTRAITS",
-        "width": 3648,
-        "height": 4864,
+        "width": 768,
+        "height": 1024,
         "is_horizontal": false
       },
       {
         "url": "4 PET and Portraits/max-salvaggio-fotografo-polo-cavallo-Anna-002.jpg",
         "title": "Fotografo Polo Cavallo Anna 002",
         "tag": "PET & PORTRAITS",
-        "width": 3644,
-        "height": 4859,
+        "width": 768,
+        "height": 1024,
         "is_horizontal": false
       },
       {
         "url": "4 PET and Portraits/max-salvaggio-fotografo-polo-cavallo-Anna-003.jpg",
         "title": "Fotografo Polo Cavallo Anna 003",
         "tag": "PET & PORTRAITS",
-        "width": 3648,
-        "height": 4864,
+        "width": 768,
+        "height": 1024,
         "is_horizontal": false
       },
       {
         "url": "4 PET and Portraits/max-salvaggio-fotografo-polo-cavallo-Anna-004.jpg",
         "title": "Fotografo Polo Cavallo Anna 004",
         "tag": "PET & PORTRAITS",
-        "width": 3648,
-        "height": 4864,
+        "width": 768,
+        "height": 1024,
         "is_horizontal": false
       },
       {
         "url": "4 PET and Portraits/max-salvaggio-fotografo-polo-cavallo-Anna-005.jpg",
         "title": "Fotografo Polo Cavallo Anna 005",
         "tag": "PET & PORTRAITS",
-        "width": 3648,
-        "height": 4864,
+        "width": 768,
+        "height": 1024,
         "is_horizontal": false
       },
       {
         "url": "4 PET and Portraits/max-salvaggio-fotografo-polo-cavallo-Anna-006.jpg",
         "title": "Fotografo Polo Cavallo Anna 006",
         "tag": "PET & PORTRAITS",
-        "width": 3648,
-        "height": 4864,
+        "width": 768,
+        "height": 1024,
         "is_horizontal": false
       },
       {
         "url": "4 PET and Portraits/max-salvaggio-fotografo-polo-cavallo-Bea-001.jpg",
         "title": "Fotografo Polo Cavallo Bea 001",
         "tag": "PET & PORTRAITS",
-        "width": 3876,
-        "height": 5168,
+        "width": 768,
+        "height": 1024,
         "is_horizontal": false
       },
       {
         "url": "4 PET and Portraits/max-salvaggio-fotografo-polo-cavallo-Bea-002.jpg",
         "title": "Fotografo Polo Cavallo Bea 002",
         "tag": "PET & PORTRAITS",
-        "width": 3954,
-        "height": 5272,
-        "is_horizontal": false
-      },
-      {
-        "url": "4 PET and Portraits/max-salvaggio-fotografo-polo-cavallo-Bea-003.jpg",
-        "title": "Fotografo Polo Cavallo Bea 003",
-        "tag": "PET & PORTRAITS",
-        "width": 1824,
-        "height": 2432,
+        "width": 768,
+        "height": 1024,
         "is_horizontal": false
       },
       {
         "url": "4 PET and Portraits/max-salvaggio-fotografo-polo-cavallo-Bea-004.jpg",
         "title": "Fotografo Polo Cavallo Bea 004",
         "tag": "PET & PORTRAITS",
-        "width": 1824,
-        "height": 2432,
-        "is_horizontal": false
-      },
-      {
-        "url": "4 PET and Portraits/max-salvaggio-fotografo-polo-cavallo-Bea-005.jpg",
-        "title": "Fotografo Polo Cavallo Bea 005",
-        "tag": "PET & PORTRAITS",
-        "width": 1824,
-        "height": 2432,
+        "width": 768,
+        "height": 1024,
         "is_horizontal": false
       },
       {
         "url": "4 PET and Portraits/max-salvaggio-fotografo-polo-cavallo-Bea-006.jpg",
         "title": "Fotografo Polo Cavallo Bea 006",
         "tag": "PET & PORTRAITS",
-        "width": 1824,
-        "height": 2432,
-        "is_horizontal": false
-      },
-      {
-        "url": "4 PET and Portraits/max-salvaggio-fotografo-polo-cavallo-Bea-007.jpg",
-        "title": "Fotografo Polo Cavallo Bea 007",
-        "tag": "PET & PORTRAITS",
-        "width": 2440,
-        "height": 3253,
+        "width": 768,
+        "height": 1024,
         "is_horizontal": false
       },
       {
         "url": "4 PET and Portraits/max-salvaggio-fotografo-polo-cavallo-Bea-008.jpg",
         "title": "Fotografo Polo Cavallo Bea 008",
         "tag": "PET & PORTRAITS",
-        "width": 1329,
-        "height": 1772,
+        "width": 768,
+        "height": 1024,
         "is_horizontal": false
       },
       {
         "url": "4 PET and Portraits/max-salvaggio-fotografo-portrait-cane-cecilia-capriotti-001.jpg",
         "title": "Fotografo Portrait Cane Cecilia Capriotti 001",
         "tag": "PET & PORTRAITS",
-        "width": 4182,
-        "height": 5472,
+        "width": 783,
+        "height": 1024,
         "is_horizontal": false
       },
       {
         "url": "4 PET and Portraits/max-salvaggio-fotografo-portrait-cane-dante-vincenzo-001.jpg",
         "title": "Fotografo Portrait Cane Dante Vincenzo 001",
         "tag": "PET & PORTRAITS",
-        "width": 2362,
-        "height": 3543,
+        "width": 683,
+        "height": 1024,
         "is_horizontal": false
       },
       {
         "url": "4 PET and Portraits/max-salvaggio-fotografo-portrait-cane-jessica-1.jpg",
         "title": "Fotografo Portrait Cane Jessica 1",
         "tag": "PET & PORTRAITS",
-        "width": 3840,
-        "height": 5760,
+        "width": 683,
+        "height": 1024,
         "is_horizontal": false
       },
       {
         "url": "4 PET and Portraits/max-salvaggio-fotografo-portrait-cane-jessica-2.jpg",
         "title": "Fotografo Portrait Cane Jessica 2",
         "tag": "PET & PORTRAITS",
-        "width": 3840,
-        "height": 5760,
+        "width": 683,
+        "height": 1024,
         "is_horizontal": false
       },
       {
         "url": "4 PET and Portraits/max-salvaggio-fotografo-portrait-cane-jessica-3.jpg",
         "title": "Fotografo Portrait Cane Jessica 3",
         "tag": "PET & PORTRAITS",
-        "width": 3840,
-        "height": 5760,
+        "width": 683,
+        "height": 1024,
         "is_horizontal": false
       }
     ]

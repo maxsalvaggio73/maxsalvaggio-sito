@@ -1432,6 +1432,10 @@ document.addEventListener("DOMContentLoaded", () => {
     lightbox.addEventListener("click", handleLightboxBackgroundClick);
     document.addEventListener("keydown", handleLightboxKeys);
     
+    // Navigazione frecce click
+    if (lightboxPrev) lightboxPrev.addEventListener("click", prevLightbox);
+    if (lightboxNext) lightboxNext.addEventListener("click", nextLightbox);
+    
     // Supporto touch swipe per navigazione
     lightbox.addEventListener("touchstart", handleTouchStart, { passive: true });
     lightbox.addEventListener("touchend", handleTouchEnd, { passive: true });
@@ -1446,6 +1450,29 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function closeLightbox() {
     if (!lightbox) return;
+    
+    // Ritorno nella stessa posizione dell'immagine di riferimento
+    const currentSlide = lightboxImages[lightboxIndex];
+    if (currentSlide) {
+      let targetUrl = "";
+      if (currentSlide.type === "image" && currentSlide.image) {
+        targetUrl = currentSlide.image.url;
+      } else if (currentSlide.type === "pair" && currentSlide.images && currentSlide.images[0]) {
+        targetUrl = currentSlide.images[0].url;
+      } else if (currentSlide.type === "transition" && currentSlide.project && currentSlide.project.images && currentSlide.project.images[0]) {
+        targetUrl = currentSlide.project.images[0].url;
+      }
+      
+      if (targetUrl) {
+        const pageImages = Array.from(document.querySelectorAll("img")).filter(img => {
+          return !img.closest("#lightbox") && (img.getAttribute("src") === targetUrl || img.src.endsWith(targetUrl));
+        });
+        if (pageImages.length > 0) {
+          const targetImg = pageImages[0];
+          targetImg.scrollIntoView({ behavior: "auto", block: "center" });
+        }
+      }
+    }
     
     lightbox.classList.remove("open");
     lightbox.setAttribute("aria-hidden", "true");
@@ -1468,10 +1495,20 @@ document.addEventListener("DOMContentLoaded", () => {
     const swipe = lightbox.querySelector(".lightbox-swipe-info");
     if (swipe) swipe.remove();
 
+    // Reset inline styling of Close button
+    if (lightboxClose) {
+      lightboxClose.style.top = "";
+      lightboxClose.style.left = "";
+      lightboxClose.style.right = "";
+      lightboxClose.style.bottom = "";
+    }
+
     // Rimozione listeners
     lightboxClose.removeEventListener("click", closeLightbox);
     lightbox.removeEventListener("click", handleLightboxBackgroundClick);
     document.removeEventListener("keydown", handleLightboxKeys);
+    if (lightboxPrev) lightboxPrev.removeEventListener("click", prevLightbox);
+    if (lightboxNext) lightboxNext.removeEventListener("click", nextLightbox);
     lightbox.removeEventListener("touchstart", handleTouchStart);
     lightbox.removeEventListener("touchend", handleTouchEnd);
   }
@@ -1515,11 +1552,29 @@ document.addEventListener("DOMContentLoaded", () => {
     lightbox.appendChild(zoomHint);
     setTimeout(() => { if (zoomHint.parentNode) zoomHint.remove(); }, 2500);
 
-    // X: 4px sotto il bordo inferiore dell'immagine, allineata col lato destro
-    lightboxClose.style.top   = `${rect.bottom + OFFSET}px`;
-    lightboxClose.style.left  = `${rect.right - ICON_SIZE}px`;
-    lightboxClose.style.bottom = "";
-    lightboxClose.style.right  = "";
+    // X: posizionata in alto a destra su desktop, altrimenti 4px sotto il bordo inferiore dell'immagine
+    if (window.innerWidth > 768) {
+      lightboxClose.style.top = "30px";
+      lightboxClose.style.right = "30px";
+      lightboxClose.style.left = "auto";
+      lightboxClose.style.bottom = "auto";
+    } else {
+      lightboxClose.style.top   = `${rect.bottom + OFFSET}px`;
+      lightboxClose.style.left  = `${rect.right - ICON_SIZE}px`;
+      lightboxClose.style.bottom = "";
+      lightboxClose.style.right  = "";
+    }
+  }
+
+  function getActiveLightboxImageElement() {
+    const currentSlide = lightboxImages[lightboxIndex];
+    if (!currentSlide) return null;
+    if (currentSlide.type === "pair") {
+      return document.getElementById("lightbox-pair-img-1");
+    } else if (currentSlide.type === "image") {
+      return lightboxImg;
+    }
+    return null;
   }
 
   function toggleZoomAtPoint(imgEl, event) {
@@ -2332,6 +2387,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
     window.addEventListener('resize', handleLandscape);
     window.addEventListener('orientationchange', handleLandscape);
+    
+    // Ricalcola overlay lightbox al ridimensionamento
+    window.addEventListener('resize', () => {
+      if (lightbox && lightbox.classList.contains("open")) {
+        const activeImg = getActiveLightboxImageElement();
+        if (activeImg) {
+          positionLightboxOverlays(activeImg);
+        }
+      }
+    });
     
     // Attiva all'interazione dell'utente se caricano direttamente in landscape
     document.addEventListener('touchstart', function triggerOnTouch() {

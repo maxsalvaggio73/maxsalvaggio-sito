@@ -814,7 +814,6 @@ body.light-mode .social-icon-svg {
 /* Fullscreen Image Preview Navigation Arrows */
 /* Queste frecce appaiono sull'overlay con sfondo RAL 7035 (Grigio Perla chiaro) */
 .lightbox-nav {
-  display: none !important;
   position: relative;
   background-color: rgba(255, 255, 255, 0.75); /* Sfondo capsula bianca semitrasparente */
   backdrop-filter: blur(5px);
@@ -835,6 +834,12 @@ body.light-mode .social-icon-svg {
   user-select: none;
   box-shadow: 0 3px 12px rgba(0, 0, 0, 0.15);
   flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .lightbox-nav {
+    display: none !important;
+  }
 }
 
 .prev-btn {
@@ -1733,7 +1738,7 @@ body.light-mode .social-icon-svg {
 .lightbox-wrapper img {
   cursor: pointer;
   max-width: 100%;
-  max-height: 100%;
+  max-height: min(100%, 900px);
   width: auto;
   height: auto;
   object-fit: contain;
@@ -2206,7 +2211,7 @@ body.light-mode .social-icon-svg {
 }
 
 .lightbox-pair-img {
-  max-height: 100%;
+  max-height: min(100%, 900px);
   max-width: calc(50% - 10px); /* due verticali affiancate */
   min-width: 0; /* previene overflow su Android */
   flex-shrink: 1;
