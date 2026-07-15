@@ -121,10 +121,6 @@ header {
   box-sizing: border-box !important;
 }
 
-.cs-tagline {
-  display: none !important;
-}
-
 .header-container {
   width: 100%;
   display: flex;
