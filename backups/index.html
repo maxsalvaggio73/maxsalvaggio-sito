@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Max Salvaggio — Coming Soon</title>
+  <meta name="description" content="Il nuovo sito di Max Salvaggio è in arrivo. Fotografo di moda, lingerie, swimwear e commercial. Contattaci per informazioni." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@300;400;700;900&family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <style>/* original styles omitted for brevity */</style>
+</head>
+<body>
+  <div id="mosaic-bg"><div id="mosaic-canvas-wrapper"></div></div>
+  <div id="mosaic-overlay"></div>
+  <div id="page-wrapper">
+    <p class="cs-logo">Max Salvaggio</p>
+    <p class="cs-tagline">Photography &amp; Creative Direction</p>
+    <div class="glass-card">
+      <h1 class="card-headline">Coming Soon</h1>
+      <p class="card-sub">Scrivici un messaggio — ti risponderemo al più presto.</p>
+      <div class="card-divider"></div>
+      <div class="success-msg" id="success-message"></div>
+      <form id="contact-form" class="contact-form" action="https://formspree.io/f/xzdqzagg" method="POST" novalidate>
+        <input type="text" name="_gotcha" class="form-honey" tabindex="-1" autocomplete="off" />
+        <input type="hidden" name="_next" value="" />
+        <!-- form fields omitted -->
+        <button type="submit" class="btn-submit" id="submit-btn"><span class="btn-text">Invia Messaggio&nbsp;→</span><span class="btn-spinner"></span></button>
+      </form>
+    </div>
+  </div>
+  <footer class="cs-footer">&copy; <span id="year"></span> Max Salvaggio — All Rights Reserved</footer>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="config.js"></script>
+  <script src="archive-data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
