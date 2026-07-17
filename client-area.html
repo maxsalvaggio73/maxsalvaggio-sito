@@ -1020,7 +1020,7 @@
         console.log("checkAuth: Verifica ruolo e stato approvazione per:", currentUser.id);
         const { data: profile, error } = await supabaseClient
           .from('profiles')
-          .select('is_approved, onboarding_completed, documents_approved, full_name')
+          .select('is_approved, onboarding_completed, documents_approved, full_name, is_guest')
           .eq('id', currentUser.id)
           .single();
 
@@ -1054,7 +1054,15 @@
         }
 
         // Access Gate matching the 3-state onboarding flow
-        if (!profile.onboarding_completed) {
+        if (profile.is_guest) {
+          // State 3: Show Gallery (Bypass onboarding for guest users)
+          document.getElementById("onboarding-panel").style.display = "none";
+          document.getElementById("waiting-panel").style.display = "none";
+          document.getElementById("empty-state-panel").style.display = "block";
+          
+          // Load photos
+          loadClientPhotos();
+        } else if (!profile.onboarding_completed) {
           // State 1: Show Form
           toggleCompanyFields('privato');
           document.getElementById("onboarding-panel").style.display = "block";

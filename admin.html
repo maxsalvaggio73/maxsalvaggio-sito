@@ -855,6 +855,88 @@
       border-color: var(--accent);
     }
 
+    /* Guest User Management Styles */
+    .guest-container {
+      padding: 30px;
+      overflow-y: auto;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .guest-header {
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 20px;
+      margin-bottom: 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .guest-form-container {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 20px;
+      margin-bottom: 35px;
+    }
+    .guest-form-title {
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 15px;
+      color: var(--text-primary);
+    }
+    .guest-form {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)) auto;
+      gap: 15px;
+      align-items: flex-end;
+    }
+    .guest-table-container {
+      background: rgba(255,255,255,0.01);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    .guest-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.82rem;
+    }
+    .guest-table th, .guest-table td {
+      padding: 12px 18px;
+      border-bottom: 1px solid var(--border-color);
+    }
+    .guest-table th {
+      background-color: rgba(255,255,255,0.02);
+      font-family: var(--font-body);
+      font-weight: 600;
+      text-transform: uppercase;
+      font-size: 0.7rem;
+      letter-spacing: 0.05em;
+      color: var(--text-secondary);
+    }
+    .guest-table tbody tr:hover {
+      background-color: rgba(255,255,255,0.015);
+    }
+    .guest-table td {
+      color: var(--text-primary);
+    }
+    .guest-table td.email-cell {
+      font-family: monospace;
+      color: var(--text-secondary);
+    }
+    .guest-table td.status-cell {
+      color: var(--accent-green);
+      font-weight: 500;
+    }
+    .mini-badge-guest {
+      background-color: rgba(0, 150, 136, 0.15);
+      color: #80CBC4;
+      border: 1px solid rgba(0, 150, 136, 0.25);
+    }
+
   </style>
 
   <!-- ========================================================
@@ -869,6 +951,7 @@
     <div class="navigation-tabs">
       <button id="tab-clients" class="tab-btn active" onclick="switchAdminMode('clients')">Clienti</button>
       <button id="tab-portfolio" class="tab-btn" onclick="switchAdminMode('portfolio')">Portfolio</button>
+      <button id="tab-guest" class="tab-btn" onclick="switchAdminMode('guest')">Guest</button>
     </div>
 
     <!-- Client Management Sidebar Menu -->
@@ -940,6 +1023,18 @@
         </div>
         <div class="client-list" id="portfolio-projects-list-body">
           <!-- Dynamic projects list -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Guest Management Sidebar Menu -->
+    <div class="sidebar-menu" id="guest-menu-wrapper" style="display: none; gap: 20px;">
+      <div class="menu-section">
+        <div class="menu-section-title">
+          <span>Stato Guest</span>
+        </div>
+        <div class="client-list">
+          <div class="client-item active" style="cursor: default;">Gestione Guest Attivi</div>
         </div>
       </div>
     </div>
@@ -1164,6 +1259,69 @@ create policy "Consenti agli admin la gestione di oggetti public-portfolio" on s
 
     </div>
 
+    <!-- GUEST WORKSPACE VIEW (Active when in guest mode) -->
+    <div class="guest-container" id="guest-panel" style="display: none;">
+      
+      <div class="guest-header">
+        <div>
+          <span style="font-size: 0.72rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.1em; display: block; margin-bottom: 4px;">Pannello di Controllo</span>
+          <h2 style="font-family: var(--font-display); font-size: 1.5rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-primary); margin: 0;">Registrazione & Gestione Guest</h2>
+        </div>
+        <div>
+          <button class="btn-refresh" style="margin: 0; background: rgba(255,255,255,0.04); border: 1px solid var(--border-color); color: var(--text-primary); border-radius: 4px; padding: 10px 18px;" onclick="loadGuestUsers()">Aggiorna Lista</button>
+        </div>
+      </div>
+
+      <!-- Creation Form -->
+      <div class="guest-form-container">
+        <div class="guest-form-title">Crea Nuovo Utente Guest</div>
+        <form id="guest-creation-form" class="guest-form" onsubmit="event.preventDefault(); submitCreateGuest();">
+          <div class="form-group-compact">
+            <label for="guest-first-name">Nome</label>
+            <input type="text" id="guest-first-name" placeholder="Es. Mario" required>
+          </div>
+          <div class="form-group-compact">
+            <label for="guest-last-name">Cognome</label>
+            <input type="text" id="guest-last-name" placeholder="Es. Rossi" required>
+          </div>
+          <div class="form-group-compact">
+            <label for="guest-email">Email (Username)</label>
+            <input type="email" id="guest-email" placeholder="Es. mario.rossi@email.com" required>
+          </div>
+          <div>
+            <button type="submit" class="btn-submit" id="btn-create-guest" style="margin: 0; padding: 10px 20px; font-size: 0.78rem; font-weight: 600; display: flex; align-items: center; gap: 8px;">
+              <span class="spinner" id="guest-create-spinner" style="width: 14px; height: 14px; border-width: 2px;"></span>
+              <span>Registra & Invia Credenziali</span>
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Guest List Table -->
+      <div class="section-subheading">
+        <span>Elenco Utenti Guest</span>
+        <span style="font-size: 0.65rem; color: var(--text-secondary); text-transform: none;">Visualizzazione in ordine alfabetico</span>
+      </div>
+
+      <div class="guest-table-container">
+        <table class="guest-table">
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>Cognome</th>
+              <th>Email / Username</th>
+              <th>Stato Password</th>
+              <th style="width: 80px; text-align: center;">Azioni</th>
+            </tr>
+          </thead>
+          <tbody id="guest-table-body">
+            <!-- Rendered dynamically -->
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+
   </main>
 
   <!-- ========================================================
@@ -1318,6 +1476,8 @@ create policy "Consenti agli admin la gestione di oggetti public-portfolio" on s
         let clientCount = 0;
 
         profiles.forEach(user => {
+          if (user.is_guest) return;
+          
           const item = document.createElement("div");
           item.className = "client-item";
           
@@ -1717,6 +1877,232 @@ create policy "Consenti agli admin la gestione di oggetti public-portfolio" on s
       textarea.setSelectionRange(0, 99999);
       navigator.clipboard.writeText(textarea.value);
       alert("Testo ed oggetto dell'email copiati negli appunti!");
+    }
+
+    /* ========================================================
+       GUEST MANAGEMENT JAVASCRIPT FUNCTIONS
+       ======================================================== */
+
+    function generatePassword(length = 12) {
+      const chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+~`|}{[]:;?><,./-=";
+      let password = "";
+      for (let i = 0; i < length; i++) {
+        password += chars.charAt(Math.floor(Math.random() * chars.length));
+      }
+      return password;
+    }
+
+    async function sendGuestEmail(email, name, password) {
+      const subjectText = "Credenziali di accesso — Max Salvaggio Portfolio";
+      const bodyText = `Gentile ${name},\n\nTi comunichiamo che è stato creato per te un account Guest temporaneo per accedere al portfolio privato.\n\nEcco le tue credenziali di accesso:\n- Link di accesso: https://www.maxsalvaggio.com/login.html\n- Username (Email): ${email}\n- Password: ${password}\n\nConserva questa email per i prossimi accessi.\n\nUn cordiale saluto,\nMax Salvaggio\nStudio Fotografico Milano\nwww.maxsalvaggio.com`;
+
+      const hasEmailJs = typeof config !== 'undefined' && 
+                         config.EMAILJS_SERVICE_ID && 
+                         config.EMAILJS_PUBLIC_KEY;
+      
+      const templateId = (config.EMAILJS_GUEST_TEMPLATE_ID) || config.EMAILJS_TEMPLATE_ID;
+
+      if (hasEmailJs && templateId) {
+        try {
+          // Send email to Guest
+          await fetch("https://api.emailjs.com/api/v1.0/email/send", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              service_id: config.EMAILJS_SERVICE_ID,
+              template_id: templateId,
+              user_id: config.EMAILJS_PUBLIC_KEY,
+              template_params: {
+                to_email: email,
+                to_name: name,
+                subject: subjectText,
+                message: bodyText
+              }
+            })
+          });
+
+          // Send copy to Admin if ADMIN_EMAIL is set
+          if (config.ADMIN_EMAIL) {
+            await fetch("https://api.emailjs.com/api/v1.0/email/send", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                service_id: config.EMAILJS_SERVICE_ID,
+                template_id: templateId,
+                user_id: config.EMAILJS_PUBLIC_KEY,
+                template_params: {
+                  to_email: config.ADMIN_EMAIL,
+                  to_name: "Amministratore",
+                  subject: `[COPIA ADMIN] ${subjectText} (${email})`,
+                  message: `Questa è una copia di sicurezza delle credenziali inviate al Guest.\n\n---\n\n${bodyText}`
+                }
+              })
+            });
+          }
+          alert("Account Guest creato con successo! Email inviata al cliente (e copia all'amministratore).");
+        } catch (eJSerr) {
+          console.error("EmailJS guest sending error:", eJSerr);
+          alert("Utente creato, ma si è verificato un errore durante l'invio automatico dell'email.");
+          openEmailModal(subjectText, bodyText);
+        }
+      } else {
+        // Fallback to manual modal copy-paste
+        openEmailModal(subjectText, bodyText);
+      }
+    }
+
+    async function loadGuestUsers() {
+      if (!supabaseClient) return;
+
+      const tbody = document.getElementById("guest-table-body");
+      if (!tbody) return;
+
+      tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: var(--text-secondary); padding: 20px;">Caricamento utenti Guest...</td></tr>`;
+
+      try {
+        const { data: guests, error } = await supabaseClient
+          .from('profiles')
+          .select('*')
+          .eq('is_guest', true)
+          .order('last_name', { ascending: true })
+          .order('first_name', { ascending: true });
+
+        if (error) {
+          console.error("Error loading guests:", error);
+          tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: #FF8A80; padding: 20px;">Errore nel caricamento: ${error.message}</td></tr>`;
+          return;
+        }
+
+        if (guests.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: var(--text-secondary); padding: 20px;">Nessun utente Guest registrato.</td></tr>`;
+          return;
+        }
+
+        tbody.innerHTML = "";
+        guests.forEach(user => {
+          const tr = document.createElement("tr");
+          
+          tr.innerHTML = `
+            <td>${user.first_name || 'N/D'}</td>
+            <td>${user.last_name || 'N/D'}</td>
+            <td class="email-cell">${user.email}</td>
+            <td class="status-cell">Inviata via Email</td>
+            <td style="text-align: center;">
+              <button class="btn-mini-action btn-mini-suspend" onclick="deleteGuestUser('${user.id}', '${user.email}')" title="Elimina Utente Guest">
+                Elimina
+              </button>
+            </td>
+          `;
+          tbody.appendChild(tr);
+        });
+
+      } catch (err) {
+        console.error("loadGuestUsers err:", err);
+      }
+    }
+
+    async function submitCreateGuest() {
+      const firstNameInput = document.getElementById("guest-first-name");
+      const lastNameInput = document.getElementById("guest-last-name");
+      const emailInput = document.getElementById("guest-email");
+      const btn = document.getElementById("btn-create-guest");
+      const spinner = document.getElementById("guest-create-spinner");
+
+      if (!firstNameInput || !lastNameInput || !emailInput) return;
+
+      const firstName = firstNameInput.value.trim();
+      const lastName = lastNameInput.value.trim();
+      const email = emailInput.value.trim();
+
+      if (!firstName || !lastName || !email) {
+        alert("Compila tutti i campi!");
+        return;
+      }
+
+      btn.disabled = true;
+      spinner.style.display = "inline-block";
+
+      try {
+        const password = generatePassword(12);
+
+        // 1. Sign up user in Supabase Auth
+        const { data, error } = await supabaseClient.auth.signUp({
+          email: email,
+          password: password
+        });
+
+        if (error) {
+          alert("Errore durante la registrazione Auth: " + error.message);
+          return;
+        }
+
+        if (!data || !data.user) {
+          alert("Impossibile creare l'utente. Riprova.");
+          return;
+        }
+
+        // 2. Create profile row in profiles
+        const profileData = {
+          id: data.user.id,
+          email: email,
+          first_name: firstName,
+          last_name: lastName,
+          full_name: `${firstName} ${lastName}`,
+          is_guest: true,
+          is_approved: true,
+          onboarding_completed: true,
+          documents_approved: true
+        };
+
+        const { error: profileError } = await supabaseClient
+          .from('profiles')
+          .upsert(profileData);
+
+        if (profileError) {
+          alert("Utente Auth creato, ma errore durante la creazione del profilo: " + profileError.message);
+          return;
+        }
+
+        // Reset form
+        firstNameInput.value = "";
+        lastNameInput.value = "";
+        emailInput.value = "";
+
+        // 3. Send email credentials
+        await sendGuestEmail(email, `${firstName} ${lastName}`, password);
+
+        // 4. Reload guest table
+        loadGuestUsers();
+
+      } catch (err) {
+        console.error("submitCreateGuest err:", err);
+        alert("Si è verificato un errore imprevisto.");
+      } finally {
+        btn.disabled = false;
+        spinner.style.display = "none";
+      }
+    }
+
+    async function deleteGuestUser(userId, email) {
+      const confirmDelete = confirm(`Sei sicuro di voler eliminare definitivamente questo utente Guest (${email})?`);
+      if (!confirmDelete) return;
+
+      try {
+        const { error } = await supabaseClient
+          .from('profiles')
+          .delete()
+          .eq('id', userId);
+
+        if (error) {
+          alert("Impossibile eliminare l'utente: " + error.message);
+          return;
+        }
+
+        alert("Utente Guest eliminato con successo.");
+        loadGuestUsers();
+      } catch (err) {
+        console.error("deleteGuestUser error:", err);
+      }
     }
 
     // Close workspace and return to welcome panel
@@ -2124,43 +2510,60 @@ create policy "Consenti agli admin la gestione di oggetti public-portfolio" on s
     let portfolioFilesToUpload = [];
     let portfolioDraggedItem = null;
 
-    // Switch between Client Management and Portfolio Management
+    // Switch between Client Management, Portfolio Management and Guest Management
     function switchAdminMode(mode) {
       currentAdminMode = mode;
       
       const tabClients = document.getElementById("tab-clients");
       const tabPortfolio = document.getElementById("tab-portfolio");
+      const tabGuest = document.getElementById("tab-guest");
+      
       const clientsWrapper = document.getElementById("clients-menu-wrapper");
       const portfolioWrapper = document.getElementById("portfolio-menu-wrapper");
+      const guestWrapper = document.getElementById("guest-menu-wrapper");
       
       const welcomePanel = document.getElementById("welcome-panel");
       const clientPanel = document.getElementById("client-panel");
       const portfolioPanel = document.getElementById("portfolio-panel");
+      const guestPanel = document.getElementById("guest-panel");
+      
+      // Deactivate all tabs
+      tabClients.classList.remove("active");
+      tabPortfolio.classList.remove("active");
+      tabGuest.classList.remove("active");
+      
+      // Hide all sidebars
+      clientsWrapper.style.display = "none";
+      portfolioWrapper.style.display = "none";
+      guestWrapper.style.display = "none";
+      
+      // Hide all panels
+      welcomePanel.style.display = "none";
+      clientPanel.style.display = "none";
+      portfolioPanel.style.display = "none";
+      guestPanel.style.display = "none";
       
       if (mode === 'portfolio') {
-        tabClients.classList.remove("active");
         tabPortfolio.classList.add("active");
-        clientsWrapper.style.display = "none";
         portfolioWrapper.style.display = "flex";
-        
-        // Hide client panels, show portfolio panel
-        welcomePanel.style.display = "none";
-        clientPanel.style.display = "none";
         portfolioPanel.style.display = "block";
         
         // Load portfolio projects list & items
         loadPortfolioProjects();
         loadPortfolioItems();
+      } else if (mode === 'guest') {
+        tabGuest.classList.add("active");
+        guestWrapper.style.display = "flex";
+        guestPanel.style.display = "flex";
+        
+        // Load guest users list
+        loadGuestUsers();
       } else {
         tabClients.classList.add("active");
-        tabPortfolio.classList.remove("active");
         clientsWrapper.style.display = "flex";
-        portfolioWrapper.style.display = "none";
         
-        // Show welcome panel, hide portfolio panel
+        // Show welcome panel, hide other panels
         welcomePanel.style.display = "flex";
-        clientPanel.style.display = "none";
-        portfolioPanel.style.display = "none";
       }
     }
 

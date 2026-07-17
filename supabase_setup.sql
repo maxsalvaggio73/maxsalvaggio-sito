@@ -61,3 +61,20 @@ using (
 ) with check (
     bucket_id = 'public-portfolio' and (select is_admin from public.profiles where id = auth.uid()) = true
 );
+
+-- ========================================================
+-- GUEST USERS MIGRATION
+-- Esegui questo blocco nell'editor SQL di Supabase per abilitare
+-- la gestione degli utenti Guest dall'Admin Panel.
+-- ========================================================
+
+-- 6. Aggiunta colonne per utenti Guest nella tabella profiles
+alter table public.profiles
+  add column if not exists is_guest boolean default false,
+  add column if not exists first_name text,
+  add column if not exists last_name text;
+
+-- Indice per query rapide sulla lista Guest (ordinamento alfabetico)
+create index if not exists idx_profiles_guest_name
+on public.profiles(last_name, first_name) where is_guest = true;
+

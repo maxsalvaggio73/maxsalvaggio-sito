@@ -1,5 +1,5 @@
 // Database delle immagini generato automaticamente dallo script scan.py
-// Data di generazione: 2026-07-15T17:13:53.053720Z
+// Data di generazione: 2026-07-17T11:49:39.784254Z
 
 const portfolioData = {
   "overview": [
@@ -1125,7 +1125,7 @@ const portfolioData = {
             "is_horizontal": false
           },
           {
-            "url": "1 EDITORIALS/editorials/moda-grazia-hong-kong-express/max-salvaggio-fotografo-moda-grazia-hong-kong-057.jpg",
+            "url": "1 EDITORIALS/editorials/moda-grazia-hong-kong-express/max-salvaggio-fotografo-moda-grazia-hong-kong-057.JPG",
             "title": "Fotografo Moda Grazia Hong Kong 057",
             "tag": "EDITORIALS",
             "width": 683,
@@ -1141,7 +1141,7 @@ const portfolioData = {
             "is_horizontal": false
           },
           {
-            "url": "1 EDITORIALS/editorials/moda-grazia-hong-kong-express/max-salvaggio-fotografo-moda-grazia-hong-kong-059.jpg",
+            "url": "1 EDITORIALS/editorials/moda-grazia-hong-kong-express/max-salvaggio-fotografo-moda-grazia-hong-kong-059.JPG",
             "title": "Fotografo Moda Grazia Hong Kong 059",
             "tag": "EDITORIALS",
             "width": 1536,
@@ -1197,7 +1197,7 @@ const portfolioData = {
             "is_horizontal": true
           },
           {
-            "url": "1 EDITORIALS/editorials/moda-grazia-hong-kong-express/max-salvaggio-fotografo-moda-grazia-hong-kong-066.jpg",
+            "url": "1 EDITORIALS/editorials/moda-grazia-hong-kong-express/max-salvaggio-fotografo-moda-grazia-hong-kong-066.JPG",
             "title": "Fotografo Moda Grazia Hong Kong 066",
             "tag": "EDITORIALS",
             "width": 683,
@@ -1541,7 +1541,7 @@ const portfolioData = {
             "is_horizontal": false
           },
           {
-            "url": "1 EDITORIALS/editorials/moda-grazia-giungla-urbana/max-salvaggio-fotografo-moda-grazia-hong-kong-046.jpg",
+            "url": "1 EDITORIALS/editorials/moda-grazia-giungla-urbana/max-salvaggio-fotografo-moda-grazia-hong-kong-046.JPG",
             "title": "Fotografo Moda Grazia Hong Kong 046",
             "tag": "EDITORIALS",
             "width": 1536,
@@ -1549,7 +1549,7 @@ const portfolioData = {
             "is_horizontal": true
           },
           {
-            "url": "1 EDITORIALS/editorials/moda-grazia-giungla-urbana/max-salvaggio-fotografo-moda-grazia-hong-kong-047.jpg",
+            "url": "1 EDITORIALS/editorials/moda-grazia-giungla-urbana/max-salvaggio-fotografo-moda-grazia-hong-kong-047.JPG",
             "title": "Fotografo Moda Grazia Hong Kong 047",
             "tag": "EDITORIALS",
             "width": 1536,
@@ -1557,7 +1557,7 @@ const portfolioData = {
             "is_horizontal": true
           },
           {
-            "url": "1 EDITORIALS/editorials/moda-grazia-giungla-urbana/max-salvaggio-fotografo-moda-grazia-hong-kong-048.jpg",
+            "url": "1 EDITORIALS/editorials/moda-grazia-giungla-urbana/max-salvaggio-fotografo-moda-grazia-hong-kong-048.JPG",
             "title": "Fotografo Moda Grazia Hong Kong 048",
             "tag": "EDITORIALS",
             "width": 1536,
@@ -1565,7 +1565,7 @@ const portfolioData = {
             "is_horizontal": true
           },
           {
-            "url": "1 EDITORIALS/editorials/moda-grazia-giungla-urbana/max-salvaggio-fotografo-moda-grazia-hong-kong-049.jpg",
+            "url": "1 EDITORIALS/editorials/moda-grazia-giungla-urbana/max-salvaggio-fotografo-moda-grazia-hong-kong-049.JPG",
             "title": "Fotografo Moda Grazia Hong Kong 049",
             "tag": "EDITORIALS",
             "width": 1536,
@@ -1573,7 +1573,7 @@ const portfolioData = {
             "is_horizontal": true
           },
           {
-            "url": "1 EDITORIALS/editorials/moda-grazia-giungla-urbana/max-salvaggio-fotografo-moda-grazia-hong-kong-050.jpg",
+            "url": "1 EDITORIALS/editorials/moda-grazia-giungla-urbana/max-salvaggio-fotografo-moda-grazia-hong-kong-050.JPG",
             "title": "Fotografo Moda Grazia Hong Kong 050",
             "tag": "EDITORIALS",
             "width": 1536,
@@ -1925,7 +1925,7 @@ const portfolioData = {
             "is_horizontal": false
           },
           {
-            "url": "1 EDITORIALS/editorials/moda-grazia-bianco/max-salvaggio-fotografo-moda-grazia-hong-kong-013.jpg",
+            "url": "1 EDITORIALS/editorials/moda-grazia-bianco/max-salvaggio-fotografo-moda-grazia-hong-kong-013.JPG",
             "title": "Fotografo Moda Grazia Hong Kong 013",
             "tag": "EDITORIALS",
             "width": 1024,
