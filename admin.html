@@ -16,6 +16,10 @@
   <!-- Local Config -->
   <script src="config.js"></script>
 
+  <!-- Shared Lightbox Component -->
+  <link rel="stylesheet" href="shared-lightbox.css">
+  <script src="shared-lightbox.js"></script>
+
   <style>
     :root {
       --bg-primary: #121415;
@@ -399,7 +403,7 @@
        ======================================================== */
     .admin-gallery-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
       gap: 20px;
     }
 
@@ -425,7 +429,7 @@
     .admin-card-preview-wrapper {
       position: relative;
       width: 100%;
-      aspect-ratio: 3 / 2;
+      aspect-ratio: 1 / 1;
       overflow: hidden;
       background-color: rgba(0, 0, 0, 0.3);
     }
@@ -1778,13 +1782,65 @@ create policy "Consenti agli admin la gestione di oggetti public-portfolio" on s
           return idxA - idxB;
         });
 
+        // 4. Map files and prepare lightbox items
+        const mediaItems = [];
+        const galleryItems = [];
+
+        activeFiles.forEach((file) => {
+          const { data: { publicUrl } } = supabaseClient
+            .storage
+            .from('client-proofs')
+            .getPublicUrl(email + '/' + file.name);
+
+          const ext = file.name.split('.').pop().toLowerCase();
+          const isImage = ['jpg', 'jpeg', 'png', 'webp', 'gif'].includes(ext);
+          const isVideo = ['mp4', 'mov', 'webm'].includes(ext);
+          const isAudio = ['mp3', 'wav', 'ogg'].includes(ext);
+          const isPdf = ext === 'pdf';
+
+          const sizeKB = (file.metadata?.size / 1024) || 0;
+          const sizeStr = sizeKB > 1024 ? (sizeKB / 1024).toFixed(2) + " MB" : sizeKB.toFixed(1) + " KB";
+
+          let itemType = 'document';
+          if (isImage) itemType = 'image';
+          else if (isVideo) itemType = 'video';
+          else if (isAudio) itemType = 'audio';
+
+          const isMedia = isImage || isVideo || isAudio;
+
+          let mediaIndex = -1;
+          if (isMedia) {
+            mediaItems.push({
+              url: publicUrl,
+              type: itemType,
+              name: file.name
+            });
+            mediaIndex = mediaItems.length - 1;
+          }
+
+          galleryItems.push({
+            file,
+            publicUrl,
+            isImage,
+            isVideo,
+            isAudio,
+            isPdf,
+            sizeStr,
+            isMedia,
+            mediaIndex
+          });
+        });
+
+        // Store globally for lightbox navigation
+        window.sharedLightboxItems = mediaItems;
+
         gridBody.innerHTML = "";
         
-        activeFiles.forEach((file, index) => {
+        galleryItems.forEach((item, index) => {
           const card = document.createElement("div");
           card.className = "admin-gallery-card";
           card.draggable = true;
-          card.setAttribute("data-filename", file.name);
+          card.setAttribute("data-filename", item.file.name);
           
           // Drag and Drop Event listeners
           card.addEventListener("dragstart", handleDragStart);
@@ -1792,31 +1848,15 @@ create policy "Consenti agli admin la gestione di oggetti public-portfolio" on s
           card.addEventListener("drop", handleDrop);
           card.addEventListener("dragend", handleDragEnd);
 
-          // Get public URL to render thumbnail preview
-          const { data: { publicUrl } } = supabaseClient
-            .storage
-            .from('client-proofs')
-            .getPublicUrl(email + '/' + file.name);
-
-          // Size Calculation
-          const sizeKB = (file.metadata?.size / 1024) || 0;
-          const sizeStr = sizeKB > 1024
-            ? (sizeKB / 1024).toFixed(2) + " MB"
-            : sizeKB.toFixed(1) + " KB";
-
-          // Icon/Preview Resolver
-          const ext = file.name.split('.').pop().toLowerCase();
-          const isImage = ['jpg', 'jpeg', 'png', 'webp', 'gif'].includes(ext);
-          const isVideo = ['mp4', 'mov', 'webm'].includes(ext);
-          const isAudio = ['mp3', 'wav', 'ogg'].includes(ext);
+          const elementId = `dims-${index}`;
 
           let previewHtml = "";
-          if (isImage) {
-            previewHtml = `<img src="${publicUrl}" class="admin-card-preview" alt="Preview">`;
-          } else if (isVideo) {
-            previewHtml = `<video src="${publicUrl}" class="admin-card-preview" muted preload="metadata"></video>`;
+          if (item.isImage) {
+            previewHtml = `<img src="${item.publicUrl}" class="admin-card-preview" alt="Preview">`;
+          } else if (item.isVideo) {
+            previewHtml = `<video src="${item.publicUrl}" class="admin-card-preview" muted preload="metadata"></video>`;
           } else {
-            const icon = isAudio ? "🎵" : (ext === 'pdf' ? "📕" : "📄");
+            const icon = item.isAudio ? "🎵" : (item.isPdf ? "📕" : "📄");
             previewHtml = `
               <div class="admin-card-preview" style="display:flex; justify-content:center; align-items:center; font-size:2rem; background: rgba(0,0,0,0.2);">
                 ${icon}
@@ -1824,49 +1864,54 @@ create policy "Consenti agli admin la gestione di oggetti public-portfolio" on s
             `;
           }
 
-          // Safe ID for dimensions text
-          const elementId = `dims-${index}`;
-
           card.innerHTML = `
-            <div class="admin-card-preview-wrapper">
+            <div class="admin-card-preview-wrapper" style="cursor: pointer;">
               ${previewHtml}
             </div>
             <div class="admin-card-caption">
-              <div class="admin-card-info">
-                <span class="admin-card-title" title="${file.name}">${file.name}</span>
-                <span class="admin-card-meta">Peso: ${sizeStr}</span>
+              <div class="admin-card-info" style="cursor: pointer; flex-grow: 1;">
+                <span class="admin-card-title" title="${item.file.name}">${item.file.name}</span>
+                <span class="admin-card-meta">Peso: ${item.sizeStr}</span>
                 <span class="admin-card-meta" id="${elementId}">Dimensioni: Calcolo...</span>
               </div>
               <div class="admin-card-actions">
-                <button class="btn-card-delete" onclick="deleteClientFile('${email}', '${file.name}')">Elimina</button>
+                <button class="btn-card-delete" onclick="event.stopPropagation(); deleteClientFile('${email}', '${item.file.name}')">Elimina</button>
               </div>
             </div>
           `;
 
+          // Handle clicks on preview/caption preventing conflict with buttons
+          const openMedia = () => {
+            if (item.isMedia) {
+              SharedLightbox.open(window.sharedLightboxItems, item.mediaIndex);
+            } else {
+              window.open(item.publicUrl, '_blank');
+            }
+          };
+
+          card.querySelector('.admin-card-preview-wrapper').addEventListener('click', openMedia);
+          card.querySelector('.admin-card-info').addEventListener('click', openMedia);
+
           gridBody.appendChild(card);
 
-          // Get dimensions dynamically if file is an image
-          if (isImage) {
+          // Get dimensions dynamically if file is image or video
+          if (item.isImage) {
             const img = new Image();
-            img.src = publicUrl;
+            img.src = item.publicUrl;
             img.onload = () => {
               const el = document.getElementById(elementId);
-              if (el) {
-                el.textContent = `Dimensioni: ${img.naturalWidth} x ${img.naturalHeight} px`;
-              }
+              if (el) el.textContent = `Dimensioni: ${img.naturalWidth} x ${img.naturalHeight} px`;
             };
             img.onerror = () => {
               const el = document.getElementById(elementId);
               if (el) el.textContent = "Dimensioni: N/D";
             };
-          } else if (isVideo) {
+          } else if (item.isVideo) {
             const vid = document.createElement("video");
-            vid.src = publicUrl;
+            vid.src = item.publicUrl;
             vid.onloadedmetadata = () => {
               const el = document.getElementById(elementId);
-              if (el) {
-                el.textContent = `Dimensioni: ${vid.videoWidth} x ${vid.videoHeight} px`;
-              }
+              if (el) el.textContent = `Dimensioni: ${vid.videoWidth} x ${vid.videoHeight} px`;
             };
             vid.onerror = () => {
               const el = document.getElementById(elementId);

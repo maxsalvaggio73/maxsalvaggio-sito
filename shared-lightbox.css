@@ -1,0 +1,191 @@
+/* shared-lightbox.css */
+
+.shared-lightbox {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(18, 20, 21, 0.97); /* Rich premium dark background */
+  z-index: 99999;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  user-select: none;
+}
+
+.shared-lightbox.active {
+  display: flex;
+  opacity: 1;
+}
+
+.shared-lightbox-content {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 88%;
+  height: 90%;
+  max-width: 1200px;
+  max-height: 900px;
+  outline: none;
+}
+
+.shared-lightbox-media-wrapper {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.shared-lightbox-img {
+  max-height: 900px;
+  max-width: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+  display: none;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.shared-lightbox-video {
+  max-height: 900px;
+  max-width: 100%;
+  width: auto;
+  height: auto;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+  display: none;
+  outline: none;
+}
+
+.shared-lightbox-audio {
+  display: none;
+  width: 350px;
+  background: #1a1d1e;
+  border-radius: 30px;
+  padding: 10px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+/* Controls */
+.shared-lightbox-close {
+  position: absolute;
+  top: 30px;
+  right: 40px;
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 3rem;
+  cursor: pointer;
+  line-height: 1;
+  transition: color 0.25s, transform 0.25s;
+  z-index: 100001;
+}
+
+.shared-lightbox-close:hover {
+  color: #fff;
+  transform: scale(1.1);
+}
+
+.shared-lightbox-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(26, 29, 30, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.7);
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  z-index: 100001;
+  font-size: 1.5rem;
+  user-select: none;
+  backdrop-filter: blur(10px);
+}
+
+.shared-lightbox-nav:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.shared-lightbox-prev {
+  left: 40px;
+}
+
+.shared-lightbox-next {
+  right: 40px;
+}
+
+/* Zoom Lens (Lentino) — 250px, 250% zoom */
+.shared-lightbox-lens {
+  position: fixed;
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  border: 3px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.3), 0 12px 36px rgba(0, 0, 0, 0.7);
+  background-repeat: no-repeat;
+  display: none;
+  pointer-events: none;
+  z-index: 100000;
+}
+
+/* Caption info */
+.shared-lightbox-caption {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.85rem;
+  background: rgba(18, 20, 21, 0.85);
+  padding: 8px 18px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  pointer-events: none;
+  z-index: 100001;
+  text-align: center;
+  letter-spacing: 0.05em;
+  font-family: inherit;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .shared-lightbox-prev {
+    left: 15px;
+  }
+  .shared-lightbox-next {
+    right: 15px;
+  }
+  .shared-lightbox-close {
+    top: 20px;
+    right: 25px;
+    font-size: 2.5rem;
+  }
+  .shared-lightbox-nav {
+    width: 44px;
+    height: 44px;
+    font-size: 1.2rem;
+  }
+  .shared-lightbox-lens {
+    display: none !important; /* Force hide lens on small/touch screens */
+  }
+}

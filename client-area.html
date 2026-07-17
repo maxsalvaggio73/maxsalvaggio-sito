@@ -17,9 +17,13 @@
   
   <!-- Portfolio Database -->
   <script src="archive-data.js"></script>
+  
+  <!-- Shared Lightbox Component -->
+  <script src="shared-lightbox.js"></script>
 
   <!-- Main Portfolio Stylesheet -->
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="shared-lightbox.css">
 
   <style>
     :root {
@@ -401,8 +405,8 @@
     }
     .gallery-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 30px;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 20px;
       margin-bottom: 40px;
     }
     .gallery-item {
@@ -424,7 +428,7 @@
     .gallery-preview-container {
       position: relative;
       width: 100%;
-      aspect-ratio: 3 / 2;
+      aspect-ratio: 1 / 1;
       overflow: hidden;
       background-color: rgba(0, 0, 0, 0.2);
     }
@@ -869,15 +873,7 @@
     </div>
   </main>
 
-  <!-- Built-in Lightbox Preview supporting Images, Video, and Audio -->
-  <div class="lightbox-overlay" id="lightbox" onclick="closeLightbox()">
-    <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
-    <div id="lightbox-content" onclick="event.stopPropagation()" style="max-width:90%; max-height:85%; display:flex; justify-content:center; align-items:center;">
-      <img src="" alt="Preview" class="lightbox-img" id="lightbox-img">
-      <video src="" controls class="lightbox-img" id="lightbox-video" style="outline:none; max-width:100%; max-height:80vh;"></video>
-      <audio src="" controls id="lightbox-audio" style="display:none; width:320px; outline:none;"></audio>
-    </div>
-  </div>
+  <!-- Shared Lightbox is dynamically injected by shared-lightbox.js -->
 
   <!-- FOOTER -->
   <footer>
@@ -1423,56 +1419,79 @@
           return idxA - idxB;
         });
 
-        // If files exist, build the grid
-        gridBody.innerHTML = "";
-        
-        imageFiles.forEach((file, index) => {
-          // Fetch the public URL of the file
+        // 4. Map files and prepare lightbox items
+        const mediaItems = [];
+        const galleryItems = [];
+
+        imageFiles.forEach((file) => {
           const { data: { publicUrl } } = supabaseClient
             .storage
             .from('client-proofs')
             .getPublicUrl(folderName + '/' + file.name);
 
-          // Get file type extension
           const ext = file.name.split('.').pop().toLowerCase();
           const isImage = ['jpg', 'jpeg', 'png', 'webp', 'gif'].includes(ext);
           const isVideo = ['mp4', 'mov', 'webm'].includes(ext);
           const isAudio = ['mp3', 'wav', 'ogg'].includes(ext);
           const isPdf = ext === 'pdf';
 
-          // Size formatting
           const sizeKB = (file.metadata?.size / 1024) || 0;
-          const sizeStr = sizeKB > 1024
-            ? (sizeKB / 1024).toFixed(2) + " MB"
-            : sizeKB.toFixed(1) + " KB";
+          const sizeStr = sizeKB > 1024 ? (sizeKB / 1024).toFixed(2) + " MB" : sizeKB.toFixed(1) + " KB";
 
-          // Element ID for dimensions
+          let itemType = 'document';
+          if (isImage) itemType = 'image';
+          else if (isVideo) itemType = 'video';
+          else if (isAudio) itemType = 'audio';
+
+          const isMedia = isImage || isVideo || isAudio;
+
+          let mediaIndex = -1;
+          if (isMedia) {
+            mediaItems.push({
+              url: publicUrl,
+              type: itemType,
+              name: file.name
+            });
+            mediaIndex = mediaItems.length - 1;
+          }
+
+          galleryItems.push({
+            file,
+            publicUrl,
+            isImage,
+            isVideo,
+            isAudio,
+            isPdf,
+            sizeStr,
+            isMedia,
+            mediaIndex
+          });
+        });
+
+        // Store globally for lightbox navigation
+        window.sharedLightboxItems = mediaItems;
+
+        // Build the grid
+        gridBody.innerHTML = "";
+        
+        galleryItems.forEach((item, index) => {
           const elementId = `client-dims-${index}`;
-
-          // Create item card
           const card = document.createElement("div");
           card.className = "gallery-item";
 
           let previewHtml = "";
-          let clickHandler = "";
-
-          if (isImage) {
-            clickHandler = `onclick="openLightbox('${publicUrl}', 'image')"`;
-            previewHtml = `<img src="${publicUrl}" alt="${file.name}" class="gallery-img" loading="lazy">`;
-          } else if (isVideo) {
-            clickHandler = `onclick="openLightbox('${publicUrl}', 'video')"`;
-            previewHtml = `<video src="${publicUrl}" class="gallery-img" style="object-fit: cover;" preload="metadata" muted loop onmouseover="this.play()" onmouseout="this.pause()"></video>`;
-          } else if (isAudio) {
-            clickHandler = `onclick="openLightbox('${publicUrl}', 'audio')"`;
+          if (item.isImage) {
+            previewHtml = `<img src="${item.publicUrl}" alt="${item.file.name}" class="gallery-img" loading="lazy">`;
+          } else if (item.isVideo) {
+            previewHtml = `<video src="${item.publicUrl}" class="gallery-img" style="object-fit: cover;" preload="metadata" muted loop onmouseover="this.play()" onmouseout="this.pause()"></video>`;
+          } else if (item.isAudio) {
             previewHtml = `
               <div class="gallery-img" style="display:flex; flex-direction:column; justify-content:center; align-items:center; background-color:rgba(255,255,255,0.02); height:100%;">
                 <span style="font-size:2.5rem;">🎵</span>
               </div>
             `;
           } else {
-            // Document, PDF or ZIP
-            const docIcon = isPdf ? "📕" : "📄";
-            clickHandler = `onclick="window.open('${publicUrl}', '_blank')"`;
+            const docIcon = item.isPdf ? "📕" : "📄";
             previewHtml = `
               <div class="gallery-img" style="display:flex; flex-direction:column; justify-content:center; align-items:center; background-color:rgba(255,255,255,0.02); height:100%;">
                 <span style="font-size:2.5rem;">${docIcon}</span>
@@ -1481,27 +1500,39 @@
           }
 
           card.innerHTML = `
-            <div class="gallery-preview-container" ${clickHandler}>
+            <div class="gallery-preview-container">
               ${previewHtml}
               <div class="gallery-overlay">
-                <a href="${publicUrl}" download="${file.name}" class="btn-download-item" onclick="event.stopPropagation()">Scarica</a>
+                <a href="${item.publicUrl}" download="${item.file.name}" class="btn-download-item" onclick="event.stopPropagation()">Scarica</a>
               </div>
             </div>
-            <div class="gallery-caption" ${clickHandler}>
-              <span class="caption-title">${file.name}</span>
+            <div class="gallery-caption">
+              <span class="caption-title">${item.file.name}</span>
               <div class="caption-meta">
-                <span>Peso: ${sizeStr}</span>
+                <span>Peso: ${item.sizeStr}</span>
                 <span id="${elementId}">Dimensioni: Calcolo...</span>
               </div>
             </div>
           `;
 
+          // Handle clicks on preview/caption preventing conflict with buttons
+          const openMedia = () => {
+            if (item.isMedia) {
+              SharedLightbox.open(window.sharedLightboxItems, item.mediaIndex);
+            } else {
+              window.open(item.publicUrl, '_blank');
+            }
+          };
+
+          card.querySelector('.gallery-preview-container').addEventListener('click', openMedia);
+          card.querySelector('.gallery-caption').addEventListener('click', openMedia);
+
           gridBody.appendChild(card);
 
-          // Render dimensions dynamically for images and videos
-          if (isImage) {
+          // Get dimensions dynamically if file is image or video
+          if (item.isImage) {
             const img = new Image();
-            img.src = publicUrl;
+            img.src = item.publicUrl;
             img.onload = () => {
               const el = document.getElementById(elementId);
               if (el) el.textContent = `Dimensioni: ${img.naturalWidth} x ${img.naturalHeight} px`;
@@ -1510,9 +1541,9 @@
               const el = document.getElementById(elementId);
               if (el) el.textContent = "Dimensioni: N/D";
             };
-          } else if (isVideo) {
+          } else if (item.isVideo) {
             const vid = document.createElement("video");
-            vid.src = publicUrl;
+            vid.src = item.publicUrl;
             vid.onloadedmetadata = () => {
               const el = document.getElementById(elementId);
               if (el) el.textContent = `Dimensioni: ${vid.videoWidth} x ${vid.videoHeight} px`;
@@ -1535,48 +1566,6 @@
         console.error("loadClientPhotos err:", err);
         statusMsg.textContent = "Errore durante il caricamento dei provini.";
       }
-    }
-
-    // Lightbox Controls supporting different formats
-    function openLightbox(url, type) {
-      const lightbox = document.getElementById("lightbox");
-      const img = document.getElementById("lightbox-img");
-      const video = document.getElementById("lightbox-video");
-      const audio = document.getElementById("lightbox-audio");
-
-      // Hide all elements
-      img.style.display = "none";
-      video.style.display = "none";
-      audio.style.display = "none";
-
-      if (type === 'image') {
-        img.src = url;
-        img.style.display = "block";
-      } else if (type === 'video') {
-        video.src = url;
-        video.style.display = "block";
-        video.play();
-      } else if (type === 'audio') {
-        audio.src = url;
-        audio.style.display = "block";
-        audio.play();
-      }
-
-      lightbox.classList.add("active");
-    }
-
-    function closeLightbox() {
-      const lightbox = document.getElementById("lightbox");
-      const video = document.getElementById("lightbox-video");
-      const audio = document.getElementById("lightbox-audio");
-
-      // Reset src to stop media playback
-      video.pause();
-      video.src = "";
-      audio.pause();
-      audio.src = "";
-
-      lightbox.classList.remove("active");
     }
 
     // Log Out
