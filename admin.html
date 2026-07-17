@@ -1983,12 +1983,28 @@ www.maxsalvaggio.com`;
 
         if (error) {
           console.error("Error loading guests:", error);
-          tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: #FF8A80; padding: 20px;">Errore nel caricamento: ${error.message}</td></tr>`;
+          tbody.innerHTML = `
+            <tr><td colspan="5" style="text-align: center; padding: 20px;">
+              <span style="color: #FF8A80; font-weight: 600;">⚠️ Errore nel caricamento:</span><br>
+              <span style="color: var(--text-secondary); font-size: 0.8rem; font-family: monospace;">${error.message}</span><br><br>
+              <span style="color: var(--text-secondary); font-size: 0.78rem;">
+                Se l'errore riguarda colonne mancanti, esegui prima la migrazione SQL dalla 
+                <a href="https://supabase.com/dashboard/project/dtqcwngdaokwiotjxykg/editor" target="_blank" style="color: var(--accent);">Supabase SQL Editor</a>.
+              </span>
+            </td></tr>`;
           return;
         }
 
-        if (guests.length === 0) {
-          tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: var(--text-secondary); padding: 20px;">Nessun utente Guest registrato.</td></tr>`;
+        if (!guests || guests.length === 0) {
+          tbody.innerHTML = `
+            <tr><td colspan="5" style="text-align: center; padding: 25px;">
+              <span style="color: var(--text-secondary); font-size: 0.85rem;">
+                Nessun utente Guest registrato.<br>
+                <span style="font-size: 0.75rem; opacity: 0.7; margin-top: 5px; display: block;">
+                  Compila il modulo sopra per creare il primo utente Guest.
+                </span>
+              </span>
+            </td></tr>`;
           return;
         }
 
