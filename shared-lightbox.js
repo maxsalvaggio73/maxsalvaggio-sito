@@ -88,7 +88,7 @@
       
       lens.style.display = 'block';
       lens.style.backgroundImage = `url(${img.src})`;
-      lens.style.backgroundSize = `${rect.width * 2.5}px ${rect.height * 2.5}px`;
+      lens.style.backgroundSize = `${rect.width * 2}px ${rect.height * 2}px`;
     });
 
     img.addEventListener('mouseleave', () => {
@@ -109,9 +109,9 @@
       lens.style.left = `${e.clientX - lensWidth / 2}px`;
       lens.style.top = `${e.clientY - lensHeight / 2}px`;
 
-      // 250% zoom background positioning
-      const bgX = -(x * 2.5 - lensWidth / 2);
-      const bgY = -(y * 2.5 - lensHeight / 2);
+      // 200% zoom background positioning
+      const bgX = -(x * 2 - lensWidth / 2);
+      const bgY = -(y * 2 - lensHeight / 2);
       lens.style.backgroundPosition = `${bgX}px ${bgY}px`;
     });
   }
