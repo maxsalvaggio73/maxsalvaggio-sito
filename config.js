@@ -5,7 +5,7 @@ const config = {
   // URL di reindirizzamento dopo il reset della password (usata in login.html)
   PASSWORD_RECOVERY_REDIRECT_URL: "https://www.maxsalvaggio.com/login.html",
   // Email dell'amministratore (riceve copia delle credenziali Guest)
-  ADMIN_EMAIL: "info@maxsalvaggio.com",
+  ADMIN_EMAIL: "maxsalvaggio@gmail.com",
   // EmailJS (opzionale) — compila per invio automatico
   // EMAILJS_SERVICE_ID: "service_xxxxxxx",
   // EMAILJS_TEMPLATE_ID: "template_xxxxxxx",

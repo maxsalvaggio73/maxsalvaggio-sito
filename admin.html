@@ -1894,59 +1894,73 @@ create policy "Consenti agli admin la gestione di oggetti public-portfolio" on s
 
     async function sendGuestEmail(email, name, password) {
       const subjectText = "Credenziali di accesso — Max Salvaggio Portfolio";
-      const bodyText = `Gentile ${name},\n\nTi comunichiamo che è stato creato per te un account Guest temporaneo per accedere al portfolio privato.\n\nEcco le tue credenziali di accesso:\n- Link di accesso: https://www.maxsalvaggio.com/login.html\n- Username (Email): ${email}\n- Password: ${password}\n\nConserva questa email per i prossimi accessi.\n\nUn cordiale saluto,\nMax Salvaggio\nStudio Fotografico Milano\nwww.maxsalvaggio.com`;
+      const bodyText = `Gentile ${name},
 
-      const hasEmailJs = typeof config !== 'undefined' && 
-                         config.EMAILJS_SERVICE_ID && 
-                         config.EMAILJS_PUBLIC_KEY;
-      
-      const templateId = (config.EMAILJS_GUEST_TEMPLATE_ID) || config.EMAILJS_TEMPLATE_ID;
+Ti comunichiamo che è stato creato per te un account Guest per accedere all'area riservata.
 
-      if (hasEmailJs && templateId) {
-        try {
-          // Send email to Guest
-          await fetch("https://api.emailjs.com/api/v1.0/email/send", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              service_id: config.EMAILJS_SERVICE_ID,
-              template_id: templateId,
-              user_id: config.EMAILJS_PUBLIC_KEY,
-              template_params: {
-                to_email: email,
-                to_name: name,
-                subject: subjectText,
-                message: bodyText
-              }
-            })
-          });
+Ecco le tue credenziali di accesso:
+- Link di accesso: https://www.maxsalvaggio.com/login.html
+- Username (Email): ${email}
+- Password: ${password}
 
-          // Send copy to Admin if ADMIN_EMAIL is set
-          if (config.ADMIN_EMAIL) {
-            await fetch("https://api.emailjs.com/api/v1.0/email/send", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                service_id: config.EMAILJS_SERVICE_ID,
-                template_id: templateId,
-                user_id: config.EMAILJS_PUBLIC_KEY,
-                template_params: {
-                  to_email: config.ADMIN_EMAIL,
-                  to_name: "Amministratore",
-                  subject: `[COPIA ADMIN] ${subjectText} (${email})`,
-                  message: `Questa è una copia di sicurezza delle credenziali inviate al Guest.\n\n---\n\n${bodyText}`
-                }
-              })
-            });
-          }
-          alert("Account Guest creato con successo! Email inviata al cliente (e copia all'amministratore).");
-        } catch (eJSerr) {
-          console.error("EmailJS guest sending error:", eJSerr);
-          alert("Utente creato, ma si è verificato un errore durante l'invio automatico dell'email.");
-          openEmailModal(subjectText, bodyText);
-        }
+Conserva questa email per i prossimi accessi.
+
+Un cordiale saluto,
+Max Salvaggio
+Studio Fotografico Milano
+www.maxsalvaggio.com`;
+
+      const adminEmail = (typeof config !== 'undefined' && config.ADMIN_EMAIL)
+                         ? config.ADMIN_EMAIL
+                         : "maxsalvaggio@gmail.com";
+
+      let guestSent = false;
+      let adminSent = false;
+
+      // --- 1. Invia email AL GUEST via Formspree ---
+      try {
+        const guestRes = await fetch("https://formspree.io/f/xzdqzagg", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", "Accept": "application/json" },
+          body: JSON.stringify({
+            _replyto: email,
+            email: email,
+            subject: subjectText,
+            message: bodyText
+          })
+        });
+        if (guestRes.ok) guestSent = true;
+      } catch (e) {
+        console.error("Formspree guest send error:", e);
+      }
+
+      // --- 2. Invia COPIA ALL'ADMIN via Formspree ---
+      try {
+        const adminMessage = `COPIA CREDENZIALI GUEST CREATO\n\nGuest: ${name}\nEmail Guest: ${email}\n\n---\n\n${bodyText}`;
+        const adminRes = await fetch("https://formspree.io/f/xzdqzagg", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", "Accept": "application/json" },
+          body: JSON.stringify({
+            _replyto: adminEmail,
+            email: adminEmail,
+            subject: `[COPIA ADMIN] ${subjectText} — ${name} (${email})`,
+            message: adminMessage
+          })
+        });
+        if (adminRes.ok) adminSent = true;
+      } catch (e) {
+        console.error("Formspree admin copy error:", e);
+      }
+
+      // --- 3. Feedback e fallback ---
+      if (guestSent && adminSent) {
+        alert(`✅ Account Guest creato!\n\nEmail con credenziali inviata a:\n• ${email}\n• Copia admin: ${adminEmail}`);
+      } else if (guestSent) {
+        alert(`⚠️ Email inviata al guest (${email}), ma la copia admin non è partita. Usa il modal per copiarla.`);
+        openEmailModal(subjectText, bodyText);
       } else {
-        // Fallback to manual modal copy-paste
+        // Fallback completo: modal per copia manuale
+        alert("⚠️ Utente creato ma l'invio automatico dell'email non è riuscito. Copia le credenziali dal riquadro che si aprirà.");
         openEmailModal(subjectText, bodyText);
       }
     }
@@ -1981,14 +1995,23 @@ create policy "Consenti agli admin la gestione di oggetti public-portfolio" on s
         tbody.innerHTML = "";
         guests.forEach(user => {
           const tr = document.createElement("tr");
-          
+          const isActive = user.is_approved !== false;
+          const toggleLabel = isActive ? 'Sospendi' : 'Approva';
+          const toggleClass = isActive ? 'btn-mini-suspend' : 'btn-mini-approve';
+          const statusBadge = isActive
+            ? `<span style="color: var(--accent-green); font-size: 0.75rem; font-weight: 600;">✔ Inviata via Email</span>`
+            : `<span style="color: var(--accent-yellow); font-size: 0.75rem; font-weight: 600;">⏸ Sospeso</span>`;
+
           tr.innerHTML = `
             <td>${user.first_name || 'N/D'}</td>
             <td>${user.last_name || 'N/D'}</td>
             <td class="email-cell">${user.email}</td>
-            <td class="status-cell">Inviata via Email</td>
-            <td style="text-align: center;">
-              <button class="btn-mini-action btn-mini-suspend" onclick="deleteGuestUser('${user.id}', '${user.email}')" title="Elimina Utente Guest">
+            <td>${statusBadge}</td>
+            <td style="text-align: right; white-space: nowrap; display: flex; gap: 6px; justify-content: flex-end;">
+              <button class="btn-mini-action ${toggleClass}" onclick="toggleGuestApproval('${user.id}', ${isActive})">
+                ${toggleLabel}
+              </button>
+              <button class="btn-mini-action btn-mini-suspend" style="border-color: rgba(229,9,20,0.3); color: #FF8A80;" onclick="deleteGuestUser('${user.id}', '${user.email}')">
                 Elimina
               </button>
             </td>
@@ -2080,6 +2103,29 @@ create policy "Consenti agli admin la gestione di oggetti public-portfolio" on s
       } finally {
         btn.disabled = false;
         spinner.style.display = "none";
+      }
+    }
+
+    async function toggleGuestApproval(userId, currentlyApproved) {
+      const newState = !currentlyApproved;
+      const actionLabel = newState ? 'riattivare' : 'sospendere';
+      const confirmMsg = `Sei sicuro di voler ${actionLabel} questo utente Guest?`;
+      if (!confirm(confirmMsg)) return;
+
+      try {
+        const { error } = await supabaseClient
+          .from('profiles')
+          .update({ is_approved: newState })
+          .eq('id', userId);
+
+        if (error) {
+          alert("Errore aggiornamento stato: " + error.message);
+          return;
+        }
+
+        loadGuestUsers();
+      } catch (err) {
+        console.error("toggleGuestApproval error:", err);
       }
     }
 
