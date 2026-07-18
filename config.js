@@ -1,7 +1,7 @@
 // Configurazione locale connessione Supabase (Ignorata in Git)
 const config = {
   SUPABASE_URL: "https://dtqcwngdaokwiotjxykg.supabase.co",
-  SUPABASE_ANON_KEY: "sb_publishable_mY0WKttHSjO12PwkgI8Xlg_1f_8zMDN",
+  SUPABASE_ANON_KEY: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR0cWN3bmdkYW9rd2lvdGp4eWtnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODMxNzYxOTMsImV4cCI6MjA5ODc1MjE5M30.txGNRRQu4hk8gu_6r-EpVPCV9kIott413NVC2_DowrI",
   // URL di reindirizzamento dopo il reset della password (usata in login.html)
   PASSWORD_RECOVERY_REDIRECT_URL: "https://www.maxsalvaggio.com/login.html",
   // Email dell'amministratore (riceve copia delle credenziali Guest)

@@ -13,6 +13,9 @@
   <!-- Supabase CDN -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   
+  <!-- SortableJS CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+  
   <!-- Local Config -->
   <script src="config.js"></script>
 
@@ -937,6 +940,108 @@
       border: 1px solid rgba(0, 150, 136, 0.25);
     }
 
+    /* Dynamic Portfolio Sidebar Styles */
+    .section-item-wrapper {
+      background: rgba(255, 255, 255, 0.015);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 4px;
+      margin-bottom: 12px;
+      transition: border-color 0.2s ease;
+    }
+    .section-item-wrapper:hover {
+      border-color: rgba(255, 255, 255, 0.1);
+    }
+    .section-header-block {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 10px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #fff;
+    }
+    .section-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex: 1;
+    }
+    .section-drag-handle, .page-drag-handle {
+      cursor: grab;
+      color: var(--text-secondary);
+      font-size: 0.85rem;
+      padding: 0 4px;
+      user-select: none;
+    }
+    .section-drag-handle:active, .page-drag-handle:active {
+      cursor: grabbing;
+    }
+    .section-controls, .page-controls {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+    .btn-sidebar-crud {
+      background: none;
+      border: none;
+      color: var(--text-secondary);
+      cursor: pointer;
+      font-size: 0.85rem;
+      padding: 2px 4px;
+      border-radius: 3px;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .btn-sidebar-crud:hover {
+      color: var(--accent);
+      background: rgba(255, 255, 255, 0.05);
+    }
+    .btn-sidebar-crud.btn-add:hover {
+      color: var(--accent-green);
+    }
+    .page-list-container {
+      min-height: 15px;
+      padding: 4px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      background: rgba(0,0,0,0.15);
+      border-radius: 4px;
+      border: 1px dashed rgba(255,255,255,0.03);
+    }
+    .portfolio-page-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      padding: 8px 10px;
+      font-size: 0.78rem;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    .portfolio-page-item:hover {
+      background-color: rgba(255, 255, 255, 0.04);
+      border-color: rgba(255, 255, 255, 0.1);
+    }
+    .portfolio-page-item.active {
+      background-color: rgba(229, 9, 20, 0.08);
+      border-color: rgba(229, 9, 20, 0.4);
+      color: #fff;
+    }
+    .portfolio-page-title-text {
+      flex: 1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin: 0 6px;
+    }
   </style>
 
   <!-- ========================================================
@@ -991,28 +1096,12 @@
     <!-- Portfolio Management Sidebar Menu -->
     <div class="sidebar-menu" id="portfolio-menu-wrapper" style="display: none; gap: 20px;">
       <div class="menu-section">
-        <div class="menu-section-title">
+        <div class="menu-section-title" style="display:flex; justify-content:space-between; align-items:center;">
           <span>Sezioni Portfolio</span>
+          <button onclick="createNewSectionPrompt()" style="background:none; border:none; color:var(--accent); font-weight:600; font-size:1.15rem; cursor:pointer;" title="Nuova Macro-Sezione">+</button>
         </div>
-        <div class="client-list">
-          <div class="client-item category-item active" data-category="overview" onclick="selectPortfolioCategory('overview', this)">Overview</div>
-          
-          <div style="font-size: 0.65rem; color: var(--text-secondary); text-transform: uppercase; margin-top: 10px; margin-bottom: 5px; letter-spacing: 0.05em; font-weight: 600;">Campaigns</div>
-          <div class="client-item category-item" data-category="campaigns-fashion" onclick="selectPortfolioCategory('campaigns-fashion', this)">Fashion</div>
-          <div class="client-item category-item" data-category="campaigns-lingerie" onclick="selectPortfolioCategory('campaigns-lingerie', this)">Lingerie</div>
-          <div class="client-item category-item" data-category="campaigns-swimwear" onclick="selectPortfolioCategory('campaigns-swimwear', this)">Swimwear</div>
-          
-          <div style="font-size: 0.65rem; color: var(--text-secondary); text-transform: uppercase; margin-top: 10px; margin-bottom: 5px; letter-spacing: 0.05em; font-weight: 600;">Body & Form</div>
-          <div class="client-item category-item" data-category="body-organic" onclick="selectPortfolioCategory('body-organic', this)">Organic Sculptures</div>
-          <div class="client-item category-item" data-category="body-shadows" onclick="selectPortfolioCategory('body-shadows', this)">Shadows & Intimacy</div>
-          
-          <div style="font-size: 0.65rem; color: var(--text-secondary); text-transform: uppercase; margin-top: 10px; margin-bottom: 5px; letter-spacing: 0.05em; font-weight: 600;">Portraits & Beauty</div>
-          <div class="client-item category-item" data-category="portraits-portraits" onclick="selectPortfolioCategory('portraits-portraits', this)">Portraits</div>
-          <div class="client-item category-item" data-category="portraits-beauty" onclick="selectPortfolioCategory('portraits-beauty', this)">Beauty</div>
-          <div class="client-item category-item" data-category="portraits-pets" onclick="selectPortfolioCategory('portraits-pets', this)">Pets & Portraits</div>
-
-          <div style="font-size: 0.65rem; color: var(--text-secondary); text-transform: uppercase; margin-top: 10px; margin-bottom: 5px; letter-spacing: 0.05em; font-weight: 600;">Editoriali</div>
-          <div class="client-item category-item" data-category="editorial-unpublished" onclick="selectPortfolioCategory('editorial-unpublished', this)">Unpublished</div>
+        <div class="client-list" id="portfolio-sections-list-body">
+          <!-- Popolato dinamicamente via JS -->
         </div>
       </div>
 
@@ -2652,7 +2741,8 @@ www.maxsalvaggio.com`;
         portfolioWrapper.style.display = "flex";
         portfolioPanel.style.display = "block";
         
-        // Load portfolio projects list & items
+        // Load portfolio sections, pages, projects & items
+        loadPortfolioSections();
         loadPortfolioProjects();
         loadPortfolioItems();
       } else if (mode === 'guest') {
@@ -2668,6 +2758,297 @@ www.maxsalvaggio.com`;
         
         // Show welcome panel, hide other panels
         welcomePanel.style.display = "flex";
+      }
+    }
+
+    // Dynamic Portfolio Sections & Pages list
+    window.portfolioPagesList = [];
+
+    async function loadPortfolioSections() {
+      if (!supabaseClient) return;
+      const container = document.getElementById("portfolio-sections-list-body");
+      container.innerHTML = '<div style="font-size:0.7rem; color:var(--text-secondary); padding: 5px 0;">Caricamento sezioni...</div>';
+
+      try {
+        // 1. Fetch sections
+        const { data: sections, error: sectErr } = await supabaseClient
+          .from('portfolio_sections')
+          .select('*')
+          .order('position', { ascending: true });
+
+        if (sectErr) throw sectErr;
+
+        // 2. Fetch pages
+        const { data: pages, error: pageErr } = await supabaseClient
+          .from('portfolio_pages')
+          .select('*')
+          .order('position', { ascending: true });
+
+        if (pageErr) throw pageErr;
+
+        window.portfolioPagesList = pages || [];
+        container.innerHTML = "";
+
+        if (!sections || sections.length === 0) {
+          container.innerHTML = '<div style="font-size:0.7rem; color:var(--text-secondary); padding: 5px 0;">Nessuna macro-sezione configurata.</div>';
+          return;
+        }
+
+        sections.forEach(sect => {
+          const sectWrapper = document.createElement("div");
+          sectWrapper.className = "section-item-wrapper";
+          sectWrapper.setAttribute("data-section-id", sect.id);
+
+          const isOverviewOrInfo = sect.slug === 'overview' || sect.slug === 'info';
+          const isActiveSection = activePortfolioCategory === sect.slug;
+
+          sectWrapper.innerHTML = `
+            <div class="section-header-block ${!sect.is_dropdown ? 'client-item category-item ' + (isActiveSection ? 'active' : '') : ''}" 
+                 ${!sect.is_dropdown ? `onclick="selectPortfolioCategory('${sect.slug}', this)"` : ''}>
+              <div class="section-title-wrap">
+                <span class="section-drag-handle" onclick="event.stopPropagation();">☰</span>
+                <span class="section-title-text">${sect.label}</span>
+              </div>
+              <div class="section-controls" onclick="event.stopPropagation();">
+                ${sect.is_dropdown ? `<button class="btn-sidebar-crud btn-add" title="Nuova Pagina" onclick="createNewPagePrompt('${sect.id}')">+</button>` : ''}
+                ${isOverviewOrInfo ? '' : `<button class="btn-sidebar-crud btn-delete" title="Elimina Sezione" onclick="deletePortfolioSection('${sect.id}', '${sect.label}')">🗑</button>`}
+              </div>
+            </div>
+            ${sect.is_dropdown ? `
+              <div class="page-list-container" data-section-id="${sect.id}" id="page-list-${sect.id}">
+                <!-- Popolato sotto -->
+              </div>
+            ` : ''}
+          `;
+
+          container.appendChild(sectWrapper);
+
+          if (sect.is_dropdown) {
+            const pageListContainer = sectWrapper.querySelector(".page-list-container");
+            const sectionPages = pages.filter(p => p.section_id === sect.id);
+
+            sectionPages.forEach(pg => {
+              const pageItem = document.createElement("div");
+              pageItem.className = `portfolio-page-item category-item ${activePortfolioCategory === pg.slug ? 'active' : ''}`;
+              pageItem.setAttribute("data-page-id", pg.id);
+              pageItem.setAttribute("data-category", pg.slug);
+              pageItem.onclick = () => selectPortfolioCategory(pg.slug, pageItem);
+
+              pageItem.innerHTML = `
+                <span class="page-drag-handle" onclick="event.stopPropagation();">☰</span>
+                <span class="portfolio-page-title-text">${pg.label}</span>
+                <div class="page-controls" onclick="event.stopPropagation();">
+                  <button class="btn-sidebar-crud btn-delete" title="Elimina Pagina" onclick="deletePortfolioPage('${pg.id}', '${pg.label}')">✕</button>
+                </div>
+              `;
+              pageListContainer.appendChild(pageItem);
+            });
+          }
+        });
+
+        // Initialize Sortable for Sections
+        new Sortable(container, {
+          handle: '.section-drag-handle',
+          animation: 150,
+          onEnd: async function() {
+            await saveSectionsOrder();
+          }
+        });
+
+        // Initialize Sortable for Pages under each dropdown section
+        const pageContainers = container.querySelectorAll(".page-list-container");
+        pageContainers.forEach(pc => {
+          new Sortable(pc, {
+            group: 'portfolio-pages',
+            handle: '.page-drag-handle',
+            animation: 150,
+            onEnd: async function(evt) {
+              const pageId = evt.item.getAttribute("data-page-id");
+              const targetSectionId = evt.to.getAttribute("data-section-id");
+              await savePagesOrder(pageId, targetSectionId);
+            }
+          });
+        });
+
+      } catch (err) {
+        console.error("loadPortfolioSections error:", err);
+        container.innerHTML = '<div style="font-size:0.7rem; color:#FF8A80;">Errore caricamento sezioni.</div>';
+      }
+    }
+
+    // Save ordering position of macro-sections
+    async function saveSectionsOrder() {
+      if (!supabaseClient) return;
+      const wrappers = document.querySelectorAll("#portfolio-sections-list-body .section-item-wrapper");
+      try {
+        const updates = Array.from(wrappers).map((wrap, index) => {
+          const id = wrap.getAttribute("data-section-id");
+          return supabaseClient
+            .from('portfolio_sections')
+            .update({ position: index })
+            .eq('id', id);
+        });
+
+        const results = await Promise.all(updates);
+        const hasError = results.some(r => r.error);
+        if (hasError) throw new Error("Errore durante il salvataggio dell'ordine delle sezioni.");
+        
+        console.log("Ordine sezioni aggiornato.");
+      } catch (err) {
+        console.error("saveSectionsOrder error:", err);
+        alert(err.message);
+      }
+    }
+
+    // Save ordering/position and section parent of pages
+    async function savePagesOrder(pageId, targetSectionId) {
+      if (!supabaseClient) return;
+      try {
+        // Get all items currently in target section to rebuild sequential positions
+        const pageItems = document.querySelectorAll(`#page-list-${targetSectionId} .portfolio-page-item`);
+        const updates = Array.from(pageItems).map((item, index) => {
+          const id = item.getAttribute("data-page-id");
+          const payload = { position: index };
+          if (id === pageId) {
+            payload.section_id = targetSectionId;
+          }
+          return supabaseClient
+            .from('portfolio_pages')
+            .update(payload)
+            .eq('id', id);
+        });
+
+        const results = await Promise.all(updates);
+        const hasError = results.some(r => r.error);
+        if (hasError) throw new Error("Errore durante il salvataggio dell'ordine delle pagine.");
+
+        console.log("Ordine pagine aggiornato.");
+      } catch (err) {
+        console.error("savePagesOrder error:", err);
+        alert(err.message);
+      }
+    }
+
+    // CRUD: Nuova Macro-Sezione
+    async function createNewSectionPrompt() {
+      const label = prompt("Inserisci il nome della nuova Macro-Sezione (es. 'ARCHIVE', 'EDITORIALS'):");
+      if (!label || !label.trim()) return;
+
+      const slug = label.toLowerCase()
+        .replace(/[^\w\s-]/g, '')
+        .trim()
+        .replace(/[-\s]+/g, '-');
+
+      if (!slug) {
+        alert("Nome non valido.");
+        return;
+      }
+
+      try {
+        // Fetch current count to assign position
+        const { count } = await supabaseClient
+          .from('portfolio_sections')
+          .select('id', { count: 'exact', head: true });
+
+        const { error } = await supabaseClient
+          .from('portfolio_sections')
+          .insert({
+            slug: slug,
+            label: label,
+            position: count || 0,
+            is_dropdown: true,
+            target: '#' + slug
+          });
+
+        if (error) throw error;
+
+        await loadPortfolioSections();
+      } catch (err) {
+        console.error("createNewSection error:", err);
+        alert("Errore durante la creazione: " + err.message);
+      }
+    }
+
+    // CRUD: Nuova Pagina
+    async function createNewPagePrompt(sectionId) {
+      const label = prompt("Inserisci il nome della nuova pagina (es. 'Portraits suisse', 'Fashion ibiza'):");
+      if (!label || !label.trim()) return;
+
+      const slug = label.toLowerCase()
+        .replace(/[^\w\s-]/g, '')
+        .trim()
+        .replace(/[-\s]+/g, '-');
+
+      if (!slug) {
+        alert("Nome non valido.");
+        return;
+      }
+
+      try {
+        // Fetch current count in this section to assign position
+        const { count } = await supabaseClient
+          .from('portfolio_pages')
+          .select('id', { count: 'exact', head: true })
+          .eq('section_id', sectionId);
+
+        const { error } = await supabaseClient
+          .from('portfolio_pages')
+          .insert({
+            section_id: sectionId,
+            slug: slug,
+            label: label,
+            position: count || 0,
+            target_type: 'tab',
+            target_value: slug,
+            target_section: '#portraits-beauty' // di default per visualizzazioni standard tab
+          });
+
+        if (error) throw error;
+
+        await loadPortfolioSections();
+      } catch (err) {
+        console.error("createNewPage error:", err);
+        alert("Errore durante la creazione della pagina: " + err.message);
+      }
+    }
+
+    // CRUD: Elimina Sezione
+    async function deletePortfolioSection(sectionId, label) {
+      const confirmDelete = confirm(`Sei sicuro di voler eliminare definitivamente la sezione "${label}"?\nQuesta operazione eliminerà anche tutte le pagine interne ad essa collegate.`);
+      if (!confirmDelete) return;
+
+      try {
+        const { error } = await supabaseClient
+          .from('portfolio_sections')
+          .delete()
+          .eq('id', sectionId);
+
+        if (error) throw error;
+
+        await loadPortfolioSections();
+      } catch (err) {
+        console.error("deletePortfolioSection error:", err);
+        alert("Errore durante l'eliminazione: " + err.message);
+      }
+    }
+
+    // CRUD: Elimina Pagina
+    async function deletePortfolioPage(pageId, label) {
+      const confirmDelete = confirm(`Sei sicuro di voler eliminare la pagina "${label}"?`);
+      if (!confirmDelete) return;
+
+      try {
+        const { error } = await supabaseClient
+          .from('portfolio_pages')
+          .delete()
+          .eq('id', pageId);
+
+        if (error) throw error;
+
+        await loadPortfolioSections();
+      } catch (err) {
+        console.error("deletePortfolioPage error:", err);
+        alert("Errore durante l'eliminazione: " + err.message);
       }
     }
 
@@ -2734,26 +3115,37 @@ www.maxsalvaggio.com`;
       document.querySelectorAll(".category-item, .project-item").forEach(item => {
         item.classList.remove("active");
       });
-      element.classList.add("active");
+      if (element) {
+        element.classList.add("active");
+      } else {
+        const targetEl = document.querySelector(`[data-category="${category}"]`);
+        if (targetEl) targetEl.classList.add("active");
+      }
       
       // Update title
       const titleElem = document.getElementById("active-portfolio-category-title");
       if (isProject && projectData) {
         titleElem.textContent = `Progetto: ${projectData.project_title}`;
       } else {
-        const categoryMap = {
-          'overview': 'Overview',
-          'campaigns-fashion': 'Campaigns - Fashion',
-          'campaigns-lingerie': 'Campaigns - Lingerie',
-          'campaigns-swimwear': 'Campaigns - Swimwear',
-          'body-organic': 'Body & Form - Organic Sculptures',
-          'body-shadows': 'Body & Form - Shadows & Intimacy',
-          'portraits-portraits': 'Portraits & Beauty - Portraits',
-          'portraits-beauty': 'Portraits & Beauty - Beauty',
-          'portraits-pets': 'Portraits & Beauty - Pets & Portraits',
-          'editorial-unpublished': 'Editoriali - Unpublished'
-        };
-        titleElem.textContent = categoryMap[category] || category.toUpperCase();
+        // Try to lookup dynamic labels first
+        const matchedPage = window.portfolioPagesList.find(p => p.slug === category);
+        if (matchedPage) {
+          titleElem.textContent = matchedPage.label;
+        } else {
+          const categoryMap = {
+            'overview': 'Overview',
+            'campaigns-fashion': 'Campaigns - Fashion',
+            'campaigns-lingerie': 'Campaigns - Lingerie',
+            'campaigns-swimwear': 'Campaigns - Swimwear',
+            'body-organic': 'Body & Form - Organic Sculptures',
+            'body-shadows': 'Body & Form - Shadows & Intimacy',
+            'portraits-portraits': 'Portraits & Beauty - Portraits',
+            'portraits-beauty': 'Portraits & Beauty - Beauty',
+            'portraits-pets': 'Portraits & Beauty - Pets & Portraits',
+            'editorial-unpublished': 'Editoriali - Unpublished'
+          };
+          titleElem.textContent = categoryMap[category] || category.toUpperCase();
+        }
       }
       
       // Show/Hide project metadata form

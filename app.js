@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
   
   // --- DOM ELEMENTS ---
   const sections = document.querySelectorAll(".spa-section");
-  const navLinks = document.querySelectorAll(".nav-link, .mobile-nav-link, .footer-nav-link");
+  let navLinks = document.querySelectorAll(".nav-link, .mobile-nav-link, .footer-nav-link");
   const brandLogo = document.getElementById("brand-logo");
   const hamburger = document.getElementById("hamburger");
   const mobileNavOverlay = document.getElementById("mobile-nav-overlay");
@@ -103,6 +103,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
     try {
       const supabaseClient = supabase.createClient(config.SUPABASE_URL, config.SUPABASE_ANON_KEY);
+      
+      // Carica sezioni e pagine per i menu dinamici
+      const { data: dbSections, error: sectError } = await supabaseClient
+        .from('portfolio_sections')
+        .select('*')
+        .order('position', { ascending: true });
+
+      const { data: dbPages, error: pageError } = await supabaseClient
+        .from('portfolio_pages')
+        .select('*')
+        .order('position', { ascending: true });
+
+      if (!sectError && !pageError && dbSections && dbSections.length > 0) {
+        buildDynamicMenus(dbSections, dbPages || []);
+      }
+
       const { data: dbRows, error } = await supabaseClient
         .from('portfolio_items')
         .select('*')
@@ -204,6 +220,30 @@ document.addEventListener("DOMContentLoaded", () => {
                 proj.images.push(imgObj);
               }
               break;
+            default:
+              // Dynamically map newly created categories as fallback
+              const catParts = row.category.split('-');
+              const mainGroup = catParts[0];
+              if (mainGroup === 'campaigns') {
+                const subKey = catParts.slice(1).join('_');
+                if (!newPortfolioData.campaigns[subKey]) newPortfolioData.campaigns[subKey] = [];
+                imgObj.tag = 'CAMPAIGNS';
+                newPortfolioData.campaigns[subKey].push(imgObj);
+              } else if (mainGroup === 'body') {
+                const subKey = catParts.slice(1).join('_');
+                if (!newPortfolioData.body_and_form[subKey]) newPortfolioData.body_and_form[subKey] = [];
+                imgObj.tag = 'BODY & FORM';
+                newPortfolioData.body_and_form[subKey].push(imgObj);
+              } else if (mainGroup === 'portraits') {
+                const subKey = catParts.slice(1).join('_');
+                if (!newPortfolioData.portraits_and_beauty[subKey]) newPortfolioData.portraits_and_beauty[subKey] = [];
+                imgObj.tag = 'PORTRAITS';
+                newPortfolioData.portraits_and_beauty[subKey].push(imgObj);
+              } else {
+                if (!newPortfolioData[row.category]) newPortfolioData[row.category] = [];
+                newPortfolioData[row.category].push(imgObj);
+              }
+              break;
           }
         });
 
@@ -215,6 +255,141 @@ document.addEventListener("DOMContentLoaded", () => {
     } catch (err) {
       console.error("Errore durante il caricamento del portfolio da Supabase:", err);
       console.log("Ripiego sul database locale offline.");
+    }
+  }
+
+  function buildDynamicMenus(sections, pages) {
+    const navMenu = document.querySelector(".nav-menu");
+    const mobileNavList = document.querySelector(".mobile-nav-list");
+    const footerNavContainer = document.querySelector(".footer-nav-container");
+
+    if (navMenu) {
+      let navHtml = "";
+      sections.forEach(sect => {
+        if (sect.is_dropdown) {
+          const sectPages = pages.filter(p => p.section_id === sect.id);
+          navHtml += `
+            <li class="dropdown">
+              <a href="${sect.target}" class="nav-link dropdown-toggle" data-section="${sect.target.replace('#', '')}" data-dropdown="${sect.slug}">${sect.label} <span class="arrow">&#9662;</span></a>
+              <ul class="dropdown-menu">
+                ${sectPages.map(pg => {
+                  if (pg.target_type === 'tab') {
+                    return `<li><a href="${pg.target_section || '#portraits-beauty'}" class="nav-link" data-section="${(pg.target_section || '#portraits-beauty').replace('#', '')}" data-tab="${pg.target_value}">${pg.label}</a></li>`;
+                  } else {
+                    return `<li><a href="${pg.target_value}" class="nav-link" data-section="${pg.target_value.replace('#', '')}">${pg.label}</a></li>`;
+                  }
+                }).join('')}
+              </ul>
+            </li>
+          `;
+        } else {
+          navHtml += `<li><a href="${sect.target}" class="nav-link" data-section="${sect.target.replace('#', '')}">${sect.label}</a></li>`;
+        }
+      });
+      navHtml += `<li class="nav-workspace-item"><a href="login.html" class="nav-link"><svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round" class="workspace-icon"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"></path></svg>LOG IN</a></li>`;
+      navMenu.innerHTML = navHtml;
+    }
+
+    if (mobileNavList) {
+      let mobileHtml = "";
+      sections.forEach(sect => {
+        if (sect.is_dropdown) {
+          const sectPages = pages.filter(p => p.section_id === sect.id);
+          mobileHtml += `
+            <li class="mobile-dropdown">
+              <span class="mobile-nav-link mobile-dropdown-toggle" data-dropdown="${sect.slug}">${sect.label} <span class="arrow">&#9662;</span></span>
+              <ul class="mobile-submenu">
+                ${sectPages.map(pg => {
+                  if (pg.target_type === 'tab') {
+                    return `<li><a href="${pg.target_section || '#portraits-beauty'}" class="mobile-nav-link" data-section="${(pg.target_section || '#portraits-beauty').replace('#', '')}" data-tab="${pg.target_value}">${pg.label}</a></li>`;
+                  } else {
+                    return `<li><a href="${pg.target_value}" class="mobile-nav-link" data-section="${pg.target_value.replace('#', '')}">${pg.label}</a></li>`;
+                  }
+                }).join('')}
+              </ul>
+            </li>
+          `;
+        } else {
+          mobileHtml += `<li><a href="${sect.target}" class="mobile-nav-link" data-section="${sect.target.replace('#', '')}">${sect.label}</a></li>`;
+        }
+      });
+      mobileHtml += `<li><a href="login.html" class="mobile-nav-link"><svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round" class="workspace-icon"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"></path></svg>LOG IN</a></li>`;
+      mobileNavList.innerHTML = mobileHtml;
+    }
+
+    if (footerNavContainer) {
+      const nonDropdowns = sections.filter(s => !s.is_dropdown);
+      const dropdowns = sections.filter(s => s.is_dropdown);
+      
+      const col1Sect = nonDropdowns.find(s => s.slug === 'overview');
+      const col4Sect = nonDropdowns.find(s => s.slug === 'info');
+      
+      const drop1 = dropdowns[0];
+      const drop2 = dropdowns[1];
+      const drop3 = dropdowns[2];
+      
+      let footerHtml = "";
+      
+      footerHtml += `
+        <div class="footer-nav-col">
+          <ul class="footer-nav-list-links">
+            ${col1Sect ? `<li><a href="${col1Sect.target}" class="footer-nav-link" data-section="${col1Sect.target.replace('#', '')}">${col1Sect.label.toUpperCase()}</a></li>` : ''}
+            ${drop1 ? `
+              <li class="footer-nav-header" style="margin-top: 15px;"><a href="${drop1.target}" class="footer-nav-link" data-section="${drop1.target.replace('#', '')}">${drop1.label.toUpperCase()}</a></li>
+              ${pages.filter(p => p.section_id === drop1.id).map(pg => {
+                const href = pg.target_type === 'tab' ? (pg.target_section || '#portraits-beauty') : pg.target_value;
+                const sec = href.replace('#', '');
+                return `<li><a href="${href}" class="footer-nav-link sub-link" data-section="${sec}" ${pg.target_type === 'tab' ? `data-tab="${pg.target_value}"` : ''}>${pg.label}</a></li>`;
+              }).join('')}
+            ` : ''}
+          </ul>
+        </div>
+      `;
+
+      footerHtml += `
+        <div class="footer-nav-col">
+          <ul class="footer-nav-list-links">
+            ${drop2 ? `
+              <li class="footer-nav-header"><a href="${drop2.target}" class="footer-nav-link" data-section="${drop2.target.replace('#', '')}">${drop2.label.toUpperCase()}</a></li>
+              ${pages.filter(p => p.section_id === drop2.id).map(pg => {
+                const href = pg.target_type === 'tab' ? (pg.target_section || '#portraits-beauty') : pg.target_value;
+                const sec = href.replace('#', '');
+                return `<li><a href="${href}" class="footer-nav-link sub-link" data-section="${sec}" ${pg.target_type === 'tab' ? `data-tab="${pg.target_value}"` : ''}>${pg.label}</a></li>`;
+              }).join('')}
+            ` : ''}
+          </ul>
+        </div>
+      `;
+
+      footerHtml += `
+        <div class="footer-nav-col">
+          <ul class="footer-nav-list-links">
+            ${drop3 ? `
+              <li class="footer-nav-header"><a href="${drop3.target}" class="footer-nav-link" data-section="${drop3.target.replace('#', '')}">${drop3.label.toUpperCase()}</a></li>
+              ${pages.filter(p => p.section_id === drop3.id).map(pg => {
+                const href = pg.target_type === 'tab' ? (pg.target_section || '#portraits-beauty') : pg.target_value;
+                const sec = href.replace('#', '');
+                return `<li><a href="${href}" class="footer-nav-link sub-link" data-section="${sec}" ${pg.target_type === 'tab' ? `data-tab="${pg.target_value}"` : ''}>${pg.label}</a></li>`;
+              }).join('')}
+            ` : ''}
+          </ul>
+        </div>
+      `;
+
+      footerHtml += `
+        <div class="footer-nav-col">
+          <ul class="footer-nav-list-links">
+            ${col4Sect ? `<li><a href="${col4Sect.target}" class="footer-nav-link" data-section="${col4Sect.target.replace('#', '')}">${col4Sect.label.toUpperCase()}</a></li>` : ''}
+            <li><a href="login.html" class="footer-nav-link"><svg viewBox="0 0 24 24" width="10" height="10" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round" class="workspace-icon" style="margin-right:5px; transform:translateY(-1px);"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"></path></svg>LOG IN</a></li>
+          </ul>
+        </div>
+      `;
+      footerNavContainer.innerHTML = footerHtml;
+    }
+
+    // Re-bind the click and transition events to dynamic menu items
+    if (typeof bindNavigationEvents === 'function') {
+      bindNavigationEvents();
     }
   }
 
@@ -263,69 +438,77 @@ document.addEventListener("DOMContentLoaded", () => {
         switchSection(newHash, true);
       }
     });
+    bindNavigationEvents();
 
-    // Nav Links click binding
-    navLinks.forEach(link => {
-      link.addEventListener("click", (e) => {
-        const targetSection = link.getAttribute("data-section");
-        const targetTab = link.getAttribute("data-tab");
-        if (targetSection) {
+    function bindNavigationEvents() {
+      // Re-query current links in the DOM
+      navLinks = document.querySelectorAll(".nav-link, .mobile-nav-link, .footer-nav-link");
+
+      // Nav Links click binding
+      navLinks.forEach(link => {
+        // Remove existing listener if any by cloning and replacing (or just bind safely)
+        // Since we are rebuilding HTML, simple event listeners bind cleanly.
+        link.addEventListener("click", (e) => {
+          const targetSection = link.getAttribute("data-section");
+          const targetTab = link.getAttribute("data-tab");
+          if (targetSection) {
+            e.preventDefault();
+            
+            if (targetTab) {
+              localStorage.setItem("activeTab", targetTab);
+              const tabButton = document.querySelector(`.tab-link[data-tab="${targetTab}"]`);
+              if (tabButton) {
+                tabButton.click();
+              }
+            }
+            
+            window.location.hash = targetSection;
+            closeMobileMenu();
+          }
+        });
+      });
+
+      // Archive Back Buttons click binding (takes you back to the Archive landing page)
+      document.querySelectorAll(".btn-archive-back").forEach(btn => {
+        btn.addEventListener("click", () => {
+          window.location.hash = "archive";
+        });
+      });
+
+      // Make clicking the parent dropdown items load their respective section
+      document.querySelectorAll(".dropdown-toggle").forEach(toggle => {
+        toggle.addEventListener("click", (e) => {
           e.preventDefault();
-          
-          if (targetTab) {
-            localStorage.setItem("activeTab", targetTab);
-            const tabButton = document.querySelector(`.tab-link[data-tab="${targetTab}"]`);
-            if (tabButton) {
-              tabButton.click();
+          const targetSection = toggle.getAttribute("data-section");
+          if (targetSection) {
+            window.location.hash = targetSection;
+          }
+        });
+      });
+
+      // Mobile dropdown toggle
+      document.querySelectorAll(".mobile-dropdown-toggle").forEach(toggle => {
+        toggle.addEventListener("click", (e) => {
+          e.stopPropagation();
+          const submenu = toggle.nextElementSibling;
+          if (submenu) {
+            toggle.classList.toggle("open");
+            submenu.classList.toggle("open");
+            const arrow = toggle.querySelector(".arrow");
+            if (arrow) {
+              arrow.style.transform = submenu.classList.contains("open") ? "rotate(180deg)" : "rotate(0deg)";
             }
           }
-          
-          window.location.hash = targetSection;
-          closeMobileMenu();
-        }
+        });
       });
-    });
 
-    // Archive Back Buttons click binding (takes you back to the Archive landing page)
-    document.querySelectorAll(".btn-archive-back").forEach(btn => {
-      btn.addEventListener("click", () => {
-        window.location.hash = "archive";
-      });
-    });
-
-    // Make clicking the parent dropdown items load their respective section
-    document.querySelectorAll(".dropdown-toggle").forEach(toggle => {
-      toggle.addEventListener("click", (e) => {
-        e.preventDefault();
-        const targetSection = toggle.getAttribute("data-section");
-        if (targetSection) {
-          window.location.hash = targetSection;
-        }
-      });
-    });
-
-    // Mobile dropdown toggle
-    document.querySelectorAll(".mobile-dropdown-toggle").forEach(toggle => {
-      toggle.addEventListener("click", (e) => {
-        e.stopPropagation();
-        const submenu = toggle.nextElementSibling;
-        if (submenu) {
-          toggle.classList.toggle("open");
-          submenu.classList.toggle("open");
-          const arrow = toggle.querySelector(".arrow");
-          if (arrow) {
-            arrow.style.transform = submenu.classList.contains("open") ? "rotate(180deg)" : "rotate(0deg)";
-          }
-        }
-      });
-    });
-
-    // Brand Logo link click
-    if (brandLogo) {
-      brandLogo.addEventListener("click", (e) => {
-        e.preventDefault();
-        window.location.hash = "overview";
-      });
+      // Brand Logo link click
+      if (brandLogo) {
+        brandLogo.addEventListener("click", (e) => {
+          e.preventDefault();
+          window.location.hash = "overview";
+        });
+      }
     }
 
     // Hamburger Menu
