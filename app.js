@@ -234,7 +234,6 @@ document.addEventListener("DOMContentLoaded", () => {
       "body-form",
       "portraits-beauty",
       "film-work",
-      "bio",
       "contact",
       "unpublished-research",
       "pb-portraits",
@@ -244,7 +243,11 @@ document.addEventListener("DOMContentLoaded", () => {
       "body-shadows"
     ];
     
-    if (initialHash && validSections.includes(initialHash)) {
+    // Redirect legacy #bio hash to #contact (bio is now merged into INFO)
+    if (initialHash === "bio") {
+      window.location.hash = "contact";
+      activeSectionId = "contact";
+    } else if (initialHash && validSections.includes(initialHash)) {
       activeSectionId = initialHash;
     } else {
       activeSectionId = "overview";
@@ -365,28 +368,49 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // Update parent dropdown toggle active states
+    const activeTab = localStorage.getItem("activeTab") || (window._lastActiveTab || "");
     const dropdownGroups = [
       {
         toggleSelector: '[data-dropdown="archive"]',
-        sections: ["editorials", "campaigns-fashion", "campaigns-lingerie", "campaigns-swimwear", "unpublished-research", "archive"]
+        // portraits-beauty is included so that when Beauty tab is active (via Archive menu), Archive toggle stays highlighted
+        sections: ["editorials", "campaigns-fashion", "campaigns-lingerie", "campaigns-swimwear", "unpublished-research", "archive", "portraits-beauty"],
+        tabFilter: { section: "portraits-beauty", activeTab: "pb-beauty" } // only highlight archive if we're on the Beauty tab
       },
       {
         toggleSelector: '[data-dropdown="portraits-beauty"]',
-        sections: ["portraits-beauty"]
+        sections: ["portraits-beauty"],
+        tabFilter: null // highlight for any tab under portraits-beauty
       },
       {
         toggleSelector: '[data-dropdown="body-form"]',
-        sections: ["body-form"]
+        sections: ["body-form"],
+        tabFilter: null
       }
     ];
     dropdownGroups.forEach(group => {
       const toggles = document.querySelectorAll(group.toggleSelector);
+      let isActive = false;
       if (group.sections.includes(targetId)) {
+        if (group.tabFilter && group.tabFilter.section === targetId) {
+          // Special case: only activate if the Beauty tab is active
+          const currentActiveTab = document.querySelector('.tab-link.active');
+          const currentTabId = currentActiveTab ? currentActiveTab.getAttribute('data-tab') : "";
+          isActive = (currentTabId === group.tabFilter.activeTab) || (activeTab === group.tabFilter.activeTab);
+          // For portraits-beauty toggle: highlight ONLY when Beauty tab is NOT active
+          if (group.toggleSelector === '[data-dropdown="portraits-beauty"]') {
+            isActive = !((currentTabId === "pb-beauty") || (activeTab === "pb-beauty"));
+          }
+        } else {
+          isActive = true;
+        }
+      }
+      if (isActive) {
         toggles.forEach(t => t.classList.add("active"));
       } else {
         toggles.forEach(t => t.classList.remove("active"));
       }
     });
+
 
     if (currentActive && currentActive.id === ("section-" + sectionId) && targetId !== "editorials" && targetId !== "unpublished-research") {
       return;
@@ -467,7 +491,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Show/hide back to top button depending on section
     const btnBackToTop = document.getElementById("btn-back-to-top");
     if (btnBackToTop) {
-      if (targetId === "contact" || targetId === "bio") {
+      if (targetId === "contact") {
         btnBackToTop.style.display = "none";
       } else {
         btnBackToTop.style.display = "flex";
