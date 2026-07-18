@@ -1084,6 +1084,38 @@ alter table public.profiles
   add column if not exists onboarding_completed boolean default false,
   add column if not exists documents_approved boolean default false;
 
+-- 1b. Abilita e configura RLS per la tabella 'profiles' (RISOLVE l'errore RLS)
+alter table public.profiles enable row level security;
+
+create or replace function public.is_admin()
+returns boolean as $$
+begin
+  return exists (
+    select 1 from public.profiles
+    where id = auth.uid() and is_admin = true
+  );
+end;
+$$ language plpgsql security definer;
+
+-- Rimuovi eventuali policy esistenti per evitare conflitti
+drop policy if exists "Allow all operations for admins" on public.profiles;
+drop policy if exists "Allow select for owners" on public.profiles;
+drop policy if exists "Allow update for owners" on public.profiles;
+drop policy if exists "Allow insert for owners" on public.profiles;
+
+-- Crea le nuove policy sicure e ricorsione-free
+create policy "Allow all operations for admins" on public.profiles
+  for all to authenticated using (public.is_admin()) with check (public.is_admin());
+
+create policy "Allow select for owners" on public.profiles
+  for select to authenticated using (auth.uid() = id);
+
+create policy "Allow update for owners" on public.profiles
+  for update to authenticated using (auth.uid() = id) with check (auth.uid() = id);
+
+create policy "Allow insert for owners" on public.profiles
+  for insert to authenticated with check (auth.uid() = id);
+
 -- 2. Permette a te (Amministratore) di gestire tutto lo storage
 create policy "Admins can select files" on storage.objects for select using (
   bucket_id = 'client-proofs' and (select is_admin from public.profiles where id = auth.uid()) = true
@@ -2064,8 +2096,18 @@ www.maxsalvaggio.com`;
       try {
         const password = generatePassword(12);
 
-        // 1. Sign up user in Supabase Auth
-        const { data, error } = await supabaseClient.auth.signUp({
+        // Create a temporary client that doesn't persist the session,
+        // so calling signUp won't overwrite the admin's session.
+        const tempSupabase = supabase.createClient(config.SUPABASE_URL, config.SUPABASE_ANON_KEY, {
+          auth: {
+            persistSession: false,
+            autoRefreshToken: false,
+            detectSessionInUrl: false
+          }
+        });
+
+        // 1. Sign up user in Supabase Auth using the temporary client
+        const { data, error } = await tempSupabase.auth.signUp({
           email: email,
           password: password
         });
