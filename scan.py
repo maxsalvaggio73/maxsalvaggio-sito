@@ -1,7 +1,7 @@
 import os
 import json
 import re
-from datetime import datetime
+from datetime import datetime, timezone
 
 base_dir = os.path.dirname(os.path.abspath(__file__))
 output_file = os.path.join(base_dir, 'archive-data.js')
@@ -307,7 +307,7 @@ def scan_all():
 
     # Output JSON database to file
     js_content = f"""// Database delle immagini generato automaticamente dallo script scan.py
-// Data di generazione: {datetime.utcnow().isoformat()}Z
+// Data di generazione: {datetime.now(timezone.utc).isoformat()}
 
 const portfolioData = {json.dumps(data, indent=2, ensure_ascii=False)};
 """
