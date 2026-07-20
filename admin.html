@@ -1440,6 +1440,16 @@ create policy "Consenti agli admin la gestione di oggetti public-portfolio" on s
           </tbody>
         </table>
       </div>
+    <div class="guest-workspace" id="guest-workspace" style="display:none;">
+  <div class="guest-info-card" style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius:6px; padding:20px; margin-bottom:30px;">
+    <h3 id="guest-name" style="margin:0 0 10px; font-family: var(--font-display); color: var(--text-primary);"></h3>
+    <p id="guest-email" style="margin:0; color: var(--text-secondary);"></p>
+  </div>
+  <div class="guest-proofs" id="guest-proofs" style="display:flex; flex-wrap:wrap; gap:15px;">
+    <!-- Proof thumbnails will be inserted here -->
+  </div>
+  <button class="btn-submit" style="margin-top:20px;" onclick="showGuestList()">← Torna all'elenco Guest</button>
+</div>
 
     </div>
 

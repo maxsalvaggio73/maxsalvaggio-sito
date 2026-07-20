@@ -27,6 +27,11 @@ Sito portfolio ufficiale del fotografo **Max Salvaggio**, con gallerie interatti
 Le fotografie originali dell'archivio **non sono incluse** in questo repository per motivi di peso e copyright.  
 Per eseguire il sito in locale, posiziona la cartella `Max Salvaggio Archivio/` nella stessa directory di `index.html`.
 
+## Cronologia delle modifiche (CHANGELOG)
+
+- **2026-07-18** – Ripristino forzato alla versione stabile via Git (commit 97704da).
+- **2026-07-20** – Implementata logica "Registra & Invia Credenziali" per la sezione Guest (creazione Supabase, email Formspree, UI refresh).
+
 ---
 
 © Max Salvaggio — Tutti i diritti riservati
