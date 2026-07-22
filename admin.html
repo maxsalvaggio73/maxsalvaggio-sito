@@ -1117,15 +1117,35 @@
     </div>
 
     <!-- Guest Management Sidebar Menu -->
-    <div class="sidebar-menu" id="guest-menu-wrapper" style="display: none; gap: 20px;">
+    <div class="sidebar-menu" id="guest-menu-wrapper" style="display: none; flex-direction: column; gap: 20px;">
+      
+      <!-- Section 1: Form di creazione Guest -->
       <div class="menu-section">
         <div class="menu-section-title">
-          <span>Stato Guest</span>
+          <span>Crea Utente Guest</span>
         </div>
-        <div class="client-list">
-          <div class="client-item active" style="cursor: default;">Gestione Guest Attivi</div>
+        <form id="guest-creation-form" style="display: flex; flex-direction: column; gap: 10px; margin-top: 8px;" onsubmit="event.preventDefault(); submitCreateGuest();">
+          <input type="text" id="guest-first-name" placeholder="Nome" required style="width: 100%; background: rgba(0,0,0,0.25); border: 1px solid var(--border-color); border-radius: 4px; padding: 8px 10px; font-size: 0.78rem; color: var(--text-primary); font-family: var(--font-body);">
+          <input type="text" id="guest-last-name" placeholder="Cognome" required style="width: 100%; background: rgba(0,0,0,0.25); border: 1px solid var(--border-color); border-radius: 4px; padding: 8px 10px; font-size: 0.78rem; color: var(--text-primary); font-family: var(--font-body);">
+          <input type="email" id="guest-email" placeholder="Email / Username" required style="width: 100%; background: rgba(0,0,0,0.25); border: 1px solid var(--border-color); border-radius: 4px; padding: 8px 10px; font-size: 0.78rem; color: var(--text-primary); font-family: var(--font-body);">
+          <button type="submit" class="btn-submit" id="btn-create-guest" style="margin-top: 4px; padding: 9px 12px; font-size: 0.72rem; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%;">
+            <span class="spinner" id="guest-create-spinner" style="width: 12px; height: 12px; border-width: 2px;"></span>
+            <span>Registra & Invia Credenziali</span>
+          </button>
+        </form>
+      </div>
+
+      <!-- Section 2: Elenco Utenti Guest -->
+      <div class="menu-section">
+        <div class="menu-section-title" style="display: flex; justify-content: space-between; align-items: center;">
+          <span>Elenco Guest Attivi</span>
+          <button class="btn-refresh" style="font-size: 0.65rem; padding: 0; background: none; border: none; color: var(--accent);" onclick="loadGuestUsers()">Aggiorna</button>
+        </div>
+        <div class="client-list" id="guest-list-body">
+          <div class="empty-state" style="font-size: 0.75rem; padding: 10px 0;">Caricamento utenti Guest...</div>
         </div>
       </div>
+
     </div>
 
     <div class="sidebar-footer">
@@ -1142,7 +1162,7 @@
     <!-- WELCOME VIEW (No client active) -->
     <div class="welcome-workspace" id="welcome-panel">
       <h2>Benvenuto nel Pannello Admin</h2>
-      <p>Seleziona un cliente attivo dalla lista a sinistra per visualizzare, caricare o riordinare il materiale a lui condiviso. Le richieste di accesso in attesa compariranno in cima alla barra laterale.</p>
+      <p>Seleziona un cliente attivo o un utente guest dalla lista a sinistra per visualizzare, caricare o riordinare il materiale a lui condiviso. Le richieste di accesso in attesa compariranno in cima alla barra laterale.</p>
       
       <button class="btn-submit" id="open-sql-guide" style="margin-top:15px;">Guida SQL e Regole di Sicurezza</button>
 <div id="sql-slide-menu" class="slide-menu">
@@ -1178,34 +1198,29 @@ alter table public.profiles enable row level security;
 
 create or replace function public.is_admin()
 returns boolean as $$
-begin
-  return exists (
-    select 1 from public.profiles
-    where id = auth.uid() and is_admin = true
-  );
-end;
-$$ language plpgsql security definer;
+select coalesce(
+  (select is_admin from public.profiles where id = auth.uid()),
+  false
+);
+$$ language sql security definer;
 
--- Rimuovi eventuali policy esistenti per evitare conflitti
-drop policy if exists "Allow all operations for admins" on public.profiles;
-drop policy if exists "Allow select for owners" on public.profiles;
-drop policy if exists "Allow update for owners" on public.profiles;
-drop policy if exists "Allow insert for owners" on public.profiles;
+-- 1c. Policy RLS per profiles
+create policy "Admins can view all profiles" on public.profiles
+  for select using (public.is_admin());
 
--- Crea le nuove policy sicure e ricorsione-free
-create policy "Allow all operations for admins" on public.profiles
-  for all to authenticated using (public.is_admin()) with check (public.is_admin());
+create policy "Admins can update profiles" on public.profiles
+  for update using (public.is_admin());
 
-create policy "Allow select for owners" on public.profiles
-  for select to authenticated using (auth.uid() = id);
+create policy "Admins can insert profiles" on public.profiles
+  for insert with check (public.is_admin());
 
-create policy "Allow update for owners" on public.profiles
-  for update to authenticated using (auth.uid() = id) with check (auth.uid() = id);
+create policy "Users can view own profile" on public.profiles
+  for select using (auth.uid() = id);
 
-create policy "Allow insert for owners" on public.profiles
-  for insert to authenticated with check (auth.uid() = id);
+create policy "Users can update own profile" on public.profiles
+  for update using (auth.uid() = id);
 
--- 2. Permette a te (Amministratore) di gestire tutto lo storage
+-- 2. Permette agli admin la piena gestione del bucket 'client-proofs'
 create policy "Admins can select files" on storage.objects for select using (
   bucket_id = 'client-proofs' and (select is_admin from public.profiles where id = auth.uid()) = true
 );
@@ -1338,118 +1353,78 @@ create policy "Consenti agli admin la gestione di oggetti public-portfolio" on s
 
       <!-- Project Metadata Editor (Visible only when an editorial project is active) -->
       <div class="project-meta-form" id="portfolio-project-meta-box" style="display: none;">
-        <div class="form-group-compact">
-          <label for="project-meta-title">Titolo Progetto</label>
-          <input type="text" id="project-meta-title" placeholder="Es. Viaggio in Oriente">
+        <div class="section-subheading" style="margin-bottom: 15px;">
+          <span>Dettagli Progetto Editoriale</span>
         </div>
-        <div class="form-group-compact">
-          <label for="project-meta-place">Luogo dello scatto</label>
-          <input type="text" id="project-meta-place" placeholder="Es. Cambodia">
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+          <div>
+            <label style="font-size: 0.7rem; color: var(--text-secondary); display: block; margin-bottom: 4px;">Titolo Progetto</label>
+            <input type="text" id="proj-meta-title" placeholder="Es. Summer Campaign" style="width: 100%; background: rgba(0,0,0,0.3); border: 1px solid var(--border-color); border-radius: 4px; padding: 8px; font-size: 0.8rem; color: #fff;">
+          </div>
+          <div>
+            <label style="font-size: 0.7rem; color: var(--text-secondary); display: block; margin-bottom: 4px;">Luogo / Location</label>
+            <input type="text" id="proj-meta-place" placeholder="Es. Milano, Italia" style="width: 100%; background: rgba(0,0,0,0.3); border: 1px solid var(--border-color); border-radius: 4px; padding: 8px; font-size: 0.8rem; color: #fff;">
+          </div>
+          <div>
+            <label style="font-size: 0.7rem; color: var(--text-secondary); display: block; margin-bottom: 4px;">Rivista / Magazine</label>
+            <input type="text" id="proj-meta-magazine" placeholder="Es. Vogue Italia" style="width: 100%; background: rgba(0,0,0,0.3); border: 1px solid var(--border-color); border-radius: 4px; padding: 8px; font-size: 0.8rem; color: #fff;">
+          </div>
         </div>
-        <div class="form-group-compact">
-          <label for="project-meta-magazine">Rivista</label>
-          <input type="text" id="project-meta-magazine" placeholder="Es. Grazia">
-        </div>
-        <div style="display: flex; gap: 10px; padding-top: 5px;">
-          <button class="btn-submit" style="margin: 0; padding: 10px 15px; font-size: 0.72rem; background: var(--accent-green); border: none;" onclick="updateProjectMetadata()">Aggiorna Info</button>
-          <button class="btn-action btn-suspend" style="margin: 0; padding: 10px 15px; font-size: 0.72rem; border-radius: 4px; background: rgba(255,255,255,0.05); border: 1px solid var(--border-color);" onclick="deleteEditorialProject()">Elimina Progetto</button>
-        </div>
+        <button class="btn-submit" style="margin: 0; padding: 8px 16px; font-size: 0.75rem; width: auto;" onclick="saveProjectMetadata()">Salva Dettagli Progetto</button>
       </div>
 
       <!-- Drag & Drop Upload Zone for Portfolio -->
-      <div class="upload-zone" id="portfolio-drop-zone" style="margin-bottom: 25px;">
-        <span class="upload-zone-text" id="portfolio-drop-zone-text">Trascina qui le foto da aggiungere al Portfolio, o clicca per sfogliare (Dropbox, Rullino o File Locali)</span>
-        <input type="file" id="portfolio-file-input" style="display: none;" onchange="handlePortfolioFileSelect(event)" accept="image/*" multiple>
+      <div class="upload-zone" id="portfolio-drop-zone">
+        <span class="upload-zone-text" id="portfolio-drop-zone-text">Trascina qui le immagini da aggiungere a questa sezione portfolio o clicca per sfogliare</span>
+        <input type="file" id="portfolio-file-input" style="display: none;" onchange="handlePortfolioFileSelect(event)" multiple accept="image/*">
         <div id="portfolio-selected-files-list" style="margin-top: 10px; font-size: 0.78rem; color: var(--accent); font-weight: 500; word-break: break-all;"></div>
       </div>
 
       <button id="btn-upload-portfolio-file" class="btn-submit" style="margin-bottom: 30px; display: none;" onclick="startPortfolioFileUpload()">
         <span class="spinner" id="portfolio-upload-spinner"></span>
-        <span>Carica e Ottimizza Immagini nel Portfolio</span>
+        <span>Carica immagini nel portfolio</span>
       </button>
 
-      <!-- Grid Subtitle for help -->
-      <div style="font-size: 0.72rem; color: var(--text-secondary); margin-bottom: 10px; font-style: italic;">
-        Trascina le schede per cambiare l'ordine delle foto. Ricordati di cliccare su "Salva Ordine Griglia" al termine.
-      </div>
-
-      <!-- Dynamic Portfolio Thumbnail Grid -->
+      <!-- Portfolio Items Draggable Grid -->
       <div class="portfolio-grid" id="portfolio-grid-container">
-        <!-- Rendered dynamically -->
+        <!-- Dynamic content -->
       </div>
 
     </div>
 
-    <!-- GUEST WORKSPACE VIEW (Active when in guest mode) -->
-    <div class="guest-container" id="guest-panel" style="display: none;">
+    <!-- GUEST WORKSPACE VIEW (Active when in guest mode or guest selected) -->
+    <div class="client-workspace" id="guest-panel" style="display: none; padding: 30px;">
       
-      <div class="guest-header">
-        <div>
-          <span style="font-size: 0.72rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.1em; display: block; margin-bottom: 4px;">Pannello di Controllo</span>
-          <h2 style="font-family: var(--font-display); font-size: 1.5rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-primary); margin: 0;">Registrazione & Gestione Guest</h2>
+      <div class="workspace-header">
+        <h2 class="workspace-title">Spazio Guest: <span id="active-guest-title">Seleziona un Guest</span></h2>
+        <button class="btn-action btn-suspend" id="btn-close-guest-workspace" style="border-radius: 20px; display: none;" onclick="closeGuestWorkspace()">Chiudi Area</button>
+      </div>
+
+      <!-- Welcome message when no guest selected -->
+      <div class="welcome-workspace" id="guest-welcome-box" style="margin: 40px auto; max-width: 600px; text-align: center;">
+        <h2>Gestione Utenti Guest</h2>
+        <p>Utilizza il modulo nella barra laterale a sinistra per registrare un nuovo utente Guest o seleziona un Guest attivo per visualizzare ed inviare i suoi provini fotografici.</p>
+      </div>
+
+      <!-- Selected Guest Workspace Details & Proofs -->
+      <div class="guest-workspace" id="guest-workspace-details" style="display: none; flex-direction: column;">
+        <div class="client-info-card" id="guest-info-card-box">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <h3 id="guest-name" style="margin: 0 0 6px; font-family: var(--font-display); color: var(--text-primary); font-size: 1.1rem;"></h3>
+              <p id="guest-email-detail" style="margin: 0; color: var(--text-secondary); font-size: 0.85rem;"></p>
+            </div>
+            <div id="guest-status-badge"></div>
+          </div>
         </div>
-        <div>
-          <button class="btn-refresh" style="margin: 0; background: rgba(255,255,255,0.04); border: 1px solid var(--border-color); color: var(--text-primary); border-radius: 4px; padding: 10px 18px;" onclick="loadGuestUsers()">Aggiorna Lista</button>
+
+        <div class="section-subheading" style="margin-top: 20px;">
+          <span>Provini e Materiale Condiviso</span>
+        </div>
+        <div class="admin-gallery-grid" id="guest-proofs-grid">
+          <div class="empty-state" style="grid-column: 1 / -1;">Nessun provino caricato per questo Guest.</div>
         </div>
       </div>
-
-      <!-- Creation Form -->
-      <div class="guest-form-container">
-        <div class="guest-form-title">Crea Nuovo Utente Guest</div>
-        <form id="guest-creation-form" class="guest-form" onsubmit="event.preventDefault(); submitCreateGuest();">
-          <div class="form-group-compact">
-            <label for="guest-first-name">Nome</label>
-            <input type="text" id="guest-first-name" placeholder="Es. Mario" required>
-          </div>
-          <div class="form-group-compact">
-            <label for="guest-last-name">Cognome</label>
-            <input type="text" id="guest-last-name" placeholder="Es. Rossi" required>
-          </div>
-          <div class="form-group-compact">
-            <label for="guest-email">Email (Username)</label>
-            <input type="email" id="guest-email" placeholder="Es. mario.rossi@email.com" required>
-          </div>
-          <div>
-            <button type="submit" class="btn-submit" id="btn-create-guest" style="margin: 0; padding: 10px 20px; font-size: 0.78rem; font-weight: 600; display: flex; align-items: center; gap: 8px;">
-              <span class="spinner" id="guest-create-spinner" style="width: 14px; height: 14px; border-width: 2px;"></span>
-              <span>Registra & Invia Credenziali</span>
-            </button>
-          </div>
-        </form>
-      </div>
-
-      <!-- Guest List Table -->
-      <div class="section-subheading">
-        <span>Elenco Utenti Guest</span>
-        <span style="font-size: 0.65rem; color: var(--text-secondary); text-transform: none;">Visualizzazione in ordine alfabetico</span>
-      </div>
-
-      <div class="guest-table-container">
-        <table class="guest-table">
-          <thead>
-            <tr>
-              <th>Nome</th>
-              <th>Cognome</th>
-              <th>Email / Username</th>
-              <th>Stato Password</th>
-              <th style="width: 80px; text-align: center;">Azioni</th>
-            </tr>
-          </thead>
-          <tbody id="guest-table-body">
-            <!-- Rendered dynamically -->
-          </tbody>
-        </table>
-      </div>
-    <div class="guest-workspace" id="guest-workspace" style="display:none;">
-  <div class="guest-info-card" style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius:6px; padding:20px; margin-bottom:30px;">
-    <h3 id="guest-name" style="margin:0 0 10px; font-family: var(--font-display); color: var(--text-primary);"></h3>
-    <p id="guest-email" style="margin:0; color: var(--text-secondary);"></p>
-  </div>
-  <div class="guest-proofs" id="guest-proofs" style="display:flex; flex-wrap:wrap; gap:15px;">
-    <!-- Proof thumbnails will be inserted here -->
-  </div>
-  <button class="btn-submit" style="margin-top:20px;" onclick="showGuestList()">← Torna all'elenco Guest</button>
-</div>
 
     </div>
 
@@ -2096,13 +2071,15 @@ www.maxsalvaggio.com`;
       }
     }
 
+    let activeGuestEmail = null;
+
     async function loadGuestUsers() {
       if (!supabaseClient) return;
 
-      const tbody = document.getElementById("guest-table-body");
-      if (!tbody) return;
+      const container = document.getElementById("guest-list-body");
+      if (!container) return;
 
-      tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: var(--text-secondary); padding: 20px;">Caricamento utenti Guest...</td></tr>`;
+      container.innerHTML = `<div class="empty-state" style="font-size: 0.75rem; padding: 10px 0;">Caricamento utenti Guest...</div>`;
 
       try {
         const { data: guests, error } = await supabaseClient
@@ -2114,61 +2091,80 @@ www.maxsalvaggio.com`;
 
         if (error) {
           console.error("Error loading guests:", error);
-          tbody.innerHTML = `
-            <tr><td colspan="5" style="text-align: center; padding: 20px;">
-              <span style="color: #FF8A80; font-weight: 600;">⚠️ Errore nel caricamento:</span><br>
-              <span style="color: var(--text-secondary); font-size: 0.8rem; font-family: monospace;">${error.message}</span><br><br>
-              <span style="color: var(--text-secondary); font-size: 0.78rem;">
-                Se l'errore riguarda colonne mancanti, esegui prima la migrazione SQL dalla 
-                <a href="https://supabase.com/dashboard/project/dtqcwngdaokwiotjxykg/editor" target="_blank" style="color: var(--accent);">Supabase SQL Editor</a>.
-              </span>
-            </td></tr>`;
+          container.innerHTML = `
+            <div class="empty-state" style="color: #FF8A80; font-size: 0.75rem; padding: 10px 0;">
+              Errore nel caricamento: ${error.message}
+            </div>`;
           return;
         }
 
         if (!guests || guests.length === 0) {
-          tbody.innerHTML = `
-            <tr><td colspan="5" style="text-align: center; padding: 25px;">
-              <span style="color: var(--text-secondary); font-size: 0.85rem;">
-                Nessun utente Guest registrato.<br>
-                <span style="font-size: 0.75rem; opacity: 0.7; margin-top: 5px; display: block;">
-                  Compila il modulo sopra per creare il primo utente Guest.
-                </span>
-              </span>
-            </td></tr>`;
+          container.innerHTML = `
+            <div class="empty-state" style="font-size: 0.75rem; padding: 10px 0;">
+              Nessun utente Guest registrato.
+            </div>`;
           return;
         }
 
-        tbody.innerHTML = "";
+        container.innerHTML = "";
         guests.forEach(user => {
-          const tr = document.createElement("tr");
-          const isActive = user.is_approved !== false;
-          const toggleLabel = isActive ? 'Sospendi' : 'Approva';
-          const toggleClass = isActive ? 'btn-mini-suspend' : 'btn-mini-approve';
-          const statusBadge = isActive
-            ? `<span style="color: var(--accent-green); font-size: 0.75rem; font-weight: 600;">✔ Inviata via Email</span>`
-            : `<span style="color: var(--accent-yellow); font-size: 0.75rem; font-weight: 600;">⏸ Sospeso</span>`;
+          const item = document.createElement("div");
+          item.className = "client-item";
+          const isActive = activeGuestEmail === user.email;
+          if (isActive) item.classList.add("active");
 
-          tr.innerHTML = `
-            <td>${user.first_name || 'N/D'}</td>
-            <td>${user.last_name || 'N/D'}</td>
-            <td class="email-cell">${user.email}</td>
-            <td>${statusBadge}</td>
-            <td style="text-align: right; white-space: nowrap; display: flex; gap: 6px; justify-content: flex-end;">
-              <button class="btn-mini-action ${toggleClass}" onclick="toggleGuestApproval('${user.id}', ${isActive})">
-                ${toggleLabel}
-              </button>
-              <button class="btn-mini-action btn-mini-suspend" style="border-color: rgba(229,9,20,0.3); color: #FF8A80;" onclick="deleteGuestUser('${user.id}', '${user.email}')">
-                Elimina
-              </button>
-            </td>
+          const fullName = `${user.first_name || ''} ${user.last_name || ''}`.trim() || user.email;
+          
+          item.onclick = () => selectGuest(user);
+          item.innerHTML = `
+            <span class="client-email-text" title="${fullName} (${user.email})">${fullName}</span>
+            <button class="btn-mini-action btn-mini-suspend" onclick="event.stopPropagation(); deleteGuestUser('${user.id}', '${user.email}')">Elimina</button>
           `;
-          tbody.appendChild(tr);
+          container.appendChild(item);
         });
 
       } catch (err) {
         console.error("loadGuestUsers err:", err);
       }
+    }
+
+    function selectGuest(user) {
+      activeGuestEmail = user.email;
+
+      const items = document.querySelectorAll("#guest-list-body .client-item");
+      items.forEach(item => {
+        const text = item.querySelector(".client-email-text").title;
+        if (text.includes(user.email)) {
+          item.classList.add("active");
+        } else {
+          item.classList.remove("active");
+        }
+      });
+
+      document.getElementById("guest-welcome-box").style.display = "none";
+      document.getElementById("guest-workspace-details").style.display = "flex";
+      document.getElementById("btn-close-guest-workspace").style.display = "inline-block";
+      document.getElementById("active-guest-title").textContent = `${user.first_name || ''} ${user.last_name || ''}`.trim() || user.email;
+      
+      document.getElementById("guest-name").textContent = `${user.first_name || ''} ${user.last_name || ''}`.trim();
+      document.getElementById("guest-email-detail").textContent = user.email;
+      
+      const badgeContainer = document.getElementById("guest-status-badge");
+      const isApproved = user.is_approved !== false;
+      badgeContainer.innerHTML = isApproved
+        ? `<span class="mini-badge" style="background-color: rgba(76,175,80,0.1); color: #A5D6A7; border: 1px solid rgba(76,175,80,0.2);">Attivo</span>`
+        : `<span class="mini-badge mini-badge-pending">Sospeso</span>`;
+    }
+
+    function closeGuestWorkspace() {
+      activeGuestEmail = null;
+      document.getElementById("active-guest-title").textContent = "Seleziona un Guest";
+      document.getElementById("btn-close-guest-workspace").style.display = "none";
+      document.getElementById("guest-welcome-box").style.display = "block";
+      document.getElementById("guest-workspace-details").style.display = "none";
+
+      const items = document.querySelectorAll("#guest-list-body .client-item");
+      items.forEach(item => item.classList.remove("active"));
     }
 
     async function submitCreateGuest() {
