@@ -405,9 +405,10 @@
        DRAGGABLE MULTI-COLUMN LIGHTROOM GRID
        ======================================================== */
     .admin-gallery-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      display: flex;
+      flex-wrap: wrap;
       gap: 20px;
+      align-items: flex-start;
     }
 
     .admin-gallery-card {
@@ -420,6 +421,11 @@
       cursor: grab;
       position: relative;
       transition: border-color 0.25s, transform 0.25s;
+      width: 100%;
+      max-width: 300px; /* Default max-width (vertical) */
+    }
+    .admin-gallery-card.card-horizontal {
+      max-width: 600px; /* Max-width per foto orizzontali */
     }
     .admin-gallery-card:active {
       cursor: grabbing;
@@ -432,14 +438,32 @@
     .admin-card-preview-wrapper {
       position: relative;
       width: 100%;
-      aspect-ratio: 1 / 1;
       overflow: hidden;
       background-color: rgba(0, 0, 0, 0.3);
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
     .admin-card-preview {
       width: 100%;
-      height: 100%;
-      object-fit: cover;
+      height: auto;
+      display: block;
+      object-fit: contain;
+    }
+
+    /* Magnifier Lens 250% */
+    .magnifier-lens {
+      position: absolute;
+      width: 130px;
+      height: 130px;
+      border: 2px solid #fff;
+      border-radius: 50%;
+      cursor: crosshair;
+      pointer-events: none;
+      box-shadow: 0 0 15px rgba(0,0,0,0.7), inset 0 0 8px rgba(0,0,0,0.5);
+      background-repeat: no-repeat;
+      display: none;
+      z-index: 100;
     }
 
     .admin-card-caption {
@@ -2185,6 +2209,47 @@ www.maxsalvaggio.com`;
       items.forEach(item => item.classList.remove("active"));
     }
 
+    // Helper per attivare il lentino 250% al passaggio del mouse
+    function attachMagnifierLens(imgElement, wrapperElement) {
+      if (!imgElement || !wrapperElement) return;
+
+      const lens = document.createElement("div");
+      lens.className = "magnifier-lens";
+      wrapperElement.appendChild(lens);
+
+      const zoomLevel = 2.5; // 250%
+
+      wrapperElement.addEventListener("mousemove", (e) => {
+        const rect = imgElement.getBoundingClientRect();
+        const wrapperRect = wrapperElement.getBoundingClientRect();
+
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        if (x < 0 || y < 0 || x > rect.width || y > rect.height) {
+          lens.style.display = "none";
+          return;
+        }
+
+        lens.style.display = "block";
+        lens.style.backgroundImage = `url('${imgElement.src}')`;
+        lens.style.backgroundSize = `${rect.width * zoomLevel}px ${rect.height * zoomLevel}px`;
+
+        const lensW = 130;
+        const lensH = 130;
+        let lensX = (e.clientX - wrapperRect.left) - (lensW / 2);
+        let lensY = (e.clientY - wrapperRect.top) - (lensH / 2);
+
+        lens.style.left = `${lensX}px`;
+        lens.style.top = `${lensY}px`;
+        lens.style.backgroundPosition = `-${x * zoomLevel - lensW / 2}px -${y * zoomLevel - lensH / 2}px`;
+      });
+
+      wrapperElement.addEventListener("mouseleave", () => {
+        lens.style.display = "none";
+      });
+    }
+
     async function loadGuestFiles(email) {
       if (!supabaseClient) return;
 
@@ -2263,13 +2328,13 @@ www.maxsalvaggio.com`;
 
           let previewHtml = `<div style="display:flex; align-items:center; justify-content:center; height:100%; font-size:2rem;">📄</div>`;
           if (isImage) {
-            previewHtml = `<img src="${publicUrl}" class="admin-card-preview" alt="${file.name}">`;
+            previewHtml = `<img src="${publicUrl}" class="admin-card-preview" id="img-preview-${elementId}" alt="${file.name}">`;
           } else if (isVideo) {
             previewHtml = `<video src="${publicUrl}" class="admin-card-preview" muted preload="metadata"></video>`;
           }
 
           card.innerHTML = `
-            <div class="admin-card-preview-wrapper">${previewHtml}</div>
+            <div class="admin-card-preview-wrapper" id="wrapper-${elementId}">${previewHtml}</div>
             <div class="admin-card-caption">
               <div class="admin-card-info">
                 <div class="admin-card-title" title="${file.name}">${file.name}</div>
@@ -2290,6 +2355,13 @@ www.maxsalvaggio.com`;
             img.onload = () => {
               const el = document.getElementById(elementId);
               if (el) el.textContent = `Dimensioni: ${img.naturalWidth} x ${img.naturalHeight} px`;
+
+              if (img.naturalWidth > img.naturalHeight) {
+                card.classList.add("card-horizontal");
+              }
+              const imgEl = document.getElementById(`img-preview-${elementId}`);
+              const wrapperEl = document.getElementById(`wrapper-${elementId}`);
+              attachMagnifierLens(imgEl, wrapperEl);
             };
           } else if (isVideo) {
             const vid = document.createElement("video");
@@ -2297,6 +2369,9 @@ www.maxsalvaggio.com`;
             vid.onloadedmetadata = () => {
               const el = document.getElementById(elementId);
               if (el) el.textContent = `Dimensioni: ${vid.videoWidth} x ${vid.videoHeight} px`;
+              if (vid.videoWidth > vid.videoHeight) {
+                card.classList.add("card-horizontal");
+              }
             };
           }
         });
@@ -2690,7 +2765,7 @@ www.maxsalvaggio.com`;
 
           let previewHtml = "";
           if (item.isImage) {
-            previewHtml = `<img src="${item.publicUrl}" class="admin-card-preview" alt="Preview">`;
+            previewHtml = `<img src="${item.publicUrl}" class="admin-card-preview" id="client-img-preview-${elementId}" alt="Preview">`;
           } else if (item.isVideo) {
             previewHtml = `<video src="${item.publicUrl}" class="admin-card-preview" muted preload="metadata"></video>`;
           } else {
@@ -2703,7 +2778,7 @@ www.maxsalvaggio.com`;
           }
 
           card.innerHTML = `
-            <div class="admin-card-preview-wrapper" style="cursor: pointer;">
+            <div class="admin-card-preview-wrapper" id="client-wrapper-${elementId}" style="cursor: pointer;">
               ${previewHtml}
             </div>
             <div class="admin-card-caption">
@@ -2739,6 +2814,13 @@ www.maxsalvaggio.com`;
             img.onload = () => {
               const el = document.getElementById(elementId);
               if (el) el.textContent = `Dimensioni: ${img.naturalWidth} x ${img.naturalHeight} px`;
+
+              if (img.naturalWidth > img.naturalHeight) {
+                card.classList.add("card-horizontal");
+              }
+              const imgEl = document.getElementById(`client-img-preview-${elementId}`);
+              const wrapperEl = document.getElementById(`client-wrapper-${elementId}`);
+              attachMagnifierLens(imgEl, wrapperEl);
             };
             img.onerror = () => {
               const el = document.getElementById(elementId);
@@ -2750,6 +2832,9 @@ www.maxsalvaggio.com`;
             vid.onloadedmetadata = () => {
               const el = document.getElementById(elementId);
               if (el) el.textContent = `Dimensioni: ${vid.videoWidth} x ${vid.videoHeight} px`;
+              if (vid.videoWidth > vid.videoHeight) {
+                card.classList.add("card-horizontal");
+              }
             };
             vid.onerror = () => {
               const el = document.getElementById(elementId);
