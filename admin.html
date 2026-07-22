@@ -1418,8 +1418,21 @@ create policy "Consenti agli admin la gestione di oggetti public-portfolio" on s
           </div>
         </div>
 
-        <div class="section-subheading" style="margin-top: 20px;">
+        <!-- Drag & Drop Upload Zone for Guest -->
+        <div class="upload-zone" id="guest-drop-zone">
+          <span class="upload-zone-text" id="guest-drop-zone-text">Trascina qui le foto, video, PDF o audio per caricarli all'istante o clicca per sfogliare</span>
+          <input type="file" id="guest-file-input" style="display: none;" onchange="handleGuestFileSelect(event)" multiple>
+          <div id="guest-selected-files-list" style="margin-top: 10px; font-size: 0.78rem; color: var(--accent); font-weight: 500; word-break: break-all;"></div>
+        </div>
+
+        <button id="btn-upload-guest-file" class="btn-submit" style="margin-bottom: 30px; display: none;" onclick="startGuestFileUpload()">
+          <span class="spinner" id="guest-upload-spinner"></span>
+          <span>Carica file selezionati nel cloud</span>
+        </button>
+
+        <div class="section-subheading" style="margin-top: 10px;">
           <span>Provini e Materiale Condiviso</span>
+          <span style="font-size: 0.65rem; color: var(--text-secondary); text-transform: none;">Sposta le schede per cambiare l'ordine visualizzato dal guest</span>
         </div>
         <div class="admin-gallery-grid" id="guest-proofs-grid">
           <div class="empty-state" style="grid-column: 1 / -1;">Nessun provino caricato per questo Guest.</div>
@@ -2128,6 +2141,9 @@ www.maxsalvaggio.com`;
       }
     }
 
+    let guestFilesToUpload = [];
+    let guestDraggedItem = null;
+
     function selectGuest(user) {
       activeGuestEmail = user.email;
 
@@ -2154,6 +2170,8 @@ www.maxsalvaggio.com`;
       badgeContainer.innerHTML = isApproved
         ? `<span class="mini-badge" style="background-color: rgba(76,175,80,0.1); color: #A5D6A7; border: 1px solid rgba(76,175,80,0.2);">Attivo</span>`
         : `<span class="mini-badge mini-badge-pending">Sospeso</span>`;
+
+      loadGuestFiles(user.email);
     }
 
     function closeGuestWorkspace() {
@@ -2165,6 +2183,241 @@ www.maxsalvaggio.com`;
 
       const items = document.querySelectorAll("#guest-list-body .client-item");
       items.forEach(item => item.classList.remove("active"));
+    }
+
+    async function loadGuestFiles(email) {
+      if (!supabaseClient) return;
+
+      const gridBody = document.getElementById("guest-proofs-grid");
+      gridBody.innerHTML = '<div class="empty-state" style="grid-column:1/-1;">Caricamento provini condivisi...</div>';
+
+      try {
+        const { data: profile } = await supabaseClient
+          .from('profiles')
+          .select('file_order')
+          .eq('email', email)
+          .single();
+
+        const fileOrder = profile?.file_order || [];
+
+        const { data: files, error } = await supabaseClient
+          .storage
+          .from('client-proofs')
+          .list(email);
+
+        if (error) {
+          console.error("Storage list error:", error);
+          gridBody.innerHTML = `<div class="empty-state" style="grid-column:1/-1; color:#FF8A80;">⚠️ Errore nel caricamento del materiale.</div>`;
+          return;
+        }
+
+        if (!files || files.length === 0) {
+          gridBody.innerHTML = '<div class="empty-state" style="grid-column:1/-1;">Nessun provino caricato per questo Guest.</div>';
+          return;
+        }
+
+        files.sort((a, b) => {
+          const indexA = fileOrder.indexOf(a.name);
+          const indexB = fileOrder.indexOf(b.name);
+          if (indexA !== -1 && indexB !== -1) return indexA - indexB;
+          if (indexA !== -1) return -1;
+          if (indexB !== -1) return 1;
+          return new Date(b.created_at) - new Date(a.created_at);
+        });
+
+        gridBody.innerHTML = "";
+        const formattedItems = [];
+
+        files.forEach((file, index) => {
+          const { data: publicUrlData } = supabaseClient
+            .storage
+            .from('client-proofs')
+            .getPublicUrl(`${email}/${file.name}`);
+
+          const publicUrl = publicUrlData.publicUrl;
+          const ext = file.name.split('.').pop().toLowerCase();
+          const isImage = ['jpg', 'jpeg', 'png', 'webp', 'gif'].includes(ext);
+          const isVideo = ['mp4', 'webm', 'mov'].includes(ext);
+
+          if (isImage || isVideo) {
+            formattedItems.push({
+              src: publicUrl,
+              title: file.name,
+              category: 'Provini Guest',
+              mediaType: isVideo ? 'video' : 'image'
+            });
+          }
+
+          const card = document.createElement("div");
+          card.className = "admin-gallery-card";
+          card.setAttribute("draggable", "true");
+          card.setAttribute("data-filename", file.name);
+
+          card.addEventListener('dragstart', handleGuestDragStart);
+          card.addEventListener('dragover', handleGuestDragOver);
+          card.addEventListener('drop', handleGuestDrop);
+          card.addEventListener('dragend', handleGuestDragEnd);
+
+          const sizeKb = file.metadata && file.metadata.size ? (file.metadata.size / 1024).toFixed(1) : "N/D";
+          const elementId = `guest-dim-${index}-${Math.random().toString(36).substr(2, 5)}`;
+
+          let previewHtml = `<div style="display:flex; align-items:center; justify-content:center; height:100%; font-size:2rem;">📄</div>`;
+          if (isImage) {
+            previewHtml = `<img src="${publicUrl}" class="admin-card-preview" alt="${file.name}">`;
+          } else if (isVideo) {
+            previewHtml = `<video src="${publicUrl}" class="admin-card-preview" muted preload="metadata"></video>`;
+          }
+
+          card.innerHTML = `
+            <div class="admin-card-preview-wrapper">${previewHtml}</div>
+            <div class="admin-card-caption">
+              <div class="admin-card-info">
+                <div class="admin-card-title" title="${file.name}">${file.name}</div>
+                <div class="admin-card-meta">Peso: ${sizeKb} KB</div>
+                <div class="admin-card-meta" id="${elementId}">Dimensioni: Calcolo...</div>
+              </div>
+              <div class="admin-card-actions">
+                <button class="btn-card-delete" onclick="event.stopPropagation(); deleteGuestFile('${file.name}')">Elimina</button>
+              </div>
+            </div>
+          `;
+
+          gridBody.appendChild(card);
+
+          if (isImage) {
+            const img = new Image();
+            img.src = publicUrl;
+            img.onload = () => {
+              const el = document.getElementById(elementId);
+              if (el) el.textContent = `Dimensioni: ${img.naturalWidth} x ${img.naturalHeight} px`;
+            };
+          } else if (isVideo) {
+            const vid = document.createElement("video");
+            vid.src = publicUrl;
+            vid.onloadedmetadata = () => {
+              const el = document.getElementById(elementId);
+              if (el) el.textContent = `Dimensioni: ${vid.videoWidth} x ${vid.videoHeight} px`;
+            };
+          }
+        });
+
+      } catch (err) {
+        console.error("loadGuestFiles err:", err);
+      }
+    }
+
+    async function deleteGuestFile(filename) {
+      if (!confirm(`Sei sicuro di voler eliminare "${filename}"?`)) return;
+      try {
+        const { error } = await supabaseClient
+          .storage
+          .from('client-proofs')
+          .remove([`${activeGuestEmail}/${filename}`]);
+
+        if (error) {
+          alert("Errore eliminazione: " + error.message);
+          return;
+        }
+        loadGuestFiles(activeGuestEmail);
+      } catch (err) {
+        console.error("deleteGuestFile err:", err);
+      }
+    }
+
+    function handleGuestFileSelect(event) {
+      const files = event.target.files;
+      if (!files || files.length === 0) return;
+      guestFilesToUpload = Array.from(files);
+      const names = guestFilesToUpload.map(f => f.name).join(", ");
+      document.getElementById("guest-selected-files-list").textContent = `Selezionati per l'upload: ${guestFilesToUpload.length} file (${names})`;
+      document.getElementById("btn-upload-guest-file").style.display = "flex";
+    }
+
+    async function startGuestFileUpload() {
+      if (!supabaseClient || guestFilesToUpload.length === 0 || !activeGuestEmail) return;
+
+      const btn = document.getElementById("btn-upload-guest-file");
+      const spinner = document.getElementById("guest-upload-spinner");
+
+      btn.disabled = true;
+      spinner.style.display = "inline-block";
+
+      try {
+        for (const file of guestFilesToUpload) {
+          const filePath = `${activeGuestEmail}/${file.name}`;
+          const { error } = await supabaseClient
+            .storage
+            .from('client-proofs')
+            .upload(filePath, file, { upsert: true });
+
+          if (error) {
+            alert(`Errore durante il caricamento di ${file.name}: ${error.message}`);
+            btn.disabled = false;
+            spinner.style.display = "none";
+            return;
+          }
+        }
+
+        alert("File caricati con successo per il Guest!");
+        guestFilesToUpload = [];
+        document.getElementById("guest-selected-files-list").textContent = "";
+        btn.style.display = "none";
+
+        await loadGuestFiles(activeGuestEmail);
+        await saveGuestNewOrder();
+      } catch (err) {
+        console.error("startGuestFileUpload err:", err);
+      } finally {
+        btn.disabled = false;
+        spinner.style.display = "none";
+      }
+    }
+
+    function handleGuestDragStart(e) {
+      guestDraggedItem = this;
+      e.dataTransfer.effectAllowed = 'move';
+      this.style.opacity = '0.4';
+    }
+
+    function handleGuestDragOver(e) {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+    }
+
+    function handleGuestDrop(e) {
+      e.preventDefault();
+      if (this !== guestDraggedItem) {
+        const container = document.getElementById("guest-proofs-grid");
+        const items = Array.from(container.children);
+        const draggedIndex = items.indexOf(guestDraggedItem);
+        const targetIndex = items.indexOf(this);
+
+        if (draggedIndex < targetIndex) {
+          container.insertBefore(guestDraggedItem, this.nextSibling);
+        } else {
+          container.insertBefore(guestDraggedItem, this);
+        }
+        saveGuestNewOrder();
+      }
+    }
+
+    function handleGuestDragEnd(e) {
+      this.style.opacity = '1';
+      guestDraggedItem = null;
+    }
+
+    async function saveGuestNewOrder() {
+      if (!supabaseClient || !activeGuestEmail) return;
+      const cards = document.querySelectorAll("#guest-proofs-grid .admin-gallery-card");
+      const orderArray = Array.from(cards).map(c => c.getAttribute("data-filename"));
+      try {
+        await supabaseClient
+          .from('profiles')
+          .update({ file_order: orderArray })
+          .eq('email', activeGuestEmail);
+      } catch (err) {
+        console.error(err);
+      }
     }
 
     async function submitCreateGuest() {
@@ -2577,6 +2830,35 @@ www.maxsalvaggio.com`;
       const dropZone = document.getElementById("drop-zone");
       if (dropZone) {
         dropZone.onclick = () => document.getElementById("file-input").click();
+      }
+
+      const guestDropZone = document.getElementById("guest-drop-zone");
+      if (guestDropZone) {
+        guestDropZone.onclick = () => document.getElementById("guest-file-input").click();
+        guestDropZone.addEventListener("dragover", (e) => {
+          e.preventDefault();
+          guestDropZone.style.borderColor = "var(--accent)";
+          guestDropZone.style.background = "rgba(229, 9, 20, 0.05)";
+        });
+        guestDropZone.addEventListener("dragleave", (e) => {
+          e.preventDefault();
+          guestDropZone.style.borderColor = "var(--border-color)";
+          guestDropZone.style.background = "transparent";
+        });
+        guestDropZone.addEventListener("drop", (e) => {
+          e.preventDefault();
+          guestDropZone.style.borderColor = "var(--border-color)";
+          guestDropZone.style.background = "transparent";
+          if (e.dataTransfer.files) {
+            const files = e.dataTransfer.files;
+            if (files && files.length > 0) {
+              guestFilesToUpload = Array.from(files);
+              const names = guestFilesToUpload.map(f => f.name).join(", ");
+              document.getElementById("guest-selected-files-list").textContent = `Selezionati per l'upload: ${guestFilesToUpload.length} file (${names})`;
+              document.getElementById("btn-upload-guest-file").style.display = "flex";
+            }
+          }
+        });
       }
       
       const portfolioDropZone = document.getElementById("portfolio-drop-zone");

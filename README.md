@@ -31,6 +31,7 @@ Per eseguire il sito in locale, posiziona la cartella `Max Salvaggio Archivio/` 
 
 - **2026-07-18** – Ripristino forzato alla versione stabile via Git (commit 97704da).
 - **2026-07-20** – Implementata logica "Registra & Invia Credenziali" per la sezione Guest (creazione Supabase, email Formspree, UI refresh).
+- **2026-07-22** – Aggiunta area di upload drag-and-drop e gestione provini condivisi per la sezione Guest.
 
 ---
 
