@@ -36,6 +36,7 @@ Per eseguire il sito in locale, posiziona la cartella `Max Salvaggio Archivio/` 
 - **2026-07-24** – Ottimizzato il lentino d'ingrandimento in modalità Pixel-Perfect (100% risoluzione nativa del file sorgente) con rendering ad alta nitidezza.
 - **2026-07-24** – Ottimizzazione caricamento miniature Workspace: Lazy Loading, async decoding e caricamento progressivo a blocchi.
 - **2026-07-24** – Risoluzione bug caricamento immagini Guest in client-area: allineamento generazione URL firmati (createSignedUrl con fallback a getPublicUrl).
+- **2026-07-24** – Implementata paginazione a 8 foto con indicatore X/Y pag. nello Workspace e Admin.
 
 ---
 

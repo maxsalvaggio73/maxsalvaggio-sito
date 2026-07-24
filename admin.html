@@ -1360,6 +1360,7 @@ create policy "Consenti agli admin la gestione di oggetti public-portfolio" on s
       <div class="admin-gallery-grid" id="files-grid-container">
         <!-- Rendered dynamically -->
       </div>
+      <div class="pagination-bar" id="files-pagination-bar" style="display: flex; align-items: center; justify-content: center; gap: 15px; margin-top: 25px;"></div>
 
     </div>
 
@@ -1463,6 +1464,7 @@ create policy "Consenti agli admin la gestione di oggetti public-portfolio" on s
         <div class="admin-gallery-grid" id="guest-proofs-grid">
           <div class="empty-state" style="grid-column: 1 / -1;">Nessun provino caricato per questo Guest.</div>
         </div>
+        <div class="pagination-bar" id="guest-pagination-bar" style="display: flex; align-items: center; justify-content: center; gap: 15px; margin-top: 25px;"></div>
       </div>
 
     </div>
@@ -1737,6 +1739,7 @@ create policy "Consenti agli admin la gestione di oggetti public-portfolio" on s
       await loadClientInfo(email);
 
       // Load client files
+      clientAdminCurrentPage = 1;
       loadClientFiles(email);
     }
 
@@ -2197,6 +2200,7 @@ www.maxsalvaggio.com`;
         ? `<span class="mini-badge" style="background-color: rgba(76,175,80,0.1); color: #A5D6A7; border: 1px solid rgba(76,175,80,0.2);">Attivo</span>`
         : `<span class="mini-badge mini-badge-pending">Sospeso</span>`;
 
+      guestCurrentPage = 1;
       loadGuestFiles(user.email);
     }
 
@@ -2256,10 +2260,14 @@ www.maxsalvaggio.com`;
       });
     }
 
+    let guestCurrentPage = 1;
+    const ADMIN_PROOFS_PER_PAGE = 8;
+
     async function loadGuestFiles(email) {
       if (!supabaseClient) return;
 
       const gridBody = document.getElementById("guest-proofs-grid");
+      const paginationBar = document.getElementById("guest-pagination-bar");
       gridBody.innerHTML = '<div class="empty-state" style="grid-column:1/-1;">Caricamento provini condivisi...</div>';
 
       try {
@@ -2279,15 +2287,19 @@ www.maxsalvaggio.com`;
         if (error) {
           console.error("Storage list error:", error);
           gridBody.innerHTML = `<div class="empty-state" style="grid-column:1/-1; color:#FF8A80;">⚠️ Errore nel caricamento del materiale.</div>`;
+          if (paginationBar) paginationBar.innerHTML = "";
           return;
         }
 
-        if (!files || files.length === 0) {
+        let filteredFiles = (files || []).filter(f => f.name !== '.emptyFolderPlaceholder' && f.name !== '.DS_Store' && f.name !== 'documents');
+
+        if (!filteredFiles || filteredFiles.length === 0) {
           gridBody.innerHTML = '<div class="empty-state" style="grid-column:1/-1;">Nessun provino caricato per questo Guest.</div>';
+          if (paginationBar) paginationBar.innerHTML = "";
           return;
         }
 
-        files.sort((a, b) => {
+        filteredFiles.sort((a, b) => {
           const indexA = fileOrder.indexOf(a.name);
           const indexB = fileOrder.indexOf(b.name);
           if (indexA !== -1 && indexB !== -1) return indexA - indexB;
@@ -2296,13 +2308,21 @@ www.maxsalvaggio.com`;
           return new Date(b.created_at) - new Date(a.created_at);
         });
 
-        gridBody.innerHTML = "";
-        const formattedItems = [];
+        const totalItems = filteredFiles.length;
+        const totalPages = Math.ceil(totalItems / ADMIN_PROOFS_PER_PAGE) || 1;
 
-        // Pre-fetch URLs using signed URL with getPublicUrl fallback
+        if (guestCurrentPage > totalPages) guestCurrentPage = totalPages;
+        if (guestCurrentPage < 1) guestCurrentPage = 1;
+
+        const startIndex = (guestCurrentPage - 1) * ADMIN_PROOFS_PER_PAGE;
+        const pageFiles = filteredFiles.slice(startIndex, startIndex + ADMIN_PROOFS_PER_PAGE);
+
+        gridBody.innerHTML = "";
+
+        // Pre-fetch URLs ONLY FOR CURRENT PAGE using signed URL with getPublicUrl fallback
         const guestItems = [];
-        for (let i = 0; i < files.length; i++) {
-          const file = files[i];
+        for (let i = 0; i < pageFiles.length; i++) {
+          const file = pageFiles[i];
           const path = `${email}/${file.name}`;
           let publicUrl = "";
 
@@ -2327,111 +2347,106 @@ www.maxsalvaggio.com`;
           guestItems.push({ file, publicUrl });
         }
 
-        const BATCH_SIZE = 16;
-        let batchIndex = 0;
+        guestItems.forEach((itemObj, i) => {
+          const file = itemObj.file;
+          const publicUrl = itemObj.publicUrl;
+          const index = startIndex + i;
 
-        function renderGuestBatch() {
-          const chunk = guestItems.slice(batchIndex, batchIndex + BATCH_SIZE);
-          chunk.forEach((itemObj, i) => {
-            const file = itemObj.file;
-            const publicUrl = itemObj.publicUrl;
-            const index = batchIndex + i;
+          const ext = file.name.split('.').pop().toLowerCase();
+          const isImage = ['jpg', 'jpeg', 'png', 'webp', 'gif'].includes(ext);
+          const isVideo = ['mp4', 'webm', 'mov'].includes(ext);
 
-            const ext = file.name.split('.').pop().toLowerCase();
-            const isImage = ['jpg', 'jpeg', 'png', 'webp', 'gif'].includes(ext);
-            const isVideo = ['mp4', 'webm', 'mov'].includes(ext);
+          const card = document.createElement("div");
+          card.className = "admin-gallery-card";
+          card.setAttribute("draggable", "true");
+          card.setAttribute("data-filename", file.name);
 
-            if (isImage || isVideo) {
-              formattedItems.push({
-                src: publicUrl,
-                title: file.name,
-                category: 'Provini Guest',
-                mediaType: isVideo ? 'video' : 'image'
-              });
-            }
+          card.addEventListener('dragstart', handleGuestDragStart);
+          card.addEventListener('dragover', handleGuestDragOver);
+          card.addEventListener('drop', handleGuestDrop);
+          card.addEventListener('dragend', handleGuestDragEnd);
 
-            const card = document.createElement("div");
-            card.className = "admin-gallery-card";
-            card.setAttribute("draggable", "true");
-            card.setAttribute("data-filename", file.name);
+          const sizeKb = file.metadata && file.metadata.size ? (file.metadata.size / 1024).toFixed(1) : "N/D";
+          const elementId = `guest-dim-${index}-${Math.random().toString(36).substr(2, 5)}`;
 
-            card.addEventListener('dragstart', handleGuestDragStart);
-            card.addEventListener('dragover', handleGuestDragOver);
-            card.addEventListener('drop', handleGuestDrop);
-            card.addEventListener('dragend', handleGuestDragEnd);
+          let previewHtml = `<div style="display:flex; align-items:center; justify-content:center; height:100%; font-size:2rem;">📄</div>`;
+          if (isImage) {
+            previewHtml = `<img src="${publicUrl}" class="admin-card-preview" id="img-preview-${elementId}" alt="${file.name}" loading="lazy" decoding="async">`;
+          } else if (isVideo) {
+            previewHtml = `<video src="${publicUrl}" class="admin-card-preview" muted preload="metadata"></video>`;
+          }
 
-            const sizeKb = file.metadata && file.metadata.size ? (file.metadata.size / 1024).toFixed(1) : "N/D";
-            const elementId = `guest-dim-${index}-${Math.random().toString(36).substr(2, 5)}`;
-
-            let previewHtml = `<div style="display:flex; align-items:center; justify-content:center; height:100%; font-size:2rem;">📄</div>`;
-            if (isImage) {
-              previewHtml = `<img src="${publicUrl}" class="admin-card-preview" id="img-preview-${elementId}" alt="${file.name}" loading="lazy" decoding="async">`;
-            } else if (isVideo) {
-              previewHtml = `<video src="${publicUrl}" class="admin-card-preview" muted preload="metadata"></video>`;
-            }
-
-            card.innerHTML = `
-              <div class="admin-card-preview-wrapper" id="wrapper-${elementId}">${previewHtml}</div>
-              <div class="admin-card-caption">
-                <div class="admin-card-info">
-                  <div class="admin-card-title" title="${file.name}">${file.name}</div>
-                  <div class="admin-card-meta">Peso: ${sizeKb} KB</div>
-                  <div class="admin-card-meta" id="${elementId}">Dimensioni: Calcolo...</div>
-                </div>
-                <div class="admin-card-actions">
-                  <button class="btn-card-delete" onclick="event.stopPropagation(); deleteGuestFile('${file.name}')">Elimina</button>
-                </div>
+          card.innerHTML = `
+            <div class="admin-card-preview-wrapper" id="wrapper-${elementId}">${previewHtml}</div>
+            <div class="admin-card-caption">
+              <div class="admin-card-info">
+                <div class="admin-card-title" title="${file.name}">${file.name}</div>
+                <div class="admin-card-meta">Peso: ${sizeKb} KB</div>
+                <div class="admin-card-meta" id="${elementId}">Dimensioni: Calcolo...</div>
               </div>
-            `;
+              <div class="admin-card-actions">
+                <button class="btn-card-delete" onclick="event.stopPropagation(); deleteGuestFile('${file.name}')">Elimina</button>
+              </div>
+            </div>
+          `;
 
-            gridBody.appendChild(card);
+          gridBody.appendChild(card);
 
-            if (isImage) {
-              const imgEl = document.getElementById(`img-preview-${elementId}`);
-              const wrapperEl = document.getElementById(`wrapper-${elementId}`);
-              const handleImgLoad = () => {
+          if (isImage) {
+            const imgEl = document.getElementById(`img-preview-${elementId}`);
+            const wrapperEl = document.getElementById(`wrapper-${elementId}`);
+            const handleImgLoad = () => {
+              const el = document.getElementById(elementId);
+              if (el) el.textContent = `Dimensioni: ${imgEl.naturalWidth} x ${imgEl.naturalHeight} px`;
+              if (imgEl.naturalWidth > imgEl.naturalHeight) {
+                card.classList.add("card-horizontal");
+              }
+              attachMagnifierLens(imgEl, wrapperEl);
+            };
+
+            if (imgEl && imgEl.complete && imgEl.naturalWidth) {
+              handleImgLoad();
+            } else if (imgEl) {
+              imgEl.addEventListener('load', handleImgLoad, { once: true });
+              imgEl.addEventListener('error', () => {
                 const el = document.getElementById(elementId);
-                if (el) el.textContent = `Dimensioni: ${imgEl.naturalWidth} x ${imgEl.naturalHeight} px`;
-                if (imgEl.naturalWidth > imgEl.naturalHeight) {
+                if (el) el.textContent = "Dimensioni: N/D";
+              }, { once: true });
+            }
+          } else if (isVideo) {
+            const vid = card.querySelector('video');
+            if (vid) {
+              vid.onloadedmetadata = () => {
+                const el = document.getElementById(elementId);
+                if (el) el.textContent = `Dimensioni: ${vid.videoWidth} x ${vid.videoHeight} px`;
+                if (vid.videoWidth > vid.videoHeight) {
                   card.classList.add("card-horizontal");
                 }
-                attachMagnifierLens(imgEl, wrapperEl);
               };
-
-              if (imgEl && imgEl.complete && imgEl.naturalWidth) {
-                handleImgLoad();
-              } else if (imgEl) {
-                imgEl.addEventListener('load', handleImgLoad, { once: true });
-                imgEl.addEventListener('error', () => {
-                  const el = document.getElementById(elementId);
-                  if (el) el.textContent = "Dimensioni: N/D";
-                }, { once: true });
-              }
-            } else if (isVideo) {
-              const vid = card.querySelector('video');
-              if (vid) {
-                vid.onloadedmetadata = () => {
-                  const el = document.getElementById(elementId);
-                  if (el) el.textContent = `Dimensioni: ${vid.videoWidth} x ${vid.videoHeight} px`;
-                  if (vid.videoWidth > vid.videoHeight) {
-                    card.classList.add("card-horizontal");
-                  }
-                };
-              }
             }
-          });
-
-          batchIndex += BATCH_SIZE;
-          if (batchIndex < files.length) {
-            setTimeout(renderGuestBatch, 20);
           }
-        }
+        });
 
-        renderGuestBatch();
+        // Render Pagination Bar
+        if (paginationBar) {
+          const prevDisabled = guestCurrentPage === 1 ? 'disabled style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-color); color: rgba(255,255,255,0.3); padding: 6px 16px; border-radius: 4px; cursor: not-allowed;"' : 'style="background: rgba(255,255,255,0.06); border: 1px solid var(--border-color); color: var(--text-primary); padding: 6px 16px; border-radius: 4px; cursor: pointer;"';
+          const nextDisabled = guestCurrentPage === totalPages ? 'disabled style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-color); color: rgba(255,255,255,0.3); padding: 6px 16px; border-radius: 4px; cursor: not-allowed;"' : 'style="background: rgba(255,255,255,0.06); border: 1px solid var(--border-color); color: var(--text-primary); padding: 6px 16px; border-radius: 4px; cursor: pointer;"';
+
+          paginationBar.innerHTML = `
+            <button ${prevDisabled} onclick="changeGuestPage('${email}', ${guestCurrentPage - 1})">←</button>
+            <span style="font-size: 0.85rem; font-weight: 600; color: var(--text-primary); letter-spacing: 0.05em;"><strong>${guestCurrentPage}/${totalPages} pag.</strong></span>
+            <button ${nextDisabled} onclick="changeGuestPage('${email}', ${guestCurrentPage + 1})">→</button>
+          `;
+        }
 
       } catch (err) {
         console.error("loadGuestFiles err:", err);
       }
+    }
+
+    function changeGuestPage(email, page) {
+      guestCurrentPage = page;
+      loadGuestFiles(email);
     }
 
     async function deleteGuestFile(filename) {
@@ -2696,11 +2711,14 @@ www.maxsalvaggio.com`;
       items.forEach(item => item.classList.remove("active"));
     }
 
+    let clientAdminCurrentPage = 1;
+
     // Load files shared with the selected client from Supabase Storage
     async function loadClientFiles(email) {
       if (!supabaseClient) return;
 
       const gridBody = document.getElementById("files-grid-container");
+      const paginationBar = document.getElementById("files-pagination-bar");
       gridBody.innerHTML = '<div class="empty-state" style="grid-column:1/-1;">Caricamento file condivisi...</div>';
 
       try {
@@ -2727,6 +2745,7 @@ www.maxsalvaggio.com`;
               Assicurati di aver creato il bucket <strong>client-proofs</strong> e applicato le politiche SQL.
             </div>
           `;
+          if (paginationBar) paginationBar.innerHTML = "";
           return;
         }
 
@@ -2735,6 +2754,7 @@ www.maxsalvaggio.com`;
 
         if (!activeFiles || activeFiles.length === 0) {
           gridBody.innerHTML = '<div class="empty-state" style="grid-column:1/-1;">Nessun file condiviso con questo cliente.</div>';
+          if (paginationBar) paginationBar.innerHTML = "";
           return;
         }
 
@@ -2748,11 +2768,22 @@ www.maxsalvaggio.com`;
           return idxA - idxB;
         });
 
-        // 4. Map files and prepare lightbox items
+        const totalItems = activeFiles.length;
+        const totalPages = Math.ceil(totalItems / ADMIN_PROOFS_PER_PAGE) || 1;
+
+        if (clientAdminCurrentPage > totalPages) clientAdminCurrentPage = totalPages;
+        if (clientAdminCurrentPage < 1) clientAdminCurrentPage = 1;
+
+        const startIndex = (clientAdminCurrentPage - 1) * ADMIN_PROOFS_PER_PAGE;
+        const pageFiles = activeFiles.slice(startIndex, startIndex + ADMIN_PROOFS_PER_PAGE);
+
+        gridBody.innerHTML = "";
+        
+        // 4. Map files ONLY FOR CURRENT PAGE and prepare lightbox items
         const mediaItems = [];
         const galleryItems = [];
 
-        for (const file of activeFiles) {
+        for (const file of pageFiles) {
           const path = `${email}/${file.name}`;
           let publicUrl = "";
 
@@ -2816,124 +2847,126 @@ www.maxsalvaggio.com`;
         // Store globally for lightbox navigation
         window.sharedLightboxItems = mediaItems;
 
-        gridBody.innerHTML = "";
-        
-        const CLIENT_BATCH_SIZE = 16;
-        let clientBatchIndex = 0;
+        galleryItems.forEach((item, bIdx) => {
+          const index = startIndex + bIdx;
+          const card = document.createElement("div");
+          card.className = "admin-gallery-card";
+          card.draggable = true;
+          card.setAttribute("data-filename", item.file.name);
+          
+          card.addEventListener("dragstart", handleDragStart);
+          card.addEventListener("dragover", handleDragOver);
+          card.addEventListener("drop", handleDrop);
+          card.addEventListener("dragend", handleDragEnd);
 
-        function renderClientBatch() {
-          const chunk = galleryItems.slice(clientBatchIndex, clientBatchIndex + CLIENT_BATCH_SIZE);
-          chunk.forEach((item, bIdx) => {
-            const index = clientBatchIndex + bIdx;
-            const card = document.createElement("div");
-            card.className = "admin-gallery-card";
-            card.draggable = true;
-            card.setAttribute("data-filename", item.file.name);
-            
-            card.addEventListener("dragstart", handleDragStart);
-            card.addEventListener("dragover", handleDragOver);
-            card.addEventListener("drop", handleDrop);
-            card.addEventListener("dragend", handleDragEnd);
+          const elementId = `dims-${index}`;
 
-            const elementId = `dims-${index}`;
-
-            let previewHtml = "";
-            if (item.isImage) {
-              previewHtml = `<img src="${item.publicUrl}" class="admin-card-preview" id="client-img-preview-${elementId}" alt="Preview" loading="lazy" decoding="async">`;
-            } else if (item.isVideo) {
-              previewHtml = `<video src="${item.publicUrl}" class="admin-card-preview" muted preload="metadata"></video>`;
-            } else {
-              const icon = item.isAudio ? "🎵" : (item.isPdf ? "📕" : "📄");
-              previewHtml = `
-                <div class="admin-card-preview" style="display:flex; justify-content:center; align-items:center; font-size:2rem; background: rgba(0,0,0,0.2);">
-                  ${icon}
-                </div>
-              `;
-            }
-
-            card.innerHTML = `
-              <div class="admin-card-preview-wrapper" id="client-wrapper-${elementId}" style="cursor: pointer;">
-                ${previewHtml}
-              </div>
-              <div class="admin-card-caption">
-                <div class="admin-card-info" style="cursor: pointer; flex-grow: 1;">
-                  <span class="admin-card-title" title="${item.file.name}">${item.file.name}</span>
-                  <span class="admin-card-meta">Peso: ${item.sizeStr}</span>
-                  <span class="admin-card-meta" id="${elementId}">Dimensioni: Calcolo...</span>
-                </div>
-                <div class="admin-card-actions">
-                  <button class="btn-card-delete" onclick="event.stopPropagation(); deleteClientFile('${email}', '${item.file.name}')">Elimina</button>
-                </div>
+          let previewHtml = "";
+          if (item.isImage) {
+            previewHtml = `<img src="${item.publicUrl}" class="admin-card-preview" id="client-img-preview-${elementId}" alt="Preview" loading="lazy" decoding="async">`;
+          } else if (item.isVideo) {
+            previewHtml = `<video src="${item.publicUrl}" class="admin-card-preview" muted preload="metadata"></video>`;
+          } else {
+            const icon = item.isAudio ? "🎵" : (item.isPdf ? "📕" : "📄");
+            previewHtml = `
+              <div class="admin-card-preview" style="display:flex; justify-content:center; align-items:center; font-size:2rem; background: rgba(0,0,0,0.2);">
+                ${icon}
               </div>
             `;
+          }
 
-            const openMedia = () => {
-              if (item.isMedia) {
-                SharedLightbox.open(window.sharedLightboxItems, item.mediaIndex);
-              } else {
-                window.open(item.publicUrl, '_blank');
+          card.innerHTML = `
+            <div class="admin-card-preview-wrapper" id="client-wrapper-${elementId}" style="cursor: pointer;">
+              ${previewHtml}
+            </div>
+            <div class="admin-card-caption">
+              <div class="admin-card-info" style="cursor: pointer; flex-grow: 1;">
+                <span class="admin-card-title" title="${item.file.name}">${item.file.name}</span>
+                <span class="admin-card-meta">Peso: ${item.sizeStr}</span>
+                <span class="admin-card-meta" id="${elementId}">Dimensioni: Calcolo...</span>
+              </div>
+              <div class="admin-card-actions">
+                <button class="btn-card-delete" onclick="event.stopPropagation(); deleteClientFile('${email}', '${item.file.name}')">Elimina</button>
+              </div>
+            </div>
+          `;
+
+          const openMedia = () => {
+            if (item.isMedia) {
+              SharedLightbox.open(window.sharedLightboxItems, item.mediaIndex);
+            } else {
+              window.open(item.publicUrl, '_blank');
+            }
+          };
+
+          card.querySelector('.admin-card-preview-wrapper').addEventListener('click', openMedia);
+          card.querySelector('.admin-card-info').addEventListener('click', openMedia);
+
+          gridBody.appendChild(card);
+
+          if (item.isImage) {
+            const imgEl = document.getElementById(`client-img-preview-${elementId}`);
+            const wrapperEl = document.getElementById(`client-wrapper-${elementId}`);
+            const handleImgLoad = () => {
+              const el = document.getElementById(elementId);
+              if (el) el.textContent = `Dimensioni: ${imgEl.naturalWidth} x ${imgEl.naturalHeight} px`;
+
+              if (imgEl.naturalWidth > imgEl.naturalHeight) {
+                card.classList.add("card-horizontal");
               }
+              attachMagnifierLens(imgEl, wrapperEl);
             };
 
-            card.querySelector('.admin-card-preview-wrapper').addEventListener('click', openMedia);
-            card.querySelector('.admin-card-info').addEventListener('click', openMedia);
-
-            gridBody.appendChild(card);
-
-            if (item.isImage) {
-              const imgEl = document.getElementById(`client-img-preview-${elementId}`);
-              const wrapperEl = document.getElementById(`client-wrapper-${elementId}`);
-              const handleImgLoad = () => {
+            if (imgEl && imgEl.complete && imgEl.naturalWidth) {
+              handleImgLoad();
+            } else if (imgEl) {
+              imgEl.addEventListener('load', handleImgLoad, { once: true });
+              imgEl.addEventListener('error', () => {
                 const el = document.getElementById(elementId);
-                if (el) el.textContent = `Dimensioni: ${imgEl.naturalWidth} x ${imgEl.naturalHeight} px`;
-
-                if (imgEl.naturalWidth > imgEl.naturalHeight) {
+                if (el) el.textContent = "Dimensioni: N/D";
+              }, { once: true });
+            }
+          } else if (item.isVideo) {
+            const vid = card.querySelector('video');
+            if (vid) {
+              vid.onloadedmetadata = () => {
+                const el = document.getElementById(elementId);
+                if (el) el.textContent = `Dimensioni: ${vid.videoWidth} x ${vid.videoHeight} px`;
+                if (vid.videoWidth > vid.videoHeight) {
                   card.classList.add("card-horizontal");
                 }
-                attachMagnifierLens(imgEl, wrapperEl);
               };
-
-              if (imgEl && imgEl.complete && imgEl.naturalWidth) {
-                handleImgLoad();
-              } else if (imgEl) {
-                imgEl.addEventListener('load', handleImgLoad, { once: true });
-                imgEl.addEventListener('error', () => {
-                  const el = document.getElementById(elementId);
-                  if (el) el.textContent = "Dimensioni: N/D";
-                }, { once: true });
-              }
-            } else if (item.isVideo) {
-              const vid = card.querySelector('video');
-              if (vid) {
-                vid.onloadedmetadata = () => {
-                  const el = document.getElementById(elementId);
-                  if (el) el.textContent = `Dimensioni: ${vid.videoWidth} x ${vid.videoHeight} px`;
-                  if (vid.videoWidth > vid.videoHeight) {
-                    card.classList.add("card-horizontal");
-                  }
-                };
-                vid.onerror = () => {
-                  const el = document.getElementById(elementId);
-                  if (el) el.textContent = "Dimensioni: N/D";
-                };
-              }
-            } else {
-              const el = document.getElementById(elementId);
-              if (el) el.style.display = "none";
+              vid.onerror = () => {
+                const el = document.getElementById(elementId);
+                if (el) el.textContent = "Dimensioni: N/D";
+              };
             }
-          });
-
-          clientBatchIndex += CLIENT_BATCH_SIZE;
-          if (clientBatchIndex < galleryItems.length) {
-            setTimeout(renderClientBatch, 20);
+          } else {
+            const el = document.getElementById(elementId);
+            if (el) el.style.display = "none";
           }
-        }
+        });
 
-        renderClientBatch();
+        // Render Pagination Bar
+        if (paginationBar) {
+          const prevDisabled = clientAdminCurrentPage === 1 ? 'disabled style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-color); color: rgba(255,255,255,0.3); padding: 6px 16px; border-radius: 4px; cursor: not-allowed;"' : 'style="background: rgba(255,255,255,0.06); border: 1px solid var(--border-color); color: var(--text-primary); padding: 6px 16px; border-radius: 4px; cursor: pointer;"';
+          const nextDisabled = clientAdminCurrentPage === totalPages ? 'disabled style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-color); color: rgba(255,255,255,0.3); padding: 6px 16px; border-radius: 4px; cursor: not-allowed;"' : 'style="background: rgba(255,255,255,0.06); border: 1px solid var(--border-color); color: var(--text-primary); padding: 6px 16px; border-radius: 4px; cursor: pointer;"';
+
+          paginationBar.innerHTML = `
+            <button ${prevDisabled} onclick="changeClientAdminPage('${email}', ${clientAdminCurrentPage - 1})">←</button>
+            <span style="font-size: 0.85rem; font-weight: 600; color: var(--text-primary); letter-spacing: 0.05em;"><strong>${clientAdminCurrentPage}/${totalPages} pag.</strong></span>
+            <button ${nextDisabled} onclick="changeClientAdminPage('${email}', ${clientAdminCurrentPage + 1})">→</button>
+          `;
+        }
 
       } catch (err) {
         console.error("loadClientFiles err:", err);
       }
+    }
+
+    function changeClientAdminPage(email, page) {
+      clientAdminCurrentPage = page;
+      loadClientFiles(email);
     }
 
     // Drag and Drop ordering logic

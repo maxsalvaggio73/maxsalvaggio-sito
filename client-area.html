@@ -870,6 +870,7 @@
       <div class="gallery-grid" id="gallery-grid-body">
         <!-- Rendered dynamically -->
       </div>
+      <div class="pagination-bar" id="gallery-pagination-bar" style="display: flex; align-items: center; justify-content: center; gap: 15px; margin-top: 30px; font-family: var(--font-body);"></div>
     </div>
   </main>
 
@@ -1373,9 +1374,8 @@
         console.error(err);
         alert(err.message || "Si è verificato un errore durante l'invio.");
         btn.disabled = false;
-        spinner.style.display = "none";
-      }
-    }
+          let clientAreaCurrentPage = 1;
+    const PROOFS_PER_PAGE = 8;
 
     // Query files inside the folder named exactly after the client's email
     async function loadClientPhotos() {
@@ -1386,6 +1386,7 @@
       const emptyStatePanel = document.getElementById("empty-state-panel");
       const galleryPanel = document.getElementById("gallery-panel");
       const gridBody = document.getElementById("gallery-grid-body");
+      const paginationBar = document.getElementById("gallery-pagination-bar");
 
       try {
         // 1. Fetch file order array from client profile
@@ -1427,11 +1428,22 @@
           return idxA - idxB;
         });
 
-        // 4. Map files and prepare lightbox items using signed URL with getPublicUrl fallback
+        const totalItems = imageFiles.length;
+        const totalPages = Math.ceil(totalItems / PROOFS_PER_PAGE) || 1;
+
+        if (clientAreaCurrentPage > totalPages) clientAreaCurrentPage = totalPages;
+        if (clientAreaCurrentPage < 1) clientAreaCurrentPage = 1;
+
+        const startIndex = (clientAreaCurrentPage - 1) * PROOFS_PER_PAGE;
+        const pageFiles = imageFiles.slice(startIndex, startIndex + PROOFS_PER_PAGE);
+
+        gridBody.innerHTML = '<div class="empty-state" style="grid-column:1/-1;">Caricamento provini...</div>';
+
+        // 4. Map files ONLY FOR CURRENT PAGE using signed URL with getPublicUrl fallback
         const mediaItems = [];
         const galleryItems = [];
 
-        for (const file of imageFiles) {
+        for (const file of pageFiles) {
           const path = `${folderName}/${file.name}`;
           let fileUrl = "";
 
@@ -1499,108 +1511,106 @@
 
         // Build the grid
         gridBody.innerHTML = "";
-        
-        const CLIENT_AREA_BATCH_SIZE = 16;
-        let clientAreaBatchIndex = 0;
 
-        function renderClientAreaBatch() {
-          const chunk = galleryItems.slice(clientAreaBatchIndex, clientAreaBatchIndex + CLIENT_AREA_BATCH_SIZE);
-          chunk.forEach((item, bIdx) => {
-            const index = clientAreaBatchIndex + bIdx;
-            const elementId = `client-dims-${index}`;
-            const card = document.createElement("div");
-            card.className = "gallery-item";
+        galleryItems.forEach((item, index) => {
+          const elementId = `client-dims-${index}`;
+          const card = document.createElement("div");
+          card.className = "gallery-item";
 
-            let previewHtml = "";
-            if (item.isImage) {
-              previewHtml = `<img src="${item.publicUrl}" alt="${item.file.name}" class="gallery-img" loading="lazy" decoding="async">`;
-            } else if (item.isVideo) {
-              previewHtml = `<video src="${item.publicUrl}" class="gallery-img" style="object-fit: cover;" preload="metadata" muted loop onmouseover="this.play()" onmouseout="this.pause()"></video>`;
-            } else if (item.isAudio) {
-              previewHtml = `
-                <div class="gallery-img" style="display:flex; flex-direction:column; justify-content:center; align-items:center; background-color:rgba(255,255,255,0.02); height:100%;">
-                  <span style="font-size:2.5rem;">🎵</span>
-                </div>
-              `;
-            } else {
-              const docIcon = item.isPdf ? "📕" : "📄";
-              previewHtml = `
-                <div class="gallery-img" style="display:flex; flex-direction:column; justify-content:center; align-items:center; background-color:rgba(255,255,255,0.02); height:100%;">
-                  <span style="font-size:2.5rem;">${docIcon}</span>
-                </div>
-              `;
-            }
-
-            card.innerHTML = `
-              <div class="gallery-preview-container">
-                ${previewHtml}
-                <div class="gallery-overlay">
-                  <a href="${item.publicUrl}" download="${item.file.name}" class="btn-download-item" onclick="event.stopPropagation()">Scarica</a>
-                </div>
-              </div>
-              <div class="gallery-caption">
-                <span class="caption-title">${item.file.name}</span>
-                <div class="caption-meta">
-                  <span>Peso: ${item.sizeStr}</span>
-                  <span id="${elementId}">Dimensioni: Calcolo...</span>
-                </div>
+          let previewHtml = "";
+          if (item.isImage) {
+            previewHtml = `<img src="${item.publicUrl}" alt="${item.file.name}" class="gallery-img" loading="lazy" decoding="async">`;
+          } else if (item.isVideo) {
+            previewHtml = `<video src="${item.publicUrl}" class="gallery-img" style="object-fit: cover;" preload="metadata" muted loop onmouseover="this.play()" onmouseout="this.pause()"></video>`;
+          } else if (item.isAudio) {
+            previewHtml = `
+              <div class="gallery-img" style="display:flex; flex-direction:column; justify-content:center; align-items:center; background-color:rgba(255,255,255,0.02); height:100%;">
+                <span style="font-size:2.5rem;">🎵</span>
               </div>
             `;
+          } else {
+            const docIcon = item.isPdf ? "📕" : "📄";
+            previewHtml = `
+              <div class="gallery-img" style="display:flex; flex-direction:column; justify-content:center; align-items:center; background-color:rgba(255,255,255,0.02); height:100%;">
+                <span style="font-size:2.5rem;">${docIcon}</span>
+              </div>
+            `;
+          }
 
-            const openMedia = () => {
-              if (item.isMedia) {
-                SharedLightbox.open(window.sharedLightboxItems, item.mediaIndex);
-              } else {
-                window.open(item.publicUrl, '_blank');
-              }
+          card.innerHTML = `
+            <div class="gallery-preview-container">
+              ${previewHtml}
+              <div class="gallery-overlay">
+                <a href="${item.publicUrl}" download="${item.file.name}" class="btn-download-item" onclick="event.stopPropagation()">Scarica</a>
+              </div>
+            </div>
+            <div class="gallery-caption">
+              <span class="caption-title">${item.file.name}</span>
+              <div class="caption-meta">
+                <span>Peso: ${item.sizeStr}</span>
+                <span id="${elementId}">Dimensioni: Calcolo...</span>
+              </div>
+            </div>
+          `;
+
+          const openMedia = () => {
+            if (item.isMedia) {
+              SharedLightbox.open(window.sharedLightboxItems, item.mediaIndex);
+            } else {
+              window.open(item.publicUrl, '_blank');
+            }
+          };
+
+          card.querySelector('.gallery-preview-container').addEventListener('click', openMedia);
+          card.querySelector('.gallery-caption').addEventListener('click', openMedia);
+
+          gridBody.appendChild(card);
+
+          if (item.isImage) {
+            const imgEl = card.querySelector("img");
+            const handleImgLoad = () => {
+              const el = document.getElementById(elementId);
+              if (el) el.textContent = `Dimensioni: ${imgEl.naturalWidth} x ${imgEl.naturalHeight} px`;
             };
 
-            card.querySelector('.gallery-preview-container').addEventListener('click', openMedia);
-            card.querySelector('.gallery-caption').addEventListener('click', openMedia);
-
-            gridBody.appendChild(card);
-
-            if (item.isImage) {
-              const imgEl = card.querySelector("img");
-              const handleImgLoad = () => {
+            if (imgEl && imgEl.complete && imgEl.naturalWidth) {
+              handleImgLoad();
+            } else if (imgEl) {
+              imgEl.addEventListener('load', handleImgLoad, { once: true });
+              imgEl.addEventListener('error', () => {
                 const el = document.getElementById(elementId);
-                if (el) el.textContent = `Dimensioni: ${imgEl.naturalWidth} x ${imgEl.naturalHeight} px`;
-              };
-
-              if (imgEl && imgEl.complete && imgEl.naturalWidth) {
-                handleImgLoad();
-              } else if (imgEl) {
-                imgEl.addEventListener('load', handleImgLoad, { once: true });
-                imgEl.addEventListener('error', () => {
-                  const el = document.getElementById(elementId);
-                  if (el) el.textContent = "Dimensioni: N/D";
-                }, { once: true });
-              }
-            } else if (item.isVideo) {
-              const vid = card.querySelector('video');
-              if (vid) {
-                vid.onloadedmetadata = () => {
-                  const el = document.getElementById(elementId);
-                  if (el) el.textContent = `Dimensioni: ${vid.videoWidth} x ${vid.videoHeight} px`;
-                };
-                vid.onerror = () => {
-                  const el = document.getElementById(elementId);
-                  if (el) el.textContent = "Dimensioni: N/D";
-                };
-              }
-            } else {
-              const el = document.getElementById(elementId);
-              if (el) el.style.display = "none";
+                if (el) el.textContent = "Dimensioni: N/D";
+              }, { once: true });
             }
-          });
-
-          clientAreaBatchIndex += CLIENT_AREA_BATCH_SIZE;
-          if (clientAreaBatchIndex < galleryItems.length) {
-            setTimeout(renderClientAreaBatch, 20);
+          } else if (item.isVideo) {
+            const vid = card.querySelector('video');
+            if (vid) {
+              vid.onloadedmetadata = () => {
+                const el = document.getElementById(elementId);
+                if (el) el.textContent = `Dimensioni: ${vid.videoWidth} x ${vid.videoHeight} px`;
+              };
+              vid.onerror = () => {
+                const el = document.getElementById(elementId);
+                if (el) el.textContent = "Dimensioni: N/D";
+              };
+            }
+          } else {
+            const el = document.getElementById(elementId);
+            if (el) el.style.display = "none";
           }
-        }
+        });
 
-        renderClientAreaBatch();
+        // Render Pagination Bar
+        if (paginationBar) {
+          const prevDisabled = clientAreaCurrentPage === 1 ? 'disabled style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-color); color: rgba(255,255,255,0.3); padding: 8px 18px; border-radius: 4px; cursor: not-allowed;"' : 'style="background: rgba(255,255,255,0.06); border: 1px solid var(--border-color); color: var(--text-primary); padding: 8px 18px; border-radius: 4px; cursor: pointer;"';
+          const nextDisabled = clientAreaCurrentPage === totalPages ? 'disabled style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-color); color: rgba(255,255,255,0.3); padding: 8px 18px; border-radius: 4px; cursor: not-allowed;"' : 'style="background: rgba(255,255,255,0.06); border: 1px solid var(--border-color); color: var(--text-primary); padding: 8px 18px; border-radius: 4px; cursor: pointer;"';
+
+          paginationBar.innerHTML = `
+            <button ${prevDisabled} onclick="changeClientAreaPage(${clientAreaCurrentPage - 1})">←</button>
+            <span style="font-size: 0.85rem; font-weight: 600; color: var(--text-primary); letter-spacing: 0.05em;"><strong>${clientAreaCurrentPage}/${totalPages} pag.</strong></span>
+            <button ${nextDisabled} onclick="changeClientAreaPage(${clientAreaCurrentPage + 1})">→</button>
+          `;
+        }
 
         // Toggle panels
         emptyStatePanel.style.display = "none";
@@ -1608,6 +1618,13 @@
 
       } catch (err) {
         console.error("loadClientPhotos err:", err);
+      }
+    }
+
+    function changeClientAreaPage(page) {
+      clientAreaCurrentPage = page;
+      loadClientPhotos();
+    }        console.error("loadClientPhotos err:", err);
         statusMsg.textContent = "Errore durante il caricamento dei provini.";
       }
     }
