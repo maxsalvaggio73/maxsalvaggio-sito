@@ -46,6 +46,7 @@ Per eseguire il sito in locale, posiziona la cartella `Max Salvaggio Archivio/` 
 - **2026-07-24** – Nuova strategia: resize automatico miniature 240px/480px e fix definitivo loader client-area.
 - **2026-07-24** – Fix strutturale con try-finally e fallback hard 3.5s per caricamento galleria client-area.
 - **2026-07-24** – Fix sblocco automatico overlay verifica sessione in client-area.
+- **2026-07-24** – Rimozione drastica overlay di caricamento iniziale per visualizzazione immediata workspace.
 
 ---
 
