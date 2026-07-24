@@ -3388,6 +3388,7 @@ www.maxsalvaggio.com`;
         if (photoshareWrapper) photoshareWrapper.style.display = "flex";
         if (photosharePanel) photosharePanel.style.display = "flex";
         
+        setupPSAdminDropZone();
         loadPhotoShareEvents();
         loadPhotoShareLeads();
       } else {
@@ -4278,11 +4279,58 @@ www.maxsalvaggio.com`;
     let psAdminFilesToUpload = [];
     let allPhotoShareLeads = [];
 
-    function handlePSAdminFileSelect(event) {
-      psAdminFilesToUpload = Array.from(event.target.files);
+    function setupPSAdminDropZone() {
+      const psDropZone = document.getElementById("ps-admin-drop-zone");
+      if (!psDropZone) return;
+
+      psDropZone.onclick = () => {
+        const fileInput = document.getElementById("ps-admin-file-input");
+        if (fileInput) fileInput.click();
+      };
+
+      psDropZone.addEventListener("dragover", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        psDropZone.style.borderColor = "var(--accent)";
+        psDropZone.style.background = "rgba(229, 9, 20, 0.15)";
+      });
+
+      psDropZone.addEventListener("dragleave", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        psDropZone.style.borderColor = "var(--border-color)";
+        psDropZone.style.background = "transparent";
+      });
+
+      psDropZone.addEventListener("drop", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        psDropZone.style.borderColor = "var(--border-color)";
+        psDropZone.style.background = "transparent";
+
+        if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+          psAdminFilesToUpload = Array.from(e.dataTransfer.files);
+          updatePSAdminFileList();
+        }
+      });
+    }
+
+    function updatePSAdminFileList() {
       const list = document.getElementById("ps-admin-selected-files-list");
       if (list) {
-        list.textContent = `Selezionate: ${psAdminFilesToUpload.length} foto per l'evento`;
+        if (psAdminFilesToUpload.length > 0) {
+          const names = psAdminFilesToUpload.map(f => f.name).join(", ");
+          list.textContent = `Selezionate per l'upload: ${psAdminFilesToUpload.length} foto (${names})`;
+        } else {
+          list.textContent = "";
+        }
+      }
+    }
+
+    function handlePSAdminFileSelect(event) {
+      if (event.target && event.target.files) {
+        psAdminFilesToUpload = Array.from(event.target.files);
+        updatePSAdminFileList();
       }
     }
 
