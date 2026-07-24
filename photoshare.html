@@ -603,7 +603,7 @@
     </div>
   </main>
 
-  <!-- FIXED BOTTOM ACTION BAR FOR GALLERY -->
+  <!-- FIXED BOTTOM ACTION BAR FOR GALLERY (GUEST RESERVED) -->
   <div class="bottom-action-bar" id="gallery-action-bar" style="display: none;">
     <div class="bar-info">
       <div class="selected-count-badge">
@@ -614,12 +614,21 @@
       </div>
     </div>
 
-    <div class="bar-controls">
-      <button class="btn-select-toggle" onclick="selectAllPhotos()">Seleziona Tutte</button>
-      <button class="btn-select-toggle" onclick="deselectAllPhotos()">Deseleziona Tutte</button>
-      <button class="btn-download-zip" id="btn-download-zip" onclick="downloadSelectedZip()" disabled>
+    <div class="bar-controls" style="display: flex; align-items: center; gap: 8px; flex-wrap: nowrap !important; white-space: nowrap; overflow-x: auto;">
+      <!-- [1] SELEZIONA TUTTO -->
+      <button class="btn-select-toggle" onclick="selectAllPhotos()" style="flex-shrink: 0; white-space: nowrap; padding: 8px 14px; font-size: 0.78rem;">
+        ☑️ SELEZIONA TUTTO
+      </button>
+
+      <!-- [2] RICHIEDI IMMAGINI SELEZIONATE (Verde) -->
+      <button class="btn-download-zip" id="btn-download-zip" onclick="downloadSelectedZip()" disabled style="flex-shrink: 0; white-space: nowrap; background-color: var(--accent-green); border-color: var(--accent-green); color: #000; font-weight: 700; padding: 8px 14px; font-size: 0.78rem;">
         <span class="spinner" id="zip-spinner" style="display: none;"></span>
-        <span>SCARICA SELEZIONATE (.ZIP)</span>
+        <span id="btn-download-zip-text">📥 RICHIEDI IMMAGINI SELEZIONATE (0)</span>
+      </button>
+
+      <!-- [3] DESELEZIONA TUTTO (Neutro) -->
+      <button class="btn-select-toggle" onclick="deselectAllPhotos()" style="flex-shrink: 0; white-space: nowrap; background-color: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2); color: #fff; padding: 8px 14px; font-size: 0.78rem;">
+        ❌ DESELEZIONA TUTTO
       </button>
     </div>
   </div>
@@ -773,8 +782,9 @@
       } catch (err) {
         console.warn("Lead insert exception:", err);
       } finally {
-        // Unlock in localStorage
+        // Unlock in localStorage & store guest email
         localStorage.setItem(`photoshare_unlocked_${activeEventCode}`, 'true');
+        localStorage.setItem('photoshare_user_email', email);
         btn.disabled = false;
         spinner.style.display = "none";
         document.getElementById('phase-2-panel').style.display = "none";
@@ -968,7 +978,9 @@
       const count = selectedPhotoNames.size;
       document.getElementById('selected-count').textContent = count;
       const btn = document.getElementById('btn-download-zip');
-      btn.disabled = count === 0;
+      const text = document.getElementById('btn-download-zip-text');
+      if (btn) btn.disabled = count === 0;
+      if (text) text.textContent = `📥 RICHIEDI IMMAGINI SELEZIONATE (${count})`;
     }
 
     async function downloadSelectedZip() {
@@ -981,6 +993,17 @@
       spinner.style.display = "inline-block";
 
       try {
+        const guestEmail = localStorage.getItem('photoshare_user_email') || 'Guest';
+        if (supabaseClient && activeEventCode) {
+          try {
+            await supabaseClient.from('photoshare_leads').insert([{
+              event_code: activeEventCode,
+              email: guestEmail,
+              full_name: 'Download Request: ' + Array.from(selectedPhotoNames).join(', ')
+            }]);
+          } catch (e) {}
+        }
+
         const zip = new JSZip();
         const folder = zip.folder(`PhotoShare_${activeEventCode}`);
 
@@ -997,13 +1020,14 @@
         }
 
         const zipBlob = await zip.generateAsync({ type: "blob" });
-        saveAs(zipBlob, `PhotoShare_${activeEventCode}_Social_Ready.zip`);
+        saveAs(zipBlob, `PhotoShare_${activeEventCode}_Selezionate.zip`);
 
       } catch (err) {
         alert("Si è verificato un errore durante la creazione del file ZIP: " + err.message);
       } finally {
         btn.disabled = false;
         spinner.style.display = "none";
+        updateActionBar();
       }
     }
   </script>
