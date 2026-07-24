@@ -359,6 +359,7 @@
       -webkit-backdrop-filter: blur(10px);
       text-align: center;
       margin-bottom: 30px;
+      color: var(--text-primary);
     }
     .card-icon {
       font-size: 2.5rem;
@@ -372,12 +373,16 @@
       letter-spacing: 0.1em;
       text-transform: uppercase;
       margin-bottom: 15px;
+      color: var(--text-primary);
     }
     .card-text {
       font-size: 0.92rem;
       line-height: 1.6;
-      color: var(--text-secondary);
+      color: rgba(255, 255, 255, 0.85) !important;
       margin-bottom: 25px;
+    }
+    #status-message {
+      color: rgba(255, 255, 255, 0.75) !important;
     }
     .btn-home {
       display: inline-block;
@@ -1400,10 +1405,17 @@
         console.error(err);
         alert(err.message || "Si è verificato un errore durante l'invio.");
         btn.disabled = false;
-          let clientAreaCurrentPage = 1;
+    let clientAreaCurrentPage = 1;
     const PROOFS_PER_PAGE = 8;
 
-    // Query files inside the folder checking multi-path candidates in cascade
+    function listStorageWithPathTimeout(testPath, timeoutMs = 2500) {
+      return Promise.race([
+        supabaseClient.storage.from('client-proofs').list(testPath),
+        new Promise((_, reject) => setTimeout(() => reject(new Error(`Timeout scansione percorso ${testPath}`)), timeoutMs))
+      ]);
+    }
+
+    // Query files inside the folder checking multi-path candidates in cascade with non-blocking timeouts
     async function loadClientPhotos() {
       if (!supabaseClient || !currentUser) return;
 
@@ -1427,7 +1439,7 @@
           userEmail = profile.email.trim();
         }
 
-        // 2. Multi-path search cascade in bucket 'client-proofs'
+        // 2. Multi-path search cascade in bucket 'client-proofs' with 2.5s per-path timeout
         const candidatePaths = [
           `guest/${userEmail}`,
           userEmail,
@@ -1443,34 +1455,42 @@
         let storageErrors = [];
 
         for (const testPath of uniquePaths) {
-          const { data, error } = await supabaseClient
-            .storage
-            .from('client-proofs')
-            .list(testPath);
+          try {
+            console.log(`[WORKSPACE DEBUG] Scansione percorso "${testPath}" (timeout 2.5s)...`);
+            const res = await listStorageWithPathTimeout(testPath, 2500);
 
-          if (error) {
-            console.warn(`[WORKSPACE DEBUG] Storage error on path "${testPath}":`, error);
-            storageErrors.push({ path: testPath, error });
-            continue;
-          }
+            if (res?.error) {
+              console.warn(`[WORKSPACE DEBUG] Storage error on path "${testPath}":`, res.error);
+              storageErrors.push({ path: testPath, error: res.error });
+              continue;
+            }
 
-          const filtered = (data || []).filter(f => f.name !== '.emptyFolderPlaceholder' && f.name !== '.DS_Store' && f.name !== 'documents');
+            const filtered = (res?.data || []).filter(f => f.name !== '.emptyFolderPlaceholder' && f.name !== '.DS_Store' && f.name !== 'documents');
 
-          if (filtered && filtered.length > 0) {
-            validPath = testPath;
-            files = filtered;
-            console.log("[WORKSPACE DEBUG] Found photos in path:", validPath, files);
-            break;
+            if (filtered && filtered.length > 0) {
+              validPath = testPath;
+              files = filtered;
+              console.log("[WORKSPACE DEBUG] Trovati provini nel percorso:", validPath, files);
+              break;
+            }
+          } catch (pathErr) {
+            console.warn(`[WORKSPACE DEBUG] Timeout/Errore su percorso "${testPath}":`, pathErr);
+            storageErrors.push({ path: testPath, error: pathErr });
           }
         }
 
         if (!validPath || !files || files.length === 0) {
-          console.warn("[WORKSPACE DEBUG] No photos found in any tested path. Errors:", storageErrors);
+          console.warn("[WORKSPACE DEBUG] Nessun provino trovato in tutti i percorsi testati. Errors:", storageErrors);
           statusMsg.textContent = "Al momento la tua cartella privata è vuota. Contatta lo studio per caricare il tuo materiale.";
+          statusMsg.style.color = "rgba(255, 255, 255, 0.85)";
           emptyStatePanel.style.display = "block";
           galleryPanel.style.display = "none";
           return;
         }
+
+        // SUBITO: Nascondi la scheda vuota e mostra la griglia provini
+        emptyStatePanel.style.display = "none";
+        galleryPanel.style.display = "block";
 
         let imageFiles = files;
 

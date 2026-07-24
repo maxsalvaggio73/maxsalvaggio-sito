@@ -40,6 +40,7 @@ Per eseguire il sito in locale, posiziona la cartella `Max Salvaggio Archivio/` 
 - **2026-07-24** – Risolto bug di login/redirect Workspace (sessione persistente e verifica asincrona senza espulsioni) e stabilizzata paginazione a 8 provini con indicatore X/Y pag.
 - **2026-07-24** – Fix matching percorso Storage Guest per il rendering dei provini in Workspace.
 - **2026-07-24** – Implementata ricerca multi-percorso in cascata (`guest/${email}`, `${email}`, `${email.toLowerCase()}`, `${user.id}`) con log di debug in `client-area.html`.
+- **2026-07-24** – Fix contrasto testo scheda vuota (`color: rgba(255,255,255,0.85)`) e timeout non-bloccante di 2.5s per ogni scansione percorso Storage in `client-area.html`.
 
 ---
 
