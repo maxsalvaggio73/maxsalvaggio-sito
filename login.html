@@ -732,6 +732,10 @@
         const user = data.user;
         const session = data.session;
 
+        if (user && user.email) {
+          localStorage.setItem("userEmail", user.email);
+        }
+
         if (!user || !session) {
           showAlert('error', "Impossibile ottenere la sessione di accesso.");
           btn.disabled = false;

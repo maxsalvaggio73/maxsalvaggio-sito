@@ -1464,14 +1464,24 @@
 
     // Query files inside the folder checking multi-path candidates in cascade with guaranteed try-finally
     async function loadClientPhotos() {
-      if (!supabaseClient || !currentUser) return;
+      if (!supabaseClient) return;
 
-      let userEmail = currentUser.email ? currentUser.email.trim() : "";
+      let userEmail = (currentUser && currentUser.email) ? currentUser.email.trim() : (localStorage.getItem("userEmail") || localStorage.getItem("activeEmail") || "");
+      
       const statusMsg = document.getElementById("status-message");
       const emptyStatePanel = document.getElementById("empty-state-panel");
       const galleryPanel = document.getElementById("gallery-panel");
       const gridBody = document.getElementById("gallery-grid-body");
       const paginationBar = document.getElementById("gallery-pagination-bar");
+
+      if (userEmail) {
+        const emailEl = document.getElementById("client-email");
+        if (emailEl) emailEl.textContent = userEmail;
+        const nameEl = document.getElementById("client-display-name");
+        if (nameEl && (nameEl.textContent === "..." || nameEl.textContent === "")) {
+          nameEl.textContent = userEmail;
+        }
+      }
 
       let validPath = null;
       let imageFiles = [];
