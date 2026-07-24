@@ -62,6 +62,7 @@ Per eseguire il sito in locale, posiziona la cartella `Max Salvaggio Archivio/` 
 - **2026-07-24** – Aggiornate dimensioni miniature a max 200px/400px e aggiunta cancellazione multipla in blocco per PhotoShare admin.
 - **2026-07-24** – Aggiunto pulsante verde download ZIP per foto selezionate in PhotoShare admin.
 - **2026-07-24** – Allineati sulla stessa riga i pulsanti di azione foto e aggiunto tasto Deseleziona Tutto in PhotoShare admin.
+- **2026-07-24** – Rimosso pulsante cestino singolo dalle miniature in PhotoShare.
 
 ---
 
