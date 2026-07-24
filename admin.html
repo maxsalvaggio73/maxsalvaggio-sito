@@ -2298,9 +2298,9 @@ www.maxsalvaggio.com`;
     function attachMagnifierLens(imgElement, wrapperElement) {
       if (!imgElement || !wrapperElement) return;
 
-      const lens = document.createElement("div");
+      const lens = wrapperElement.querySelector(".magnifier-lens") || document.createElement("div");
       lens.className = "magnifier-lens";
-      wrapperElement.appendChild(lens);
+      if (!lens.parentElement) wrapperElement.appendChild(lens);
 
       wrapperElement.addEventListener("mousemove", (e) => {
         const rect = imgElement.getBoundingClientRect();
@@ -2314,20 +2314,21 @@ www.maxsalvaggio.com`;
           return;
         }
 
-        const natW = imgElement.naturalWidth || (rect.width * 2.5);
-        const natH = imgElement.naturalHeight || (rect.height * 2.5);
+        const zoomFactor = 2.5;
+        const bgWidth = Math.max(rect.width * zoomFactor, imgElement.naturalWidth || 0);
+        const bgHeight = Math.max(rect.height * zoomFactor, imgElement.naturalHeight || 0);
 
-        const zoomX = natW / rect.width;
-        const zoomY = natH / rect.height;
+        const zoomX = bgWidth / rect.width;
+        const zoomY = bgHeight / rect.height;
 
         lens.style.display = "block";
         lens.style.backgroundImage = `url('${imgElement.src}')`;
-        lens.style.backgroundSize = `${natW}px ${natH}px`;
+        lens.style.backgroundSize = `${bgWidth}px ${bgHeight}px`;
 
         const lensW = 140;
         const lensH = 140;
-        let lensX = (e.clientX - wrapperRect.left) - (lensW / 2);
-        let lensY = (e.clientY - wrapperRect.top) - (lensH / 2);
+        const lensX = (e.clientX - wrapperRect.left) - (lensW / 2);
+        const lensY = (e.clientY - wrapperRect.top) - (lensH / 2);
 
         lens.style.left = `${lensX}px`;
         lens.style.top = `${lensY}px`;
@@ -4535,14 +4536,15 @@ www.maxsalvaggio.com`;
           <div class="admin-card-preview-wrapper" id="wrapper-${item.elementId}" style="position: relative; cursor: pointer;">
             <img src="${item.signedUrl}" class="admin-card-preview" id="img-preview-${item.elementId}" alt="${item.file.name}" loading="lazy" decoding="async">
           </div>
-          <div class="admin-card-caption" style="display: flex; justify-content: space-between; align-items: flex-end;">
-            <div class="admin-card-info" style="cursor: pointer; flex-grow: 1;">
+          <div class="admin-card-caption" style="display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 10px 12px;">
+            <div class="photo-select-checkbox" style="flex-shrink: 0; width: 22px; height: 22px; border-radius: 4px; background: rgba(0,0,0,0.65); border: 2px solid #fff; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 0.78rem; font-weight: 700; cursor: pointer;" onclick="event.stopPropagation(); this.classList.toggle('selected');" title="Seleziona foto">✓</div>
+            <div class="admin-card-info" style="cursor: pointer; flex-grow: 1; overflow: hidden; margin: 0 4px;">
               <div class="admin-card-title" title="${item.file.name}">${item.file.name}</div>
               <div class="admin-card-meta">Peso: ${item.sizeKb} KB</div>
               <div class="admin-card-meta" id="${item.elementId}">Dimensioni: Calcolo...</div>
             </div>
-            <div class="admin-card-actions" style="margin-left: 8px;">
-              <button class="btn-card-delete" onclick="event.stopPropagation(); deletePhotoShareEventFile(event, '${item.fullPath}', '${code}')" title="Elimina foto">🗑️</button>
+            <div class="admin-card-actions" style="flex-shrink: 0;">
+              <button class="btn-card-delete" onclick="event.stopPropagation(); deletePhotoShareEventFile(event, '${item.fullPath}', '${code}')" title="Elimina foto" style="padding: 6px 8px; font-size: 0.85rem;">🗑️</button>
             </div>
           </div>
         `;

@@ -786,9 +786,9 @@
     function attachMagnifierLens(imgElement, wrapperElement) {
       if (!imgElement || !wrapperElement) return;
 
-      const lens = document.createElement("div");
+      const lens = wrapperElement.querySelector(".magnifier-lens") || document.createElement("div");
       lens.className = "magnifier-lens";
-      wrapperElement.appendChild(lens);
+      if (!lens.parentElement) wrapperElement.appendChild(lens);
 
       wrapperElement.addEventListener("mousemove", (e) => {
         const rect = imgElement.getBoundingClientRect();
@@ -802,20 +802,21 @@
           return;
         }
 
-        const natW = imgElement.naturalWidth || (rect.width * 2.5);
-        const natH = imgElement.naturalHeight || (rect.height * 2.5);
+        const zoomFactor = 2.5;
+        const bgWidth = Math.max(rect.width * zoomFactor, imgElement.naturalWidth || 0);
+        const bgHeight = Math.max(rect.height * zoomFactor, imgElement.naturalHeight || 0);
 
-        const zoomX = natW / rect.width;
-        const zoomY = natH / rect.height;
+        const zoomX = bgWidth / rect.width;
+        const zoomY = bgHeight / rect.height;
 
         lens.style.display = "block";
         lens.style.backgroundImage = `url('${imgElement.src}')`;
-        lens.style.backgroundSize = `${natW}px ${natH}px`;
+        lens.style.backgroundSize = `${bgWidth}px ${bgHeight}px`;
 
         const lensW = 140;
         const lensH = 140;
-        let lensX = (e.clientX - wrapperRect.left) - (lensW / 2);
-        let lensY = (e.clientY - wrapperRect.top) - (lensH / 2);
+        const lensX = (e.clientX - wrapperRect.left) - (lensW / 2);
+        const lensY = (e.clientY - wrapperRect.top) - (lensH / 2);
 
         lens.style.left = `${lensX}px`;
         lens.style.top = `${lensY}px`;
@@ -880,17 +881,17 @@
         card.dataset.name = obj.item.name;
 
         card.innerHTML = `
-          <div class="photo-card-topbar">
-            <div class="photo-select-checkbox" id="chk-${obj.elemId}" onclick="event.stopPropagation(); togglePhotoSelection(this.closest('.photo-card'), '${obj.item.name}')">✓</div>
-          </div>
           <div class="photo-preview-wrapper" id="wrapper-${obj.elemId}" style="cursor: pointer; position: relative;">
             <img src="${obj.signedUrl}" alt="${obj.item.name}" class="photo-img" id="img-${obj.elemId}" loading="lazy" decoding="async">
           </div>
-          <div class="photo-caption" style="cursor: pointer;">
-            <div class="photo-caption-title" title="${obj.item.name}">${obj.item.name}</div>
-            <div class="photo-caption-meta">
-              <span>Peso: ${obj.sizeKb} KB</span>
-              <span id="dim-${obj.elemId}">Res: Calcolo...</span>
+          <div class="photo-caption" style="display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 10px 12px; cursor: pointer;">
+            <div class="photo-select-checkbox" id="chk-${obj.elemId}" style="flex-shrink: 0;" onclick="event.stopPropagation(); togglePhotoSelection(this.closest('.photo-card'), '${obj.item.name}')">✓</div>
+            <div style="flex-grow: 1; overflow: hidden; margin-left: 4px;">
+              <div class="photo-caption-title" title="${obj.item.name}">${obj.item.name}</div>
+              <div class="photo-caption-meta">
+                <span>Peso: ${obj.sizeKb} KB</span>
+                <span id="dim-${obj.elemId}">Res: Calcolo...</span>
+              </div>
             </div>
           </div>
         `;
