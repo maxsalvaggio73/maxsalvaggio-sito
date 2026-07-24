@@ -1548,6 +1548,9 @@ create policy "Consenti agli admin la gestione di oggetti public-portfolio" on s
             <span id="ps-photos-count-badge" class="mini-badge" style="background: rgba(229, 9, 20, 0.15); color: #FF8A80; font-size: 0.8rem; margin-top: 4px; display: inline-block;">0 foto</span>
           </div>
           <div id="ps-add-photos-box" style="display: none; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: flex-end;">
+            <button id="btn-select-all-ps" class="btn-submit" style="width: auto; padding: 8px 16px; font-size: 0.75rem; background-color: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.25); color: #fff;" onclick="selectAllPhotoSharePhotos()">
+              ☑️ Seleziona Tutto
+            </button>
             <button id="btn-download-selected-ps" class="btn-submit" style="display: none; width: auto; padding: 8px 16px; font-size: 0.75rem; background-color: var(--accent-green); border-color: var(--accent-green);" onclick="downloadSelectedPhotoSharePhotosZip()">
               <span class="spinner" id="ps-download-selected-spinner" style="display: none; width: 12px; height: 12px; border-width: 2px;"></span>
               <span id="ps-download-selected-text">📥 Scarica Selezionate (.ZIP)</span>
@@ -4517,6 +4520,21 @@ www.maxsalvaggio.com`;
     }
 
     let psAdminSelectedFilePaths = new Set();
+    let currentPhotoShareLoadedPaths = [];
+
+    function selectAllPhotoSharePhotos() {
+      if (!currentPhotoShareLoadedPaths || currentPhotoShareLoadedPaths.length === 0) return;
+      currentPhotoShareLoadedPaths.forEach(path => psAdminSelectedFilePaths.add(path));
+
+      const checkboxes = document.querySelectorAll("#ps-event-photos-grid .photo-select-checkbox");
+      checkboxes.forEach(chk => {
+        chk.classList.add("selected");
+        chk.style.backgroundColor = "var(--accent)";
+        chk.style.borderColor = "var(--accent)";
+      });
+
+      updatePhotoShareAdminDeleteButton();
+    }
 
     function togglePhotoShareAdminSelection(fullPath, checkboxEl) {
       if (psAdminSelectedFilePaths.has(fullPath)) {
@@ -4735,6 +4753,7 @@ www.maxsalvaggio.com`;
       }
 
       window.psLightboxItems = sharedMediaItems;
+      currentPhotoShareLoadedPaths = psItems.map(i => i.fullPath);
 
       psItems.forEach(item => {
         const isSelected = psAdminSelectedFilePaths.has(item.fullPath);

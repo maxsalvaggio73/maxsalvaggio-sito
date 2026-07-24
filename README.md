@@ -63,6 +63,7 @@ Per eseguire il sito in locale, posiziona la cartella `Max Salvaggio Archivio/` 
 - **2026-07-24** – Aggiunto pulsante verde download ZIP per foto selezionate in PhotoShare admin.
 - **2026-07-24** – Allineati sulla stessa riga i pulsanti di azione foto e aggiunto tasto Deseleziona Tutto in PhotoShare admin.
 - **2026-07-24** – Rimosso pulsante cestino singolo dalle miniature in PhotoShare.
+- **2026-07-24** – Rimosso cestino singolo dalle miniature, aggiunto tasto Seleziona Tutto come primo pulsante a sinistra in PhotoShare admin.
 
 ---
 
