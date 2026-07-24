@@ -783,12 +783,14 @@
     }
 
     // Helper per attivare il lentino a risoluzione nativa originale 100% (Pixel-Perfect)
-    function attachMagnifierLens(imgElement, wrapperElement) {
+    function attachMagnifierLens(imgElement, wrapperElement, fullResUrl) {
       if (!imgElement || !wrapperElement) return;
 
       const lens = wrapperElement.querySelector(".magnifier-lens") || document.createElement("div");
       lens.className = "magnifier-lens";
       if (!lens.parentElement) wrapperElement.appendChild(lens);
+
+      const bgUrl = fullResUrl || imgElement.src;
 
       wrapperElement.addEventListener("mousemove", (e) => {
         const rect = imgElement.getBoundingClientRect();
@@ -810,7 +812,7 @@
         const zoomY = bgHeight / rect.height;
 
         lens.style.display = "block";
-        lens.style.backgroundImage = `url('${imgElement.src}')`;
+        lens.style.backgroundImage = `url('${bgUrl}')`;
         lens.style.backgroundSize = `${bgWidth}px ${bgHeight}px`;
 
         const lensW = 140;
@@ -884,14 +886,14 @@
           <div class="photo-preview-wrapper" id="wrapper-${obj.elemId}" style="cursor: pointer; position: relative;">
             <img src="${obj.signedUrl}" alt="${obj.item.name}" class="photo-img" id="img-${obj.elemId}" loading="lazy" decoding="async">
           </div>
-          <div class="photo-caption" style="display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 10px 12px; cursor: pointer;">
-            <div class="photo-select-checkbox" id="chk-${obj.elemId}" style="flex-shrink: 0;" onclick="event.stopPropagation(); togglePhotoSelection(this.closest('.photo-card'), '${obj.item.name}')">✓</div>
-            <div style="flex-grow: 1; overflow: hidden; margin-left: 4px;">
-              <div class="photo-caption-title" title="${obj.item.name}">${obj.item.name}</div>
-              <div class="photo-caption-meta">
-                <span>Peso: ${obj.sizeKb} KB</span>
-                <span id="dim-${obj.elemId}">Res: Calcolo...</span>
-              </div>
+          <div class="photo-caption" style="padding: 10px 12px; cursor: pointer;">
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+              <div class="photo-select-checkbox" id="chk-${obj.elemId}" style="flex-shrink: 0; width: 18px; height: 18px; border-radius: 4px; background: rgba(0,0,0,0.65); border: 2px solid #fff; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 0.72rem; font-weight: 700; cursor: pointer;" onclick="event.stopPropagation(); togglePhotoSelection(this.closest('.photo-card'), '${obj.item.name}')">✓</div>
+              <div class="photo-caption-title" title="${obj.item.name}" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-weight: 600; font-size: 0.78rem; color: var(--text-primary); flex-grow: 1;">${obj.item.name}</div>
+            </div>
+            <div class="photo-caption-meta" style="font-size: 0.7rem; color: var(--text-secondary); display: flex; justify-content: space-between;">
+              <span>Peso: ${obj.sizeKb} KB</span>
+              <span id="dim-${obj.elemId}">Res: Calcolo...</span>
             </div>
           </div>
         `;
@@ -919,7 +921,7 @@
               card.classList.add("card-horizontal");
             }
             if (typeof attachMagnifierLens === 'function') {
-              attachMagnifierLens(imgEl, wrapperEl);
+              attachMagnifierLens(imgEl, wrapperEl, obj.signedUrl);
             }
           }
         };

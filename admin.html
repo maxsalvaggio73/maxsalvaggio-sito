@@ -1538,9 +1538,18 @@ create policy "Consenti agli admin la gestione di oggetti public-portfolio" on s
 
       <!-- PHOTOSHARE EVENT PHOTOS SECTION -->
       <div style="margin-top: 30px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; padding: 20px;" id="ps-photos-section">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-          <h3 style="font-size: 0.95rem; font-weight: 600; color: var(--text-primary);" id="ps-photos-grid-title">Foto dell'Evento</h3>
-          <span id="ps-photos-count-badge" class="mini-badge" style="background: rgba(229, 9, 20, 0.15); color: #FF8A80; font-size: 0.8rem;">0 foto</span>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap: wrap; gap: 10px;">
+          <div>
+            <h3 style="font-size: 0.95rem; font-weight: 600; color: var(--text-primary);" id="ps-photos-grid-title">Foto dell'Evento</h3>
+            <span id="ps-photos-count-badge" class="mini-badge" style="background: rgba(229, 9, 20, 0.15); color: #FF8A80; font-size: 0.8rem; margin-top: 4px; display: inline-block;">0 foto</span>
+          </div>
+          <div id="ps-add-photos-box" style="display: none;">
+            <input type="file" id="ps-add-photos-file-input" style="display: none;" onchange="uploadMorePhotosToActiveEvent(event)" multiple accept="image/*">
+            <button class="btn-submit" style="width: auto; padding: 8px 16px; font-size: 0.75rem; background-color: var(--accent); border-color: var(--accent);" onclick="document.getElementById('ps-add-photos-file-input').click()">
+              <span class="spinner" id="ps-add-photos-spinner" style="display: none; width: 12px; height: 12px; border-width: 2px;"></span>
+              <span>➕ Aggiungi altre Foto all'Evento</span>
+            </button>
+          </div>
         </div>
         <div class="admin-gallery-grid" id="ps-event-photos-grid">
           <div class="empty-state" style="grid-column: 1 / -1; font-size: 0.82rem;">Seleziona un evento dall'elenco a sinistra per visualizzare le sue fotografie.</div>
@@ -4433,8 +4442,14 @@ www.maxsalvaggio.com`;
       }
     }
 
+    let currentSelectedPhotoShareCode = "";
+
     function selectPhotoShareEvent(code) {
       const cleanCode = code.replace(/^#/, '').trim().toUpperCase();
+      currentSelectedPhotoShareCode = cleanCode;
+
+      const addBox = document.getElementById("ps-add-photos-box");
+      if (addBox) addBox.style.display = "block";
 
       const items = document.querySelectorAll("#photoshare-events-list .client-item");
       items.forEach(item => {
@@ -4447,6 +4462,43 @@ www.maxsalvaggio.com`;
 
       filterPhotoShareLeads(cleanCode);
       loadPhotoShareEventPhotos(cleanCode);
+    }
+
+    async function uploadMorePhotosToActiveEvent(event) {
+      if (!supabaseClient || !currentSelectedPhotoShareCode) {
+        alert("Seleziona prima un evento attivo dall'elenco.");
+        return;
+      }
+
+      const files = Array.from(event.target.files);
+      if (files.length === 0) return;
+
+      const spinner = document.getElementById("ps-add-photos-spinner");
+      if (spinner) spinner.style.display = "inline-block";
+
+      try {
+        const code = currentSelectedPhotoShareCode;
+        for (const rawFile of files) {
+          const file = rawFile;
+          const filePath = `photoshare/${code}/${file.name}`;
+          const { error } = await supabaseClient
+            .storage
+            .from('client-proofs')
+            .upload(filePath, file, { upsert: true });
+
+          if (error) {
+            console.warn(`Errore upload ${file.name}:`, error.message);
+          }
+        }
+
+        alert(`Caricate ${files.length} nuove foto nell'evento #${code}!`);
+        event.target.value = "";
+        await loadPhotoShareEventPhotos(code);
+      } catch (err) {
+        alert("Errore durante il caricamento delle foto: " + err.message);
+      } finally {
+        if (spinner) spinner.style.display = "none";
+      }
     }
 
     async function loadPhotoShareEventPhotos(code) {
@@ -4536,15 +4588,17 @@ www.maxsalvaggio.com`;
           <div class="admin-card-preview-wrapper" id="wrapper-${item.elementId}" style="position: relative; cursor: pointer;">
             <img src="${item.signedUrl}" class="admin-card-preview" id="img-preview-${item.elementId}" alt="${item.file.name}" loading="lazy" decoding="async">
           </div>
-          <div class="admin-card-caption" style="display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 10px 12px;">
-            <div class="photo-select-checkbox" style="flex-shrink: 0; width: 22px; height: 22px; border-radius: 4px; background: rgba(0,0,0,0.65); border: 2px solid #fff; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 0.78rem; font-weight: 700; cursor: pointer;" onclick="event.stopPropagation(); this.classList.toggle('selected');" title="Seleziona foto">✓</div>
-            <div class="admin-card-info" style="cursor: pointer; flex-grow: 1; overflow: hidden; margin: 0 4px;">
-              <div class="admin-card-title" title="${item.file.name}">${item.file.name}</div>
+          <div class="admin-card-caption" style="padding: 10px 12px; display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+            <div class="admin-card-info" style="cursor: pointer; flex-grow: 1; overflow: hidden;">
+              <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                <div class="photo-select-checkbox" style="flex-shrink: 0; width: 18px; height: 18px; border-radius: 4px; background: rgba(0,0,0,0.65); border: 2px solid #fff; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 0.72rem; font-weight: 700; cursor: pointer;" onclick="event.stopPropagation(); this.classList.toggle('selected');" title="Seleziona foto">✓</div>
+                <div class="admin-card-title" title="${item.file.name}" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-weight: 600; font-size: 0.78rem;">${item.file.name}</div>
+              </div>
               <div class="admin-card-meta">Peso: ${item.sizeKb} KB</div>
               <div class="admin-card-meta" id="${item.elementId}">Dimensioni: Calcolo...</div>
             </div>
-            <div class="admin-card-actions" style="flex-shrink: 0;">
-              <button class="btn-card-delete" onclick="event.stopPropagation(); deletePhotoShareEventFile(event, '${item.fullPath}', '${code}')" title="Elimina foto" style="padding: 6px 8px; font-size: 0.85rem;">🗑️</button>
+            <div class="admin-card-actions" style="flex-shrink: 0; margin-top: 2px;">
+              <button class="btn-card-delete" onclick="event.stopPropagation(); deletePhotoShareEventFile(event, '${item.fullPath}', '${code}')" title="Elimina foto" style="padding: 4px 8px; font-size: 0.85rem;">🗑️</button>
             </div>
           </div>
         `;
@@ -4572,7 +4626,7 @@ www.maxsalvaggio.com`;
               card.classList.add("card-horizontal");
             }
             if (typeof attachMagnifierLens === 'function') {
-              attachMagnifierLens(imgEl, wrapperEl);
+              attachMagnifierLens(imgEl, wrapperEl, item.signedUrl);
             }
           }
         };
