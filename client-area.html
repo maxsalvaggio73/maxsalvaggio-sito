@@ -1014,34 +1014,53 @@
       window.location.href = "login.html";
     }
 
-    // Safety Timeout: if auth check takes more than 4 seconds, show retry/login button
+    // EMERGENCY OVERRIDE TIMER: Hide loading overlay after 2.5s no matter what
     setTimeout(() => {
-      const text = document.getElementById("loading-text");
-      const btn = document.getElementById("loading-retry-btn");
-      if (text && btn && text.textContent === "Verifica sessione in corso...") {
-        console.warn("Auth check is taking too long. Displaying manual login link.");
-        text.textContent = "Connessione lenta o nessun accesso rilevato.";
-        btn.style.display = "block";
+      hideLoadingOverlay();
+    }, 2500);
+
+    function hideLoadingOverlay() {
+      const overlay = document.getElementById("loading-overlay") || document.getElementById("auth-loading-overlay");
+      if (overlay) {
+        overlay.style.opacity = "0";
+        setTimeout(() => {
+          if (overlay.parentNode) overlay.remove();
+        }, 200);
       }
-    }, 4000);
+    }
+
+    async function fetchSessionWithTimeout(timeoutMs = 2000) {
+      const sessionPromise = supabaseClient.auth.getSession();
+      const timeoutPromise = new Promise((_, reject) =>
+        setTimeout(() => reject(new Error("Timeout getSession 2s")), timeoutMs)
+      );
+
+      try {
+        const { data, error } = await Promise.race([sessionPromise, timeoutPromise]);
+        if (error) throw error;
+        return data?.session || null;
+      } catch (err) {
+        console.warn("[checkAuth] getSession timeout/error:", err);
+        return null;
+      }
+    }
 
     // Check Auth Status on Load
     async function checkAuth() {
       console.log("checkAuth: Inizio verifica autenticazione.");
       if (!supabaseClient) {
         console.error("checkAuth: supabaseClient non inizializzato.");
+        window.location.href = "login.html";
         return;
       }
 
       try {
         console.log("checkAuth: Recupero sessione da Supabase...");
-        let { data: { session }, error: sessionError } = await supabaseClient.auth.getSession();
+        let session = await fetchSessionWithTimeout(2000);
 
         if (!session) {
-          // Attendi 500ms e riprova una volta per consentire al localStorage di ripristinare la sessione dopo il redirect
-          await new Promise(r => setTimeout(r, 500));
-          const resRetry = await supabaseClient.auth.getSession();
-          session = resRetry.data?.session;
+          await new Promise(r => setTimeout(r, 300));
+          session = await fetchSessionWithTimeout(1000);
         }
 
         if (!session || !session.user) {
@@ -1052,28 +1071,32 @@
 
         currentUser = session.user;
         console.log("checkAuth: Sessione valida per l'utente:", currentUser.email);
-        document.getElementById("client-email").textContent = currentUser.email;
+        const emailEl = document.getElementById("client-email");
+        if (emailEl) emailEl.textContent = currentUser.email;
 
-        // Recupera il profilo senza rigettare in caso di id non ancora collegato
+        // Recupera il profilo con timeout
         let profile = null;
         try {
-          const { data: pById } = await supabaseClient
-            .from('profiles')
-            .select('is_approved, onboarding_completed, documents_approved, full_name, is_guest')
-            .eq('id', currentUser.id)
-            .maybeSingle();
+          const profilePromise = (async () => {
+            const { data: pById } = await supabaseClient
+              .from('profiles')
+              .select('is_approved, onboarding_completed, documents_approved, full_name, is_guest')
+              .eq('id', currentUser.id)
+              .maybeSingle();
 
-          if (pById) {
-            profile = pById;
-          } else {
+            if (pById) return pById;
+
             const { data: pByEmail } = await supabaseClient
               .from('profiles')
               .select('is_approved, onboarding_completed, documents_approved, full_name, is_guest')
               .eq('email', currentUser.email)
               .maybeSingle();
 
-            profile = pByEmail;
-          }
+            return pByEmail;
+          })();
+
+          const pTimeout = new Promise(r => setTimeout(() => r(null), 1500));
+          profile = await Promise.race([profilePromise, pTimeout]);
         } catch (errProfile) {
           console.warn("checkAuth: Avviso caricamento profilo:", errProfile);
         }
@@ -1096,55 +1119,46 @@
           return;
         }
 
-        console.log("checkAuth: Utente autorizzato. Rimozione overlay di caricamento.");
-        
-        // Hide loading overlay
-        const overlay = document.getElementById("loading-overlay");
-        if (overlay) {
-          overlay.style.opacity = "0";
-          setTimeout(() => overlay.remove(), 400);
+        const nameEl = document.getElementById("client-display-name");
+        if (nameEl) {
+          nameEl.textContent = profile.full_name || currentUser.email;
         }
 
-        if (profile.full_name) {
-          document.getElementById("client-display-name").textContent = profile.full_name;
-        } else {
-          document.getElementById("client-display-name").textContent = currentUser.email;
-        }
-
-        // Access Gate matching the 3-state onboarding flow
-        if (profile.is_guest) {
-          // State 3: Show Gallery (Bypass onboarding for guest users)
-          document.getElementById("onboarding-panel").style.display = "none";
-          document.getElementById("waiting-panel").style.display = "none";
-          document.getElementById("empty-state-panel").style.display = "block";
-          
-          // Load photos
+        // Access Gate matching onboarding flow
+        if (profile.is_guest || (profile.onboarding_completed && profile.documents_approved)) {
+          const ob = document.getElementById("onboarding-panel");
+          const wp = document.getElementById("waiting-panel");
+          const es = document.getElementById("empty-state-panel");
+          if (ob) ob.style.display = "none";
+          if (wp) wp.style.display = "none";
+          if (es) es.style.display = "block";
           loadClientPhotos();
         } else if (!profile.onboarding_completed) {
-          // State 1: Show Form
           toggleCompanyFields('privato');
-          document.getElementById("onboarding-panel").style.display = "block";
-          document.getElementById("waiting-panel").style.display = "none";
-          document.getElementById("empty-state-panel").style.display = "none";
-          document.getElementById("gallery-panel").style.display = "none";
-        } else if (!profile.documents_approved) {
-          // State 2: Show Waiting Screen
-          document.getElementById("onboarding-panel").style.display = "none";
-          document.getElementById("waiting-panel").style.display = "block";
-          document.getElementById("empty-state-panel").style.display = "none";
-          document.getElementById("gallery-panel").style.display = "none";
+          const ob = document.getElementById("onboarding-panel");
+          const wp = document.getElementById("waiting-panel");
+          const es = document.getElementById("empty-state-panel");
+          const gp = document.getElementById("gallery-panel");
+          if (ob) ob.style.display = "block";
+          if (wp) wp.style.display = "none";
+          if (es) es.style.display = "none";
+          if (gp) gp.style.display = "none";
         } else {
-          // State 3: Show Gallery
-          document.getElementById("onboarding-panel").style.display = "none";
-          document.getElementById("waiting-panel").style.display = "none";
-          document.getElementById("empty-state-panel").style.display = "block";
-          
-          // Load photos
-          loadClientPhotos();
+          const ob = document.getElementById("onboarding-panel");
+          const wp = document.getElementById("waiting-panel");
+          const es = document.getElementById("empty-state-panel");
+          const gp = document.getElementById("gallery-panel");
+          if (ob) ob.style.display = "none";
+          if (wp) wp.style.display = "block";
+          if (es) es.style.display = "none";
+          if (gp) gp.style.display = "none";
         }
 
       } catch (err) {
         console.error("Auth check error:", err);
+      } finally {
+        // FINALLY GUARANTEED: NASCONDI TASSATIVAMENTE L'OVERLAY DI CARICAMENTO
+        hideLoadingOverlay();
       }
     }
 
