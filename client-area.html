@@ -1407,7 +1407,7 @@
     async function loadClientPhotos() {
       if (!supabaseClient || !currentUser) return;
 
-      const folderName = currentUser.email.trim();
+      let userEmail = currentUser.email ? currentUser.email.trim() : "";
       const statusMsg = document.getElementById("status-message");
       const emptyStatePanel = document.getElementById("empty-state-panel");
       const galleryPanel = document.getElementById("gallery-panel");
@@ -1415,32 +1415,43 @@
       const paginationBar = document.getElementById("gallery-pagination-bar");
 
       try {
-        // 1. Fetch file order array from client profile
+        // 1. Fetch file order array from client profile by ID or Email
         const { data: profile } = await supabaseClient
           .from('profiles')
-          .select('file_order')
-          .eq('email', folderName)
-          .single();
+          .select('file_order, email')
+          .or(`id.eq.${currentUser.id},email.eq.${userEmail}`)
+          .maybeSingle();
 
         const fileOrder = profile?.file_order || [];
+        if (profile?.email) {
+          userEmail = profile.email.trim();
+        }
 
-        // 2. List files in the bucket 'client-proofs' under the client folder (email)
-        const { data: files, error } = await supabaseClient
-          .storage
-          .from('client-proofs')
-          .list(folderName);
+        // 2. List files in bucket 'client-proofs' with path fallback (Exact Email vs Lowercase Email)
+        let targetFolder = userEmail;
+        let files = null;
 
-        if (error) {
-          console.error("Storage list error:", error);
-          statusMsg.textContent = "Al momento non ci sono provini attivi o cartelle condivise per il tuo profilo.";
-          return;
+        let res = await supabaseClient.storage.from('client-proofs').list(targetFolder);
+        if (res.data && res.data.length > 0) {
+          files = res.data;
+        } else {
+          const lowerFolder = targetFolder.toLowerCase();
+          if (lowerFolder !== targetFolder) {
+            const resLower = await supabaseClient.storage.from('client-proofs').list(lowerFolder);
+            if (resLower.data && resLower.data.length > 0) {
+              files = resLower.data;
+              targetFolder = lowerFolder;
+            }
+          }
         }
 
         // Filter out empty placeholders and documents folder
-        let imageFiles = files.filter(f => f.name !== '.emptyFolderPlaceholder' && f.name !== '.DS_Store' && f.name !== 'documents');
+        let imageFiles = (files || []).filter(f => f.name !== '.emptyFolderPlaceholder' && f.name !== '.DS_Store' && f.name !== 'documents');
 
         if (!imageFiles || imageFiles.length === 0) {
           statusMsg.textContent = "Al momento la tua cartella privata è vuota. Contatta lo studio per caricare il tuo materiale.";
+          emptyStatePanel.style.display = "block";
+          galleryPanel.style.display = "none";
           return;
         }
 
@@ -1470,7 +1481,7 @@
         const galleryItems = [];
 
         for (const file of pageFiles) {
-          const path = `${folderName}/${file.name}`;
+          const path = `${targetFolder}/${file.name}`;
           let fileUrl = "";
 
           try {
