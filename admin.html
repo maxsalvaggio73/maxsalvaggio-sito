@@ -2467,6 +2467,72 @@ www.maxsalvaggio.com`;
       }
     }
 
+    // Helper function to resize images before upload
+    // Vertical images (height > width): max width = 240px
+    // Horizontal/Square images (width >= height): max width = 480px
+    // JPEG Quality = 0.80
+    async function processFileForUpload(file) {
+      const ext = file.name.split('.').pop().toLowerCase();
+      const isImage = ['jpg', 'jpeg', 'png', 'webp'].includes(ext);
+
+      if (!isImage) return file;
+
+      return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const img = new Image();
+          img.onload = function() {
+            try {
+              const origW = img.width;
+              const origH = img.height;
+              let targetW = 480;
+
+              if (origH > origW) {
+                targetW = 240;
+              } else {
+                targetW = 480;
+              }
+
+              if (origW <= targetW) {
+                resolve(file);
+                return;
+              }
+
+              const targetH = Math.round(origH * (targetW / origW));
+
+              const canvas = document.createElement("canvas");
+              canvas.width = targetW;
+              canvas.height = targetH;
+
+              const ctx = canvas.getContext("2d");
+              ctx.imageSmoothingEnabled = true;
+              ctx.imageSmoothingQuality = "high";
+              ctx.drawImage(img, 0, 0, targetW, targetH);
+
+              canvas.toBlob((blob) => {
+                if (blob) {
+                  const resizedFile = new File([blob], file.name, {
+                    type: "image/jpeg",
+                    lastModified: Date.now()
+                  });
+                  resolve(resizedFile);
+                } else {
+                  resolve(file);
+                }
+              }, "image/jpeg", 0.80);
+            } catch (err) {
+              console.warn("Resize error, uploading original:", err);
+              resolve(file);
+            }
+          };
+          img.onerror = () => resolve(file);
+          img.src = e.target.result;
+        };
+        reader.onerror = () => resolve(file);
+        reader.readAsDataURL(file);
+      });
+    }
+
     function handleGuestFileSelect(event) {
       const files = event.target.files;
       if (!files || files.length === 0) return;
@@ -2486,7 +2552,8 @@ www.maxsalvaggio.com`;
       spinner.style.display = "inline-block";
 
       try {
-        for (const file of guestFilesToUpload) {
+        for (const rawFile of guestFilesToUpload) {
+          const file = await processFileForUpload(rawFile);
           const filePath = `${activeGuestEmail}/${file.name}`;
           const { error } = await supabaseClient
             .storage
@@ -3124,7 +3191,8 @@ www.maxsalvaggio.com`;
       spinner.style.display = "inline-block";
 
       try {
-        for (const file of filesToUpload) {
+        for (const rawFile of filesToUpload) {
+          const file = await processFileForUpload(rawFile);
           const filePath = `${activeClientEmail}/${file.name}`;
           const { error } = await supabaseClient
             .storage
