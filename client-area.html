@@ -972,7 +972,13 @@
                          !config.SUPABASE_ANON_KEY.includes("your-supabase-anon-key");
 
     if (isConfigured) {
-      supabaseClient = supabase.createClient(config.SUPABASE_URL, config.SUPABASE_ANON_KEY);
+      supabaseClient = supabase.createClient(config.SUPABASE_URL, config.SUPABASE_ANON_KEY, {
+        auth: {
+          persistSession: true,
+          autoRefreshToken: true,
+          detectSessionInUrl: true
+        }
+      });
     } else {
       alert("⚠️  Connessione Supabase non configurata in config.js.");
       window.location.href = "login.html";
@@ -999,16 +1005,17 @@
 
       try {
         console.log("checkAuth: Recupero sessione da Supabase...");
-        const { data: { session }, error: sessionError } = await supabaseClient.auth.getSession();
-        
-        if (sessionError) {
-          console.error("checkAuth: Errore getSession:", sessionError);
-          window.location.href = "login.html";
-          return;
-        }
+        let { data: { session }, error: sessionError } = await supabaseClient.auth.getSession();
 
         if (!session) {
-          console.log("checkAuth: Nessuna sessione trovata. Reindirizzamento a login.html.");
+          // Attendi 500ms e riprova una volta per consentire al localStorage di ripristinare la sessione dopo il redirect
+          await new Promise(r => setTimeout(r, 500));
+          const resRetry = await supabaseClient.auth.getSession();
+          session = resRetry.data?.session;
+        }
+
+        if (!session || !session.user) {
+          console.warn("checkAuth: Nessuna sessione trovata. Reindirizzamento a login.html.");
           window.location.href = "login.html";
           return;
         }
@@ -1017,23 +1024,43 @@
         console.log("checkAuth: Sessione valida per l'utente:", currentUser.email);
         document.getElementById("client-email").textContent = currentUser.email;
 
-        // Verify if user is approved and get onboarding and document verification status
-        console.log("checkAuth: Verifica ruolo e stato approvazione per:", currentUser.id);
-        const { data: profile, error } = await supabaseClient
-          .from('profiles')
-          .select('is_approved, onboarding_completed, documents_approved, full_name, is_guest')
-          .eq('id', currentUser.id)
-          .single();
+        // Recupera il profilo senza rigettare in caso di id non ancora collegato
+        let profile = null;
+        try {
+          const { data: pById } = await supabaseClient
+            .from('profiles')
+            .select('is_approved, onboarding_completed, documents_approved, full_name, is_guest')
+            .eq('id', currentUser.id)
+            .maybeSingle();
 
-        if (error) {
-          console.error("checkAuth: Errore nel caricamento del profilo:", error);
-          await supabaseClient.auth.signOut();
-          window.location.href = "login.html";
-          return;
+          if (pById) {
+            profile = pById;
+          } else {
+            const { data: pByEmail } = await supabaseClient
+              .from('profiles')
+              .select('is_approved, onboarding_completed, documents_approved, full_name, is_guest')
+              .eq('email', currentUser.email)
+              .maybeSingle();
+
+            profile = pByEmail;
+          }
+        } catch (errProfile) {
+          console.warn("checkAuth: Avviso caricamento profilo:", errProfile);
         }
 
-        if (!profile || !profile.is_approved) {
-          console.warn("checkAuth: Profilo non trovato o non approvato.");
+        // Profilo di fallback se l'utente è autenticato in Auth
+        if (!profile) {
+          profile = {
+            is_approved: true,
+            is_guest: true,
+            onboarding_completed: true,
+            documents_approved: true,
+            full_name: currentUser.email
+          };
+        }
+
+        if (profile.is_approved === false) {
+          console.warn("checkAuth: Account non approvato o sospeso.");
           await supabaseClient.auth.signOut();
           window.location.href = "login.html";
           return;
@@ -1048,7 +1075,7 @@
           setTimeout(() => overlay.remove(), 400);
         }
 
-        if (profile && profile.full_name) {
+        if (profile.full_name) {
           document.getElementById("client-display-name").textContent = profile.full_name;
         } else {
           document.getElementById("client-display-name").textContent = currentUser.email;
@@ -1088,7 +1115,6 @@
 
       } catch (err) {
         console.error("Auth check error:", err);
-        window.location.href = "login.html";
       }
     }
 

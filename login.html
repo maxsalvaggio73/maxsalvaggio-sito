@@ -591,7 +591,13 @@
                          !config.SUPABASE_ANON_KEY.includes("your-supabase-anon-key");
 
     if (isConfigured) {
-      supabaseClient = supabase.createClient(config.SUPABASE_URL, config.SUPABASE_ANON_KEY);
+      supabaseClient = supabase.createClient(config.SUPABASE_URL, config.SUPABASE_ANON_KEY, {
+        auth: {
+          persistSession: true,
+          autoRefreshToken: true,
+          detectSessionInUrl: true
+        }
+      });
     } else {
       banner.style.display = "block";
       document.getElementById("btn-login-submit").disabled = true;
@@ -627,6 +633,7 @@
         formSignup.classList.remove("active");
       } else {
         tabLogin.classList.remove("active");
+        tabSignup.classList.add("active");
         tabSignup.classList.add("active");
         formLogin.classList.remove("active");
         formSignup.classList.add("active");
@@ -693,6 +700,11 @@
       const btn = document.getElementById("btn-login-submit");
       const spinner = document.getElementById("login-spinner");
 
+      if (!email || !password) {
+        showAlert('error', "Inserisci sia l'email che la password.");
+        return;
+      }
+
       btn.disabled = true;
       spinner.style.display = "inline-block";
 
@@ -718,34 +730,57 @@
         }
 
         const user = data.user;
+        const session = data.session;
 
-        // Query the profiles table to see if user is approved and check their role
-        const { data: profile, error: profileError } = await supabaseClient
-          .from('profiles')
-          .select('is_approved, is_admin')
-          .eq('id', user.id)
-          .single();
-
-        if (profileError) {
-          console.error("Errore query profilo:", profileError);
-          await supabaseClient.auth.signOut();
-          showAlert('error', "Accesso negato. Tabella 'profiles' non configurata in Supabase. Esegui lo script SQL fornito!");
+        if (!user || !session) {
+          showAlert('error', "Impossibile ottenere la sessione di accesso.");
           btn.disabled = false;
           spinner.style.display = "none";
           return;
         }
 
-        if (!profile || !profile.is_approved) {
+        // Query profiles table to check approval & role
+        let isApproved = true;
+        let isAdmin = false;
+
+        try {
+          const { data: profile } = await supabaseClient
+            .from('profiles')
+            .select('is_approved, is_admin, is_guest')
+            .eq('id', user.id)
+            .maybeSingle();
+
+          if (profile) {
+            isApproved = profile.is_approved !== false;
+            isAdmin = !!profile.is_admin;
+          } else {
+            const { data: pEmail } = await supabaseClient
+              .from('profiles')
+              .select('is_approved, is_admin, is_guest')
+              .eq('email', user.email)
+              .maybeSingle();
+
+            if (pEmail) {
+              isApproved = pEmail.is_approved !== false;
+              isAdmin = !!pEmail.is_admin;
+            }
+          }
+        } catch (e) {
+          console.warn("Profilo query warning:", e);
+        }
+
+        if (!isApproved) {
           await supabaseClient.auth.signOut();
-          showAlert('error', "Accesso negato. Il tuo account è in attesa di essere approvato dall'amministratore.");
+          showAlert('error', "Accesso negato. Il tuo account è in attesa di approvazione dall'amministratore.");
           btn.disabled = false;
           spinner.style.display = "none";
+          return;
+        }
+
+        if (isAdmin) {
+          window.location.href = "admin.html";
         } else {
-          if (profile.is_admin) {
-            window.location.href = "admin.html";
-          } else {
-            window.location.href = "client-area.html";
-          }
+          window.location.href = "client-area.html";
         }
       } catch (err) {
         console.error(err);

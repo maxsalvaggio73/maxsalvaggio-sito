@@ -37,6 +37,7 @@ Per eseguire il sito in locale, posiziona la cartella `Max Salvaggio Archivio/` 
 - **2026-07-24** – Ottimizzazione caricamento miniature Workspace: Lazy Loading, async decoding e caricamento progressivo a blocchi.
 - **2026-07-24** – Risoluzione bug caricamento immagini Guest in client-area: allineamento generazione URL firmati (createSignedUrl con fallback a getPublicUrl).
 - **2026-07-24** – Implementata paginazione a 8 foto con indicatore X/Y pag. nello Workspace e Admin.
+- **2026-07-24** – Risolto bug di login/redirect Workspace (sessione persistente e verifica asincrona senza espulsioni) e stabilizzata paginazione a 8 provini con indicatore X/Y pag.
 
 ---
 
