@@ -66,6 +66,7 @@ Per eseguire il sito in locale, posiziona la cartella `Max Salvaggio Archivio/` 
 - **2026-07-24** – Rimosso cestino singolo dalle miniature, aggiunto tasto Seleziona Tutto come primo pulsante a sinistra in PhotoShare admin.
 - **2026-07-24** – Forzato layout single-line no-wrap per tutti i pulsanti azione foto in PhotoShare admin.
 - **2026-07-24** – Aggiunta gestione accesso Guest con Email+PIN e barra azioni riservata a 3 tasti.
+- **2026-07-25** – Aggiunta Dashboard laterale destra con tasto EXIT, info evento e campi metadati in PhotoShare.
 
 ---
 

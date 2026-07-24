@@ -55,6 +55,100 @@
       image-rendering: high-quality;
     }
 
+    /* MAIN TWO-COLUMN LAYOUT */
+    .photoshare-main-layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 24px;
+      align-items: start;
+    }
+    @media (max-width: 992px) {
+      .photoshare-main-layout {
+        grid-template-columns: 1fr;
+      }
+      .photoshare-sidebar-col {
+        order: -1;
+        margin-bottom: 20px;
+      }
+    }
+
+    /* SIDEBAR CARD */
+    .ps-sidebar-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 20px;
+      position: sticky;
+      top: 90px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    }
+
+    .btn-exit-guest {
+      background: rgba(229, 9, 20, 0.15);
+      color: #FF8A80;
+      border: 1px solid rgba(229, 9, 20, 0.3);
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn-exit-guest:hover {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+
+    .ps-sidebar-section {
+      margin-bottom: 14px;
+    }
+    .ps-sidebar-section:last-child {
+      margin-bottom: 0;
+    }
+
+    .ps-sidebar-label {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-secondary);
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .ps-sidebar-value {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      word-break: break-word;
+    }
+
+    .ps-sidebar-subvalue {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      word-break: break-all;
+    }
+
+    .ps-sidebar-notes {
+      font-size: 0.8rem;
+      color: rgba(236, 239, 241, 0.85);
+      background: rgba(0, 0, 0, 0.3);
+      padding: 10px 12px;
+      border-radius: 6px;
+      border-left: 3px solid var(--accent);
+      line-height: 1.4;
+      white-space: pre-line;
+    }
+
+    .ps-sidebar-divider {
+      border: none;
+      border-top: 1px solid var(--border-color);
+      margin: 16px 0;
+    }
+
     * {
       box-sizing: border-box;
       margin: 0;
@@ -588,17 +682,69 @@
       </form>
     </div>
 
-    <!-- PHASE 3: PHOTO GALLERY & SELECTION -->
+    <!-- PHASE 3: PHOTO GALLERY & SIDEBAR DASHBOARD -->
     <div id="phase-3-panel" style="display: none;">
-      <div class="event-header">
-        <div>
-          <h1 class="event-title" id="event-display-title">Galleria Evento</h1>
-          <p class="event-subtitle">Seleziona le foto che desideri scaricare in un unico file .ZIP</p>
-        </div>
-      </div>
+      <div class="photoshare-main-layout">
+        <!-- LEFT COLUMN: GALLERY & HEADER -->
+        <div class="photoshare-gallery-col">
+          <div class="event-header">
+            <div>
+              <h1 class="event-title" id="event-display-title">Galleria Evento</h1>
+              <p class="event-subtitle">Seleziona le foto che desideri scaricare in un unico file .ZIP</p>
+            </div>
+          </div>
 
-      <div class="photo-grid" id="photo-grid-container">
-        <!-- Rendered dynamically -->
+          <div class="photo-grid" id="photo-grid-container">
+            <!-- Rendered dynamically -->
+          </div>
+        </div>
+
+        <!-- RIGHT COLUMN: SIDEBAR DASHBOARD -->
+        <div class="photoshare-sidebar-col">
+          <div class="ps-sidebar-card" id="ps-sidebar-dashboard">
+            <!-- TOP RIGHT EXIT BUTTON -->
+            <div style="display: flex; justify-content: flex-end; margin-bottom: 20px;">
+              <button class="btn-exit-guest" onclick="logoutGuest()" title="Esci e torna alla Home">
+                🚪 EXIT
+              </button>
+            </div>
+
+            <!-- GUEST USER INFO -->
+            <div class="ps-sidebar-section">
+              <div class="ps-sidebar-label">👤 Utente Connesso</div>
+              <div class="ps-sidebar-value" id="dash-user-name">Guest</div>
+              <div class="ps-sidebar-subvalue" id="dash-user-email">guest@example.com</div>
+            </div>
+
+            <hr class="ps-sidebar-divider">
+
+            <!-- EVENT NAME -->
+            <div class="ps-sidebar-section">
+              <div class="ps-sidebar-label">🖼️ Galleria Evento</div>
+              <div class="ps-sidebar-value" id="dash-event-name">Nome Evento</div>
+            </div>
+
+            <!-- EVENT DATE -->
+            <div class="ps-sidebar-section">
+              <div class="ps-sidebar-label">📅 Data Evento</div>
+              <div class="ps-sidebar-value" id="dash-event-date">In fase di calcolo...</div>
+            </div>
+
+            <!-- EVENT LOCATION -->
+            <div class="ps-sidebar-section">
+              <div class="ps-sidebar-label">📍 Luogo / Location</div>
+              <div class="ps-sidebar-value" id="dash-event-location">In fase di calcolo...</div>
+            </div>
+
+            <hr class="ps-sidebar-divider">
+
+            <!-- ADMIN NOTES -->
+            <div class="ps-sidebar-section">
+              <div class="ps-sidebar-label">📝 Note dell'Admin</div>
+              <div class="ps-sidebar-notes" id="dash-event-notes">Nessuna nota comunicata dall'organizzatore.</div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </main>
@@ -676,6 +822,8 @@
       }
     });
 
+    let activeValidPath = "";
+
     async function verifyEventCode() {
       const input = document.getElementById('input-event-code');
       const errorMsg = document.getElementById('code-error-msg');
@@ -711,7 +859,7 @@
         try {
           const { data, error } = await supabaseClient.storage.from('client-proofs').list(testPath);
           if (data && data.length > 0) {
-            const filtered = data.filter(f => f.name !== '.emptyFolderPlaceholder' && f.name !== '.DS_Store');
+            const filtered = data.filter(f => f.name !== '.emptyFolderPlaceholder' && f.name !== '.DS_Store' && f.name !== '_metadata.json');
             if (filtered.length > 0) {
               foundFiles = filtered;
               validPath = testPath;
@@ -726,6 +874,8 @@
         errorMsg.style.display = "block";
         return;
       }
+
+      activeValidPath = validPath;
 
       // Store files and valid path
       eventPhotos = foundFiles.map(f => ({
@@ -782,9 +932,10 @@
       } catch (err) {
         console.warn("Lead insert exception:", err);
       } finally {
-        // Unlock in localStorage & store guest email
+        // Unlock in localStorage & store guest email and name
         localStorage.setItem(`photoshare_unlocked_${activeEventCode}`, 'true');
         localStorage.setItem('photoshare_user_email', email);
+        localStorage.setItem('photoshare_user_name', fullName);
         btn.disabled = false;
         spinner.style.display = "none";
         document.getElementById('phase-2-panel').style.display = "none";
@@ -840,10 +991,60 @@
       });
     }
 
+    function logoutGuest() {
+      if (activeEventCode) {
+        localStorage.removeItem(`photoshare_unlocked_${activeEventCode}`);
+      }
+      localStorage.removeItem('photoshare_user_email');
+      localStorage.removeItem('photoshare_user_name');
+      window.location.href = 'index.html';
+    }
+
+    async function loadEventMetadata(code, validPath) {
+      const nameEl = document.getElementById('dash-event-name');
+      const dateEl = document.getElementById('dash-event-date');
+      const locEl = document.getElementById('dash-event-location');
+      const notesEl = document.getElementById('dash-event-notes');
+
+      const guestName = localStorage.getItem('photoshare_user_name') || 'Ospite';
+      const guestEmail = localStorage.getItem('photoshare_user_email') || 'N/D';
+      const nameElem = document.getElementById('dash-user-name');
+      const emailElem = document.getElementById('dash-user-email');
+      if (nameElem) nameElem.textContent = guestName;
+      if (emailElem) emailElem.textContent = guestEmail;
+
+      if (nameEl) nameEl.textContent = `#${code}`;
+      if (dateEl) dateEl.textContent = 'Non specificata';
+      if (locEl) locEl.textContent = 'Non specificato';
+      if (notesEl) notesEl.textContent = 'Nessuna nota comunicata dall\'organizzatore.';
+
+      if (!validPath || !supabaseClient) return;
+
+      try {
+        const metaPath = `${validPath}/_metadata.json`;
+        const { data } = await supabaseClient.storage.from('client-proofs').createSignedUrl(metaPath, 3600);
+        const signedUrl = data?.signedUrl;
+        if (signedUrl) {
+          const resp = await fetch(signedUrl);
+          if (resp.ok) {
+            const meta = await resp.json();
+            if (meta.name && nameEl) nameEl.textContent = meta.name;
+            if (meta.event_date && dateEl) dateEl.textContent = meta.event_date;
+            if (meta.event_location && locEl) locEl.textContent = meta.event_location;
+            if (meta.event_notes && notesEl) notesEl.textContent = meta.event_notes;
+          }
+        }
+      } catch (e) {
+        console.warn("Nessun metadata trovato per evento:", e);
+      }
+    }
+
     async function showGalleryPhase() {
       document.getElementById('event-display-title').textContent = `Galleria Evento #${activeEventCode}`;
       document.getElementById('phase-3-panel').style.display = "block";
       document.getElementById('gallery-action-bar').style.display = "flex";
+
+      loadEventMetadata(activeEventCode, activeValidPath);
 
       const grid = document.getElementById('photo-grid-container');
       grid.innerHTML = "";

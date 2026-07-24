@@ -1188,6 +1188,9 @@
         <form style="display: flex; flex-direction: column; gap: 8px; margin-top: 8px;" onsubmit="event.preventDefault(); createPhotoShareEvent();">
           <input type="text" id="ps-admin-event-name" placeholder="Nome Evento (es. Matrimonio Marco &amp; Elena)" required style="width: 100%; background: rgba(0,0,0,0.25); border: 1px solid var(--border-color); border-radius: 4px; padding: 8px 10px; font-size: 0.78rem; color: var(--text-primary); font-family: var(--font-body);">
           <input type="text" id="ps-admin-event-code" placeholder="Codice / PIN (es. MARCOELENA2026)" required style="width: 100%; background: rgba(0,0,0,0.25); border: 1px solid var(--border-color); border-radius: 4px; padding: 8px 10px; font-size: 0.78rem; color: var(--text-primary); font-family: var(--font-body); text-transform: uppercase;">
+          <input type="text" id="ps-admin-event-date" placeholder="📅 Data Evento (es. 24 Luglio 2026)" style="width: 100%; background: rgba(0,0,0,0.25); border: 1px solid var(--border-color); border-radius: 4px; padding: 8px 10px; font-size: 0.78rem; color: var(--text-primary); font-family: var(--font-body);">
+          <input type="text" id="ps-admin-event-location" placeholder="📍 Luogo / Location (es. Villa Rosa, Palermo)" style="width: 100%; background: rgba(0,0,0,0.25); border: 1px solid var(--border-color); border-radius: 4px; padding: 8px 10px; font-size: 0.78rem; color: var(--text-primary); font-family: var(--font-body);">
+          <textarea id="ps-admin-event-notes" placeholder="📝 Note per gli ospiti..." rows="2" style="width: 100%; background: rgba(0,0,0,0.25); border: 1px solid var(--border-color); border-radius: 4px; padding: 8px 10px; font-size: 0.78rem; color: var(--text-primary); font-family: var(--font-body); resize: vertical;"></textarea>
           
           <div class="upload-zone" id="ps-admin-drop-zone" style="padding: 12px 8px; margin-top: 4px; cursor: pointer;" onclick="document.getElementById('ps-admin-file-input').click()">
             <span class="upload-zone-text" id="ps-admin-drop-zone-text" style="font-size: 0.7rem;">Clicca o trascina qui le foto dell'evento</span>
@@ -4377,6 +4380,10 @@ www.maxsalvaggio.com`;
       if (!supabaseClient) return;
       const nameInput = document.getElementById("ps-admin-event-name");
       const codeInput = document.getElementById("ps-admin-event-code");
+      const dateInput = document.getElementById("ps-admin-event-date");
+      const locInput = document.getElementById("ps-admin-event-location");
+      const notesInput = document.getElementById("ps-admin-event-notes");
+
       const fileInput = document.getElementById("ps-admin-file-input");
       const btn = document.getElementById("btn-create-ps-event");
       const spinner = document.getElementById("ps-admin-spinner");
@@ -4384,6 +4391,9 @@ www.maxsalvaggio.com`;
       const name = nameInput.value.trim();
       const rawCode = codeInput.value.trim().toUpperCase();
       const code = rawCode.replace(/^#/, '').trim();
+      const eventDate = dateInput ? dateInput.value.trim() : "";
+      const eventLocation = locInput ? locInput.value.trim() : "";
+      const eventNotes = notesInput ? notesInput.value.trim() : "";
 
       if (!name || !code || psAdminFilesToUpload.length === 0) {
         alert("Inserisci Nome Evento, Codice PIN e seleziona almeno 1 foto.");
@@ -4394,6 +4404,7 @@ www.maxsalvaggio.com`;
       spinner.style.display = "inline-block";
 
       try {
+        // Upload photo files
         for (const rawFile of psAdminFilesToUpload) {
           const file = rawFile;
           const filePath = `photoshare/${code}/${file.name}`;
@@ -4408,9 +4419,24 @@ www.maxsalvaggio.com`;
           }
         }
 
+        // Save _metadata.json
+        const metaObj = {
+          name: name,
+          code: code,
+          event_date: eventDate,
+          event_location: eventLocation,
+          event_notes: eventNotes,
+          created_at: new Date().toISOString()
+        };
+        const metaBlob = new Blob([JSON.stringify(metaObj, null, 2)], { type: 'application/json' });
+        await supabaseClient.storage.from('client-proofs').upload(`photoshare/${code}/_metadata.json`, metaBlob, { upsert: true });
+
         alert(`Evento #${code} ("${name}") creato ed ${psAdminFilesToUpload.length} foto caricate con successo!`);
         nameInput.value = "";
         codeInput.value = "";
+        if (dateInput) dateInput.value = "";
+        if (locInput) locInput.value = "";
+        if (notesInput) notesInput.value = "";
         fileInput.value = "";
         psAdminFilesToUpload = [];
         document.getElementById("ps-admin-selected-files-list").textContent = "";
@@ -4701,7 +4727,7 @@ www.maxsalvaggio.com`;
         try {
           const { data, error } = await supabaseClient.storage.from('client-proofs').list(testPath);
           if (data && data.length > 0) {
-            const filtered = data.filter(f => f.name !== '.emptyFolderPlaceholder' && f.name !== '.DS_Store');
+            const filtered = data.filter(f => f.name !== '.emptyFolderPlaceholder' && f.name !== '.DS_Store' && f.name !== '_metadata.json');
             if (filtered.length > 0) {
               foundFiles = filtered;
               validPath = testPath;
