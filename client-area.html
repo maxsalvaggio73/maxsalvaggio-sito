@@ -465,14 +465,14 @@
       width: 100% !important;
       aspect-ratio: 1 / 1;
       overflow: hidden;
-      background-color: #111111 !important;
+      background-color: rgba(255, 255, 255, 0.03) !important;
     }
     .gallery-img {
       width: 100% !important;
-      height: 100% !important;
+      height: auto !important;
       min-height: 200px !important;
+      display: block !important;
       object-fit: cover !important;
-      background: #111111 !important;
       transition: opacity 0.3s ease;
     }
     .gallery-overlay {
@@ -1548,26 +1548,27 @@
 
           for (const file of pageFiles) {
             const path = `${validPath}/${file.name}`;
-            let publicUrl = "";
             let signedUrl = "";
-
-            try {
-              const { data: pData } = supabaseClient
-                .storage
-                .from('client-proofs')
-                .getPublicUrl(path);
-              publicUrl = pData?.publicUrl || "";
-            } catch (e) {}
 
             try {
               const { data: sData } = await supabaseClient
                 .storage
                 .from('client-proofs')
-                .createSignedUrl(path, 86400);
+                .createSignedUrl(path, 7200);
               signedUrl = sData?.signedUrl || "";
-            } catch (e) {}
+            } catch (e) {
+              console.warn("createSignedUrl error:", e);
+            }
 
-            const fileUrl = publicUrl || signedUrl;
+            if (!signedUrl) {
+              const { data: pData } = supabaseClient
+                .storage
+                .from('client-proofs')
+                .getPublicUrl(path);
+              signedUrl = pData?.publicUrl || "";
+            }
+
+            const fileUrl = signedUrl;
 
             const ext = file.name.split('.').pop().toLowerCase();
             const isImage = ['jpg', 'jpeg', 'png', 'webp', 'gif'].includes(ext);
@@ -1587,7 +1588,7 @@
             let mediaIndex = -1;
             if (isMedia) {
               mediaItems.push({
-                url: signedUrl || publicUrl,
+                url: signedUrl,
                 type: itemType,
                 name: file.name
               });
@@ -1596,7 +1597,6 @@
 
             galleryItems.push({
               file,
-              publicUrl,
               signedUrl,
               fileUrl,
               isImage,
@@ -1618,7 +1618,7 @@
 
             let previewHtml = "";
             if (item.isImage) {
-              previewHtml = `<img src="${item.fileUrl}" data-signed-url="${item.signedUrl}" alt="${item.file.name}" class="gallery-img" loading="lazy" decoding="async" onerror="if(!this.dataset.triedSigned && this.dataset.signedUrl){ this.dataset.triedSigned='true'; this.src=this.dataset.signedUrl; }">`;
+              previewHtml = `<img src="${item.signedUrl}" alt="${item.file.name}" class="gallery-img" style="width: 100%; height: auto; display: block; object-fit: cover; min-height: 200px;" loading="lazy" decoding="async">`;
             } else if (item.isVideo) {
               previewHtml = `<video src="${item.publicUrl}" class="gallery-img" style="object-fit: cover;" preload="metadata" muted loop onmouseover="this.play()" onmouseout="this.pause()"></video>`;
             } else if (item.isAudio) {
@@ -1640,7 +1640,7 @@
               <div class="gallery-preview-container">
                 ${previewHtml}
                 <div class="gallery-overlay">
-                  <a href="${item.signedUrl || item.publicUrl}" download="${item.file.name}" class="btn-download-item" onclick="event.stopPropagation()">Scarica</a>
+                  <a href="${item.signedUrl}" download="${item.file.name}" class="btn-download-item" onclick="event.stopPropagation()">Scarica</a>
                 </div>
               </div>
               <div class="gallery-caption">
