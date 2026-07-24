@@ -1535,6 +1535,17 @@ create policy "Consenti agli admin la gestione di oggetti public-portfolio" on s
           </table>
         </div>
       </div>
+
+      <!-- PHOTOSHARE EVENT PHOTOS SECTION -->
+      <div style="margin-top: 30px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; padding: 20px;" id="ps-photos-section">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+          <h3 style="font-size: 0.95rem; font-weight: 600; color: var(--text-primary);" id="ps-photos-grid-title">Foto dell'Evento</h3>
+          <span id="ps-photos-count-badge" class="mini-badge" style="background: rgba(229, 9, 20, 0.15); color: #FF8A80; font-size: 0.8rem;">0 foto</span>
+        </div>
+        <div class="admin-gallery-grid" id="ps-event-photos-grid">
+          <div class="empty-state" style="grid-column: 1 / -1; font-size: 0.82rem;">Seleziona un evento dall'elenco a sinistra per visualizzare le sue fotografie.</div>
+        </div>
+      </div>
     </div>
 
   </main>
@@ -4343,7 +4354,8 @@ www.maxsalvaggio.com`;
       const spinner = document.getElementById("ps-admin-spinner");
 
       const name = nameInput.value.trim();
-      const code = codeInput.value.trim().toUpperCase();
+      const rawCode = codeInput.value.trim().toUpperCase();
+      const code = rawCode.replace(/^#/, '').trim();
 
       if (!name || !code || psAdminFilesToUpload.length === 0) {
         alert("Inserisci Nome Evento, Codice PIN e seleziona almeno 1 foto.");
@@ -4404,17 +4416,137 @@ www.maxsalvaggio.com`;
 
         container.innerHTML = "";
         data.forEach(item => {
+          const cleanCode = item.name.replace(/^#/, '').toUpperCase();
           const div = document.createElement("div");
           div.className = "client-item";
-          div.onclick = () => filterPhotoShareLeads(item.name.toUpperCase());
+          div.dataset.code = cleanCode;
+          div.onclick = () => selectPhotoShareEvent(cleanCode);
           div.innerHTML = `
-            <span class="client-email-text" style="font-weight:600; color:#fff;">#${item.name.toUpperCase()}</span>
+            <span class="client-email-text" style="font-weight:600; color:#fff;">#${cleanCode}</span>
             <span class="mini-badge" style="background: rgba(229,9,20,0.15); color: #FF8A80;">Evento</span>
           `;
           container.appendChild(div);
         });
       } catch (err) {
         container.innerHTML = '<div class="empty-state" style="font-size:0.75rem; padding:10px 0;">Nessun evento trovato.</div>';
+      }
+    }
+
+    function selectPhotoShareEvent(code) {
+      const cleanCode = code.replace(/^#/, '').trim().toUpperCase();
+
+      const items = document.querySelectorAll("#photoshare-events-list .client-item");
+      items.forEach(item => {
+        if (item.dataset.code === cleanCode) {
+          item.classList.add("active");
+        } else {
+          item.classList.remove("active");
+        }
+      });
+
+      filterPhotoShareLeads(cleanCode);
+      loadPhotoShareEventPhotos(cleanCode);
+    }
+
+    async function loadPhotoShareEventPhotos(code) {
+      if (!supabaseClient) return;
+      const grid = document.getElementById("ps-event-photos-grid");
+      const title = document.getElementById("ps-photos-grid-title");
+      const badge = document.getElementById("ps-photos-count-badge");
+
+      if (!grid) return;
+
+      grid.innerHTML = '<div class="empty-state" style="grid-column: 1 / -1; font-size: 0.8rem;">Caricamento foto dell\'evento #' + code + '...</div>';
+      if (title) title.textContent = `Foto dell'Evento #${code}`;
+
+      const candidatePaths = [
+        `photoshare/${code}`,
+        `photoshare/${code.toLowerCase()}`,
+        `photoshare/#${code}`,
+        code,
+        code.toLowerCase()
+      ];
+
+      let foundFiles = null;
+      let validPath = null;
+
+      for (const testPath of candidatePaths) {
+        try {
+          const { data, error } = await supabaseClient.storage.from('client-proofs').list(testPath);
+          if (data && data.length > 0) {
+            const filtered = data.filter(f => f.name !== '.emptyFolderPlaceholder' && f.name !== '.DS_Store');
+            if (filtered.length > 0) {
+              foundFiles = filtered;
+              validPath = testPath;
+              break;
+            }
+          }
+        } catch (e) {}
+      }
+
+      if (!foundFiles || foundFiles.length === 0) {
+        grid.innerHTML = `<div class="empty-state" style="grid-column: 1 / -1; font-size: 0.8rem;">Nessuna foto trovata nella cartella dell'evento #${code}.</div>`;
+        if (badge) badge.textContent = "0 foto";
+        return;
+      }
+
+      if (badge) badge.textContent = `${foundFiles.length} foto`;
+      grid.innerHTML = "";
+
+      for (const file of foundFiles) {
+        const fullPath = `${validPath}/${file.name}`;
+        let signedUrl = "";
+
+        try {
+          const { data } = await supabaseClient.storage.from('client-proofs').createSignedUrl(fullPath, 7200);
+          signedUrl = data?.signedUrl || "";
+        } catch (e) {}
+
+        if (!signedUrl) {
+          const { data: pData } = supabaseClient.storage.from('client-proofs').getPublicUrl(fullPath);
+          signedUrl = pData?.publicUrl || "";
+        }
+
+        const card = document.createElement("div");
+        card.className = "portfolio-card";
+        card.style.aspectRatio = "1 / 1";
+        card.style.position = "relative";
+        card.style.borderRadius = "6px";
+        card.style.overflow = "hidden";
+        card.style.background = "#111";
+
+        card.innerHTML = `
+          <img src="${signedUrl}" alt="${file.name}" style="width: 100%; height: 100%; object-fit: cover; display: block;" loading="lazy">
+          <div class="portfolio-card-overlay">
+            <div class="portfolio-card-header">
+              <button class="portfolio-btn-delete" title="Elimina foto" onclick="deletePhotoShareEventFile(event, '${fullPath}', '${code}')">🗑️</button>
+            </div>
+            <div class="portfolio-card-footer">
+              <span class="portfolio-card-title">${file.name}</span>
+            </div>
+          </div>
+        `;
+
+        grid.appendChild(card);
+      }
+    }
+
+    async function deletePhotoShareEventFile(event, fullPath, code) {
+      if (event) event.stopPropagation();
+      const filename = fullPath.split('/').pop();
+      const confirmDel = confirm(`Sei sicuro di voler eliminare la foto "${filename}" dall'evento #${code}?`);
+      if (!confirmDel) return;
+
+      try {
+        const { error } = await supabaseClient.storage.from('client-proofs').remove([fullPath]);
+        if (error) {
+          alert("Impossibile eliminare la foto: " + error.message);
+          return;
+        }
+
+        await loadPhotoShareEventPhotos(code);
+      } catch (err) {
+        alert("Errore durante l'eliminazione: " + err.message);
       }
     }
 
@@ -4448,8 +4580,9 @@ www.maxsalvaggio.com`;
 
     function filterPhotoShareLeads(code) {
       const title = document.getElementById("ps-leads-table-title");
-      if (title) title.textContent = `Lead Evento #${code}`;
-      const filtered = allPhotoShareLeads.filter(l => l.event_code && l.event_code.toUpperCase() === code);
+      const cleanCode = code.replace(/^#/, '').trim().toUpperCase();
+      if (title) title.textContent = `Lead Evento #${cleanCode}`;
+      const filtered = allPhotoShareLeads.filter(l => l.event_code && l.event_code.replace(/^#/, '').toUpperCase() === cleanCode);
       renderPhotoShareLeadsTable(filtered);
     }
 

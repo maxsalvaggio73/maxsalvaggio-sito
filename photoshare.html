@@ -505,7 +505,9 @@
       const errorMsg = document.getElementById('code-error-msg');
       errorMsg.style.display = "none";
 
-      const code = input.value ? input.value.trim().toUpperCase() : "";
+      const rawCode = input.value ? input.value.trim().toUpperCase() : "";
+      const code = rawCode.replace(/^#/, '').trim();
+
       if (!code) {
         errorMsg.textContent = "Inserisci un Codice Evento valido.";
         errorMsg.style.display = "block";
@@ -514,12 +516,16 @@
 
       activeEventCode = code;
 
-      // Scan Storage folder photoshare/${code} or photoshare_${code} or ${code}
+      // Scan Storage folder candidate paths
       const candidatePaths = [
         `photoshare/${code}`,
         `photoshare/${code.toLowerCase()}`,
+        `photoshare/#${code}`,
+        `photoshare/#${code.toLowerCase()}`,
         code,
-        code.toLowerCase()
+        code.toLowerCase(),
+        `#${code}`,
+        `#${code.toLowerCase()}`
       ];
 
       let foundFiles = null;
