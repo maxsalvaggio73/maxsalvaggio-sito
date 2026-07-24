@@ -18,6 +18,10 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
   
+  <!-- Shared Lightbox Component -->
+  <link rel="stylesheet" href="shared-lightbox.css">
+  <script src="shared-lightbox.js"></script>
+
   <!-- Config File -->
   <script src="config.js"></script>
   
@@ -28,10 +32,27 @@
       --accent: #E50914;
       --accent-hover: #B20710;
       --accent-green: #00E676;
-      --text-primary: #FFFFFF;
-      --text-secondary: rgba(255, 255, 255, 0.65);
+      --text-primary: #ECEFF1;
+      --text-secondary: rgba(236, 239, 241, 0.6);
       --border-color: rgba(255, 255, 255, 0.08);
       --font-body: 'Outfit', sans-serif;
+    }
+
+    /* Magnifier Lens 100% Native Resolution (Pixel-Perfect) */
+    .magnifier-lens {
+      position: absolute;
+      width: 140px;
+      height: 140px;
+      border: 2px solid #fff;
+      border-radius: 50%;
+      cursor: crosshair;
+      pointer-events: none;
+      box-shadow: 0 0 15px rgba(0,0,0,0.7), inset 0 0 8px rgba(0,0,0,0.5);
+      background-repeat: no-repeat;
+      display: none;
+      z-index: 100;
+      image-rendering: -webkit-optimize-contrast;
+      image-rendering: high-quality;
     }
 
     * {
@@ -272,13 +293,19 @@
       max-width: 480px;
     }
 
-    /* TOP-RIGHT SELECTION CHECKBOX */
+    /* TOP HEADER BAR OUTSIDE PHOTO FOR SELECTION CHECKBOX */
+    .photo-card-topbar {
+      padding: 8px 12px;
+      background: rgba(0, 0, 0, 0.3);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+    }
+
     .photo-select-checkbox {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      width: 26px;
-      height: 26px;
+      width: 22px;
+      height: 22px;
       border-radius: 4px;
       background: rgba(0, 0, 0, 0.65);
       border: 2px solid #fff;
@@ -286,10 +313,9 @@
       align-items: center;
       justify-content: center;
       color: #fff;
-      font-size: 0.85rem;
+      font-size: 0.78rem;
       font-weight: 700;
       transition: all 0.2s ease;
-      z-index: 5;
       cursor: pointer;
     }
     .photo-card.selected .photo-select-checkbox {
@@ -756,6 +782,51 @@
       }
     }
 
+    // Helper per attivare il lentino a risoluzione nativa originale 100% (Pixel-Perfect)
+    function attachMagnifierLens(imgElement, wrapperElement) {
+      if (!imgElement || !wrapperElement) return;
+
+      const lens = document.createElement("div");
+      lens.className = "magnifier-lens";
+      wrapperElement.appendChild(lens);
+
+      wrapperElement.addEventListener("mousemove", (e) => {
+        const rect = imgElement.getBoundingClientRect();
+        const wrapperRect = wrapperElement.getBoundingClientRect();
+
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        if (x < 0 || y < 0 || x > rect.width || y > rect.height) {
+          lens.style.display = "none";
+          return;
+        }
+
+        const natW = imgElement.naturalWidth || (rect.width * 2.5);
+        const natH = imgElement.naturalHeight || (rect.height * 2.5);
+
+        const zoomX = natW / rect.width;
+        const zoomY = natH / rect.height;
+
+        lens.style.display = "block";
+        lens.style.backgroundImage = `url('${imgElement.src}')`;
+        lens.style.backgroundSize = `${natW}px ${natH}px`;
+
+        const lensW = 140;
+        const lensH = 140;
+        let lensX = (e.clientX - wrapperRect.left) - (lensW / 2);
+        let lensY = (e.clientY - wrapperRect.top) - (lensH / 2);
+
+        lens.style.left = `${lensX}px`;
+        lens.style.top = `${lensY}px`;
+        lens.style.backgroundPosition = `-${x * zoomX - lensW / 2}px -${y * zoomY - lensH / 2}px`;
+      });
+
+      wrapperElement.addEventListener("mouseleave", () => {
+        lens.style.display = "none";
+      });
+    }
+
     async function showGalleryPhase() {
       document.getElementById('event-display-title').textContent = `Galleria Evento #${activeEventCode}`;
       document.getElementById('phase-3-panel').style.display = "block";
@@ -764,7 +835,10 @@
       const grid = document.getElementById('photo-grid-container');
       grid.innerHTML = "";
 
+      const sharedMediaItems = [];
+      const psItems = [];
       let index = 0;
+
       for (const item of eventPhotos) {
         index++;
         let signedUrl = "";
@@ -787,37 +861,64 @@
         item.signedUrl = signedUrl;
         const elemId = `ps-img-${index}-${Math.random().toString(36).substr(2, 5)}`;
         const sizeKb = item.size ? (item.size / 1024).toFixed(1) : "Web";
+        const mediaIndex = sharedMediaItems.length;
 
+        sharedMediaItems.push({
+          type: 'image',
+          url: signedUrl,
+          name: item.name
+        });
+
+        psItems.push({ item, signedUrl, elemId, sizeKb, mediaIndex });
+      }
+
+      window.sharedLightboxItems = sharedMediaItems;
+
+      psItems.forEach(obj => {
         const card = document.createElement('div');
         card.className = 'photo-card';
-        card.dataset.name = item.name;
+        card.dataset.name = obj.item.name;
 
         card.innerHTML = `
-          <div class="photo-preview-wrapper" onclick="togglePhotoSelection(this.parentElement, '${item.name}')">
-            <div class="photo-select-checkbox">✓</div>
-            <img src="${signedUrl}" alt="${item.name}" class="photo-img" id="img-${elemId}" loading="lazy" decoding="async">
-            <div class="photo-zoom-overlay">
-              <button class="btn-zoom-lens" onclick="openPhotoShareLightbox(event, '${signedUrl}', '${item.name}')">🔍 Zoom</button>
-            </div>
+          <div class="photo-card-topbar">
+            <div class="photo-select-checkbox" id="chk-${obj.elemId}" onclick="event.stopPropagation(); togglePhotoSelection(this.closest('.photo-card'), '${obj.item.name}')">✓</div>
           </div>
-          <div class="photo-caption" onclick="togglePhotoSelection(this.parentElement, '${item.name}')">
-            <div class="photo-caption-title" title="${item.name}">${item.name}</div>
+          <div class="photo-preview-wrapper" id="wrapper-${obj.elemId}" style="cursor: pointer; position: relative;">
+            <img src="${obj.signedUrl}" alt="${obj.item.name}" class="photo-img" id="img-${obj.elemId}" loading="lazy" decoding="async">
+          </div>
+          <div class="photo-caption" style="cursor: pointer;">
+            <div class="photo-caption-title" title="${obj.item.name}">${obj.item.name}</div>
             <div class="photo-caption-meta">
-              <span>Peso: ${sizeKb} KB</span>
-              <span id="dim-${elemId}">Res: Calcolo...</span>
+              <span>Peso: ${obj.sizeKb} KB</span>
+              <span id="dim-${obj.elemId}">Res: Calcolo...</span>
             </div>
           </div>
         `;
 
+        const openMedia = (e) => {
+          if (e) e.stopPropagation();
+          if (typeof SharedLightbox !== 'undefined') {
+            SharedLightbox.open(window.sharedLightboxItems, obj.mediaIndex);
+          }
+        };
+
+        card.querySelector('.photo-preview-wrapper').addEventListener('click', openMedia);
+        card.querySelector('.photo-caption').addEventListener('click', openMedia);
+
         grid.appendChild(card);
 
-        const imgEl = document.getElementById(`img-${elemId}`);
+        const imgEl = document.getElementById(`img-${obj.elemId}`);
+        const wrapperEl = document.getElementById(`wrapper-${obj.elemId}`);
+
         const handleImgLoad = () => {
-          const dimEl = document.getElementById(`dim-${elemId}`);
+          const dimEl = document.getElementById(`dim-${obj.elemId}`);
           if (dimEl && imgEl.naturalWidth) {
             dimEl.textContent = `${imgEl.naturalWidth} x ${imgEl.naturalHeight} px`;
             if (imgEl.naturalWidth > imgEl.naturalHeight) {
               card.classList.add("card-horizontal");
+            }
+            if (typeof attachMagnifierLens === 'function') {
+              attachMagnifierLens(imgEl, wrapperEl);
             }
           }
         };
@@ -827,7 +928,7 @@
         } else if (imgEl) {
           imgEl.addEventListener('load', handleImgLoad, { once: true });
         }
-      }
+      });
     }
 
     function togglePhotoSelection(card, name) {

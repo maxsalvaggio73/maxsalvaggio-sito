@@ -56,6 +56,7 @@ Per eseguire il sito in locale, posiziona la cartella `Max Salvaggio Archivio/` 
 - **2026-07-24** – Fix drag and drop area PhotoShare upload in admin.html.
 - **2026-07-24** – Aggiunta anteprima foto evento e gestione storage in PhotoShare admin & client.
 - **2026-07-24** – Uniformità grafica PhotoShare: dimensioni miniature 240px/480px, lentino zoom, checkbox in alto a destra e cestino in basso a destra.
+- **2026-07-24** – Integrazione esatta Lightbox Guest per PhotoShare, controlli esterni all'immagine e mantenimento file originali.
 
 ---
 
