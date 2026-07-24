@@ -1547,23 +1547,23 @@ create policy "Consenti agli admin la gestione di oggetti public-portfolio" on s
             <h3 style="font-size: 0.95rem; font-weight: 600; color: var(--text-primary);" id="ps-photos-grid-title">Foto dell'Evento</h3>
             <span id="ps-photos-count-badge" class="mini-badge" style="background: rgba(229, 9, 20, 0.15); color: #FF8A80; font-size: 0.8rem; margin-top: 4px; display: inline-block;">0 foto</span>
           </div>
-          <div id="ps-add-photos-box" style="display: none; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: flex-end;">
-            <button id="btn-select-all-ps" class="btn-submit" style="width: auto; padding: 8px 16px; font-size: 0.75rem; background-color: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.25); color: #fff;" onclick="selectAllPhotoSharePhotos()">
+          <div id="ps-add-photos-box" style="display: none; align-items: center; gap: 8px; flex-wrap: nowrap !important; flex-direction: row; justify-content: flex-end; white-space: nowrap; overflow-x: auto; max-width: 100%;">
+            <button id="btn-select-all-ps" class="btn-submit" style="width: auto; padding: 6px 12px; font-size: 0.75rem; background-color: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.25); color: #fff; flex-shrink: 0; white-space: nowrap;" onclick="selectAllPhotoSharePhotos()">
               ☑️ Seleziona Tutto
             </button>
-            <button id="btn-download-selected-ps" class="btn-submit" style="display: none; width: auto; padding: 8px 16px; font-size: 0.75rem; background-color: var(--accent-green); border-color: var(--accent-green);" onclick="downloadSelectedPhotoSharePhotosZip()">
+            <button id="btn-download-selected-ps" class="btn-submit" style="display: none; width: auto; padding: 6px 12px; font-size: 0.75rem; background-color: var(--accent-green); border-color: var(--accent-green); flex-shrink: 0; white-space: nowrap;" onclick="downloadSelectedPhotoSharePhotosZip()">
               <span class="spinner" id="ps-download-selected-spinner" style="display: none; width: 12px; height: 12px; border-width: 2px;"></span>
               <span id="ps-download-selected-text">📥 Scarica Selezionate (.ZIP)</span>
             </button>
-            <button id="btn-delete-selected-ps" class="btn-submit" style="display: none; width: auto; padding: 8px 16px; font-size: 0.75rem; background-color: #d32f2f; border-color: #d32f2f;" onclick="deleteSelectedPhotoSharePhotos()">
+            <button id="btn-delete-selected-ps" class="btn-submit" style="display: none; width: auto; padding: 6px 12px; font-size: 0.75rem; background-color: #d32f2f; border-color: #d32f2f; flex-shrink: 0; white-space: nowrap;" onclick="deleteSelectedPhotoSharePhotos()">
               <span class="spinner" id="ps-delete-selected-spinner" style="display: none; width: 12px; height: 12px; border-width: 2px;"></span>
               <span id="ps-delete-selected-text">🗑️ Elimina Selezionate (0)</span>
             </button>
-            <button id="btn-deselect-all-ps" class="btn-submit" style="display: none; width: auto; padding: 8px 16px; font-size: 0.75rem; background-color: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2); color: #fff;" onclick="deselectAllPhotoSharePhotos()">
+            <button id="btn-deselect-all-ps" class="btn-submit" style="display: none; width: auto; padding: 6px 12px; font-size: 0.75rem; background-color: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2); color: #fff; flex-shrink: 0; white-space: nowrap;" onclick="deselectAllPhotoSharePhotos()">
               ❌ Deseleziona Tutto
             </button>
             <input type="file" id="ps-add-photos-file-input" style="display: none;" onchange="uploadMorePhotosToActiveEvent(event)" multiple accept="image/*">
-            <button class="btn-submit" style="width: auto; padding: 8px 16px; font-size: 0.75rem; background-color: var(--accent); border-color: var(--accent);" onclick="document.getElementById('ps-add-photos-file-input').click()">
+            <button class="btn-submit" style="width: auto; padding: 6px 12px; font-size: 0.75rem; background-color: var(--accent); border-color: var(--accent); flex-shrink: 0; white-space: nowrap;" onclick="document.getElementById('ps-add-photos-file-input').click()">
               <span class="spinner" id="ps-add-photos-spinner" style="display: none; width: 12px; height: 12px; border-width: 2px;"></span>
               <span>➕ Aggiungi altre foto all'evento</span>
             </button>
@@ -4467,7 +4467,7 @@ www.maxsalvaggio.com`;
       currentSelectedPhotoShareCode = cleanCode;
 
       const addBox = document.getElementById("ps-add-photos-box");
-      if (addBox) addBox.style.display = "block";
+      if (addBox) addBox.style.display = "flex";
 
       const items = document.querySelectorAll("#photoshare-events-list .client-item");
       items.forEach(item => {
