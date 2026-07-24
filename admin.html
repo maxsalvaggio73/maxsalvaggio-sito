@@ -2299,88 +2299,110 @@ www.maxsalvaggio.com`;
         gridBody.innerHTML = "";
         const formattedItems = [];
 
-        files.forEach((file, index) => {
-          const { data: publicUrlData } = supabaseClient
-            .storage
-            .from('client-proofs')
-            .getPublicUrl(`${email}/${file.name}`);
+        const BATCH_SIZE = 16;
+        let batchIndex = 0;
 
-          const publicUrl = publicUrlData.publicUrl;
-          const ext = file.name.split('.').pop().toLowerCase();
-          const isImage = ['jpg', 'jpeg', 'png', 'webp', 'gif'].includes(ext);
-          const isVideo = ['mp4', 'webm', 'mov'].includes(ext);
+        function renderGuestBatch() {
+          const chunk = files.slice(batchIndex, batchIndex + BATCH_SIZE);
+          chunk.forEach((file, i) => {
+            const index = batchIndex + i;
+            const { data: publicUrlData } = supabaseClient
+              .storage
+              .from('client-proofs')
+              .getPublicUrl(`${email}/${file.name}`);
 
-          if (isImage || isVideo) {
-            formattedItems.push({
-              src: publicUrl,
-              title: file.name,
-              category: 'Provini Guest',
-              mediaType: isVideo ? 'video' : 'image'
-            });
-          }
+            const publicUrl = publicUrlData.publicUrl;
+            const ext = file.name.split('.').pop().toLowerCase();
+            const isImage = ['jpg', 'jpeg', 'png', 'webp', 'gif'].includes(ext);
+            const isVideo = ['mp4', 'webm', 'mov'].includes(ext);
 
-          const card = document.createElement("div");
-          card.className = "admin-gallery-card";
-          card.setAttribute("draggable", "true");
-          card.setAttribute("data-filename", file.name);
+            if (isImage || isVideo) {
+              formattedItems.push({
+                src: publicUrl,
+                title: file.name,
+                category: 'Provini Guest',
+                mediaType: isVideo ? 'video' : 'image'
+              });
+            }
 
-          card.addEventListener('dragstart', handleGuestDragStart);
-          card.addEventListener('dragover', handleGuestDragOver);
-          card.addEventListener('drop', handleGuestDrop);
-          card.addEventListener('dragend', handleGuestDragEnd);
+            const card = document.createElement("div");
+            card.className = "admin-gallery-card";
+            card.setAttribute("draggable", "true");
+            card.setAttribute("data-filename", file.name);
 
-          const sizeKb = file.metadata && file.metadata.size ? (file.metadata.size / 1024).toFixed(1) : "N/D";
-          const elementId = `guest-dim-${index}-${Math.random().toString(36).substr(2, 5)}`;
+            card.addEventListener('dragstart', handleGuestDragStart);
+            card.addEventListener('dragover', handleGuestDragOver);
+            card.addEventListener('drop', handleGuestDrop);
+            card.addEventListener('dragend', handleGuestDragEnd);
 
-          let previewHtml = `<div style="display:flex; align-items:center; justify-content:center; height:100%; font-size:2rem;">📄</div>`;
-          if (isImage) {
-            previewHtml = `<img src="${publicUrl}" class="admin-card-preview" id="img-preview-${elementId}" alt="${file.name}">`;
-          } else if (isVideo) {
-            previewHtml = `<video src="${publicUrl}" class="admin-card-preview" muted preload="metadata"></video>`;
-          }
+            const sizeKb = file.metadata && file.metadata.size ? (file.metadata.size / 1024).toFixed(1) : "N/D";
+            const elementId = `guest-dim-${index}-${Math.random().toString(36).substr(2, 5)}`;
 
-          card.innerHTML = `
-            <div class="admin-card-preview-wrapper" id="wrapper-${elementId}">${previewHtml}</div>
-            <div class="admin-card-caption">
-              <div class="admin-card-info">
-                <div class="admin-card-title" title="${file.name}">${file.name}</div>
-                <div class="admin-card-meta">Peso: ${sizeKb} KB</div>
-                <div class="admin-card-meta" id="${elementId}">Dimensioni: Calcolo...</div>
+            let previewHtml = `<div style="display:flex; align-items:center; justify-content:center; height:100%; font-size:2rem;">📄</div>`;
+            if (isImage) {
+              previewHtml = `<img src="${publicUrl}" class="admin-card-preview" id="img-preview-${elementId}" alt="${file.name}" loading="lazy" decoding="async">`;
+            } else if (isVideo) {
+              previewHtml = `<video src="${publicUrl}" class="admin-card-preview" muted preload="metadata"></video>`;
+            }
+
+            card.innerHTML = `
+              <div class="admin-card-preview-wrapper" id="wrapper-${elementId}">${previewHtml}</div>
+              <div class="admin-card-caption">
+                <div class="admin-card-info">
+                  <div class="admin-card-title" title="${file.name}">${file.name}</div>
+                  <div class="admin-card-meta">Peso: ${sizeKb} KB</div>
+                  <div class="admin-card-meta" id="${elementId}">Dimensioni: Calcolo...</div>
+                </div>
+                <div class="admin-card-actions">
+                  <button class="btn-card-delete" onclick="event.stopPropagation(); deleteGuestFile('${file.name}')">Elimina</button>
+                </div>
               </div>
-              <div class="admin-card-actions">
-                <button class="btn-card-delete" onclick="event.stopPropagation(); deleteGuestFile('${file.name}')">Elimina</button>
-              </div>
-            </div>
-          `;
+            `;
 
-          gridBody.appendChild(card);
+            gridBody.appendChild(card);
 
-          if (isImage) {
-            const img = new Image();
-            img.src = publicUrl;
-            img.onload = () => {
-              const el = document.getElementById(elementId);
-              if (el) el.textContent = `Dimensioni: ${img.naturalWidth} x ${img.naturalHeight} px`;
-
-              if (img.naturalWidth > img.naturalHeight) {
-                card.classList.add("card-horizontal");
-              }
+            if (isImage) {
               const imgEl = document.getElementById(`img-preview-${elementId}`);
               const wrapperEl = document.getElementById(`wrapper-${elementId}`);
-              attachMagnifierLens(imgEl, wrapperEl);
-            };
-          } else if (isVideo) {
-            const vid = document.createElement("video");
-            vid.src = publicUrl;
-            vid.onloadedmetadata = () => {
-              const el = document.getElementById(elementId);
-              if (el) el.textContent = `Dimensioni: ${vid.videoWidth} x ${vid.videoHeight} px`;
-              if (vid.videoWidth > vid.videoHeight) {
-                card.classList.add("card-horizontal");
+              const handleImgLoad = () => {
+                const el = document.getElementById(elementId);
+                if (el) el.textContent = `Dimensioni: ${imgEl.naturalWidth} x ${imgEl.naturalHeight} px`;
+                if (imgEl.naturalWidth > imgEl.naturalHeight) {
+                  card.classList.add("card-horizontal");
+                }
+                attachMagnifierLens(imgEl, wrapperEl);
+              };
+
+              if (imgEl && imgEl.complete && imgEl.naturalWidth) {
+                handleImgLoad();
+              } else if (imgEl) {
+                imgEl.addEventListener('load', handleImgLoad, { once: true });
+                imgEl.addEventListener('error', () => {
+                  const el = document.getElementById(elementId);
+                  if (el) el.textContent = "Dimensioni: N/D";
+                }, { once: true });
               }
-            };
+            } else if (isVideo) {
+              const vid = card.querySelector('video');
+              if (vid) {
+                vid.onloadedmetadata = () => {
+                  const el = document.getElementById(elementId);
+                  if (el) el.textContent = `Dimensioni: ${vid.videoWidth} x ${vid.videoHeight} px`;
+                  if (vid.videoWidth > vid.videoHeight) {
+                    card.classList.add("card-horizontal");
+                  }
+                };
+              }
+            }
+          });
+
+          batchIndex += BATCH_SIZE;
+          if (batchIndex < files.length) {
+            setTimeout(renderGuestBatch, 20);
           }
-        });
+        }
+
+        renderGuestBatch();
 
       } catch (err) {
         console.error("loadGuestFiles err:", err);
@@ -2755,102 +2777,118 @@ www.maxsalvaggio.com`;
 
         gridBody.innerHTML = "";
         
-        galleryItems.forEach((item, index) => {
-          const card = document.createElement("div");
-          card.className = "admin-gallery-card";
-          card.draggable = true;
-          card.setAttribute("data-filename", item.file.name);
-          
-          // Drag and Drop Event listeners
-          card.addEventListener("dragstart", handleDragStart);
-          card.addEventListener("dragover", handleDragOver);
-          card.addEventListener("drop", handleDrop);
-          card.addEventListener("dragend", handleDragEnd);
+        const CLIENT_BATCH_SIZE = 16;
+        let clientBatchIndex = 0;
 
-          const elementId = `dims-${index}`;
+        function renderClientBatch() {
+          const chunk = galleryItems.slice(clientBatchIndex, clientBatchIndex + CLIENT_BATCH_SIZE);
+          chunk.forEach((item, bIdx) => {
+            const index = clientBatchIndex + bIdx;
+            const card = document.createElement("div");
+            card.className = "admin-gallery-card";
+            card.draggable = true;
+            card.setAttribute("data-filename", item.file.name);
+            
+            card.addEventListener("dragstart", handleDragStart);
+            card.addEventListener("dragover", handleDragOver);
+            card.addEventListener("drop", handleDrop);
+            card.addEventListener("dragend", handleDragEnd);
 
-          let previewHtml = "";
-          if (item.isImage) {
-            previewHtml = `<img src="${item.publicUrl}" class="admin-card-preview" id="client-img-preview-${elementId}" alt="Preview">`;
-          } else if (item.isVideo) {
-            previewHtml = `<video src="${item.publicUrl}" class="admin-card-preview" muted preload="metadata"></video>`;
-          } else {
-            const icon = item.isAudio ? "🎵" : (item.isPdf ? "📕" : "📄");
-            previewHtml = `
-              <div class="admin-card-preview" style="display:flex; justify-content:center; align-items:center; font-size:2rem; background: rgba(0,0,0,0.2);">
-                ${icon}
+            const elementId = `dims-${index}`;
+
+            let previewHtml = "";
+            if (item.isImage) {
+              previewHtml = `<img src="${item.publicUrl}" class="admin-card-preview" id="client-img-preview-${elementId}" alt="Preview" loading="lazy" decoding="async">`;
+            } else if (item.isVideo) {
+              previewHtml = `<video src="${item.publicUrl}" class="admin-card-preview" muted preload="metadata"></video>`;
+            } else {
+              const icon = item.isAudio ? "🎵" : (item.isPdf ? "📕" : "📄");
+              previewHtml = `
+                <div class="admin-card-preview" style="display:flex; justify-content:center; align-items:center; font-size:2rem; background: rgba(0,0,0,0.2);">
+                  ${icon}
+                </div>
+              `;
+            }
+
+            card.innerHTML = `
+              <div class="admin-card-preview-wrapper" id="client-wrapper-${elementId}" style="cursor: pointer;">
+                ${previewHtml}
+              </div>
+              <div class="admin-card-caption">
+                <div class="admin-card-info" style="cursor: pointer; flex-grow: 1;">
+                  <span class="admin-card-title" title="${item.file.name}">${item.file.name}</span>
+                  <span class="admin-card-meta">Peso: ${item.sizeStr}</span>
+                  <span class="admin-card-meta" id="${elementId}">Dimensioni: Calcolo...</span>
+                </div>
+                <div class="admin-card-actions">
+                  <button class="btn-card-delete" onclick="event.stopPropagation(); deleteClientFile('${email}', '${item.file.name}')">Elimina</button>
+                </div>
               </div>
             `;
-          }
 
-          card.innerHTML = `
-            <div class="admin-card-preview-wrapper" id="client-wrapper-${elementId}" style="cursor: pointer;">
-              ${previewHtml}
-            </div>
-            <div class="admin-card-caption">
-              <div class="admin-card-info" style="cursor: pointer; flex-grow: 1;">
-                <span class="admin-card-title" title="${item.file.name}">${item.file.name}</span>
-                <span class="admin-card-meta">Peso: ${item.sizeStr}</span>
-                <span class="admin-card-meta" id="${elementId}">Dimensioni: Calcolo...</span>
-              </div>
-              <div class="admin-card-actions">
-                <button class="btn-card-delete" onclick="event.stopPropagation(); deleteClientFile('${email}', '${item.file.name}')">Elimina</button>
-              </div>
-            </div>
-          `;
-
-          // Handle clicks on preview/caption preventing conflict with buttons
-          const openMedia = () => {
-            if (item.isMedia) {
-              SharedLightbox.open(window.sharedLightboxItems, item.mediaIndex);
-            } else {
-              window.open(item.publicUrl, '_blank');
-            }
-          };
-
-          card.querySelector('.admin-card-preview-wrapper').addEventListener('click', openMedia);
-          card.querySelector('.admin-card-info').addEventListener('click', openMedia);
-
-          gridBody.appendChild(card);
-
-          // Get dimensions dynamically if file is image or video
-          if (item.isImage) {
-            const img = new Image();
-            img.src = item.publicUrl;
-            img.onload = () => {
-              const el = document.getElementById(elementId);
-              if (el) el.textContent = `Dimensioni: ${img.naturalWidth} x ${img.naturalHeight} px`;
-
-              if (img.naturalWidth > img.naturalHeight) {
-                card.classList.add("card-horizontal");
+            const openMedia = () => {
+              if (item.isMedia) {
+                SharedLightbox.open(window.sharedLightboxItems, item.mediaIndex);
+              } else {
+                window.open(item.publicUrl, '_blank');
               }
+            };
+
+            card.querySelector('.admin-card-preview-wrapper').addEventListener('click', openMedia);
+            card.querySelector('.admin-card-info').addEventListener('click', openMedia);
+
+            gridBody.appendChild(card);
+
+            if (item.isImage) {
               const imgEl = document.getElementById(`client-img-preview-${elementId}`);
               const wrapperEl = document.getElementById(`client-wrapper-${elementId}`);
-              attachMagnifierLens(imgEl, wrapperEl);
-            };
-            img.onerror = () => {
-              const el = document.getElementById(elementId);
-              if (el) el.textContent = "Dimensioni: N/D";
-            };
-          } else if (item.isVideo) {
-            const vid = document.createElement("video");
-            vid.src = item.publicUrl;
-            vid.onloadedmetadata = () => {
-              const el = document.getElementById(elementId);
-              if (el) el.textContent = `Dimensioni: ${vid.videoWidth} x ${vid.videoHeight} px`;
-              if (vid.videoWidth > vid.videoHeight) {
-                card.classList.add("card-horizontal");
+              const handleImgLoad = () => {
+                const el = document.getElementById(elementId);
+                if (el) el.textContent = `Dimensioni: ${imgEl.naturalWidth} x ${imgEl.naturalHeight} px`;
+
+                if (imgEl.naturalWidth > imgEl.naturalHeight) {
+                  card.classList.add("card-horizontal");
+                }
+                attachMagnifierLens(imgEl, wrapperEl);
+              };
+
+              if (imgEl && imgEl.complete && imgEl.naturalWidth) {
+                handleImgLoad();
+              } else if (imgEl) {
+                imgEl.addEventListener('load', handleImgLoad, { once: true });
+                imgEl.addEventListener('error', () => {
+                  const el = document.getElementById(elementId);
+                  if (el) el.textContent = "Dimensioni: N/D";
+                }, { once: true });
               }
-            };
-            vid.onerror = () => {
+            } else if (item.isVideo) {
+              const vid = card.querySelector('video');
+              if (vid) {
+                vid.onloadedmetadata = () => {
+                  const el = document.getElementById(elementId);
+                  if (el) el.textContent = `Dimensioni: ${vid.videoWidth} x ${vid.videoHeight} px`;
+                  if (vid.videoWidth > vid.videoHeight) {
+                    card.classList.add("card-horizontal");
+                  }
+                };
+                vid.onerror = () => {
+                  const el = document.getElementById(elementId);
+                  if (el) el.textContent = "Dimensioni: N/D";
+                };
+              }
+            } else {
               const el = document.getElementById(elementId);
-              if (el) el.textContent = "Dimensioni: N/D";
-            };
-          } else {
-            const el = document.getElementById(elementId);
-            if (el) el.style.display = "none";
+              if (el) el.style.display = "none";
+            }
+          });
+
+          clientBatchIndex += CLIENT_BATCH_SIZE;
+          if (clientBatchIndex < galleryItems.length) {
+            setTimeout(renderClientBatch, 20);
           }
-        });
+        }
+
+        renderClientBatch();
 
       } catch (err) {
         console.error("loadClientFiles err:", err);
