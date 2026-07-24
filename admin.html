@@ -16,6 +16,10 @@
   <!-- SortableJS CDN -->
   <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
   
+  <!-- JSZip & FileSaver CDN for ZIP download -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+  
   <!-- Local Config -->
   <script src="config.js"></script>
 
@@ -1544,6 +1548,10 @@ create policy "Consenti agli admin la gestione di oggetti public-portfolio" on s
             <span id="ps-photos-count-badge" class="mini-badge" style="background: rgba(229, 9, 20, 0.15); color: #FF8A80; font-size: 0.8rem; margin-top: 4px; display: inline-block;">0 foto</span>
           </div>
           <div id="ps-add-photos-box" style="display: none; align-items: center; gap: 10px;">
+            <button id="btn-download-selected-ps" class="btn-submit" style="display: none; width: auto; padding: 8px 16px; font-size: 0.75rem; background-color: var(--accent-green); border-color: var(--accent-green);" onclick="downloadSelectedPhotoSharePhotosZip()">
+              <span class="spinner" id="ps-download-selected-spinner" style="display: none; width: 12px; height: 12px; border-width: 2px;"></span>
+              <span id="ps-download-selected-text">📥 Scarica Selezionate (.ZIP)</span>
+            </button>
             <button id="btn-delete-selected-ps" class="btn-submit" style="display: none; width: auto; padding: 8px 16px; font-size: 0.75rem; background-color: #d32f2f; border-color: #d32f2f;" onclick="deleteSelectedPhotoSharePhotos()">
               <span class="spinner" id="ps-delete-selected-spinner" style="display: none; width: 12px; height: 12px; border-width: 2px;"></span>
               <span id="ps-delete-selected-text">🗑️ Elimina Selezionate (0)</span>
@@ -4527,17 +4535,75 @@ www.maxsalvaggio.com`;
     }
 
     function updatePhotoShareAdminDeleteButton() {
-      const btn = document.getElementById("btn-delete-selected-ps");
-      const text = document.getElementById("ps-delete-selected-text");
+      const deleteBtn = document.getElementById("btn-delete-selected-ps");
+      const deleteText = document.getElementById("ps-delete-selected-text");
+      const downloadBtn = document.getElementById("btn-download-selected-ps");
+      const downloadText = document.getElementById("ps-download-selected-text");
       const count = psAdminSelectedFilePaths.size;
 
-      if (btn && text) {
-        if (count > 0) {
-          btn.style.display = "inline-flex";
-          text.textContent = `🗑️ Elimina Selezionate (${count})`;
-        } else {
-          btn.style.display = "none";
+      if (count > 0) {
+        if (deleteBtn) {
+          deleteBtn.style.display = "inline-flex";
+          if (deleteText) deleteText.textContent = `🗑️ Elimina Selezionate (${count})`;
         }
+        if (downloadBtn) {
+          downloadBtn.style.display = "inline-flex";
+          if (downloadText) downloadText.textContent = `📥 Scarica Selezionate (${count})`;
+        }
+      } else {
+        if (deleteBtn) deleteBtn.style.display = "none";
+        if (downloadBtn) downloadBtn.style.display = "none";
+      }
+    }
+
+    async function downloadSelectedPhotoSharePhotosZip() {
+      if (!supabaseClient || psAdminSelectedFilePaths.size === 0) return;
+      const count = psAdminSelectedFilePaths.size;
+
+      const btn = document.getElementById("btn-download-selected-ps");
+      const spinner = document.getElementById("ps-download-selected-spinner");
+      const text = document.getElementById("ps-download-selected-text");
+
+      if (btn) btn.disabled = true;
+      if (spinner) spinner.style.display = "inline-block";
+      if (text) text.textContent = `Download ZIP (${count})...`;
+
+      try {
+        const zip = new JSZip();
+        const folderName = `PhotoShare_${currentSelectedPhotoShareCode || 'Event'}`;
+        const zipFolder = zip.folder(folderName);
+
+        const paths = Array.from(psAdminSelectedFilePaths);
+
+        for (const fullPath of paths) {
+          let signedUrl = "";
+          try {
+            const { data } = await supabaseClient.storage.from('client-proofs').createSignedUrl(fullPath, 3600);
+            signedUrl = data?.signedUrl || "";
+          } catch (e) {}
+
+          if (!signedUrl) {
+            const { data: pData } = supabaseClient.storage.from('client-proofs').getPublicUrl(fullPath);
+            signedUrl = pData?.publicUrl || "";
+          }
+
+          if (signedUrl) {
+            const response = await fetch(signedUrl);
+            const blob = await response.blob();
+            const fileName = fullPath.split('/').pop();
+            zipFolder.file(fileName, blob);
+          }
+        }
+
+        const content = await zip.generateAsync({ type: "blob" });
+        const zipName = `PhotoShare_${currentSelectedPhotoShareCode || 'Event'}_Selezionate.zip`;
+        saveAs(content, zipName);
+      } catch (err) {
+        alert("Errore durante la creazione del file ZIP: " + err.message);
+      } finally {
+        if (btn) btn.disabled = false;
+        if (spinner) spinner.style.display = "none";
+        updatePhotoShareAdminDeleteButton();
       }
     }
 
