@@ -1427,15 +1427,33 @@
           return idxA - idxB;
         });
 
-        // 4. Map files and prepare lightbox items
+        // 4. Map files and prepare lightbox items using signed URL with getPublicUrl fallback
         const mediaItems = [];
         const galleryItems = [];
 
-        imageFiles.forEach((file) => {
-          const { data: { publicUrl } } = supabaseClient
-            .storage
-            .from('client-proofs')
-            .getPublicUrl(folderName + '/' + file.name);
+        for (const file of imageFiles) {
+          const path = `${folderName}/${file.name}`;
+          let fileUrl = "";
+
+          try {
+            const { data: signedData } = await supabaseClient
+              .storage
+              .from('client-proofs')
+              .createSignedUrl(path, 86400);
+            if (signedData && signedData.signedUrl) {
+              fileUrl = signedData.signedUrl;
+            }
+          } catch (e) {
+            console.warn("createSignedUrl fallback:", e);
+          }
+
+          if (!fileUrl) {
+            const { data: publicUrlData } = supabaseClient
+              .storage
+              .from('client-proofs')
+              .getPublicUrl(path);
+            fileUrl = publicUrlData?.publicUrl || "";
+          }
 
           const ext = file.name.split('.').pop().toLowerCase();
           const isImage = ['jpg', 'jpeg', 'png', 'webp', 'gif'].includes(ext);
@@ -1456,7 +1474,7 @@
           let mediaIndex = -1;
           if (isMedia) {
             mediaItems.push({
-              url: publicUrl,
+              url: fileUrl,
               type: itemType,
               name: file.name
             });
@@ -1465,7 +1483,7 @@
 
           galleryItems.push({
             file,
-            publicUrl,
+            publicUrl: fileUrl,
             isImage,
             isVideo,
             isAudio,
@@ -1474,7 +1492,7 @@
             isMedia,
             mediaIndex
           });
-        });
+        }
 
         // Store globally for lightbox navigation
         window.sharedLightboxItems = mediaItems;

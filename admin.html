@@ -2299,19 +2299,44 @@ www.maxsalvaggio.com`;
         gridBody.innerHTML = "";
         const formattedItems = [];
 
+        // Pre-fetch URLs using signed URL with getPublicUrl fallback
+        const guestItems = [];
+        for (let i = 0; i < files.length; i++) {
+          const file = files[i];
+          const path = `${email}/${file.name}`;
+          let publicUrl = "";
+
+          try {
+            const { data: signedData } = await supabaseClient
+              .storage
+              .from('client-proofs')
+              .createSignedUrl(path, 86400);
+            if (signedData && signedData.signedUrl) {
+              publicUrl = signedData.signedUrl;
+            }
+          } catch (e) {}
+
+          if (!publicUrl) {
+            const { data: publicUrlData } = supabaseClient
+              .storage
+              .from('client-proofs')
+              .getPublicUrl(path);
+            publicUrl = publicUrlData?.publicUrl || "";
+          }
+
+          guestItems.push({ file, publicUrl });
+        }
+
         const BATCH_SIZE = 16;
         let batchIndex = 0;
 
         function renderGuestBatch() {
-          const chunk = files.slice(batchIndex, batchIndex + BATCH_SIZE);
-          chunk.forEach((file, i) => {
+          const chunk = guestItems.slice(batchIndex, batchIndex + BATCH_SIZE);
+          chunk.forEach((itemObj, i) => {
+            const file = itemObj.file;
+            const publicUrl = itemObj.publicUrl;
             const index = batchIndex + i;
-            const { data: publicUrlData } = supabaseClient
-              .storage
-              .from('client-proofs')
-              .getPublicUrl(`${email}/${file.name}`);
 
-            const publicUrl = publicUrlData.publicUrl;
             const ext = file.name.split('.').pop().toLowerCase();
             const isImage = ['jpg', 'jpeg', 'png', 'webp', 'gif'].includes(ext);
             const isVideo = ['mp4', 'webm', 'mov'].includes(ext);
@@ -2727,11 +2752,27 @@ www.maxsalvaggio.com`;
         const mediaItems = [];
         const galleryItems = [];
 
-        activeFiles.forEach((file) => {
-          const { data: { publicUrl } } = supabaseClient
-            .storage
-            .from('client-proofs')
-            .getPublicUrl(email + '/' + file.name);
+        for (const file of activeFiles) {
+          const path = `${email}/${file.name}`;
+          let publicUrl = "";
+
+          try {
+            const { data: signedData } = await supabaseClient
+              .storage
+              .from('client-proofs')
+              .createSignedUrl(path, 86400);
+            if (signedData && signedData.signedUrl) {
+              publicUrl = signedData.signedUrl;
+            }
+          } catch (e) {}
+
+          if (!publicUrl) {
+            const { data: publicUrlData } = supabaseClient
+              .storage
+              .from('client-proofs')
+              .getPublicUrl(path);
+            publicUrl = publicUrlData?.publicUrl || "";
+          }
 
           const ext = file.name.split('.').pop().toLowerCase();
           const isImage = ['jpg', 'jpeg', 'png', 'webp', 'gif'].includes(ext);
@@ -2770,7 +2811,7 @@ www.maxsalvaggio.com`;
             isMedia,
             mediaIndex
           });
-        });
+        }
 
         // Store globally for lightbox navigation
         window.sharedLightboxItems = mediaItems;
