@@ -1403,7 +1403,7 @@
           let clientAreaCurrentPage = 1;
     const PROOFS_PER_PAGE = 8;
 
-    // Query files inside the folder named exactly after the client's email
+    // Query files inside the folder checking multi-path candidates in cascade
     async function loadClientPhotos() {
       if (!supabaseClient || !currentUser) return;
 
@@ -1427,33 +1427,52 @@
           userEmail = profile.email.trim();
         }
 
-        // 2. List files in bucket 'client-proofs' with path fallback (Exact Email vs Lowercase Email)
-        let targetFolder = userEmail;
-        let files = null;
+        // 2. Multi-path search cascade in bucket 'client-proofs'
+        const candidatePaths = [
+          `guest/${userEmail}`,
+          userEmail,
+          userEmail.toLowerCase(),
+          currentUser.id
+        ];
 
-        let res = await supabaseClient.storage.from('client-proofs').list(targetFolder);
-        if (res.data && res.data.length > 0) {
-          files = res.data;
-        } else {
-          const lowerFolder = targetFolder.toLowerCase();
-          if (lowerFolder !== targetFolder) {
-            const resLower = await supabaseClient.storage.from('client-proofs').list(lowerFolder);
-            if (resLower.data && resLower.data.length > 0) {
-              files = resLower.data;
-              targetFolder = lowerFolder;
-            }
+        const uniquePaths = [...new Set(candidatePaths.filter(Boolean))];
+        console.log("[WORKSPACE DEBUG] Searching photos for:", userEmail, uniquePaths);
+
+        let validPath = null;
+        let files = null;
+        let storageErrors = [];
+
+        for (const testPath of uniquePaths) {
+          const { data, error } = await supabaseClient
+            .storage
+            .from('client-proofs')
+            .list(testPath);
+
+          if (error) {
+            console.warn(`[WORKSPACE DEBUG] Storage error on path "${testPath}":`, error);
+            storageErrors.push({ path: testPath, error });
+            continue;
+          }
+
+          const filtered = (data || []).filter(f => f.name !== '.emptyFolderPlaceholder' && f.name !== '.DS_Store' && f.name !== 'documents');
+
+          if (filtered && filtered.length > 0) {
+            validPath = testPath;
+            files = filtered;
+            console.log("[WORKSPACE DEBUG] Found photos in path:", validPath, files);
+            break;
           }
         }
 
-        // Filter out empty placeholders and documents folder
-        let imageFiles = (files || []).filter(f => f.name !== '.emptyFolderPlaceholder' && f.name !== '.DS_Store' && f.name !== 'documents');
-
-        if (!imageFiles || imageFiles.length === 0) {
+        if (!validPath || !files || files.length === 0) {
+          console.warn("[WORKSPACE DEBUG] No photos found in any tested path. Errors:", storageErrors);
           statusMsg.textContent = "Al momento la tua cartella privata è vuota. Contatta lo studio per caricare il tuo materiale.";
           emptyStatePanel.style.display = "block";
           galleryPanel.style.display = "none";
           return;
         }
+
+        let imageFiles = files;
 
         // 3. Sort files according to saved file_order array
         imageFiles.sort((a, b) => {
@@ -1481,7 +1500,7 @@
         const galleryItems = [];
 
         for (const file of pageFiles) {
-          const path = `${targetFolder}/${file.name}`;
+          const path = `${validPath}/${file.name}`;
           let fileUrl = "";
 
           try {
