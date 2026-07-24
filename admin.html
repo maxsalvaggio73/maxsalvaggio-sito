@@ -451,11 +451,11 @@
       object-fit: contain;
     }
 
-    /* Magnifier Lens 250% */
+    /* Magnifier Lens 100% Native Resolution (Pixel-Perfect) */
     .magnifier-lens {
       position: absolute;
-      width: 130px;
-      height: 130px;
+      width: 140px;
+      height: 140px;
       border: 2px solid #fff;
       border-radius: 50%;
       cursor: crosshair;
@@ -464,6 +464,8 @@
       background-repeat: no-repeat;
       display: none;
       z-index: 100;
+      image-rendering: -webkit-optimize-contrast;
+      image-rendering: high-quality;
     }
 
     .admin-card-caption {
@@ -2209,15 +2211,13 @@ www.maxsalvaggio.com`;
       items.forEach(item => item.classList.remove("active"));
     }
 
-    // Helper per attivare il lentino 250% al passaggio del mouse
+    // Helper per attivare il lentino a risoluzione nativa originale 100% (Pixel-Perfect)
     function attachMagnifierLens(imgElement, wrapperElement) {
       if (!imgElement || !wrapperElement) return;
 
       const lens = document.createElement("div");
       lens.className = "magnifier-lens";
       wrapperElement.appendChild(lens);
-
-      const zoomLevel = 2.5; // 250%
 
       wrapperElement.addEventListener("mousemove", (e) => {
         const rect = imgElement.getBoundingClientRect();
@@ -2231,18 +2231,24 @@ www.maxsalvaggio.com`;
           return;
         }
 
+        const natW = imgElement.naturalWidth || (rect.width * 2.5);
+        const natH = imgElement.naturalHeight || (rect.height * 2.5);
+
+        const zoomX = natW / rect.width;
+        const zoomY = natH / rect.height;
+
         lens.style.display = "block";
         lens.style.backgroundImage = `url('${imgElement.src}')`;
-        lens.style.backgroundSize = `${rect.width * zoomLevel}px ${rect.height * zoomLevel}px`;
+        lens.style.backgroundSize = `${natW}px ${natH}px`;
 
-        const lensW = 130;
-        const lensH = 130;
+        const lensW = 140;
+        const lensH = 140;
         let lensX = (e.clientX - wrapperRect.left) - (lensW / 2);
         let lensY = (e.clientY - wrapperRect.top) - (lensH / 2);
 
         lens.style.left = `${lensX}px`;
         lens.style.top = `${lensY}px`;
-        lens.style.backgroundPosition = `-${x * zoomLevel - lensW / 2}px -${y * zoomLevel - lensH / 2}px`;
+        lens.style.backgroundPosition = `-${x * zoomX - lensW / 2}px -${y * zoomY - lensH / 2}px`;
       });
 
       wrapperElement.addEventListener("mouseleave", () => {
