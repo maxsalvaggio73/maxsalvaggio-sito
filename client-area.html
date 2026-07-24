@@ -378,11 +378,36 @@
     .card-text {
       font-size: 0.92rem;
       line-height: 1.6;
-      color: rgba(255, 255, 255, 0.85) !important;
+      color: rgba(255, 255, 255, 0.85);
       margin-bottom: 25px;
     }
     #status-message {
-      color: rgba(255, 255, 255, 0.75) !important;
+      color: rgba(255, 255, 255, 0.75);
+    }
+    /* Forzatura Contrasto Testo Scheda Vuota (100% Leggibile) */
+    #empty-state-panel .dashboard-card {
+      background: #ffffff !important;
+      color: #111111 !important;
+      border: 1px solid #e0e0e0 !important;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15) !important;
+    }
+    #empty-state-panel .card-title {
+      color: #111111 !important;
+    }
+    #empty-state-panel .card-text {
+      color: #333333 !important;
+    }
+    #empty-state-panel #status-message {
+      color: #222222 !important;
+      font-weight: 600 !important;
+    }
+    #empty-state-panel .btn-home {
+      color: #111111 !important;
+      border-color: #333333 !important;
+    }
+    #empty-state-panel .btn-home:hover {
+      background-color: #111111 !important;
+      color: #ffffff !important;
     }
     .btn-home {
       display: inline-block;
@@ -1427,16 +1452,26 @@
       const paginationBar = document.getElementById("gallery-pagination-bar");
 
       try {
-        // 1. Fetch file order array from client profile by ID or Email
-        const { data: profile } = await supabaseClient
-          .from('profiles')
-          .select('file_order, email')
-          .or(`id.eq.${currentUser.id},email.eq.${userEmail}`)
-          .maybeSingle();
+        // 1. Fetch file order array from client profile by ID or Email (timeout 2.0s)
+        let fileOrder = [];
+        try {
+          const profilePromise = supabaseClient
+            .from('profiles')
+            .select('file_order, email')
+            .or(`id.eq.${currentUser.id},email.eq.${userEmail}`)
+            .maybeSingle();
 
-        const fileOrder = profile?.file_order || [];
-        if (profile?.email) {
-          userEmail = profile.email.trim();
+          const timeoutProfile = new Promise(r => setTimeout(() => r({ data: null }), 2000));
+          const resProfile = await Promise.race([profilePromise, timeoutProfile]);
+
+          if (resProfile?.data) {
+            fileOrder = resProfile.data.file_order || [];
+            if (resProfile.data.email) {
+              userEmail = resProfile.data.email.trim();
+            }
+          }
+        } catch (eProfile) {
+          console.warn("[WORKSPACE DEBUG] Profile fetch warning:", eProfile);
         }
 
         // 2. Multi-path search cascade in bucket 'client-proofs' with 2.5s per-path timeout
@@ -1482,7 +1517,7 @@
         if (!validPath || !files || files.length === 0) {
           console.warn("[WORKSPACE DEBUG] Nessun provino trovato in tutti i percorsi testati. Errors:", storageErrors);
           statusMsg.textContent = "Al momento la tua cartella privata è vuota. Contatta lo studio per caricare il tuo materiale.";
-          statusMsg.style.color = "rgba(255, 255, 255, 0.85)";
+          statusMsg.style.color = "#222222 !important";
           emptyStatePanel.style.display = "block";
           galleryPanel.style.display = "none";
           return;
