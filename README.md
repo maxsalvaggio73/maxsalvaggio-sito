@@ -52,6 +52,7 @@ Per eseguire il sito in locale, posiziona la cartella `Max Salvaggio Archivio/` 
 - **2026-07-24** – Fix generazione URL immagini con fallback signed e restyle griglia gallery-panel.
 - **2026-07-24** – Rimozione crossorigin da tag img per corretto rendering provini.
 - **2026-07-24** – FixSignedURL: utilizzo esclusivo createSignedUrl per ovviare alle restrizioni RLS dello storage.
+- **2026-07-24** – Aggiunta funzionalità PhotoShare per lead generation eventi con download Social Ready.
 
 ---
 

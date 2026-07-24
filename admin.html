@@ -1083,6 +1083,7 @@
       <button id="tab-clients" class="tab-btn active" onclick="switchAdminMode('clients')">Clienti</button>
       <button id="tab-portfolio" class="tab-btn" onclick="switchAdminMode('portfolio')">Portfolio</button>
       <button id="tab-guest" class="tab-btn" onclick="switchAdminMode('guest')">Guest</button>
+      <button id="tab-photoshare" class="tab-btn" onclick="switchAdminMode('photoshare')">PhotoShare</button>
     </div>
 
     <!-- Client Management Sidebar Menu -->
@@ -1172,6 +1173,40 @@
         </div>
       </div>
 
+    </div>
+
+    <!-- PhotoShare Management Sidebar Menu -->
+    <div class="sidebar-menu" id="photoshare-menu-wrapper" style="display: none; flex-direction: column; gap: 20px;">
+      <div class="menu-section">
+        <div class="menu-section-title">
+          <span>Crea Evento PhotoShare</span>
+        </div>
+        <form style="display: flex; flex-direction: column; gap: 8px; margin-top: 8px;" onsubmit="event.preventDefault(); createPhotoShareEvent();">
+          <input type="text" id="ps-admin-event-name" placeholder="Nome Evento (es. Matrimonio Marco &amp; Elena)" required style="width: 100%; background: rgba(0,0,0,0.25); border: 1px solid var(--border-color); border-radius: 4px; padding: 8px 10px; font-size: 0.78rem; color: var(--text-primary); font-family: var(--font-body);">
+          <input type="text" id="ps-admin-event-code" placeholder="Codice / PIN (es. MARCOELENA2026)" required style="width: 100%; background: rgba(0,0,0,0.25); border: 1px solid var(--border-color); border-radius: 4px; padding: 8px 10px; font-size: 0.78rem; color: var(--text-primary); font-family: var(--font-body); text-transform: uppercase;">
+          
+          <div class="upload-zone" id="ps-admin-drop-zone" style="padding: 12px 8px; margin-top: 4px; cursor: pointer;" onclick="document.getElementById('ps-admin-file-input').click()">
+            <span class="upload-zone-text" id="ps-admin-drop-zone-text" style="font-size: 0.7rem;">Clicca o trascina qui le foto dell'evento</span>
+            <input type="file" id="ps-admin-file-input" style="display: none;" onchange="handlePSAdminFileSelect(event)" multiple accept="image/*">
+            <div id="ps-admin-selected-files-list" style="margin-top: 6px; font-size: 0.7rem; color: var(--accent); font-weight: 500; word-break: break-all;"></div>
+          </div>
+
+          <button type="submit" class="btn-submit" id="btn-create-ps-event" style="margin-top: 4px; padding: 9px 12px; font-size: 0.72rem; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%;">
+            <span class="spinner" id="ps-admin-spinner" style="width: 12px; height: 12px; border-width: 2px;"></span>
+            <span>Crea Evento &amp; Carica Foto</span>
+          </button>
+        </form>
+      </div>
+
+      <div class="menu-section">
+        <div class="menu-section-title" style="display: flex; justify-content: space-between; align-items: center;">
+          <span>Eventi PhotoShare</span>
+          <button class="btn-refresh" style="font-size: 0.65rem; padding: 0; background: none; border: none; color: var(--accent);" onclick="loadPhotoShareEvents()">Aggiorna</button>
+        </div>
+        <div class="client-list" id="photoshare-events-list">
+          <div class="empty-state" style="font-size: 0.75rem; padding: 10px 0;">Nessun evento salvato.</div>
+        </div>
+      </div>
     </div>
 
     <div class="sidebar-footer">
@@ -1467,6 +1502,39 @@ create policy "Consenti agli admin la gestione di oggetti public-portfolio" on s
         <div class="pagination-bar" id="guest-pagination-bar" style="display: flex; align-items: center; justify-content: center; gap: 15px; margin-top: 25px;"></div>
       </div>
 
+    </div>
+
+    <!-- PHOTOSHARE MANAGEMENT VIEW -->
+    <div class="client-workspace" id="photoshare-panel" style="display: none; padding: 30px; flex-direction: column;">
+      <div class="workspace-header">
+        <h2 class="workspace-title">PhotoShare: Contatti Acquisiti (Lead)</h2>
+        <button class="btn-submit" style="width: auto; padding: 8px 16px; font-size: 0.75rem; background-color: var(--accent-green); border-color: var(--accent-green);" onclick="exportPhotoShareLeadsCSV()">📥 Esporta Contatti (CSV)</button>
+      </div>
+
+      <div style="margin-top: 20px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; padding: 20px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+          <h3 style="font-size: 0.95rem; font-weight: 600; color: var(--text-primary);" id="ps-leads-table-title">Elenco Partecipanti Eventi</h3>
+          <span id="ps-leads-count-badge" class="mini-badge" style="background: rgba(255,255,255,0.1); color: #fff; font-size: 0.8rem;">0 contatti</span>
+        </div>
+
+        <div style="overflow-x: auto;">
+          <table style="width: 100%; border-collapse: collapse; font-size: 0.82rem; text-align: left;">
+            <thead>
+              <tr style="border-bottom: 1px solid var(--border-color); color: var(--text-secondary); text-transform: uppercase; font-size: 0.7rem; letter-spacing: 0.05em;">
+                <th style="padding: 10px;">Data</th>
+                <th style="padding: 10px;">Codice Evento</th>
+                <th style="padding: 10px;">Nome &amp; Cognome</th>
+                <th style="padding: 10px;">Email</th>
+                <th style="padding: 10px;">Telefono</th>
+                <th style="padding: 10px;">Instagram</th>
+              </tr>
+            </thead>
+            <tbody id="photoshare-leads-tbody">
+              <tr><td colspan="6" style="text-align: center; padding: 30px; color: var(--text-secondary);">Nessun contatto acquisito al momento.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
 
   </main>
@@ -3262,61 +3330,70 @@ www.maxsalvaggio.com`;
     let portfolioFilesToUpload = [];
     let portfolioDraggedItem = null;
 
-    // Switch between Client Management, Portfolio Management and Guest Management
+    // Switch between Client Management, Portfolio Management, Guest Management and PhotoShare
     function switchAdminMode(mode) {
       currentAdminMode = mode;
       
       const tabClients = document.getElementById("tab-clients");
       const tabPortfolio = document.getElementById("tab-portfolio");
       const tabGuest = document.getElementById("tab-guest");
+      const tabPhotoShare = document.getElementById("tab-photoshare");
       
       const clientsWrapper = document.getElementById("clients-menu-wrapper");
       const portfolioWrapper = document.getElementById("portfolio-menu-wrapper");
       const guestWrapper = document.getElementById("guest-menu-wrapper");
+      const photoshareWrapper = document.getElementById("photoshare-menu-wrapper");
       
       const welcomePanel = document.getElementById("welcome-panel");
       const clientPanel = document.getElementById("client-panel");
       const portfolioPanel = document.getElementById("portfolio-panel");
       const guestPanel = document.getElementById("guest-panel");
+      const photosharePanel = document.getElementById("photoshare-panel");
       
       // Deactivate all tabs
-      tabClients.classList.remove("active");
-      tabPortfolio.classList.remove("active");
-      tabGuest.classList.remove("active");
+      if (tabClients) tabClients.classList.remove("active");
+      if (tabPortfolio) tabPortfolio.classList.remove("active");
+      if (tabGuest) tabGuest.classList.remove("active");
+      if (tabPhotoShare) tabPhotoShare.classList.remove("active");
       
       // Hide all sidebars
-      clientsWrapper.style.display = "none";
-      portfolioWrapper.style.display = "none";
-      guestWrapper.style.display = "none";
+      if (clientsWrapper) clientsWrapper.style.display = "none";
+      if (portfolioWrapper) portfolioWrapper.style.display = "none";
+      if (guestWrapper) guestWrapper.style.display = "none";
+      if (photoshareWrapper) photoshareWrapper.style.display = "none";
       
       // Hide all panels
-      welcomePanel.style.display = "none";
-      clientPanel.style.display = "none";
-      portfolioPanel.style.display = "none";
-      guestPanel.style.display = "none";
+      if (welcomePanel) welcomePanel.style.display = "none";
+      if (clientPanel) clientPanel.style.display = "none";
+      if (portfolioPanel) portfolioPanel.style.display = "none";
+      if (guestPanel) guestPanel.style.display = "none";
+      if (photosharePanel) photosharePanel.style.display = "none";
       
       if (mode === 'portfolio') {
-        tabPortfolio.classList.add("active");
-        portfolioWrapper.style.display = "flex";
-        portfolioPanel.style.display = "block";
+        if (tabPortfolio) tabPortfolio.classList.add("active");
+        if (portfolioWrapper) portfolioWrapper.style.display = "flex";
+        if (portfolioPanel) portfolioPanel.style.display = "block";
         
-        // Load portfolio sections, pages, projects & items
         loadPortfolioSections();
         loadPortfolioProjects();
         loadPortfolioItems();
       } else if (mode === 'guest') {
-        tabGuest.classList.add("active");
-        guestWrapper.style.display = "flex";
-        guestPanel.style.display = "flex";
+        if (tabGuest) tabGuest.classList.add("active");
+        if (guestWrapper) guestWrapper.style.display = "flex";
+        if (guestPanel) guestPanel.style.display = "flex";
         
-        // Load guest users list
         loadGuestUsers();
-      } else {
-        tabClients.classList.add("active");
-        clientsWrapper.style.display = "flex";
+      } else if (mode === 'photoshare') {
+        if (tabPhotoShare) tabPhotoShare.classList.add("active");
+        if (photoshareWrapper) photoshareWrapper.style.display = "flex";
+        if (photosharePanel) photosharePanel.style.display = "flex";
         
-        // Show welcome panel, hide other panels
-        welcomePanel.style.display = "flex";
+        loadPhotoShareEvents();
+        loadPhotoShareLeads();
+      } else {
+        if (tabClients) tabClients.classList.add("active");
+        if (clientsWrapper) clientsWrapper.style.display = "flex";
+        if (welcomePanel) welcomePanel.style.display = "flex";
       }
     }
 
@@ -4193,6 +4270,191 @@ www.maxsalvaggio.com`;
         btn.disabled = false;
         spinner.style.display = "none";
       }
+    }
+
+    // ========================================================
+    // PHOTOSHARE MANAGEMENT LOGIC
+    // ========================================================
+    let psAdminFilesToUpload = [];
+    let allPhotoShareLeads = [];
+
+    function handlePSAdminFileSelect(event) {
+      psAdminFilesToUpload = Array.from(event.target.files);
+      const list = document.getElementById("ps-admin-selected-files-list");
+      if (list) {
+        list.textContent = `Selezionate: ${psAdminFilesToUpload.length} foto per l'evento`;
+      }
+    }
+
+    async function createPhotoShareEvent() {
+      if (!supabaseClient) return;
+      const nameInput = document.getElementById("ps-admin-event-name");
+      const codeInput = document.getElementById("ps-admin-event-code");
+      const fileInput = document.getElementById("ps-admin-file-input");
+      const btn = document.getElementById("btn-create-ps-event");
+      const spinner = document.getElementById("ps-admin-spinner");
+
+      const name = nameInput.value.trim();
+      const code = codeInput.value.trim().toUpperCase();
+
+      if (!name || !code || psAdminFilesToUpload.length === 0) {
+        alert("Inserisci Nome Evento, Codice PIN e seleziona almeno 1 foto.");
+        return;
+      }
+
+      btn.disabled = true;
+      spinner.style.display = "inline-block";
+
+      try {
+        for (const rawFile of psAdminFilesToUpload) {
+          const file = await processFileForUpload(rawFile);
+          const filePath = `photoshare/${code}/${file.name}`;
+
+          const { error } = await supabaseClient
+            .storage
+            .from('client-proofs')
+            .upload(filePath, file, { upsert: true });
+
+          if (error) {
+            console.warn(`Errore upload ${file.name}:`, error.message);
+          }
+        }
+
+        alert(`Evento #${code} ("${name}") creato ed ${psAdminFilesToUpload.length} foto caricate con successo!`);
+        nameInput.value = "";
+        codeInput.value = "";
+        fileInput.value = "";
+        psAdminFilesToUpload = [];
+        document.getElementById("ps-admin-selected-files-list").textContent = "";
+
+        await loadPhotoShareEvents();
+      } catch (err) {
+        alert("Errore durante la creazione dell'evento: " + err.message);
+      } finally {
+        btn.disabled = false;
+        spinner.style.display = "none";
+      }
+    }
+
+    async function loadPhotoShareEvents() {
+      if (!supabaseClient) return;
+      const container = document.getElementById("photoshare-events-list");
+      if (!container) return;
+
+      container.innerHTML = '<div style="font-size:0.75rem; color:var(--text-secondary); padding:8px 0;">Scansione eventi...</div>';
+
+      try {
+        const { data, error } = await supabaseClient
+          .storage
+          .from('client-proofs')
+          .list('photoshare');
+
+        if (error || !data || data.length === 0) {
+          container.innerHTML = '<div class="empty-state" style="font-size:0.75rem; padding:10px 0;">Nessun evento salvato.</div>';
+          return;
+        }
+
+        container.innerHTML = "";
+        data.forEach(item => {
+          const div = document.createElement("div");
+          div.className = "client-item";
+          div.onclick = () => filterPhotoShareLeads(item.name.toUpperCase());
+          div.innerHTML = `
+            <span class="client-email-text" style="font-weight:600; color:#fff;">#${item.name.toUpperCase()}</span>
+            <span class="mini-badge" style="background: rgba(229,9,20,0.15); color: #FF8A80;">Evento</span>
+          `;
+          container.appendChild(div);
+        });
+      } catch (err) {
+        container.innerHTML = '<div class="empty-state" style="font-size:0.75rem; padding:10px 0;">Nessun evento trovato.</div>';
+      }
+    }
+
+    async function loadPhotoShareLeads() {
+      if (!supabaseClient) return;
+      const tbody = document.getElementById("photoshare-leads-tbody");
+      const badge = document.getElementById("ps-leads-count-badge");
+      if (!tbody) return;
+
+      tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding:20px; color:var(--text-secondary);">Caricamento lead...</td></tr>';
+
+      try {
+        const { data, error } = await supabaseClient
+          .from('photoshare_leads')
+          .select('*')
+          .order('created_at', { ascending: false });
+
+        if (error || !data || data.length === 0) {
+          allPhotoShareLeads = [];
+          tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding:30px; color:var(--text-secondary);">Nessun contatto registrato al momento.</td></tr>';
+          if (badge) badge.textContent = "0 contatti";
+          return;
+        }
+
+        allPhotoShareLeads = data;
+        renderPhotoShareLeadsTable(allPhotoShareLeads);
+      } catch (err) {
+        tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding:20px; color:var(--text-secondary);">Nessun contatto disponibile.</td></tr>';
+      }
+    }
+
+    function filterPhotoShareLeads(code) {
+      const title = document.getElementById("ps-leads-table-title");
+      if (title) title.textContent = `Lead Evento #${code}`;
+      const filtered = allPhotoShareLeads.filter(l => l.event_code && l.event_code.toUpperCase() === code);
+      renderPhotoShareLeadsTable(filtered);
+    }
+
+    function renderPhotoShareLeadsTable(leads) {
+      const tbody = document.getElementById("photoshare-leads-tbody");
+      const badge = document.getElementById("ps-leads-count-badge");
+      if (!tbody) return;
+
+      if (badge) badge.textContent = `${leads.length} contatti`;
+
+      if (!leads || leads.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding:30px; color:var(--text-secondary);">Nessun contatto per questo evento.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = "";
+      leads.forEach(l => {
+        const dateStr = l.created_at ? new Date(l.created_at).toLocaleDateString('it-IT') : "-";
+        const igHandle = l.instagram ? l.instagram.replace('@', '').trim() : '';
+        const igLink = igHandle ? `<a href="https://instagram.com/${igHandle}" target="_blank" style="color:var(--accent); text-decoration:none; font-weight:600;">@${igHandle}</a>` : '-';
+
+        const tr = document.createElement("tr");
+        tr.style.borderBottom = "1px solid rgba(255,255,255,0.03)";
+        tr.innerHTML = `
+          <td style="padding: 10px; color: var(--text-secondary);">${dateStr}</td>
+          <td style="padding: 10px; font-weight: 600; color: #fff;">#${l.event_code || '-'}</td>
+          <td style="padding: 10px; font-weight: 500;">${l.full_name || '-'}</td>
+          <td style="padding: 10px; color: var(--text-secondary);">${l.email || '-'}</td>
+          <td style="padding: 10px; color: var(--text-secondary);">${l.phone || '-'}</td>
+          <td style="padding: 10px;">${igLink}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function exportPhotoShareLeadsCSV() {
+      if (!allPhotoShareLeads || allPhotoShareLeads.length === 0) {
+        alert("Nessun contatto da esportare.");
+        return;
+      }
+
+      let csv = "Data,Codice Evento,Nome e Cognome,Email,Telefono,Instagram\n";
+      allPhotoShareLeads.forEach(l => {
+        const dateStr = l.created_at ? new Date(l.created_at).toLocaleDateString('it-IT') : "";
+        csv += `"${dateStr}","${l.event_code || ''}","${l.full_name || ''}","${l.email || ''}","${l.phone || ''}","${l.instagram || ''}"\n`;
+      });
+
+      const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `PhotoShare_Leads_${new Date().toISOString().slice(0,10)}.csv`;
+      a.click();
     }
 
     // Log Out

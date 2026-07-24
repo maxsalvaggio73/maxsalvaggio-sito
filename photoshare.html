@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PhotoShare Eventi | Max Salvaggio Photography</title>
+  <meta name="description" content="Galleria fotografica evento e download scatti in formato ottimizzato Social & Instagram.">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Supabase CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  
+  <!-- JSZip & FileSaver CDN for ZIP download -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+  
+  <!-- Config File -->
+  <script src="config.js"></script>
+  
+  <style>
+    :root {
+      --bg-dark: #121415;
+      --bg-card: #1A1C1E;
+      --accent: #E50914;
+      --accent-hover: #B20710;
+      --accent-green: #00E676;
+      --text-primary: #FFFFFF;
+      --text-secondary: rgba(255, 255, 255, 0.65);
+      --border-color: rgba(255, 255, 255, 0.08);
+      --font-body: 'Outfit', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-primary);
+      font-family: var(--font-body);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      line-height: 1.5;
+      padding-bottom: 90px; /* space for fixed action bar */
+    }
+
+    /* HEADER */
+    header {
+      background-color: rgba(18, 20, 21, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border-color);
+      padding: 18px 24px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand-logo {
+      color: var(--text-primary);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1.2rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .brand-logo span {
+      color: var(--accent);
+      font-weight: 300;
+      font-size: 0.85rem;
+      margin-left: 6px;
+      letter-spacing: 0.15em;
+    }
+
+    .tagline-badge {
+      background: rgba(229, 9, 20, 0.12);
+      border: 1px solid rgba(229, 9, 20, 0.3);
+      color: #FF8A80;
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 20px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    /* MAIN CONTAINER */
+    main {
+      flex: 1;
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 30px 20px;
+    }
+
+    /* CARDS & PANELS */
+    .panel-card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 35px 25px;
+      max-width: 520px;
+      margin: 40px auto;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+      text-align: center;
+    }
+
+    .panel-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      margin-bottom: 10px;
+    }
+
+    .panel-desc {
+      color: var(--text-secondary);
+      font-size: 0.88rem;
+      margin-bottom: 25px;
+    }
+
+    /* FORMS & INPUTS */
+    .form-group {
+      margin-bottom: 18px;
+      text-align: left;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-secondary);
+      margin-bottom: 6px;
+    }
+
+    .form-input {
+      width: 100%;
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 12px 16px;
+      color: #fff;
+      font-family: inherit;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.25s ease;
+    }
+    .form-input:focus {
+      border-color: var(--accent);
+    }
+
+    .form-checkbox-label {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+      cursor: pointer;
+      text-align: left;
+    }
+    .form-checkbox-label input {
+      margin-top: 3px;
+      accent-color: var(--accent);
+    }
+
+    .btn-action {
+      width: 100%;
+      background-color: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 14px 20px;
+      font-family: inherit;
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+    }
+    .btn-action:hover {
+      background-color: var(--accent-hover);
+      transform: translateY(-1px);
+    }
+    .btn-action:disabled {
+      background-color: rgba(229, 9, 20, 0.4);
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* GALLERY SECTION */
+    .event-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-bottom: 25px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .event-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+    .event-subtitle {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+    }
+
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 18px;
+    }
+
+    .photo-card {
+      position: relative;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      overflow: hidden;
+      aspect-ratio: 1 / 1;
+      cursor: pointer;
+      transition: transform 0.25s ease, border-color 0.25s ease;
+    }
+    .photo-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(229, 9, 20, 0.5);
+    }
+    .photo-card.selected {
+      border: 2px solid var(--accent);
+      box-shadow: 0 0 15px rgba(229, 9, 20, 0.3);
+    }
+
+    .photo-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .photo-select-checkbox {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.6);
+      border: 2px solid #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 0.8rem;
+      font-weight: 700;
+      transition: all 0.2s ease;
+      z-index: 2;
+    }
+    .photo-card.selected .photo-select-checkbox {
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+
+    /* FIXED ACTION BAR AT BOTTOM */
+    .bottom-action-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(26, 28, 30, 0.95);
+      backdrop-filter: blur(12px);
+      border-top: 1px solid var(--border-color);
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      z-index: 1000;
+      flex-wrap: wrap;
+    }
+
+    .bar-info {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    .selected-count-badge {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    .social-badge {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--accent-green);
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+
+    .bar-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn-select-toggle {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-color);
+      color: #fff;
+      padding: 8px 14px;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-select-toggle:hover {
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .btn-download-zip {
+      background-color: var(--accent);
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-download-zip:hover {
+      background-color: var(--accent-hover);
+    }
+    .btn-download-zip:disabled {
+      background-color: rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.3);
+      cursor: not-allowed;
+    }
+
+    /* SPINNER */
+    .spinner {
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-radius: 50%;
+      border-top-color: #fff;
+      animation: spin 0.8s linear infinite;
+      display: inline-block;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <a href="home.html" class="brand-logo">Max Salvaggio <span>PhotoShare</span></a>
+    <div class="tagline-badge">📱 Social &amp; Instagram Ready</div>
+  </header>
+
+  <main>
+    <!-- PHASE 1: EVENT CODE INPUT -->
+    <div class="panel-card" id="phase-1-panel">
+      <h1 class="panel-title">Accedi al tuo Evento</h1>
+      <p class="panel-desc">Inserisci il Codice Evento o PIN fornito dall'organizzazione per visualizzare e scaricare la tua galleria fotografica.</p>
+      
+      <div class="form-group">
+        <label class="form-label" for="input-event-code">Codice Evento / PIN</label>
+        <input type="text" id="input-event-code" class="form-input" placeholder="es. MARCOELENA2026" style="text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; text-align: center;">
+      </div>
+      
+      <button class="btn-action" id="btn-submit-code" onclick="verifyEventCode()">
+        <span>Verifica Codice Evento</span>
+      </button>
+      <div id="code-error-msg" style="color: #FF8A80; font-size: 0.8rem; margin-top: 12px; display: none;"></div>
+    </div>
+
+    <!-- PHASE 2: LEAD GENERATION FORM -->
+    <div class="panel-card" id="phase-2-panel" style="display: none;">
+      <h2 class="panel-title">Sblocca la Galleria</h2>
+      <p class="panel-desc">Registrati per accedere alla galleria completa in alta definizione ed esportare direttamente i tuoi scatti ottimizzati per i Social Network.</p>
+      
+      <form id="lead-form" onsubmit="handleLeadSubmit(event)">
+        <div class="form-group">
+          <label class="form-label" for="lead-fullname">Nome e Cognome *</label>
+          <input type="text" id="lead-fullname" class="form-input" required placeholder="es. Marco Rossi">
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label" for="lead-email">Email *</label>
+          <input type="email" id="lead-email" class="form-input" required placeholder="es. marco.rossi@esempio.com">
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label" for="lead-phone">Telefono (opzionale)</label>
+          <input type="tel" id="lead-phone" class="form-input" placeholder="+39 333 1234567">
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label" for="lead-instagram">Profilo Instagram (opzionale)</label>
+          <input type="text" id="lead-instagram" class="form-input" placeholder="@tuousername">
+        </div>
+        
+        <div class="form-group">
+          <label class="form-checkbox-label">
+            <input type="checkbox" required id="lead-privacy">
+            <span>Acconsento al trattamento dei dati personali per la consegna del materiale fotografico ed eventuali comunicazioni dello studio.</span>
+          </label>
+        </div>
+        
+        <button type="submit" class="btn-action" id="btn-submit-lead">
+          <span class="spinner" id="lead-spinner" style="display: none;"></span>
+          <span>SBLOCCA GALLERIA &amp; RICEVI SCATTI</span>
+        </button>
+      </form>
+    </div>
+
+    <!-- PHASE 3: PHOTO GALLERY & SELECTION -->
+    <div id="phase-3-panel" style="display: none;">
+      <div class="event-header">
+        <div>
+          <h1 class="event-title" id="event-display-title">Galleria Evento</h1>
+          <p class="event-subtitle">Seleziona le foto che desideri scaricare in un unico file .ZIP</p>
+        </div>
+      </div>
+
+      <div class="photo-grid" id="photo-grid-container">
+        <!-- Rendered dynamically -->
+      </div>
+    </div>
+  </main>
+
+  <!-- FIXED BOTTOM ACTION BAR FOR GALLERY -->
+  <div class="bottom-action-bar" id="gallery-action-bar" style="display: none;">
+    <div class="bar-info">
+      <div class="selected-count-badge">
+        <span id="selected-count">0</span> foto selezionate
+      </div>
+      <div class="social-badge">
+        <span>📱 Formato Ottimizzato Social / Instagram Ready</span>
+      </div>
+    </div>
+
+    <div class="bar-controls">
+      <button class="btn-select-toggle" onclick="selectAllPhotos()">Seleziona Tutte</button>
+      <button class="btn-select-toggle" onclick="deselectAllPhotos()">Deseleziona Tutte</button>
+      <button class="btn-download-zip" id="btn-download-zip" onclick="downloadSelectedZip()" disabled>
+        <span class="spinner" id="zip-spinner" style="display: none;"></span>
+        <span>SCARICA SELEZIONATE (.ZIP)</span>
+      </button>
+    </div>
+  </div>
+
+  <script>
+    let supabaseClient = null;
+    let activeEventCode = "";
+    let eventPhotos = [];
+    let selectedPhotoNames = new Set();
+
+    // Init Supabase
+    if (typeof config !== 'undefined' && config.SUPABASE_URL && config.SUPABASE_ANON_KEY) {
+      supabaseClient = supabase.createClient(config.SUPABASE_URL, config.SUPABASE_ANON_KEY);
+    }
+
+    // Auto-check URL query param ?code=MARCOELENA2026
+    document.addEventListener("DOMContentLoaded", () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const codeParam = urlParams.get('code') || urlParams.get('event');
+      if (codeParam) {
+        document.getElementById('input-event-code').value = codeParam.toUpperCase();
+        verifyEventCode();
+      }
+    });
+
+    async function verifyEventCode() {
+      const input = document.getElementById('input-event-code');
+      const errorMsg = document.getElementById('code-error-msg');
+      errorMsg.style.display = "none";
+
+      const code = input.value ? input.value.trim().toUpperCase() : "";
+      if (!code) {
+        errorMsg.textContent = "Inserisci un Codice Evento valido.";
+        errorMsg.style.display = "block";
+        return;
+      }
+
+      activeEventCode = code;
+
+      // Scan Storage folder photoshare/${code} or photoshare_${code} or ${code}
+      const candidatePaths = [
+        `photoshare/${code}`,
+        `photoshare/${code.toLowerCase()}`,
+        code,
+        code.toLowerCase()
+      ];
+
+      let foundFiles = null;
+      let validPath = null;
+
+      for (const testPath of candidatePaths) {
+        try {
+          const { data, error } = await supabaseClient.storage.from('client-proofs').list(testPath);
+          if (data && data.length > 0) {
+            const filtered = data.filter(f => f.name !== '.emptyFolderPlaceholder' && f.name !== '.DS_Store');
+            if (filtered.length > 0) {
+              foundFiles = filtered;
+              validPath = testPath;
+              break;
+            }
+          }
+        } catch (e) {}
+      }
+
+      if (!foundFiles || foundFiles.length === 0) {
+        errorMsg.textContent = `Nessun evento o galleria trovata per il codice "${code}". Controlla il PIN e riprova.`;
+        errorMsg.style.display = "block";
+        return;
+      }
+
+      // Store files and valid path
+      eventPhotos = foundFiles.map(f => ({
+        name: f.name,
+        path: `${validPath}/${f.name}`
+      }));
+
+      // Check if unlocked in localStorage
+      const isUnlocked = localStorage.getItem(`photoshare_unlocked_${code}`) === 'true';
+
+      document.getElementById('phase-1-panel').style.display = "none";
+
+      if (isUnlocked) {
+        showGalleryPhase();
+      } else {
+        document.getElementById('phase-2-panel').style.display = "block";
+      }
+    }
+
+    async function handleLeadSubmit(event) {
+      event.preventDefault();
+      const btn = document.getElementById('btn-submit-lead');
+      const spinner = document.getElementById('lead-spinner');
+
+      btn.disabled = true;
+      spinner.style.display = "inline-block";
+
+      const fullName = document.getElementById('lead-fullname').value.trim();
+      const email = document.getElementById('lead-email').value.trim();
+      const phone = document.getElementById('lead-phone').value.trim();
+      let instagram = document.getElementById('lead-instagram').value.trim();
+
+      if (instagram && !instagram.startsWith('@') && !instagram.includes('instagram.com')) {
+        instagram = '@' + instagram;
+      }
+
+      try {
+        if (supabaseClient) {
+          // Insert into photoshare_leads
+          const { error } = await supabaseClient
+            .from('photoshare_leads')
+            .insert([{
+              event_code: activeEventCode,
+              full_name: fullName,
+              email: email,
+              phone: phone || null,
+              instagram: instagram || null
+            }]);
+
+          if (error) {
+            console.warn("photoshare_leads insert note:", error.message);
+          }
+        }
+      } catch (err) {
+        console.warn("Lead insert exception:", err);
+      } finally {
+        // Unlock in localStorage
+        localStorage.setItem(`photoshare_unlocked_${activeEventCode}`, 'true');
+        btn.disabled = false;
+        spinner.style.display = "none";
+        document.getElementById('phase-2-panel').style.display = "none";
+        showGalleryPhase();
+      }
+    }
+
+    async function showGalleryPhase() {
+      document.getElementById('event-display-title').textContent = `Galleria Evento #${activeEventCode}`;
+      document.getElementById('phase-3-panel').style.display = "block";
+      document.getElementById('gallery-action-bar').style.display = "flex";
+
+      const grid = document.getElementById('photo-grid-container');
+      grid.innerHTML = "";
+
+      for (const item of eventPhotos) {
+        let signedUrl = "";
+        try {
+          const { data } = await supabaseClient
+            .storage
+            .from('client-proofs')
+            .createSignedUrl(item.path, 7200);
+          signedUrl = data?.signedUrl || "";
+        } catch (e) {}
+
+        if (!signedUrl) {
+          const { data: pData } = supabaseClient
+            .storage
+            .from('client-proofs')
+            .getPublicUrl(item.path);
+          signedUrl = pData?.publicUrl || "";
+        }
+
+        item.signedUrl = signedUrl;
+
+        const card = document.createElement('div');
+        card.className = 'photo-card';
+        card.dataset.name = item.name;
+
+        card.innerHTML = `
+          <div class="photo-select-checkbox">✓</div>
+          <img src="${signedUrl}" alt="${item.name}" class="photo-img" loading="lazy" decoding="async">
+        `;
+
+        card.onclick = () => togglePhotoSelection(card, item.name);
+        grid.appendChild(card);
+      }
+    }
+
+    function togglePhotoSelection(card, name) {
+      if (selectedPhotoNames.has(name)) {
+        selectedPhotoNames.delete(name);
+        card.classList.remove('selected');
+      } else {
+        selectedPhotoNames.add(name);
+        card.classList.add('selected');
+      }
+      updateActionBar();
+    }
+
+    function selectAllPhotos() {
+      const cards = document.querySelectorAll('.photo-card');
+      cards.forEach(card => {
+        const name = card.dataset.name;
+        if (name) {
+          selectedPhotoNames.add(name);
+          card.classList.add('selected');
+        }
+      });
+      updateActionBar();
+    }
+
+    function deselectAllPhotos() {
+      selectedPhotoNames.clear();
+      const cards = document.querySelectorAll('.photo-card');
+      cards.forEach(card => card.classList.remove('selected'));
+      updateActionBar();
+    }
+
+    function updateActionBar() {
+      const count = selectedPhotoNames.size;
+      document.getElementById('selected-count').textContent = count;
+      const btn = document.getElementById('btn-download-zip');
+      btn.disabled = count === 0;
+    }
+
+    async function downloadSelectedZip() {
+      if (selectedPhotoNames.size === 0) return;
+
+      const btn = document.getElementById('btn-download-zip');
+      const spinner = document.getElementById('zip-spinner');
+
+      btn.disabled = true;
+      spinner.style.display = "inline-block";
+
+      try {
+        const zip = new JSZip();
+        const folder = zip.folder(`PhotoShare_${activeEventCode}`);
+
+        const selectedItems = eventPhotos.filter(p => selectedPhotoNames.has(p.name));
+
+        for (const item of selectedItems) {
+          try {
+            const resp = await fetch(item.signedUrl);
+            const blob = await resp.blob();
+            folder.file(item.name, blob);
+          } catch (fetchErr) {
+            console.error(`Errore nel download di ${item.name}:`, fetchErr);
+          }
+        }
+
+        const zipBlob = await zip.generateAsync({ type: "blob" });
+        saveAs(zipBlob, `PhotoShare_${activeEventCode}_Social_Ready.zip`);
+
+      } catch (err) {
+        alert("Si è verificato un errore durante la creazione del file ZIP: " + err.message);
+      } finally {
+        btn.disabled = false;
+        spinner.style.display = "none";
+      }
+    }
+  </script>
+</body>
+</html>
