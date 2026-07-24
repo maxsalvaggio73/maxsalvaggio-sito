@@ -1430,17 +1430,35 @@
         console.error(err);
         alert(err.message || "Si è verificato un errore durante l'invio.");
         btn.disabled = false;
+      }
+    }
+
     let clientAreaCurrentPage = 1;
     const PROOFS_PER_PAGE = 8;
 
-    function listStorageWithPathTimeout(testPath, timeoutMs = 2500) {
+    // Fallback Apex: Safety Timeout 3.5s
+    setTimeout(() => {
+      const statusMsg = document.getElementById("status-message");
+      const galleryPanel = document.getElementById("gallery-panel");
+      
+      if (galleryPanel && galleryPanel.style.display !== "block") {
+        console.warn("[APEX HARD TIMEOUT 3.5s] Fallback disattivazione loader.");
+        if (statusMsg && statusMsg.textContent.includes("Caricamento della galleria")) {
+          statusMsg.textContent = "Nessun provino disponibile. La tua cartella privata è attualmente vuota.";
+          statusMsg.style.color = "#222222 !important";
+          statusMsg.style.fontWeight = "600";
+        }
+      }
+    }, 3500);
+
+    function listStorageWithPathTimeout(testPath, timeoutMs = 2000) {
       return Promise.race([
         supabaseClient.storage.from('client-proofs').list(testPath),
         new Promise((_, reject) => setTimeout(() => reject(new Error(`Timeout scansione percorso ${testPath}`)), timeoutMs))
       ]);
     }
 
-    // Query files inside the folder checking multi-path candidates in cascade with non-blocking timeouts
+    // Query files inside the folder checking multi-path candidates in cascade with guaranteed try-finally
     async function loadClientPhotos() {
       if (!supabaseClient || !currentUser) return;
 
@@ -1450,6 +1468,9 @@
       const galleryPanel = document.getElementById("gallery-panel");
       const gridBody = document.getElementById("gallery-grid-body");
       const paginationBar = document.getElementById("gallery-pagination-bar");
+
+      let validPath = null;
+      let imageFiles = [];
 
       try {
         // 1. Fetch file order array from client profile safely by ID or Email
@@ -1484,31 +1505,26 @@
           console.warn("[WORKSPACE DEBUG] Profile fetch warning:", eProfile);
         }
 
-        // 2. Multi-path search cascade in bucket 'client-proofs' matching admin.html logic
+        // 2. Candidate paths matching admin.html logic including sanitized email variants
+        const sanitizedEmail = userEmail.toLowerCase().replace(/\+/g, '_plus_');
         const candidatePaths = [
           userEmail,
           userEmail.toLowerCase(),
+          sanitizedEmail,
           `guest/${userEmail}`,
+          `guest/${userEmail.toLowerCase()}`,
+          `guest/${sanitizedEmail}`,
           currentUser.id
         ];
 
         const uniquePaths = [...new Set(candidatePaths.filter(Boolean))];
         console.log("[WORKSPACE DEBUG] Searching photos for:", userEmail, uniquePaths);
 
-        let validPath = null;
         let files = null;
-        let storageErrors = [];
-
         for (const testPath of uniquePaths) {
           try {
             console.log("[STORAGE PATH MATCH]", testPath);
-            const res = await listStorageWithPathTimeout(testPath, 2500);
-
-            if (res?.error) {
-              console.warn(`[WORKSPACE DEBUG] Storage error on path "${testPath}":`, res.error);
-              storageErrors.push({ path: testPath, error: res.error });
-              continue;
-            }
+            const res = await listStorageWithPathTimeout(testPath, 2000);
 
             const filtered = (res?.data || []).filter(f => f.name !== '.emptyFolderPlaceholder' && f.name !== '.DS_Store' && f.name !== 'documents');
 
@@ -1520,221 +1536,169 @@
             }
           } catch (pathErr) {
             console.warn(`[WORKSPACE DEBUG] Timeout/Errore su percorso "${testPath}":`, pathErr);
-            storageErrors.push({ path: testPath, error: pathErr });
           }
         }
 
-        if (!validPath || !files || files.length === 0) {
-          console.warn("[WORKSPACE DEBUG] Nessun provino trovato in tutti i percorsi testati. Errors:", storageErrors);
-          statusMsg.textContent = "Al momento la tua cartella privata è vuota. Contatta lo studio per caricare il tuo materiale.";
-          statusMsg.style.color = "#222222 !important";
-          emptyStatePanel.style.display = "block";
-          galleryPanel.style.display = "none";
-          return;
-        }
+        if (validPath && files && files.length > 0) {
+          imageFiles = files;
 
-        // SUBITO: Nascondi la scheda vuota e mostra la griglia provini
-        emptyStatePanel.style.display = "none";
-        galleryPanel.style.display = "block";
-
-        let imageFiles = files;
-
-        // 3. Sort files according to saved file_order array
-        imageFiles.sort((a, b) => {
-          const idxA = fileOrder.indexOf(a.name);
-          const idxB = fileOrder.indexOf(b.name);
-          if (idxA === -1 && idxB === -1) return 0;
-          if (idxA === -1) return 1;
-          if (idxB === -1) return -1;
-          return idxA - idxB;
-        });
-
-        const totalItems = imageFiles.length;
-        const totalPages = Math.ceil(totalItems / PROOFS_PER_PAGE) || 1;
-
-        if (clientAreaCurrentPage > totalPages) clientAreaCurrentPage = totalPages;
-        if (clientAreaCurrentPage < 1) clientAreaCurrentPage = 1;
-
-        const startIndex = (clientAreaCurrentPage - 1) * PROOFS_PER_PAGE;
-        const pageFiles = imageFiles.slice(startIndex, startIndex + PROOFS_PER_PAGE);
-
-        gridBody.innerHTML = '<div class="empty-state" style="grid-column:1/-1;">Caricamento provini...</div>';
-
-        // 4. Map files ONLY FOR CURRENT PAGE using signed URL with getPublicUrl fallback
-        const mediaItems = [];
-        const galleryItems = [];
-
-        for (const file of pageFiles) {
-          const path = `${validPath}/${file.name}`;
-          let fileUrl = "";
-
-          try {
-            const { data: signedData } = await supabaseClient
-              .storage
-              .from('client-proofs')
-              .createSignedUrl(path, 86400);
-            if (signedData && signedData.signedUrl) {
-              fileUrl = signedData.signedUrl;
-            }
-          } catch (e) {
-            console.warn("createSignedUrl fallback:", e);
-          }
-
-          if (!fileUrl) {
-            const { data: publicUrlData } = supabaseClient
-              .storage
-              .from('client-proofs')
-              .getPublicUrl(path);
-            fileUrl = publicUrlData?.publicUrl || "";
-          }
-
-          const ext = file.name.split('.').pop().toLowerCase();
-          const isImage = ['jpg', 'jpeg', 'png', 'webp', 'gif'].includes(ext);
-          const isVideo = ['mp4', 'mov', 'webm'].includes(ext);
-          const isAudio = ['mp3', 'wav', 'ogg'].includes(ext);
-          const isPdf = ext === 'pdf';
-
-          const sizeKB = (file.metadata?.size / 1024) || 0;
-          const sizeStr = sizeKB > 1024 ? (sizeKB / 1024).toFixed(2) + " MB" : sizeKB.toFixed(1) + " KB";
-
-          let itemType = 'document';
-          if (isImage) itemType = 'image';
-          else if (isVideo) itemType = 'video';
-          else if (isAudio) itemType = 'audio';
-
-          const isMedia = isImage || isVideo || isAudio;
-
-          let mediaIndex = -1;
-          if (isMedia) {
-            mediaItems.push({
-              url: fileUrl,
-              type: itemType,
-              name: file.name
-            });
-            mediaIndex = mediaItems.length - 1;
-          }
-
-          galleryItems.push({
-            file,
-            publicUrl: fileUrl,
-            isImage,
-            isVideo,
-            isAudio,
-            isPdf,
-            sizeStr,
-            isMedia,
-            mediaIndex
+          // 3. Sort files according to saved file_order array
+          imageFiles.sort((a, b) => {
+            const idxA = fileOrder.indexOf(a.name);
+            const idxB = fileOrder.indexOf(b.name);
+            if (idxA === -1 && idxB === -1) return 0;
+            if (idxA === -1) return 1;
+            if (idxB === -1) return -1;
+            return idxA - idxB;
           });
-        }
 
-        // Store globally for lightbox navigation
-        window.sharedLightboxItems = mediaItems;
+          const totalItems = imageFiles.length;
+          const totalPages = Math.ceil(totalItems / PROOFS_PER_PAGE) || 1;
 
-        // Build the grid
-        gridBody.innerHTML = "";
+          if (clientAreaCurrentPage > totalPages) clientAreaCurrentPage = totalPages;
+          if (clientAreaCurrentPage < 1) clientAreaCurrentPage = 1;
 
-        galleryItems.forEach((item, index) => {
-          const elementId = `client-dims-${index}`;
-          const card = document.createElement("div");
-          card.className = "gallery-item";
+          const startIndex = (clientAreaCurrentPage - 1) * PROOFS_PER_PAGE;
+          const pageFiles = imageFiles.slice(startIndex, startIndex + PROOFS_PER_PAGE);
 
-          let previewHtml = "";
-          if (item.isImage) {
-            previewHtml = `<img src="${item.publicUrl}" alt="${item.file.name}" class="gallery-img" loading="lazy" decoding="async">`;
-          } else if (item.isVideo) {
-            previewHtml = `<video src="${item.publicUrl}" class="gallery-img" style="object-fit: cover;" preload="metadata" muted loop onmouseover="this.play()" onmouseout="this.pause()"></video>`;
-          } else if (item.isAudio) {
-            previewHtml = `
-              <div class="gallery-img" style="display:flex; flex-direction:column; justify-content:center; align-items:center; background-color:rgba(255,255,255,0.02); height:100%;">
-                <span style="font-size:2.5rem;">🎵</span>
-              </div>
-            `;
-          } else {
-            const docIcon = item.isPdf ? "📕" : "📄";
-            previewHtml = `
-              <div class="gallery-img" style="display:flex; flex-direction:column; justify-content:center; align-items:center; background-color:rgba(255,255,255,0.02); height:100%;">
-                <span style="font-size:2.5rem;">${docIcon}</span>
-              </div>
-            `;
+          gridBody.innerHTML = "";
+          const mediaItems = [];
+          const galleryItems = [];
+
+          for (const file of pageFiles) {
+            const path = `${validPath}/${file.name}`;
+            let fileUrl = "";
+
+            try {
+              const { data: signedData } = await supabaseClient
+                .storage
+                .from('client-proofs')
+                .createSignedUrl(path, 86400);
+              fileUrl = signedData?.signedUrl || "";
+            } catch (e) {}
+
+            if (!fileUrl) {
+              const { data: publicUrlData } = supabaseClient
+                .storage
+                .from('client-proofs')
+                .getPublicUrl(path);
+              fileUrl = publicUrlData?.publicUrl || "";
+            }
+
+            const ext = file.name.split('.').pop().toLowerCase();
+            const isImage = ['jpg', 'jpeg', 'png', 'webp', 'gif'].includes(ext);
+            const isVideo = ['mp4', 'mov', 'webm'].includes(ext);
+            const isAudio = ['mp3', 'wav', 'ogg'].includes(ext);
+            const isPdf = ext === 'pdf';
+
+            const sizeKB = (file.metadata?.size / 1024) || 0;
+            const sizeStr = sizeKB > 1024 ? (sizeKB / 1024).toFixed(2) + " MB" : sizeKB.toFixed(1) + " KB";
+
+            let itemType = 'document';
+            if (isImage) itemType = 'image';
+            else if (isVideo) itemType = 'video';
+            else if (isAudio) itemType = 'audio';
+
+            const isMedia = isImage || isVideo || isAudio;
+            let mediaIndex = -1;
+            if (isMedia) {
+              mediaItems.push({
+                url: fileUrl,
+                type: itemType,
+                name: file.name
+              });
+              mediaIndex = mediaItems.length - 1;
+            }
+
+            galleryItems.push({
+              file,
+              publicUrl: fileUrl,
+              isImage,
+              isVideo,
+              isAudio,
+              isPdf,
+              sizeStr,
+              isMedia,
+              mediaIndex
+            });
           }
 
-          card.innerHTML = `
-            <div class="gallery-preview-container">
-              ${previewHtml}
-              <div class="gallery-overlay">
-                <a href="${item.publicUrl}" download="${item.file.name}" class="btn-download-item" onclick="event.stopPropagation()">Scarica</a>
-              </div>
-            </div>
-            <div class="gallery-caption">
-              <span class="caption-title">${item.file.name}</span>
-              <div class="caption-meta">
-                <span>Peso: ${item.sizeStr}</span>
-                <span id="${elementId}">Dimensioni: Calcolo...</span>
-              </div>
-            </div>
-          `;
+          window.sharedLightboxItems = mediaItems;
 
-          const openMedia = () => {
-            if (item.isMedia) {
-              SharedLightbox.open(window.sharedLightboxItems, item.mediaIndex);
+          galleryItems.forEach((item, index) => {
+            const elementId = `client-dims-${index}`;
+            const card = document.createElement("div");
+            card.className = "gallery-item";
+
+            let previewHtml = "";
+            if (item.isImage) {
+              previewHtml = `<img src="${item.publicUrl}" alt="${item.file.name}" class="gallery-img" loading="lazy" decoding="async">`;
+            } else if (item.isVideo) {
+              previewHtml = `<video src="${item.publicUrl}" class="gallery-img" style="object-fit: cover;" preload="metadata" muted loop onmouseover="this.play()" onmouseout="this.pause()"></video>`;
+            } else if (item.isAudio) {
+              previewHtml = `
+                <div class="gallery-img" style="display:flex; flex-direction:column; justify-content:center; align-items:center; background-color:rgba(255,255,255,0.02); height:100%;">
+                  <span style="font-size:2.5rem;">🎵</span>
+                </div>
+              `;
             } else {
-              window.open(item.publicUrl, '_blank');
+              const docIcon = item.isPdf ? "📕" : "📄";
+              previewHtml = `
+                <div class="gallery-img" style="display:flex; flex-direction:column; justify-content:center; align-items:center; background-color:rgba(255,255,255,0.02); height:100%;">
+                  <span style="font-size:2.5rem;">${docIcon}</span>
+                </div>
+              `;
             }
-          };
 
-          card.querySelector('.gallery-preview-container').addEventListener('click', openMedia);
-          card.querySelector('.gallery-caption').addEventListener('click', openMedia);
+            card.innerHTML = `
+              <div class="gallery-preview-container">
+                ${previewHtml}
+                <div class="gallery-overlay">
+                  <a href="${item.publicUrl}" download="${item.file.name}" class="btn-download-item" onclick="event.stopPropagation()">Scarica</a>
+                </div>
+              </div>
+              <div class="gallery-caption">
+                <span class="caption-title">${item.file.name}</span>
+                <div class="caption-meta">
+                  <span>${item.sizeStr}</span>
+                  <span id="${elementId}" style="color:var(--accent);">N/D</span>
+                </div>
+              </div>
+            `;
 
-          gridBody.appendChild(card);
+            if (item.isMedia) {
+              const imgWrapper = card.querySelector('.gallery-preview-container');
+              if (imgWrapper) {
+                imgWrapper.style.cursor = "pointer";
+                imgWrapper.onclick = () => openSharedLightbox(item.mediaIndex);
+              }
+            }
 
-          if (item.isImage) {
-            const imgEl = card.querySelector("img");
-            const handleImgLoad = () => {
+            gridBody.appendChild(card);
+
+            if (item.isImage) {
+              const img = card.querySelector('img');
+              if (img) {
+                if (img.complete && img.naturalWidth) {
+                  const el = document.getElementById(elementId);
+                  if (el) el.textContent = `${img.naturalWidth} x ${img.naturalHeight} px`;
+                } else {
+                  img.addEventListener('load', () => {
+                    const el = document.getElementById(elementId);
+                    if (el) el.textContent = `${img.naturalWidth} x ${img.naturalHeight} px`;
+                  }, { once: true });
+                }
+              }
+            } else if (item.isVideo) {
+              const vid = card.querySelector('video');
+              if (vid) {
+                vid.onloadedmetadata = () => {
+                  const el = document.getElementById(elementId);
+                  if (el) el.textContent = `${vid.videoWidth} x ${vid.videoHeight} px`;
+                };
+              }
+            } else {
               const el = document.getElementById(elementId);
-              if (el) el.textContent = `Dimensioni: ${imgEl.naturalWidth} x ${imgEl.naturalHeight} px`;
-            };
-
-            if (imgEl && imgEl.complete && imgEl.naturalWidth) {
-              handleImgLoad();
-            } else if (imgEl) {
-              imgEl.addEventListener('load', handleImgLoad, { once: true });
-              imgEl.addEventListener('error', () => {
-                const el = document.getElementById(elementId);
-                if (el) el.textContent = "Dimensioni: N/D";
-              }, { once: true });
-            }
-          } else if (item.isVideo) {
-            const vid = card.querySelector('video');
-            if (vid) {
-              vid.onloadedmetadata = () => {
-                const el = document.getElementById(elementId);
-                if (el) el.textContent = `Dimensioni: ${vid.videoWidth} x ${vid.videoHeight} px`;
-              };
-              vid.onerror = () => {
-                const el = document.getElementById(elementId);
-                if (el) el.textContent = "Dimensioni: N/D";
-              };
-            }
-          } else {
-            const el = document.getElementById(elementId);
-            if (el) el.style.display = "none";
-          }
-        });
-
-        // Render Pagination Bar
-        if (paginationBar) {
-          const prevDisabled = clientAreaCurrentPage === 1 ? 'disabled style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-color); color: rgba(255,255,255,0.3); padding: 8px 18px; border-radius: 4px; cursor: not-allowed;"' : 'style="background: rgba(255,255,255,0.06); border: 1px solid var(--border-color); color: var(--text-primary); padding: 8px 18px; border-radius: 4px; cursor: pointer;"';
-          const nextDisabled = clientAreaCurrentPage === totalPages ? 'disabled style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-color); color: rgba(255,255,255,0.3); padding: 8px 18px; border-radius: 4px; cursor: not-allowed;"' : 'style="background: rgba(255,255,255,0.06); border: 1px solid var(--border-color); color: var(--text-primary); padding: 8px 18px; border-radius: 4px; cursor: pointer;"';
-
-          paginationBar.innerHTML = `
-            <button ${prevDisabled} onclick="changeClientAreaPage(${clientAreaCurrentPage - 1})">←</button>
-            <span style="font-size: 0.85rem; font-weight: 600; color: var(--text-primary); letter-spacing: 0.05em;"><strong>${clientAreaCurrentPage}/${totalPages} pag.</strong></span>
-            <button ${nextDisabled} onclick="changeClientAreaPage(${clientAreaCurrentPage + 1})">→</button>
-          `;
-        }
-
-        // Toggle panels
-        emptyStatePanel.style.display = "none";
         galleryPanel.style.display = "block";
 
       } catch (err) {

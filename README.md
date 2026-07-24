@@ -44,6 +44,7 @@ Per eseguire il sito in locale, posiziona la cartella `Max Salvaggio Archivio/` 
 - **2026-07-24** – Forzatura contrasto testo scuro (#111111/#333333/#222222) per la scheda vuota ed aggiunta del timeout non-bloccante sulla query del profilo utente in `client-area.html`.
 - **2026-07-24** – Allineata la composizione del percorso Storage Guest tra Admin e Client-Area e risolto bug di sintassi PostgREST su email con carattere "+".
 - **2026-07-24** – Nuova strategia: resize automatico miniature 240px/480px e fix definitivo loader client-area.
+- **2026-07-24** – Fix strutturale con try-finally e fallback hard 3.5s per caricamento galleria client-area.
 
 ---
 
