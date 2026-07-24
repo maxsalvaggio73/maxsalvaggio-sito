@@ -1044,30 +1044,35 @@
         return;
       }
 
+      // Controllo rigido e immediato della sessione
+      let session = null;
       try {
-        console.log("checkAuth: Recupero sessione da Supabase...");
-        let session = await fetchSessionWithTimeout(2000);
+        const { data } = await supabaseClient.auth.getSession();
+        session = data?.session;
+      } catch (e) {}
 
-        if (!session) {
-          await new Promise(r => setTimeout(r, 300));
-          session = await fetchSessionWithTimeout(1000);
-        }
+      const email = session?.user?.email || localStorage.getItem("userEmail") || localStorage.getItem("activeEmail");
 
-        if (!session || !session.user) {
-          console.warn("checkAuth: Nessuna sessione trovata. Reindirizzamento a login.html.");
-          window.location.href = "login.html";
-          return;
-        }
+      // SE !email O email === 'undefined' O 'null': REDIRECT IMMEDIATO A LOGIN
+      if (!email || email === "undefined" || email === "null" || email.trim() === "") {
+        console.warn("[SESSION CHECK] Sessione o email non trovata. Redirect immediato a login.html");
+        window.location.href = "login.html";
+        return;
+      }
 
-        currentUser = session.user;
-        console.log("checkAuth: Sessione valida per l'utente:", currentUser.email);
-        const emailEl = document.getElementById("client-email");
-        if (emailEl) emailEl.textContent = currentUser.email;
+      currentUser = session?.user || { email: email, id: "" };
 
-        // Recupera il profilo con timeout
-        let profile = null;
-        try {
-          const profilePromise = (async () => {
+      // POPOLA SUBITO I DATI UTENTE SUL DOM SENZA ATTESA
+      const emailEl = document.getElementById("client-email");
+      if (emailEl) emailEl.textContent = email;
+
+      const nameEl = document.getElementById("client-display-name");
+      if (nameEl) nameEl.textContent = email;
+
+      // Recupera il profilo con timeout per eventuale nome completo
+      try {
+        const profilePromise = (async () => {
+          if (currentUser.id) {
             const { data: pById } = await supabaseClient
               .from('profiles')
               .select('is_approved, onboarding_completed, documents_approved, full_name, is_guest')
@@ -1075,81 +1080,36 @@
               .maybeSingle();
 
             if (pById) return pById;
+          }
 
-            const { data: pByEmail } = await supabaseClient
-              .from('profiles')
-              .select('is_approved, onboarding_completed, documents_approved, full_name, is_guest')
-              .eq('email', currentUser.email)
-              .maybeSingle();
+          const { data: pByEmail } = await supabaseClient
+            .from('profiles')
+            .select('is_approved, onboarding_completed, documents_approved, full_name, is_guest')
+            .eq('email', email)
+            .maybeSingle();
 
-            return pByEmail;
-          })();
+          return pByEmail;
+        })();
 
-          const pTimeout = new Promise(r => setTimeout(() => r(null), 1500));
-          profile = await Promise.race([profilePromise, pTimeout]);
-        } catch (errProfile) {
-          console.warn("checkAuth: Avviso caricamento profilo:", errProfile);
+        const pTimeout = new Promise(r => setTimeout(() => r(null), 1200));
+        const profile = await Promise.race([profilePromise, pTimeout]);
+
+        if (profile?.full_name && nameEl) {
+          nameEl.textContent = profile.full_name;
         }
 
-        // Profilo di fallback se l'utente è autenticato in Auth
-        if (!profile) {
-          profile = {
-            is_approved: true,
-            is_guest: true,
-            onboarding_completed: true,
-            documents_approved: true,
-            full_name: currentUser.email
-          };
-        }
-
-        if (profile.is_approved === false) {
-          console.warn("checkAuth: Account non approvato o sospeso.");
+        if (profile?.is_approved === false) {
+          console.warn("checkAuth: Account sospeso.");
           await supabaseClient.auth.signOut();
           window.location.href = "login.html";
           return;
         }
-
-        const nameEl = document.getElementById("client-display-name");
-        if (nameEl) {
-          nameEl.textContent = profile.full_name || currentUser.email;
-        }
-
-        // Access Gate matching onboarding flow
-        if (profile.is_guest || (profile.onboarding_completed && profile.documents_approved)) {
-          const ob = document.getElementById("onboarding-panel");
-          const wp = document.getElementById("waiting-panel");
-          const es = document.getElementById("empty-state-panel");
-          if (ob) ob.style.display = "none";
-          if (wp) wp.style.display = "none";
-          if (es) es.style.display = "block";
-          loadClientPhotos();
-        } else if (!profile.onboarding_completed) {
-          toggleCompanyFields('privato');
-          const ob = document.getElementById("onboarding-panel");
-          const wp = document.getElementById("waiting-panel");
-          const es = document.getElementById("empty-state-panel");
-          const gp = document.getElementById("gallery-panel");
-          if (ob) ob.style.display = "block";
-          if (wp) wp.style.display = "none";
-          if (es) es.style.display = "none";
-          if (gp) gp.style.display = "none";
-        } else {
-          const ob = document.getElementById("onboarding-panel");
-          const wp = document.getElementById("waiting-panel");
-          const es = document.getElementById("empty-state-panel");
-          const gp = document.getElementById("gallery-panel");
-          if (ob) ob.style.display = "none";
-          if (wp) wp.style.display = "block";
-          if (es) es.style.display = "none";
-          if (gp) gp.style.display = "none";
-        }
-
-      } catch (err) {
-        console.error("Auth check error:", err);
-      } finally {
-        // FINALLY GUARANTEED: NASCONDI TASSATIVAMENTE L'OVERLAY DI CARICAMENTO
-        hideLoadingOverlay();
+      } catch (errProfile) {
+        console.warn("checkAuth: Avviso caricamento profilo:", errProfile);
       }
+
+      // Avvia subito il caricamento provini
+      loadClientPhotos();
     }
 
     // Toggle company and Codice Fiscale upload fields depending on client type selection
@@ -1713,19 +1673,42 @@
               }
             } else {
               const el = document.getElementById(elementId);
-        galleryPanel.style.display = "block";
+              if (el) el.style.display = "none";
+            }
+          });
 
+          if (paginationBar) {
+            const prevDisabled = clientAreaCurrentPage === 1 ? 'disabled style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-color); color: rgba(255,255,255,0.3); padding: 8px 18px; border-radius: 4px; cursor: not-allowed;"' : 'style="background: rgba(255,255,255,0.06); border: 1px solid var(--border-color); color: var(--text-primary); padding: 8px 18px; border-radius: 4px; cursor: pointer;"';
+            const nextDisabled = clientAreaCurrentPage === totalPages ? 'disabled style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-color); color: rgba(255,255,255,0.3); padding: 8px 18px; border-radius: 4px; cursor: not-allowed;"' : 'style="background: rgba(255,255,255,0.06); border: 1px solid var(--border-color); color: var(--text-primary); padding: 8px 18px; border-radius: 4px; cursor: pointer;"';
+
+            paginationBar.innerHTML = `
+              <button ${prevDisabled} onclick="changeClientAreaPage(${clientAreaCurrentPage - 1})">←</button>
+              <span style="font-size: 0.85rem; font-weight: 600; color: var(--text-primary); letter-spacing: 0.05em;"><strong>${clientAreaCurrentPage}/${totalPages} pag.</strong></span>
+              <button ${nextDisabled} onclick="changeClientAreaPage(${clientAreaCurrentPage + 1})">→</button>
+            `;
+          }
+        }
       } catch (err) {
-        console.error("loadClientPhotos err:", err);
+        console.error("loadClientPhotos exception caught:", err);
+      } finally {
+        if (imageFiles && imageFiles.length > 0) {
+          if (emptyStatePanel) emptyStatePanel.style.display = "none";
+          if (galleryPanel) galleryPanel.style.display = "block";
+        } else {
+          if (statusMsg) {
+            statusMsg.textContent = "Nessun provino disponibile nel tuo workspace.";
+            statusMsg.style.color = "#222222 !important";
+            statusMsg.style.fontWeight = "600";
+          }
+          if (emptyStatePanel) emptyStatePanel.style.display = "block";
+          if (galleryPanel) galleryPanel.style.display = "none";
+        }
       }
     }
 
     function changeClientAreaPage(page) {
       clientAreaCurrentPage = page;
       loadClientPhotos();
-    }        console.error("loadClientPhotos err:", err);
-        statusMsg.textContent = "Errore durante il caricamento dei provini.";
-      }
     }
 
     // Log Out
