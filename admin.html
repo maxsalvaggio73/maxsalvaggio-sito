@@ -4493,7 +4493,9 @@ www.maxsalvaggio.com`;
       if (badge) badge.textContent = `${foundFiles.length} foto`;
       grid.innerHTML = "";
 
+      let psIndex = 0;
       for (const file of foundFiles) {
+        psIndex++;
         const fullPath = `${validPath}/${file.name}`;
         let signedUrl = "";
 
@@ -4507,27 +4509,48 @@ www.maxsalvaggio.com`;
           signedUrl = pData?.publicUrl || "";
         }
 
+        const sizeKb = file.metadata && file.metadata.size ? (file.metadata.size / 1024).toFixed(1) : (file.size ? (file.size / 1024).toFixed(1) : "N/D");
+        const elementId = `ps-dim-${psIndex}-${Math.random().toString(36).substr(2, 5)}`;
+
         const card = document.createElement("div");
-        card.className = "portfolio-card";
-        card.style.aspectRatio = "1 / 1";
-        card.style.position = "relative";
-        card.style.borderRadius = "6px";
-        card.style.overflow = "hidden";
-        card.style.background = "#111";
+        card.className = "admin-gallery-card";
 
         card.innerHTML = `
-          <img src="${signedUrl}" alt="${file.name}" style="width: 100%; height: 100%; object-fit: cover; display: block;" loading="lazy">
-          <div class="portfolio-card-overlay">
-            <div class="portfolio-card-header">
-              <button class="portfolio-btn-delete" title="Elimina foto" onclick="deletePhotoShareEventFile(event, '${fullPath}', '${code}')">🗑️</button>
-            </div>
-            <div class="portfolio-card-footer">
-              <span class="portfolio-card-title">${file.name}</span>
+          <div class="admin-card-preview-wrapper" id="wrapper-${elementId}" style="position: relative;">
+            <img src="${signedUrl}" class="admin-card-preview" id="img-preview-${elementId}" alt="${file.name}" loading="lazy" decoding="async">
+            <button class="btn-card-delete" style="position: absolute; bottom: 8px; right: 8px; z-index: 10; padding: 4px 8px; font-size: 0.72rem;" onclick="event.stopPropagation(); deletePhotoShareEventFile(event, '${fullPath}', '${code}')" title="Elimina foto">🗑️ Elimina</button>
+          </div>
+          <div class="admin-card-caption">
+            <div class="admin-card-info">
+              <div class="admin-card-title" title="${file.name}">${file.name}</div>
+              <div class="admin-card-meta">Peso: ${sizeKb} KB</div>
+              <div class="admin-card-meta" id="${elementId}">Dimensioni: Calcolo...</div>
             </div>
           </div>
         `;
 
         grid.appendChild(card);
+
+        const imgEl = document.getElementById(`img-preview-${elementId}`);
+        const wrapperEl = document.getElementById(`wrapper-${elementId}`);
+        const handleImgLoad = () => {
+          const el = document.getElementById(elementId);
+          if (el && imgEl.naturalWidth) {
+            el.textContent = `Dimensioni: ${imgEl.naturalWidth} x ${imgEl.naturalHeight} px`;
+            if (imgEl.naturalWidth > imgEl.naturalHeight) {
+              card.classList.add("card-horizontal");
+            }
+            if (typeof attachMagnifierLens === 'function') {
+              attachMagnifierLens(imgEl, wrapperEl);
+            }
+          }
+        };
+
+        if (imgEl && imgEl.complete && imgEl.naturalWidth) {
+          handleImgLoad();
+        } else if (imgEl) {
+          imgEl.addEventListener('load', handleImgLoad, { once: true });
+        }
       }
     }
 
