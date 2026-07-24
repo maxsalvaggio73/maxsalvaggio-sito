@@ -50,6 +50,7 @@ Per eseguire il sito in locale, posiziona la cartella `Max Salvaggio Archivio/` 
 - **2026-07-24** – Fix recupero utente ed email per caricamento provini workspace.
 - **2026-07-24** – Fix definitivo session check e hard redirect login se user undefined in client-area.
 - **2026-07-24** – Fix generazione URL immagini con fallback signed e restyle griglia gallery-panel.
+- **2026-07-24** – Rimozione crossorigin da tag img per corretto rendering provini.
 
 ---
 

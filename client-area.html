@@ -1618,7 +1618,7 @@
 
             let previewHtml = "";
             if (item.isImage) {
-              previewHtml = `<img src="${item.publicUrl}" data-signed-url="${item.signedUrl}" alt="${item.file.name}" class="gallery-img" crossorigin="anonymous" loading="lazy" decoding="async" onerror="if(!this.dataset.triedSigned && this.dataset.signedUrl){ this.dataset.triedSigned='true'; this.src=this.dataset.signedUrl; }">`;
+              previewHtml = `<img src="${item.fileUrl}" data-signed-url="${item.signedUrl}" alt="${item.file.name}" class="gallery-img" loading="lazy" decoding="async" onerror="if(!this.dataset.triedSigned && this.dataset.signedUrl){ this.dataset.triedSigned='true'; this.src=this.dataset.signedUrl; }">`;
             } else if (item.isVideo) {
               previewHtml = `<video src="${item.publicUrl}" class="gallery-img" style="object-fit: cover;" preload="metadata" muted loop onmouseover="this.play()" onmouseout="this.pause()"></video>`;
             } else if (item.isAudio) {
