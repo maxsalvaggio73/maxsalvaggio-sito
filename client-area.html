@@ -1452,33 +1452,43 @@
       const paginationBar = document.getElementById("gallery-pagination-bar");
 
       try {
-        // 1. Fetch file order array from client profile by ID or Email (timeout 2.0s)
+        // 1. Fetch file order array from client profile safely by ID or Email
         let fileOrder = [];
         try {
-          const profilePromise = supabaseClient
-            .from('profiles')
-            .select('file_order, email')
-            .or(`id.eq.${currentUser.id},email.eq.${userEmail}`)
-            .maybeSingle();
+          let pData = null;
+          if (currentUser.id) {
+            const { data: pById } = await supabaseClient
+              .from('profiles')
+              .select('file_order, email')
+              .eq('id', currentUser.id)
+              .maybeSingle();
+            pData = pById;
+          }
 
-          const timeoutProfile = new Promise(r => setTimeout(() => r({ data: null }), 2000));
-          const resProfile = await Promise.race([profilePromise, timeoutProfile]);
+          if (!pData && userEmail) {
+            const { data: pByEmail } = await supabaseClient
+              .from('profiles')
+              .select('file_order, email')
+              .eq('email', userEmail)
+              .maybeSingle();
+            pData = pByEmail;
+          }
 
-          if (resProfile?.data) {
-            fileOrder = resProfile.data.file_order || [];
-            if (resProfile.data.email) {
-              userEmail = resProfile.data.email.trim();
+          if (pData) {
+            fileOrder = pData.file_order || [];
+            if (pData.email) {
+              userEmail = pData.email.trim();
             }
           }
         } catch (eProfile) {
           console.warn("[WORKSPACE DEBUG] Profile fetch warning:", eProfile);
         }
 
-        // 2. Multi-path search cascade in bucket 'client-proofs' with 2.5s per-path timeout
+        // 2. Multi-path search cascade in bucket 'client-proofs' matching admin.html logic
         const candidatePaths = [
-          `guest/${userEmail}`,
           userEmail,
           userEmail.toLowerCase(),
+          `guest/${userEmail}`,
           currentUser.id
         ];
 
@@ -1491,7 +1501,7 @@
 
         for (const testPath of uniquePaths) {
           try {
-            console.log(`[WORKSPACE DEBUG] Scansione percorso "${testPath}" (timeout 2.5s)...`);
+            console.log("[STORAGE PATH MATCH]", testPath);
             const res = await listStorageWithPathTimeout(testPath, 2500);
 
             if (res?.error) {

@@ -42,6 +42,7 @@ Per eseguire il sito in locale, posiziona la cartella `Max Salvaggio Archivio/` 
 - **2026-07-24** – Implementata ricerca multi-percorso in cascata (`guest/${email}`, `${email}`, `${email.toLowerCase()}`, `${user.id}`) con log di debug in `client-area.html`.
 - **2026-07-24** – Fix contrasto testo scheda vuota (`color: rgba(255,255,255,0.85)`) e timeout non-bloccante di 2.5s per ogni scansione percorso Storage in `client-area.html`.
 - **2026-07-24** – Forzatura contrasto testo scuro (#111111/#333333/#222222) per la scheda vuota ed aggiunta del timeout non-bloccante sulla query del profilo utente in `client-area.html`.
+- **2026-07-24** – Allineata la composizione del percorso Storage Guest tra Admin e Client-Area e risolto bug di sintassi PostgREST su email con carattere "+".
 
 ---
 
