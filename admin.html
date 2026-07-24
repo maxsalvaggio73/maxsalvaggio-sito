@@ -422,10 +422,10 @@
       position: relative;
       transition: border-color 0.25s, transform 0.25s;
       width: 100%;
-      max-width: 300px; /* Default max-width (vertical) */
+      max-width: 200px; /* Default max-width (verticale) */
     }
     .admin-gallery-card.card-horizontal {
-      max-width: 600px; /* Max-width per foto orizzontali */
+      max-width: 400px; /* Max-width per foto orizzontali */
     }
     .admin-gallery-card:active {
       cursor: grabbing;
@@ -1543,7 +1543,11 @@ create policy "Consenti agli admin la gestione di oggetti public-portfolio" on s
             <h3 style="font-size: 0.95rem; font-weight: 600; color: var(--text-primary);" id="ps-photos-grid-title">Foto dell'Evento</h3>
             <span id="ps-photos-count-badge" class="mini-badge" style="background: rgba(229, 9, 20, 0.15); color: #FF8A80; font-size: 0.8rem; margin-top: 4px; display: inline-block;">0 foto</span>
           </div>
-          <div id="ps-add-photos-box" style="display: none;">
+          <div id="ps-add-photos-box" style="display: none; align-items: center; gap: 10px;">
+            <button id="btn-delete-selected-ps" class="btn-submit" style="display: none; width: auto; padding: 8px 16px; font-size: 0.75rem; background-color: #d32f2f; border-color: #d32f2f;" onclick="deleteSelectedPhotoSharePhotos()">
+              <span class="spinner" id="ps-delete-selected-spinner" style="display: none; width: 12px; height: 12px; border-width: 2px;"></span>
+              <span id="ps-delete-selected-text">🗑️ Elimina Selezionate (0)</span>
+            </button>
             <input type="file" id="ps-add-photos-file-input" style="display: none;" onchange="uploadMorePhotosToActiveEvent(event)" multiple accept="image/*">
             <button class="btn-submit" style="width: auto; padding: 8px 16px; font-size: 0.75rem; background-color: var(--accent); border-color: var(--accent);" onclick="document.getElementById('ps-add-photos-file-input').click()">
               <span class="spinner" id="ps-add-photos-spinner" style="display: none; width: 12px; height: 12px; border-width: 2px;"></span>
@@ -4501,11 +4505,80 @@ www.maxsalvaggio.com`;
       }
     }
 
+    let psAdminSelectedFilePaths = new Set();
+
+    function togglePhotoShareAdminSelection(fullPath, checkboxEl) {
+      if (psAdminSelectedFilePaths.has(fullPath)) {
+        psAdminSelectedFilePaths.delete(fullPath);
+        if (checkboxEl) {
+          checkboxEl.classList.remove("selected");
+          checkboxEl.style.backgroundColor = "rgba(0,0,0,0.65)";
+          checkboxEl.style.borderColor = "#fff";
+        }
+      } else {
+        psAdminSelectedFilePaths.add(fullPath);
+        if (checkboxEl) {
+          checkboxEl.classList.add("selected");
+          checkboxEl.style.backgroundColor = "var(--accent)";
+          checkboxEl.style.borderColor = "var(--accent)";
+        }
+      }
+      updatePhotoShareAdminDeleteButton();
+    }
+
+    function updatePhotoShareAdminDeleteButton() {
+      const btn = document.getElementById("btn-delete-selected-ps");
+      const text = document.getElementById("ps-delete-selected-text");
+      const count = psAdminSelectedFilePaths.size;
+
+      if (btn && text) {
+        if (count > 0) {
+          btn.style.display = "inline-flex";
+          text.textContent = `🗑️ Elimina Selezionate (${count})`;
+        } else {
+          btn.style.display = "none";
+        }
+      }
+    }
+
+    async function deleteSelectedPhotoSharePhotos() {
+      if (!supabaseClient || psAdminSelectedFilePaths.size === 0) return;
+      const count = psAdminSelectedFilePaths.size;
+      const confirmDel = confirm(`Sei sicuro di voler eliminare definitivamente le ${count} foto selezionate dall'evento #${currentSelectedPhotoShareCode}?`);
+      if (!confirmDel) return;
+
+      const btn = document.getElementById("btn-delete-selected-ps");
+      const spinner = document.getElementById("ps-delete-selected-spinner");
+      if (btn) btn.disabled = true;
+      if (spinner) spinner.style.display = "inline-block";
+
+      try {
+        const pathsArray = Array.from(psAdminSelectedFilePaths);
+        const { error } = await supabaseClient.storage.from('client-proofs').remove(pathsArray);
+        if (error) {
+          alert("Impossibile eliminare le foto selezionate: " + error.message);
+          return;
+        }
+
+        psAdminSelectedFilePaths.clear();
+        updatePhotoShareAdminDeleteButton();
+        await loadPhotoShareEventPhotos(currentSelectedPhotoShareCode);
+      } catch (err) {
+        alert("Errore durante l'eliminazione multipla: " + err.message);
+      } finally {
+        if (btn) btn.disabled = false;
+        if (spinner) spinner.style.display = "none";
+      }
+    }
+
     async function loadPhotoShareEventPhotos(code) {
       if (!supabaseClient) return;
       const grid = document.getElementById("ps-event-photos-grid");
       const title = document.getElementById("ps-photos-grid-title");
       const badge = document.getElementById("ps-photos-count-badge");
+
+      psAdminSelectedFilePaths.clear();
+      updatePhotoShareAdminDeleteButton();
 
       if (!grid) return;
 
@@ -4581,6 +4654,7 @@ www.maxsalvaggio.com`;
       window.psLightboxItems = sharedMediaItems;
 
       psItems.forEach(item => {
+        const isSelected = psAdminSelectedFilePaths.has(item.fullPath);
         const card = document.createElement("div");
         card.className = "admin-gallery-card";
 
@@ -4591,7 +4665,7 @@ www.maxsalvaggio.com`;
           <div class="admin-card-caption" style="padding: 10px 12px; display: flex; align-items: center; justify-content: space-between; gap: 8px;">
             <div class="admin-card-info" style="cursor: pointer; flex-grow: 1; overflow: hidden;">
               <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
-                <div class="photo-select-checkbox" style="flex-shrink: 0; width: 18px; height: 18px; border-radius: 4px; background: rgba(0,0,0,0.65); border: 2px solid #fff; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 0.72rem; font-weight: 700; cursor: pointer;" onclick="event.stopPropagation(); this.classList.toggle('selected');" title="Seleziona foto">✓</div>
+                <div class="photo-select-checkbox ${isSelected ? 'selected' : ''}" style="flex-shrink: 0; width: 18px; height: 18px; border-radius: 4px; background: ${isSelected ? 'var(--accent)' : 'rgba(0,0,0,0.65)'}; border: 2px solid ${isSelected ? 'var(--accent)' : '#fff'}; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 0.72rem; font-weight: 700; cursor: pointer;" onclick="event.stopPropagation(); togglePhotoShareAdminSelection('${item.fullPath}', this);" title="Seleziona foto">✓</div>
                 <div class="admin-card-title" title="${item.file.name}" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-weight: 600; font-size: 0.78rem;">${item.file.name}</div>
               </div>
               <div class="admin-card-meta">Peso: ${item.sizeKb} KB</div>
