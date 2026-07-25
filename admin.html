@@ -4916,7 +4916,30 @@ www.maxsalvaggio.com`;
         }
 
         const eventDisplayName = currentPhotoShareActiveEventName || `#${code}`;
-        alert(`Utente "${fullName}" (${email}) invitato e registrato con successo per l'Evento "${eventDisplayName}"!`);
+        const loginUrl = `${window.location.origin}/photoshare.html?pin=${code}`;
+
+        // 3. Invio email automatica credenziali all'utente con CC all'admin
+        try {
+          await fetch("https://formspree.io/f/xzdqzagg", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "Accept": "application/json"
+            },
+            body: JSON.stringify({
+              name: fullName,
+              email: email,
+              _replyto: email,
+              _cc: "maxsalvaggio@gmail.com",
+              subject: `🔒 Credenziali di Accesso - Evento "${eventDisplayName}"`,
+              message: `Ciao ${fullName},\n\nSei stato invitato ad accedere alla galleria fotografica dell'evento "${eventDisplayName}"!\n\nEcco le tue credenziali riservate:\n• Username / Email: ${email}\n• Password / Codice PIN: #${code}\n\nAccedi direttamente da questo link:\n${loginUrl}\n\nUn caro saluto,\nMax Salvaggio`
+            })
+          });
+        } catch (eErr) {
+          console.warn("Invio email Formspree non riuscito:", eErr);
+        }
+
+        alert(`Utente "${fullName}" (${email}) invitato con successo! Email con credenziali inviata all'utente e in CC a maxsalvaggio@gmail.com per l'Evento "${eventDisplayName}".`);
 
         if (nameEl) nameEl.value = '';
         if (emailEl) emailEl.value = '';

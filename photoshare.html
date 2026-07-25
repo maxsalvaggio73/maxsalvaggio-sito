@@ -823,10 +823,10 @@
       supabaseClient = supabase.createClient(config.SUPABASE_URL, config.SUPABASE_ANON_KEY);
     }
 
-    // Auto-check URL query param ?code=MARCOELENA2026
+    // Auto-check URL query param ?pin=MARCOELENA2026 oppure ?code=MARCOELENA2026
     document.addEventListener("DOMContentLoaded", () => {
       const urlParams = new URLSearchParams(window.location.search);
-      const codeParam = urlParams.get('code') || urlParams.get('event');
+      const codeParam = urlParams.get('pin') || urlParams.get('code') || urlParams.get('event');
       if (codeParam) {
         document.getElementById('input-event-code').value = codeParam.toUpperCase();
         verifyEventCode();
