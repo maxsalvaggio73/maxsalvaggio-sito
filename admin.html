@@ -1513,91 +1513,108 @@ create policy "Consenti agli admin la gestione di oggetti public-portfolio" on s
 
     <!-- PHOTOSHARE MANAGEMENT VIEW -->
     <div class="client-workspace" id="photoshare-panel" style="display: none; padding: 30px; flex-direction: column;">
-      <div class="workspace-header">
-        <h2 class="workspace-title">PhotoShare: Contatti Acquisiti (Lead)</h2>
-        <button class="btn-submit" style="width: auto; padding: 8px 16px; font-size: 0.75rem; background-color: var(--accent-green); border-color: var(--accent-green);" onclick="exportPhotoShareLeadsCSV()">📥 Esporta Contatti (CSV)</button>
-      <!-- BOX DETTAGLI EVENTO SELEZIONATO -->
-      <div id="ps-event-details-box" style="margin-top: 20px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; padding: 20px;">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; flex-wrap: wrap; gap: 10px;">
+      <div class="workspace-header" style="margin-bottom: 10px;">
+        <h2 class="workspace-title">Gestione Eventi &amp; Galleria PhotoShare</h2>
+      </div>
+
+      <!-- ROW: 3 HORIZONTAL BOXES (DETTAGLI, INVITI, LEAD) -->
+      <div class="photoshare-top-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; width: 100%; margin-top: 15px; align-items: stretch;">
+
+        <!-- [BOX 1 - SINISTRA]: DETTAGLI EVENTO -->
+        <div id="ps-event-details-box" style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
           <div>
-            <h3 style="font-size: 1.05rem; font-weight: 700; color: #fff; display: flex; align-items: center; gap: 8px;" id="ps-detail-name">
-              <span>🏷️ Seleziona un Evento dall'Elenco</span>
-            </h3>
-            <div style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 2px;">
-              PIN: <strong id="ps-detail-code" style="color: var(--accent); letter-spacing: 0.05em;">---</strong>
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
+              <h3 style="font-size: 1rem; font-weight: 700; color: #fff; display: flex; align-items: center; gap: 6px; margin: 0;" id="ps-detail-name">
+                <span>🏷️ Seleziona Evento</span>
+              </h3>
+              <span class="mini-badge" style="background: rgba(229, 9, 20, 0.15); color: #FF8A80; font-size: 0.72rem;">PIN: <strong id="ps-detail-code" style="color: var(--accent); letter-spacing: 0.05em;">---</strong></span>
+            </div>
+
+            <div style="background: rgba(0,0,0,0.25); padding: 12px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.05); font-size: 0.78rem; display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px;">
+              <div>
+                <span style="color: var(--text-secondary); font-size: 0.68rem; text-transform: uppercase; font-weight: 600; display: block;">📅 Data Evento</span>
+                <span id="ps-detail-date" style="color: #fff; font-weight: 500;">---</span>
+              </div>
+              <div>
+                <span style="color: var(--text-secondary); font-size: 0.68rem; text-transform: uppercase; font-weight: 600; display: block;">📍 Luogo / Location</span>
+                <span id="ps-detail-location" style="color: #fff; font-weight: 500;">---</span>
+              </div>
+              <div>
+                <span style="color: var(--text-secondary); font-size: 0.68rem; text-transform: uppercase; font-weight: 600; display: block;">📝 Note dell'Admin per gli Ospiti</span>
+                <span id="ps-detail-notes" style="color: rgba(255,255,255,0.85); font-style: italic;">---</span>
+              </div>
             </div>
           </div>
 
-          <div style="display: flex; gap: 8px;">
-            <button class="btn-submit" id="btn-edit-ps-details" style="width: auto; padding: 6px 14px; font-size: 0.75rem; background-color: rgba(255,183,77,0.15); border-color: rgba(255,183,77,0.4); color: #FFB74D;" onclick="triggerActiveEventEdit()">
-              ✏️ Modifica Dettagli / PIN
+          <div style="display: flex; gap: 8px; margin-top: auto;">
+            <button class="btn-submit" id="btn-edit-ps-details" style="flex: 1; padding: 7px 10px; font-size: 0.72rem; background-color: rgba(255,183,77,0.15); border-color: rgba(255,183,77,0.4); color: #FFB74D; display: flex; align-items: center; justify-content: center; gap: 4px;" onclick="triggerActiveEventEdit()">
+              ✏️ Modifica
             </button>
-            <button class="btn-submit" id="btn-delete-ps-details" style="width: auto; padding: 6px 14px; font-size: 0.75rem; background-color: rgba(229,9,20,0.15); border-color: rgba(229,9,20,0.4); color: #FF8A80;" onclick="triggerActiveEventDelete()">
-              🗑️ Elimina Evento
+            <button class="btn-submit" id="btn-delete-ps-details" style="flex: 1; padding: 7px 10px; font-size: 0.72rem; background-color: rgba(229,9,20,0.15); border-color: rgba(229,9,20,0.4); color: #FF8A80; display: flex; align-items: center; justify-content: center; gap: 4px;" onclick="triggerActiveEventDelete()">
+              🗑️ Elimina
             </button>
           </div>
         </div>
 
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; background: rgba(0,0,0,0.25); padding: 14px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.05); font-size: 0.8rem;">
+        <!-- [BOX 2 - CENTRO]: INVITA UTENTE ALL'EVENTO -->
+        <div id="ps-invite-user-box" style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
           <div>
-            <span style="color: var(--text-secondary); font-size: 0.7rem; text-transform: uppercase; display: block; font-weight: 600;">📅 Data Evento</span>
-            <span id="ps-detail-date" style="color: #fff; font-weight: 500;">---</span>
-          </div>
-          <div>
-            <span style="color: var(--text-secondary); font-size: 0.7rem; text-transform: uppercase; display: block; font-weight: 600;">📍 Luogo / Location</span>
-            <span id="ps-detail-location" style="color: #fff; font-weight: 500;">---</span>
-          </div>
-          <div style="grid-column: 1 / -1;">
-            <span style="color: var(--text-secondary); font-size: 0.7rem; text-transform: uppercase; display: block; font-weight: 600;">📝 Note dell'Admin per gli Ospiti</span>
-            <span id="ps-detail-notes" style="color: rgba(255,255,255,0.85); font-weight: 400; font-style: italic;">---</span>
+            <h3 style="font-size: 1rem; font-weight: 700; color: #fff; margin-bottom: 12px;">➕ Invita Utente all'Evento</h3>
+            <form style="display: flex; flex-direction: column; gap: 10px;" onsubmit="event.preventDefault(); inviteUserToPhotoShareEvent();">
+              <div>
+                <label style="font-size: 0.68rem; color: var(--text-secondary); text-transform: uppercase; font-weight: 600; margin-bottom: 3px; display: block;">Nome e Cognome</label>
+                <input type="text" id="ps-invite-fullname" placeholder="es. Mario Rossi" required style="width: 100%; background: rgba(0,0,0,0.25); border: 1px solid var(--border-color); border-radius: 4px; padding: 8px 10px; font-size: 0.78rem; color: #fff;">
+              </div>
+              <div>
+                <label style="font-size: 0.68rem; color: var(--text-secondary); text-transform: uppercase; font-weight: 600; margin-bottom: 3px; display: block;">Email Utente</label>
+                <input type="email" id="ps-invite-email" placeholder="es. mario.rossi@email.com" required style="width: 100%; background: rgba(0,0,0,0.25); border: 1px solid var(--border-color); border-radius: 4px; padding: 8px 10px; font-size: 0.78rem; color: #fff;">
+              </div>
+              <div>
+                <label style="font-size: 0.68rem; color: var(--text-secondary); text-transform: uppercase; font-weight: 600; margin-bottom: 3px; display: block;">Codice PIN Evento</label>
+                <input type="text" id="ps-invite-code" placeholder="es. CODICE2026" required style="width: 100%; background: rgba(0,0,0,0.25); border: 1px solid var(--border-color); border-radius: 4px; padding: 8px 10px; font-size: 0.78rem; color: #fff; text-transform: uppercase; letter-spacing: 0.05em;">
+              </div>
+              <button type="submit" class="btn-submit" id="btn-ps-invite" style="margin-top: 4px; padding: 9px 12px; font-size: 0.75rem; background-color: var(--accent); border-color: var(--accent); width: 100%; font-weight: 600;">
+                ✉️ Invita &amp; Registra Lead
+              </button>
+            </form>
           </div>
         </div>
-      </div>
 
-      <div style="margin-top: 20px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; padding: 20px;">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-          <h3 style="font-size: 0.95rem; font-weight: 600; color: var(--text-primary);" id="ps-leads-table-title">Elenco Partecipanti Eventi</h3>
-          <span id="ps-leads-count-badge" class="mini-badge" style="background: rgba(255,255,255,0.1); color: #fff; font-size: 0.8rem;">0 contatti</span>
+        <!-- [BOX 3 - DESTRA]: LEAD & CONTATTI ACQUISITI (#NOME_EVENTO) -->
+        <div id="ps-leads-box" style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; padding: 20px; display: flex; flex-direction: column;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
+            <div>
+              <h3 style="font-size: 0.95rem; font-weight: 700; color: #fff;" id="ps-leads-table-title">Contatti Acquisiti</h3>
+              <span id="ps-leads-count-badge" class="mini-badge" style="background: rgba(255,255,255,0.1); color: #fff; font-size: 0.72rem;">0 contatti</span>
+            </div>
+            <button class="btn-submit" style="width: auto; padding: 6px 12px; font-size: 0.72rem; background-color: var(--accent-green); border-color: var(--accent-green);" onclick="exportPhotoShareLeadsCSV()">📥 ESPORTA CONTATTI (CSV)</button>
+          </div>
+
+          <div style="overflow-x: auto; flex: 1; max-height: 260px; overflow-y: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.78rem; text-align: left;">
+              <thead>
+                <tr style="border-bottom: 1px solid var(--border-color); color: var(--text-secondary); text-transform: uppercase; font-size: 0.65rem; letter-spacing: 0.05em;">
+                  <th style="padding: 6px 8px;">Data</th>
+                  <th style="padding: 6px 8px;">Nome</th>
+                  <th style="padding: 6px 8px;">Email</th>
+                  <th style="padding: 6px 8px;">Info</th>
+                </tr>
+              </thead>
+              <tbody id="photoshare-leads-tbody">
+                <tr><td colspan="4" style="text-align: center; padding: 20px; color: var(--text-secondary);">Nessun contatto acquisito al momento.</td></tr>
+              </tbody>
+            </table>
+          </div>
         </div>
 
-        <div style="overflow-x: auto;">
-          <table style="width: 100%; border-collapse: collapse; font-size: 0.82rem; text-align: left;">
-            <thead>
-              <tr style="border-bottom: 1px solid var(--border-color); color: var(--text-secondary); text-transform: uppercase; font-size: 0.7rem; letter-spacing: 0.05em;">
-                <th style="padding: 10px;">Data</th>
-                <th style="padding: 10px;">Codice Evento</th>
-                <th style="padding: 10px;">Nome &amp; Cognome</th>
-                <th style="padding: 10px;">Email</th>
-                <th style="padding: 10px;">Telefono</th>
-                <th style="padding: 10px;">Instagram</th>
-              </tr>
-            </thead>
-            <tbody id="photoshare-leads-tbody">
-              <tr><td colspan="6" style="text-align: center; padding: 30px; color: var(--text-secondary);">Nessun contatto acquisito al momento.</td></tr>
-            </tbody>
-          </table>
-        </div>
       </div>
 
-      <!-- INVITA UTENTE MANUALE ALL'EVENTO -->
-      <div style="margin-top: 20px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; padding: 20px;">
-        <h3 style="font-size: 0.95rem; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">➕ Invita Utente all'Evento</h3>
-        <form style="display: flex; gap: 10px; flex-wrap: wrap; align-items: center;" onsubmit="event.preventDefault(); inviteUserToPhotoShareEvent();">
-          <input type="text" id="ps-invite-fullname" placeholder="Nome e Cognome" required style="flex: 1; min-width: 160px; background: rgba(0,0,0,0.25); border: 1px solid var(--border-color); border-radius: 4px; padding: 8px 12px; font-size: 0.8rem; color: #fff;">
-          <input type="email" id="ps-invite-email" placeholder="Email Utente" required style="flex: 1; min-width: 180px; background: rgba(0,0,0,0.25); border: 1px solid var(--border-color); border-radius: 4px; padding: 8px 12px; font-size: 0.8rem; color: #fff;">
-          <input type="text" id="ps-invite-code" placeholder="Codice / PIN Evento" required style="width: 160px; background: rgba(0,0,0,0.25); border: 1px solid var(--border-color); border-radius: 4px; padding: 8px 12px; font-size: 0.8rem; color: #fff; text-transform: uppercase;">
-          <button type="submit" class="btn-submit" id="btn-ps-invite" style="width: auto; padding: 8px 18px; font-size: 0.78rem; background-color: var(--accent); border-color: var(--accent);">
-            Invita &amp; Registra
-          </button>
-        </form>
-      </div>
-
-      <!-- PHOTOSHARE EVENT PHOTOS SECTION -->
-      <div style="margin-top: 30px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; padding: 20px;" id="ps-photos-section">
+      <!-- PHOTOSHARE EVENT PHOTOS SECTION (IMMEDIATELY BELOW, FULL WIDTH 100%) -->
+      <div style="margin-top: 24px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; padding: 20px; width: 100%;" id="ps-photos-section">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap: wrap; gap: 10px;">
           <div>
-            <h3 style="font-size: 0.95rem; font-weight: 600; color: var(--text-primary);" id="ps-photos-grid-title">Foto dell'Evento</h3>
-            <span id="ps-photos-count-badge" class="mini-badge" style="background: rgba(229, 9, 20, 0.15); color: #FF8A80; font-size: 0.8rem; margin-top: 4px; display: inline-block;">0 foto</span>
+            <h3 style="font-size: 1rem; font-weight: 700; color: #fff;" id="ps-photos-grid-title">Foto dell'Evento</h3>
+            <span id="ps-photos-count-badge" class="mini-badge" style="background: rgba(229, 9, 20, 0.15); color: #FF8A80; font-size: 0.78rem; margin-top: 4px; display: inline-block;">0 foto</span>
           </div>
           <div id="ps-add-photos-box" style="display: none; align-items: center; gap: 8px; flex-wrap: nowrap !important; flex-direction: row; justify-content: flex-end; white-space: nowrap; overflow-x: auto; max-width: 100%;">
             <button id="btn-select-all-ps" class="btn-submit" style="width: auto; padding: 6px 12px; font-size: 0.75rem; background-color: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.25); color: #fff; flex-shrink: 0; white-space: nowrap;" onclick="selectAllPhotoSharePhotos()">
@@ -1607,15 +1624,14 @@ create policy "Consenti agli admin la gestione di oggetti public-portfolio" on s
               <span class="spinner" id="ps-download-selected-spinner" style="display: none; width: 12px; height: 12px; border-width: 2px;"></span>
               <span id="ps-download-selected-text">📥 Scarica Selezionate (.ZIP)</span>
             </button>
-            <button id="btn-delete-selected-ps" class="btn-submit" style="display: none; width: auto; padding: 6px 12px; font-size: 0.75rem; background-color: #d32f2f; border-color: #d32f2f; flex-shrink: 0; white-space: nowrap;" onclick="deleteSelectedPhotoSharePhotos()">
+            <button id="btn-deselect-ps" class="btn-submit" style="width: auto; padding: 6px 12px; font-size: 0.75rem; background-color: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2); color: #fff; flex-shrink: 0; white-space: nowrap;" onclick="deselectAllPhotoSharePhotos()">
+              ❌ Deseleziona
+            </button>
+            <button id="btn-delete-selected-ps" class="btn-submit" style="display: none; width: auto; padding: 6px 12px; font-size: 0.75rem; background-color: var(--accent); border-color: var(--accent); flex-shrink: 0; white-space: nowrap;" onclick="deleteSelectedPhotoSharePhotos()">
               <span class="spinner" id="ps-delete-selected-spinner" style="display: none; width: 12px; height: 12px; border-width: 2px;"></span>
               <span id="ps-delete-selected-text">🗑️ Elimina Selezionate (0)</span>
             </button>
-            <button id="btn-deselect-all-ps" class="btn-submit" style="display: none; width: auto; padding: 6px 12px; font-size: 0.75rem; background-color: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2); color: #fff; flex-shrink: 0; white-space: nowrap;" onclick="deselectAllPhotoSharePhotos()">
-              ❌ Deseleziona Tutto
-            </button>
-            <input type="file" id="ps-add-photos-file-input" style="display: none;" onchange="uploadMorePhotosToActiveEvent(event)" multiple accept="image/*">
-            <button class="btn-submit" style="width: auto; padding: 6px 12px; font-size: 0.75rem; background-color: var(--accent); border-color: var(--accent); flex-shrink: 0; white-space: nowrap;" onclick="document.getElementById('ps-add-photos-file-input').click()">
+            <label class="btn-submit" style="width: auto; padding: 6px 12px; font-size: 0.75rem; background-color: var(--accent); border-color: var(--accent); cursor: pointer; flex-shrink: 0; white-space: nowrap;">
               <span class="spinner" id="ps-add-photos-spinner" style="display: none; width: 12px; height: 12px; border-width: 2px;"></span>
               <span>➕ Aggiungi altre foto all'evento</span>
             </button>
