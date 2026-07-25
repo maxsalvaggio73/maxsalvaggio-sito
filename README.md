@@ -72,6 +72,7 @@ Per eseguire il sito in locale, posiziona la cartella `Max Salvaggio Archivio/` 
 - **2026-07-25** – Aggiunto box dettagli evento tra header e tabella lead, gestione edit/delete evento e verifica email guest.
 - **2026-07-25** – Fix rendering miniature foto e riorganizzazione layout orizzontale box dettagli, inviti e lead in admin.html.
 - **2026-07-25** – Fix visualizzazione Nome Evento nei titoli/sidebar e aggiornato colore testo PIN in bianco in admin.html.
+- **2026-07-25** – Fix Nome Evento nei popup modali e aggiunta possibilità di modifica Codice/PIN evento in admin.html.
 
 ---
 

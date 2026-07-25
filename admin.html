@@ -4587,33 +4587,68 @@ www.maxsalvaggio.com`;
         }
       } catch (e) {}
 
-      const newName = prompt(`Modifica Nome Evento #${code}:`, existingMeta.name || code);
+      const currentName = existingMeta.name || code;
+
+      const newName = prompt(`Modifica Nome Evento "${currentName}":`, currentName);
       if (newName === null) return;
 
-      const newDate = prompt(`Modifica Data Evento #${code}:`, existingMeta.event_date || '');
+      const newRawCode = prompt(`Modifica Codice / PIN Evento per "${currentName}":`, code);
+      if (newRawCode === null) return;
+      const newCode = newRawCode.replace(/^#/, '').trim().toUpperCase();
+
+      if (!newCode) {
+        alert("Il Codice / PIN dell'evento non può essere vuoto.");
+        return;
+      }
+
+      const newDate = prompt(`Modifica Data Evento per "${currentName}":`, existingMeta.event_date || '');
       if (newDate === null) return;
 
-      const newLoc = prompt(`Modifica Luogo/Location Evento #${code}:`, existingMeta.event_location || '');
+      const newLoc = prompt(`Modifica Luogo / Location Evento per "${currentName}":`, existingMeta.event_location || '');
       if (newLoc === null) return;
 
-      const newNotes = prompt(`Modifica Note Admin per gli Ospiti dell'Evento #${code}:`, existingMeta.event_notes || '');
+      const newNotes = prompt(`Modifica Note Admin per gli Ospiti dell'Evento "${currentName}":`, existingMeta.event_notes || '');
       if (newNotes === null) return;
 
       try {
+        let activeCode = code;
+
+        // Se il PIN/Codice è stato modificato, migra file nello Storage e aggiorna i Lead nel DB
+        if (newCode !== code) {
+          try {
+            const { data: files } = await supabaseClient.storage.from('client-proofs').list(`photoshare/${code}`);
+            if (files && files.length > 0) {
+              for (const f of files) {
+                await supabaseClient.storage.from('client-proofs').move(`photoshare/${code}/${f.name}`, `photoshare/${newCode}/${f.name}`);
+              }
+            }
+          } catch (mErr) {
+            console.warn("Miglioramento storage path:", mErr);
+          }
+
+          try {
+            await supabaseClient.from('photoshare_leads').update({ event_code: newCode }).eq('event_code', code);
+          } catch (lErr) {
+            console.warn("Aggiornamento lead db:", lErr);
+          }
+
+          activeCode = newCode;
+        }
+
         const metaObj = {
-          name: newName.trim() || code,
-          code: code,
+          name: newName.trim() || currentName,
+          code: activeCode,
           event_date: newDate.trim(),
           event_location: newLoc.trim(),
           event_notes: newNotes.trim(),
           updated_at: new Date().toISOString()
         };
         const metaBlob = new Blob([JSON.stringify(metaObj, null, 2)], { type: 'application/json' });
-        await supabaseClient.storage.from('client-proofs').upload(`photoshare/${code}/_metadata.json`, metaBlob, { upsert: true });
+        await supabaseClient.storage.from('client-proofs').upload(`photoshare/${activeCode}/_metadata.json`, metaBlob, { upsert: true });
 
-        alert(`Evento #${code} aggiornato con successo!`);
+        alert(`Evento "${metaObj.name}" aggiornato con successo!`);
         await loadPhotoShareEvents();
-        selectPhotoShareEvent(code);
+        selectPhotoShareEvent(activeCode);
       } catch (err) {
         alert("Errore durante l'aggiornamento dei dati evento: " + err.message);
       }
@@ -4621,7 +4656,20 @@ www.maxsalvaggio.com`;
 
     async function deletePhotoShareEventEntirely(code) {
       if (!supabaseClient) return;
-      const confirmDel = confirm(`ATTENZIONE: Sei sicuro di voler eliminare DEFINITIVAMENTE l'Evento #${code} e TUTTI i file/foto contenuti?`);
+
+      let eventTitle = code;
+      try {
+        const { data } = await supabaseClient.storage.from('client-proofs').createSignedUrl(`photoshare/${code}/_metadata.json`, 3600);
+        if (data?.signedUrl) {
+          const resp = await fetch(data.signedUrl);
+          if (resp.ok) {
+            const meta = await resp.json();
+            if (meta.name) eventTitle = meta.name;
+          }
+        }
+      } catch (e) {}
+
+      const confirmDel = confirm(`ATTENZIONE: Sei sicuro di voler eliminare DEFINITIVAMENTE l'Evento "${eventTitle}" (PIN: #${code}) e TUTTI i file/foto contenuti?`);
       if (!confirmDel) return;
 
       try {
@@ -4634,7 +4682,7 @@ www.maxsalvaggio.com`;
           }
         }
 
-        alert(`Evento #${code} ed i relativi file sono stati eliminati definitivamente.`);
+        alert(`Evento "${eventTitle}" ed i relativi file sono stati eliminati definitivamente.`);
         await loadPhotoShareEvents();
         const grid = document.getElementById("ps-event-photos-grid");
         if (grid) grid.innerHTML = '<div class="empty-state" style="grid-column: 1 / -1;">Seleziona un evento dall\'elenco a sinistra.</div>';
