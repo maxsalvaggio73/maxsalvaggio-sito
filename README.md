@@ -69,6 +69,7 @@ Per eseguire il sito in locale, posiziona la cartella `Max Salvaggio Archivio/` 
 - **2026-07-25** – Aggiunta Dashboard laterale destra con tasto EXIT, info evento e campi metadati in PhotoShare.
 - **2026-07-25** – Spostata Dashboard a 20px dal bordo destro e integrati i pulsanti di selezione dentro la card.
 - **2026-07-25** – Aggiunta gestione modifica/eliminazione eventi PhotoShare, invito manuale admin e verifica email per registrazione guest.
+- **2026-07-25** – Aggiunto box dettagli evento tra header e tabella lead, gestione edit/delete evento e verifica email guest.
 
 ---
 

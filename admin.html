@@ -1516,6 +1516,42 @@ create policy "Consenti agli admin la gestione di oggetti public-portfolio" on s
       <div class="workspace-header">
         <h2 class="workspace-title">PhotoShare: Contatti Acquisiti (Lead)</h2>
         <button class="btn-submit" style="width: auto; padding: 8px 16px; font-size: 0.75rem; background-color: var(--accent-green); border-color: var(--accent-green);" onclick="exportPhotoShareLeadsCSV()">📥 Esporta Contatti (CSV)</button>
+      <!-- BOX DETTAGLI EVENTO SELEZIONATO -->
+      <div id="ps-event-details-box" style="margin-top: 20px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; padding: 20px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; flex-wrap: wrap; gap: 10px;">
+          <div>
+            <h3 style="font-size: 1.05rem; font-weight: 700; color: #fff; display: flex; align-items: center; gap: 8px;" id="ps-detail-name">
+              <span>🏷️ Seleziona un Evento dall'Elenco</span>
+            </h3>
+            <div style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 2px;">
+              PIN: <strong id="ps-detail-code" style="color: var(--accent); letter-spacing: 0.05em;">---</strong>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 8px;">
+            <button class="btn-submit" id="btn-edit-ps-details" style="width: auto; padding: 6px 14px; font-size: 0.75rem; background-color: rgba(255,183,77,0.15); border-color: rgba(255,183,77,0.4); color: #FFB74D;" onclick="triggerActiveEventEdit()">
+              ✏️ Modifica Dettagli / PIN
+            </button>
+            <button class="btn-submit" id="btn-delete-ps-details" style="width: auto; padding: 6px 14px; font-size: 0.75rem; background-color: rgba(229,9,20,0.15); border-color: rgba(229,9,20,0.4); color: #FF8A80;" onclick="triggerActiveEventDelete()">
+              🗑️ Elimina Evento
+            </button>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; background: rgba(0,0,0,0.25); padding: 14px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.05); font-size: 0.8rem;">
+          <div>
+            <span style="color: var(--text-secondary); font-size: 0.7rem; text-transform: uppercase; display: block; font-weight: 600;">📅 Data Evento</span>
+            <span id="ps-detail-date" style="color: #fff; font-weight: 500;">---</span>
+          </div>
+          <div>
+            <span style="color: var(--text-secondary); font-size: 0.7rem; text-transform: uppercase; display: block; font-weight: 600;">📍 Luogo / Location</span>
+            <span id="ps-detail-location" style="color: #fff; font-weight: 500;">---</span>
+          </div>
+          <div style="grid-column: 1 / -1;">
+            <span style="color: var(--text-secondary); font-size: 0.7rem; text-transform: uppercase; display: block; font-weight: 600;">📝 Note dell'Admin per gli Ospiti</span>
+            <span id="ps-detail-notes" style="color: rgba(255,255,255,0.85); font-weight: 400; font-style: italic;">---</span>
+          </div>
+        </div>
       </div>
 
       <div style="margin-top: 20px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; padding: 20px;">
@@ -4580,6 +4616,56 @@ www.maxsalvaggio.com`;
 
     let currentSelectedPhotoShareCode = "";
 
+    async function updatePhotoShareDetailsBox(code) {
+      const nameEl = document.getElementById('ps-detail-name');
+      const codeEl = document.getElementById('ps-detail-code');
+      const dateEl = document.getElementById('ps-detail-date');
+      const locEl = document.getElementById('ps-detail-location');
+      const notesEl = document.getElementById('dash-notes-val') || document.getElementById('ps-detail-notes');
+      const inviteCodeInput = document.getElementById('ps-invite-code');
+
+      if (codeEl) codeEl.textContent = `#${code}`;
+      if (inviteCodeInput) inviteCodeInput.value = code;
+
+      if (!supabaseClient) return;
+
+      try {
+        const { data } = await supabaseClient.storage.from('client-proofs').createSignedUrl(`photoshare/${code}/_metadata.json`, 3600);
+        if (data?.signedUrl) {
+          const resp = await fetch(data.signedUrl);
+          if (resp.ok) {
+            const meta = await resp.json();
+            if (nameEl) nameEl.innerHTML = `<span>🏷️ ${meta.name || code}</span>`;
+            if (dateEl) dateEl.textContent = meta.event_date || 'Non specificata';
+            if (locEl) locEl.textContent = meta.event_location || 'Non specificato';
+            if (notesEl) notesEl.textContent = meta.event_notes || 'Nessuna nota impostata dall\'admin.';
+            return;
+          }
+        }
+      } catch (e) {}
+
+      if (nameEl) nameEl.innerHTML = `<span>🏷️ Evento #${code}</span>`;
+      if (dateEl) dateEl.textContent = 'Non specificata';
+      if (locEl) locEl.textContent = 'Non specificato';
+      if (notesEl) notesEl.textContent = 'Nessuna nota impostata dall\'admin.';
+    }
+
+    function triggerActiveEventEdit() {
+      if (!currentSelectedPhotoShareCode) {
+        alert("Seleziona prima un evento attivo dall'elenco a sinistra.");
+        return;
+      }
+      editPhotoShareEvent(currentSelectedPhotoShareCode);
+    }
+
+    function triggerActiveEventDelete() {
+      if (!currentSelectedPhotoShareCode) {
+        alert("Seleziona prima un evento attivo dall'elenco a sinistra.");
+        return;
+      }
+      deletePhotoShareEventEntirely(currentSelectedPhotoShareCode);
+    }
+
     function selectPhotoShareEvent(code) {
       const cleanCode = code.replace(/^#/, '').trim().toUpperCase();
       currentSelectedPhotoShareCode = cleanCode;
@@ -4596,6 +4682,7 @@ www.maxsalvaggio.com`;
         }
       });
 
+      updatePhotoShareDetailsBox(cleanCode);
       filterPhotoShareLeads(cleanCode);
       loadPhotoShareEventPhotos(cleanCode);
     }
