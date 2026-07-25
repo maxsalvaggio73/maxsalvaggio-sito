@@ -57,16 +57,26 @@
 
     /* MAIN TWO-COLUMN LAYOUT */
     .photoshare-main-layout {
-      display: grid;
-      grid-template-columns: 1fr 300px;
+      display: flex;
       gap: 24px;
       align-items: start;
+      width: 100%;
+      max-width: 100%;
+    }
+    .photoshare-gallery-col {
+      flex: 1;
+      min-width: 0;
+    }
+    .photoshare-sidebar-col {
+      width: 320px;
+      flex-shrink: 0;
     }
     @media (max-width: 992px) {
       .photoshare-main-layout {
-        grid-template-columns: 1fr;
+        flex-direction: column;
       }
       .photoshare-sidebar-col {
+        width: 100%;
         order: -1;
         margin-bottom: 20px;
       }
@@ -163,7 +173,7 @@
       display: flex;
       flex-direction: column;
       line-height: 1.5;
-      padding-bottom: 90px; /* space for fixed action bar */
+      padding-bottom: 30px;
     }
 
     /* HEADER */
@@ -212,9 +222,9 @@
     main {
       flex: 1;
       width: 100%;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 30px 20px;
+      max-width: 100%;
+      margin: 0;
+      padding: 30px 20px 30px 24px;
     }
 
     /* CARDS & PANELS */
@@ -743,41 +753,36 @@
               <div class="ps-sidebar-label">📝 Note dell'Admin</div>
               <div class="ps-sidebar-notes" id="dash-event-notes">Nessuna nota comunicata dall'organizzatore.</div>
             </div>
+
+            <hr class="ps-sidebar-divider">
+
+            <!-- GUEST PHOTO ACTIONS (INTEGRATED IN DASHBOARD CARD) -->
+            <div class="ps-sidebar-section" style="display: flex; flex-direction: column; gap: 8px;">
+              <div class="ps-sidebar-label" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                <span>📸 Azioni Foto</span>
+                <span id="selected-count-badge" style="background: rgba(229, 9, 20, 0.15); color: #FF8A80; padding: 2px 8px; border-radius: 10px; font-size: 0.7rem; text-transform: none;"><span id="selected-count">0</span> Selezionate</span>
+              </div>
+
+              <!-- [1] SELEZIONA TUTTO (width 100%) -->
+              <button class="btn-action-side" onclick="selectAllPhotos()" style="width: 100%; background-color: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.25); color: #fff; padding: 10px 14px; font-size: 0.78rem; font-weight: 600; border-radius: 6px; cursor: pointer; transition: all 0.2s;">
+                ☑️ SELEZIONA TUTTO
+              </button>
+
+              <!-- [2] RICHIEDI IMMAGINI SELEZIONATE (Verde, width 100%) -->
+              <button class="btn-action-side" id="btn-download-zip" onclick="downloadSelectedZip()" disabled style="width: 100%; background-color: var(--accent-green); border: 1px solid var(--accent-green); color: #000; font-weight: 700; padding: 10px 14px; font-size: 0.78rem; border-radius: 6px; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 6px;">
+                <span class="spinner" id="zip-spinner" style="display: none; width: 14px; height: 14px; border-width: 2px;"></span>
+                <span id="btn-download-zip-text">📥 RICHIEDI IMMAGINI SELEZIONATE (0)</span>
+              </button>
+
+              <!-- [3] DESELEZIONA TUTTO (Neutro, width 100%) -->
+              <button class="btn-action-side" onclick="deselectAllPhotos()" style="width: 100%; background-color: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); color: var(--text-secondary); padding: 10px 14px; font-size: 0.78rem; font-weight: 600; border-radius: 6px; cursor: pointer; transition: all 0.2s;">
+                ❌ DESELEZIONA TUTTO
+              </button>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </main>
-
-  <!-- FIXED BOTTOM ACTION BAR FOR GALLERY (GUEST RESERVED) -->
-  <div class="bottom-action-bar" id="gallery-action-bar" style="display: none;">
-    <div class="bar-info">
-      <div class="selected-count-badge">
-        <span id="selected-count">0</span> foto selezionate
-      </div>
-      <div class="social-badge">
-        <span>📱 Formato Ottimizzato Social / Instagram Ready</span>
-      </div>
-    </div>
-
-    <div class="bar-controls" style="display: flex; align-items: center; gap: 8px; flex-wrap: nowrap !important; white-space: nowrap; overflow-x: auto;">
-      <!-- [1] SELEZIONA TUTTO -->
-      <button class="btn-select-toggle" onclick="selectAllPhotos()" style="flex-shrink: 0; white-space: nowrap; padding: 8px 14px; font-size: 0.78rem;">
-        ☑️ SELEZIONA TUTTO
-      </button>
-
-      <!-- [2] RICHIEDI IMMAGINI SELEZIONATE (Verde) -->
-      <button class="btn-download-zip" id="btn-download-zip" onclick="downloadSelectedZip()" disabled style="flex-shrink: 0; white-space: nowrap; background-color: var(--accent-green); border-color: var(--accent-green); color: #000; font-weight: 700; padding: 8px 14px; font-size: 0.78rem;">
-        <span class="spinner" id="zip-spinner" style="display: none;"></span>
-        <span id="btn-download-zip-text">📥 RICHIEDI IMMAGINI SELEZIONATE (0)</span>
-      </button>
-
-      <!-- [3] DESELEZIONA TUTTO (Neutro) -->
-      <button class="btn-select-toggle" onclick="deselectAllPhotos()" style="flex-shrink: 0; white-space: nowrap; background-color: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2); color: #fff; padding: 8px 14px; font-size: 0.78rem;">
-        ❌ DESELEZIONA TUTTO
-      </button>
-    </div>
-  </div>
 
   <!-- LIGHTBOX POPUP MODAL -->
   <div class="ps-lightbox-overlay" id="ps-lightbox" onclick="closePhotoShareLightbox()">
@@ -1042,7 +1047,6 @@
     async function showGalleryPhase() {
       document.getElementById('event-display-title').textContent = `Galleria Evento #${activeEventCode}`;
       document.getElementById('phase-3-panel').style.display = "block";
-      document.getElementById('gallery-action-bar').style.display = "flex";
 
       loadEventMetadata(activeEventCode, activeValidPath);
 
