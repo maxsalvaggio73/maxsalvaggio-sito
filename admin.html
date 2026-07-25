@@ -1527,7 +1527,7 @@ create policy "Consenti agli admin la gestione di oggetti public-portfolio" on s
               <h3 style="font-size: 1rem; font-weight: 700; color: #fff; display: flex; align-items: center; gap: 6px; margin: 0;" id="ps-detail-name">
                 <span>🏷️ Seleziona Evento</span>
               </h3>
-              <span class="mini-badge" style="background: rgba(229, 9, 20, 0.15); color: #FF8A80; font-size: 0.72rem;">PIN: <strong id="ps-detail-code" style="color: var(--accent); letter-spacing: 0.05em;">---</strong></span>
+              <span class="mini-badge" style="background: rgba(255, 255, 255, 0.15); color: #ffffff; font-size: 0.72rem;">PIN: <strong id="ps-detail-code" style="color: #ffffff; letter-spacing: 0.05em;">---</strong></span>
             </div>
 
             <div style="background: rgba(0,0,0,0.25); padding: 12px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.05); font-size: 0.78rem; display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px;">
@@ -4534,8 +4534,21 @@ www.maxsalvaggio.com`;
         }
 
         container.innerHTML = "";
-        data.forEach(item => {
+        for (const item of data) {
           const cleanCode = item.name.replace(/^#/, '').toUpperCase();
+          let displayName = cleanCode;
+
+          try {
+            const { data: metaUrlData } = await supabaseClient.storage.from('client-proofs').createSignedUrl(`photoshare/${cleanCode}/_metadata.json`, 3600);
+            if (metaUrlData?.signedUrl) {
+              const resp = await fetch(metaUrlData.signedUrl);
+              if (resp.ok) {
+                const meta = await resp.json();
+                if (meta.name) displayName = meta.name;
+              }
+            }
+          } catch (e) {}
+
           const div = document.createElement("div");
           div.className = "client-item";
           div.dataset.code = cleanCode;
@@ -4544,9 +4557,9 @@ www.maxsalvaggio.com`;
           div.style.justifyContent = "space-between";
           div.onclick = () => selectPhotoShareEvent(cleanCode);
           div.innerHTML = `
-            <div style="display: flex; align-items: center; gap: 6px; overflow: hidden;">
-              <span class="client-email-text" style="font-weight:600; color:#fff; font-size: 0.78rem;">#${cleanCode}</span>
-              <span class="mini-badge" style="background: rgba(229,9,20,0.15); color: #FF8A80; font-size: 0.65rem;">Evento</span>
+            <div style="display: flex; flex-direction: column; overflow: hidden; gap: 2px;">
+              <span class="client-email-text" style="font-weight:600; color:#fff; font-size: 0.78rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${displayName}</span>
+              <span style="font-size: 0.65rem; color: #ffffff;">PIN: #${cleanCode}</span>
             </div>
             <div style="display: flex; gap: 4px; flex-shrink: 0;" onclick="event.stopPropagation();">
               <button style="background: none; border: none; color: #FFB74D; font-size: 0.8rem; cursor: pointer; padding: 2px 4px;" onclick="editPhotoShareEvent('${cleanCode}')" title="Modifica Evento">✏️</button>
@@ -4554,7 +4567,7 @@ www.maxsalvaggio.com`;
             </div>
           `;
           container.appendChild(div);
-        });
+        }
       } catch (err) {
         container.innerHTML = '<div class="empty-state" style="font-size:0.75rem; padding:10px 0;">Nessun evento trovato.</div>';
       }
@@ -4632,6 +4645,8 @@ www.maxsalvaggio.com`;
 
     let currentSelectedPhotoShareCode = "";
 
+    let currentPhotoShareActiveEventName = "";
+
     async function updatePhotoShareDetailsBox(code) {
       const nameEl = document.getElementById('ps-detail-name');
       const codeEl = document.getElementById('ps-detail-code');
@@ -4639,9 +4654,16 @@ www.maxsalvaggio.com`;
       const locEl = document.getElementById('ps-detail-location');
       const notesEl = document.getElementById('dash-notes-val') || document.getElementById('ps-detail-notes');
       const inviteCodeInput = document.getElementById('ps-invite-code');
+      const leadsTitle = document.getElementById("ps-leads-table-title");
+      const photosTitle = document.getElementById("ps-photos-grid-title");
 
-      if (codeEl) codeEl.textContent = `#${code}`;
+      if (codeEl) {
+        codeEl.textContent = `#${code}`;
+        codeEl.style.color = "#ffffff";
+      }
       if (inviteCodeInput) inviteCodeInput.value = code;
+
+      currentPhotoShareActiveEventName = code;
 
       if (!supabaseClient) return;
 
@@ -4651,7 +4673,12 @@ www.maxsalvaggio.com`;
           const resp = await fetch(data.signedUrl);
           if (resp.ok) {
             const meta = await resp.json();
-            if (nameEl) nameEl.innerHTML = `<span>🏷️ ${meta.name || code}</span>`;
+            if (meta.name) {
+              currentPhotoShareActiveEventName = meta.name;
+              if (nameEl) nameEl.innerHTML = `<span>🏷️ ${meta.name}</span>`;
+              if (leadsTitle) leadsTitle.textContent = `Contatti Acquisiti (${meta.name})`;
+              if (photosTitle) photosTitle.textContent = `Foto dell'Evento ${meta.name}`;
+            }
             if (dateEl) dateEl.textContent = meta.event_date || 'Non specificata';
             if (locEl) locEl.textContent = meta.event_location || 'Non specificato';
             if (notesEl) notesEl.textContent = meta.event_notes || 'Nessuna nota impostata dall\'admin.';
@@ -4661,6 +4688,8 @@ www.maxsalvaggio.com`;
       } catch (e) {}
 
       if (nameEl) nameEl.innerHTML = `<span>🏷️ Evento #${code}</span>`;
+      if (leadsTitle) leadsTitle.textContent = `Contatti Acquisiti (#${code})`;
+      if (photosTitle) photosTitle.textContent = `Foto dell'Evento #${code}`;
       if (dateEl) dateEl.textContent = 'Non specificata';
       if (locEl) locEl.textContent = 'Non specificato';
       if (notesEl) notesEl.textContent = 'Nessuna nota impostata dall\'admin.';
@@ -4945,8 +4974,9 @@ www.maxsalvaggio.com`;
 
       if (!grid) return;
 
-      grid.innerHTML = '<div class="empty-state" style="grid-column: 1 / -1; font-size: 0.8rem;">Caricamento foto dell\'evento #' + code + '...</div>';
-      if (title) title.textContent = `Foto dell'Evento #${code}`;
+      const eventTitleName = currentPhotoShareActiveEventName || `#${code}`;
+      grid.innerHTML = `<div class="empty-state" style="grid-column: 1 / -1; font-size: 0.8rem;">Caricamento foto dell'evento ${eventTitleName}...</div>`;
+      if (title) title.textContent = `Foto dell'Evento ${eventTitleName}`;
 
       const candidatePaths = [
         `photoshare/${code}`,
@@ -5124,7 +5154,8 @@ www.maxsalvaggio.com`;
     function filterPhotoShareLeads(code) {
       const title = document.getElementById("ps-leads-table-title");
       const cleanCode = code.replace(/^#/, '').trim().toUpperCase();
-      if (title) title.textContent = `Lead Evento #${cleanCode}`;
+      const name = currentPhotoShareActiveEventName || cleanCode;
+      if (title) title.textContent = `Contatti Acquisiti (${name})`;
       const filtered = allPhotoShareLeads.filter(l => l.event_code && l.event_code.replace(/^#/, '').toUpperCase() === cleanCode);
       renderPhotoShareLeadsTable(filtered);
     }
