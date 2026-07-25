@@ -84,6 +84,7 @@ Per eseguire il sito in locale, posiziona la cartella `Max Salvaggio Archivio/` 
 - **2026-07-25** – Fix titolo header da EDITORIALS a PORTRAITS e ripristino tab orizzontali nella vista PORTRAITS II.
 - **2026-07-25** – Fix layout Portraits II: sostituita immagine gigante con la griglia standard di miniature.
 - **2026-07-25** – Rimossa la voce Beauty dal menù Archive dell'header e del footer.
+- **2026-07-25** – Sostituita ancora #portraits-beauty con #portraits e sincronizzato stato attivo menù header con i tab di sezione.
 
 ---
 

@@ -274,7 +274,7 @@ document.addEventListener("DOMContentLoaded", () => {
               <ul class="dropdown-menu">
                 ${sectPages.map(pg => {
                   if (pg.target_type === 'tab') {
-                    return `<li><a href="${pg.target_section || '#portraits-beauty'}" class="nav-link" data-section="${(pg.target_section || '#portraits-beauty').replace('#', '')}" data-tab="${pg.target_value}">${pg.label}</a></li>`;
+                    return `<li><a href="${pg.target_section || '#portraits'}" class="nav-link" data-section="${(pg.target_section || '#portraits').replace('#', '')}" data-tab="${pg.target_value}">${pg.label}</a></li>`;
                   } else {
                     return `<li><a href="${pg.target_value}" class="nav-link" data-section="${pg.target_value.replace('#', '')}">${pg.label}</a></li>`;
                   }
@@ -301,7 +301,7 @@ document.addEventListener("DOMContentLoaded", () => {
               <ul class="mobile-submenu">
                 ${sectPages.map(pg => {
                   if (pg.target_type === 'tab') {
-                    return `<li><a href="${pg.target_section || '#portraits-beauty'}" class="mobile-nav-link" data-section="${(pg.target_section || '#portraits-beauty').replace('#', '')}" data-tab="${pg.target_value}">${pg.label}</a></li>`;
+                    return `<li><a href="${pg.target_section || '#portraits'}" class="mobile-nav-link" data-section="${(pg.target_section || '#portraits').replace('#', '')}" data-tab="${pg.target_value}">${pg.label}</a></li>`;
                   } else {
                     return `<li><a href="${pg.target_value}" class="mobile-nav-link" data-section="${pg.target_value.replace('#', '')}">${pg.label}</a></li>`;
                   }
@@ -337,7 +337,7 @@ document.addEventListener("DOMContentLoaded", () => {
             ${drop1 ? `
               <li class="footer-nav-header" style="margin-top: 15px;"><a href="${drop1.target}" class="footer-nav-link" data-section="${drop1.target.replace('#', '')}">${drop1.label.toUpperCase()}</a></li>
               ${pages.filter(p => p.section_id === drop1.id).map(pg => {
-                const href = pg.target_type === 'tab' ? (pg.target_section || '#portraits-beauty') : pg.target_value;
+                const href = pg.target_type === 'tab' ? (pg.target_section || '#portraits') : pg.target_value;
                 const sec = href.replace('#', '');
                 return `<li><a href="${href}" class="footer-nav-link sub-link" data-section="${sec}" ${pg.target_type === 'tab' ? `data-tab="${pg.target_value}"` : ''}>${pg.label}</a></li>`;
               }).join('')}
@@ -352,7 +352,7 @@ document.addEventListener("DOMContentLoaded", () => {
             ${drop2 ? `
               <li class="footer-nav-header"><a href="${drop2.target}" class="footer-nav-link" data-section="${drop2.target.replace('#', '')}">${drop2.label.toUpperCase()}</a></li>
               ${pages.filter(p => p.section_id === drop2.id).map(pg => {
-                const href = pg.target_type === 'tab' ? (pg.target_section || '#portraits-beauty') : pg.target_value;
+                const href = pg.target_type === 'tab' ? (pg.target_section || '#portraits') : pg.target_value;
                 const sec = href.replace('#', '');
                 return `<li><a href="${href}" class="footer-nav-link sub-link" data-section="${sec}" ${pg.target_type === 'tab' ? `data-tab="${pg.target_value}"` : ''}>${pg.label}</a></li>`;
               }).join('')}
@@ -367,7 +367,7 @@ document.addEventListener("DOMContentLoaded", () => {
             ${drop3 ? `
               <li class="footer-nav-header"><a href="${drop3.target}" class="footer-nav-link" data-section="${drop3.target.replace('#', '')}">${drop3.label.toUpperCase()}</a></li>
               ${pages.filter(p => p.section_id === drop3.id).map(pg => {
-                const href = pg.target_type === 'tab' ? (pg.target_section || '#portraits-beauty') : pg.target_value;
+                const href = pg.target_type === 'tab' ? (pg.target_section || '#portraits') : pg.target_value;
                 const sec = href.replace('#', '');
                 return `<li><a href="${href}" class="footer-nav-link sub-link" data-section="${sec}" ${pg.target_type === 'tab' ? `data-tab="${pg.target_value}"` : ''}>${pg.label}</a></li>`;
               }).join('')}
@@ -407,6 +407,7 @@ document.addEventListener("DOMContentLoaded", () => {
       "campaigns-lingerie",
       "campaigns-swimwear",
       "body-form",
+      "portraits",
       "portraits-beauty",
       "film-work",
       "contact",
@@ -418,10 +419,13 @@ document.addEventListener("DOMContentLoaded", () => {
       "body-shadows"
     ];
     
-    // Redirect legacy #bio hash to #contact (bio is now merged into INFO)
+    // Redirect legacy #bio hash to #contact and #portraits-beauty to #portraits
     if (initialHash === "bio") {
       window.location.hash = "contact";
       activeSectionId = "contact";
+    } else if (initialHash === "portraits-beauty") {
+      window.location.hash = "portraits";
+      activeSectionId = "portraits";
     } else if (initialHash && validSections.includes(initialHash)) {
       activeSectionId = initialHash;
     } else {
@@ -524,12 +528,65 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  function updateNavLinksActiveState(targetSectionId, explicitTabId) {
+    const currentSec = targetSectionId || (activeSectionId === "unpublished-research" ? "portraits" : activeSectionId);
+    const activeTab = explicitTabId || localStorage.getItem("activeTab") || (document.querySelector(`#section-${currentSec} .tab-link.active`)?.getAttribute("data-tab") || (currentSec === "portraits" ? "pb-portraits" : ""));
+
+    navLinks.forEach(link => {
+      const linkSection = link.getAttribute("data-section");
+      const linkTab = link.getAttribute("data-tab");
+
+      if (linkTab) {
+        if ((linkSection === currentSec || (linkSection === "portraits-beauty" && currentSec === "portraits")) && linkTab === activeTab) {
+          link.classList.add("active");
+        } else {
+          link.classList.remove("active");
+        }
+      } else {
+        if (linkSection === currentSec || (linkSection === "portraits-beauty" && currentSec === "portraits")) {
+          link.classList.add("active");
+        } else {
+          link.classList.remove("active");
+        }
+      }
+    });
+
+    const dropdownGroups = [
+      {
+        toggleSelector: '[data-dropdown="archive"]',
+        sections: ["editorials", "campaigns-fashion", "campaigns-lingerie", "campaigns-swimwear", "archive"]
+      },
+      {
+        toggleSelector: '[data-dropdown="portraits"], [data-dropdown="portraits-beauty"]',
+        sections: ["portraits", "portraits-beauty", "unpublished-research"]
+      },
+      {
+        toggleSelector: '[data-dropdown="body-form"]',
+        sections: ["body-form"]
+      }
+    ];
+
+    dropdownGroups.forEach(group => {
+      const toggles = document.querySelectorAll(group.toggleSelector);
+      const isActive = group.sections.includes(currentSec);
+      toggles.forEach(t => {
+        if (isActive) {
+          t.classList.add("active");
+        } else {
+          t.classList.remove("active");
+        }
+      });
+    });
+  }
+
   function switchSection(targetId, animate = true) {
     let sectionId = targetId;
 
-    if (targetId === "unpublished-research") {
-      sectionId = "portraits-beauty";
-      localStorage.setItem("activeTab", "pb-unpublished");
+    if (targetId === "unpublished-research" || targetId === "portraits-beauty") {
+      sectionId = "portraits";
+      if (targetId === "unpublished-research") {
+        localStorage.setItem("activeTab", "pb-unpublished");
+      }
     }
 
     const currentActive = document.querySelector(".spa-section.active");
@@ -542,57 +599,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     activeSectionId = targetId;
 
-    // Update active class on nav links
-    navLinks.forEach(link => {
-      if (link.getAttribute("data-section") === targetId) {
-        link.classList.add("active");
-      } else {
-        link.classList.remove("active");
-      }
-    });
-
-    // Update parent dropdown toggle active states
-    const activeTab = localStorage.getItem("activeTab") || (window._lastActiveTab || "");
-    const dropdownGroups = [
-      {
-        toggleSelector: '[data-dropdown="archive"]',
-        sections: ["editorials", "campaigns-fashion", "campaigns-lingerie", "campaigns-swimwear", "archive"],
-        tabFilter: null
-      },
-      {
-        toggleSelector: '[data-dropdown="portraits-beauty"]',
-        sections: ["portraits-beauty", "unpublished-research"],
-        tabFilter: null // highlight for any tab under portraits-beauty
-      },
-      {
-        toggleSelector: '[data-dropdown="body-form"]',
-        sections: ["body-form"],
-        tabFilter: null
-      }
-    ];
-    dropdownGroups.forEach(group => {
-      const toggles = document.querySelectorAll(group.toggleSelector);
-      let isActive = false;
-      if (group.sections.includes(targetId)) {
-        if (group.tabFilter && group.tabFilter.section === targetId) {
-          // Special case: only activate if the Beauty tab is active
-          const currentActiveTab = document.querySelector('.tab-link.active');
-          const currentTabId = currentActiveTab ? currentActiveTab.getAttribute('data-tab') : "";
-          isActive = (currentTabId === group.tabFilter.activeTab) || (activeTab === group.tabFilter.activeTab);
-          // For portraits-beauty toggle: highlight ONLY when Beauty tab is NOT active
-          if (group.toggleSelector === '[data-dropdown="portraits-beauty"]') {
-            isActive = !((currentTabId === "pb-beauty") || (activeTab === "pb-beauty"));
-          }
-        } else {
-          isActive = true;
-        }
-      }
-      if (isActive) {
-        toggles.forEach(t => t.classList.add("active"));
-      } else {
-        toggles.forEach(t => t.classList.remove("active"));
-      }
-    });
+    // Update nav links active state
+    updateNavLinksActiveState(sectionId);
 
 
     if (currentActive && currentActive.id === ("section-" + sectionId) && targetId !== "editorials" && targetId !== "unpublished-research") {
@@ -1525,6 +1533,9 @@ document.addEventListener("DOMContentLoaded", () => {
           targetContent.offsetHeight; // reflow
           targetContent.classList.add("active");
         }
+
+        const secId = section.id.replace("section-", "");
+        updateNavLinksActiveState(secId, targetTabId);
 
         // Update background image for tab click
         updateBackgroundForSection(targetTabId);
