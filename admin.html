@@ -4515,6 +4515,19 @@ www.maxsalvaggio.com`;
       }
     }
 
+    async function purgeStorageFolder(folderPath) {
+      if (!supabaseClient || !folderPath) return;
+      try {
+        const { data } = await supabaseClient.storage.from('client-proofs').list(folderPath, { limit: 1000 });
+        if (data && data.length > 0) {
+          const filesToRemove = data.map(f => `${folderPath}/${f.name}`);
+          await supabaseClient.storage.from('client-proofs').remove(filesToRemove);
+        }
+      } catch (e) {
+        console.warn("purgeStorageFolder exception:", folderPath, e);
+      }
+    }
+
     async function loadPhotoShareEvents() {
       if (!supabaseClient) return;
       const container = document.getElementById("photoshare-events-list");
@@ -4526,7 +4539,7 @@ www.maxsalvaggio.com`;
         const { data, error } = await supabaseClient
           .storage
           .from('client-proofs')
-          .list('photoshare');
+          .list('photoshare', { limit: 1000 });
 
         if (error || !data || data.length === 0) {
           container.innerHTML = '<div class="empty-state" style="font-size:0.75rem; padding:10px 0;">Nessun evento salvato.</div>';
@@ -4534,20 +4547,42 @@ www.maxsalvaggio.com`;
         }
 
         container.innerHTML = "";
+        const processedCodes = new Set();
+
         for (const item of data) {
           const cleanCode = item.name.replace(/^#/, '').toUpperCase();
+          if (processedCodes.has(cleanCode)) continue;
+          processedCodes.add(cleanCode);
+
           let displayName = cleanCode;
+          let hasMetadata = false;
+          let fileCount = 0;
 
           try {
-            const { data: metaUrlData } = await supabaseClient.storage.from('client-proofs').createSignedUrl(`photoshare/${cleanCode}/_metadata.json`, 3600);
-            if (metaUrlData?.signedUrl) {
-              const resp = await fetch(metaUrlData.signedUrl);
-              if (resp.ok) {
-                const meta = await resp.json();
-                if (meta.name) displayName = meta.name;
+            const { data: subFiles } = await supabaseClient.storage.from('client-proofs').list(`photoshare/${cleanCode}`, { limit: 100 });
+            if (subFiles && subFiles.length > 0) {
+              const imageFiles = subFiles.filter(f => f.name !== '.emptyFolderPlaceholder' && f.name !== '.DS_Store' && f.name !== '_metadata.json');
+              fileCount = imageFiles.length;
+              const metaFile = subFiles.find(f => f.name === '_metadata.json');
+              if (metaFile) {
+                hasMetadata = true;
+                const { data: metaUrlData } = await supabaseClient.storage.from('client-proofs').createSignedUrl(`photoshare/${cleanCode}/_metadata.json`, 3600);
+                if (metaUrlData?.signedUrl) {
+                  const resp = await fetch(metaUrlData.signedUrl);
+                  if (resp.ok) {
+                    const meta = await resp.json();
+                    if (meta.name) displayName = meta.name;
+                  }
+                }
               }
             }
           } catch (e) {}
+
+          // Se la cartella è vuota (0 foto e senza metadata), pulisci automaticamente la cartella residua
+          if (fileCount === 0 && !hasMetadata) {
+            await purgeStorageFolder(`photoshare/${cleanCode}`);
+            continue;
+          }
 
           const div = document.createElement("div");
           div.className = "client-item";
@@ -4613,34 +4648,43 @@ www.maxsalvaggio.com`;
       try {
         let activeCode = code;
 
-        // Se il PIN/Codice è stato modificato, migra file nello Storage ed elimina la vecchia cartella per evitare duplicazioni
+        // Se il PIN/Codice è stato modificato, migra file nello Storage ed elimina completamente la vecchia cartella
         if (newCode !== code) {
-          try {
-            const { data: files } = await supabaseClient.storage.from('client-proofs').list(`photoshare/${code}`);
-            if (files && files.length > 0) {
-              const oldPaths = [];
-              for (const f of files) {
-                const oldPath = `photoshare/${code}/${f.name}`;
-                const newPath = `photoshare/${newCode}/${f.name}`;
-                oldPaths.push(oldPath);
+          const oldCandidatePaths = Array.from(new Set([
+            `photoshare/${code}`,
+            `photoshare/${code.toLowerCase()}`,
+            `photoshare/#${code}`,
+            `photoshare/#${code.toLowerCase()}`
+          ]));
 
-                const { error: moveErr } = await supabaseClient.storage.from('client-proofs').move(oldPath, newPath);
-                if (moveErr) {
-                  try {
-                    const { data: signedData } = await supabaseClient.storage.from('client-proofs').createSignedUrl(oldPath, 300);
-                    if (signedData?.signedUrl) {
-                      const fResp = await fetch(signedData.signedUrl);
-                      const fBlob = await fResp.blob();
-                      await supabaseClient.storage.from('client-proofs').upload(newPath, fBlob, { upsert: true });
-                    }
-                  } catch (fbErr) {}
+          for (const oldFolder of oldCandidatePaths) {
+            try {
+              const { data: files } = await supabaseClient.storage.from('client-proofs').list(oldFolder, { limit: 1000 });
+              if (files && files.length > 0) {
+                const oldPathsToPurge = [];
+                for (const f of files) {
+                  const oldFilePath = `${oldFolder}/${f.name}`;
+                  const newFilePath = `photoshare/${newCode}/${f.name}`;
+                  oldPathsToPurge.push(oldFilePath);
+
+                  const { error: moveErr } = await supabaseClient.storage.from('client-proofs').move(oldFilePath, newFilePath);
+                  if (moveErr) {
+                    try {
+                      const { data: signedData } = await supabaseClient.storage.from('client-proofs').createSignedUrl(oldFilePath, 300);
+                      if (signedData?.signedUrl) {
+                        const fResp = await fetch(signedData.signedUrl);
+                        const fBlob = await fResp.blob();
+                        await supabaseClient.storage.from('client-proofs').upload(newFilePath, fBlob, { upsert: true });
+                      }
+                    } catch (fbErr) {}
+                  }
                 }
+                // Rimozione esplicita di tutti i vecchi file compreso _metadata.json
+                await supabaseClient.storage.from('client-proofs').remove(oldPathsToPurge);
               }
-              // Elimina definitivamente tutti i file dal vecchio percorso per cancellare la cartella dal list
-              await supabaseClient.storage.from('client-proofs').remove(oldPaths);
+            } catch (mErr) {
+              console.warn("Errore migrazione storage path:", mErr);
             }
-          } catch (mErr) {
-            console.warn("Errore migrazione storage path:", mErr);
           }
 
           try {
@@ -4690,13 +4734,15 @@ www.maxsalvaggio.com`;
       if (!confirmDel) return;
 
       try {
-        const candidatePaths = [`photoshare/${code}`, `photoshare/${code.toLowerCase()}`];
+        const candidatePaths = [
+          `photoshare/${code}`,
+          `photoshare/${code.toLowerCase()}`,
+          `photoshare/#${code}`,
+          `photoshare/#${code.toLowerCase()}`
+        ];
+
         for (const path of candidatePaths) {
-          const { data } = await supabaseClient.storage.from('client-proofs').list(path);
-          if (data && data.length > 0) {
-            const filesToRemove = data.map(f => `${path}/${f.name}`);
-            await supabaseClient.storage.from('client-proofs').remove(filesToRemove);
-          }
+          await purgeStorageFolder(path);
         }
 
         alert(`Evento "${eventTitle}" ed i relativi file sono stati eliminati definitivamente.`);
