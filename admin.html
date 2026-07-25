@@ -4613,17 +4613,34 @@ www.maxsalvaggio.com`;
       try {
         let activeCode = code;
 
-        // Se il PIN/Codice è stato modificato, migra file nello Storage e aggiorna i Lead nel DB
+        // Se il PIN/Codice è stato modificato, migra file nello Storage ed elimina la vecchia cartella per evitare duplicazioni
         if (newCode !== code) {
           try {
             const { data: files } = await supabaseClient.storage.from('client-proofs').list(`photoshare/${code}`);
             if (files && files.length > 0) {
+              const oldPaths = [];
               for (const f of files) {
-                await supabaseClient.storage.from('client-proofs').move(`photoshare/${code}/${f.name}`, `photoshare/${newCode}/${f.name}`);
+                const oldPath = `photoshare/${code}/${f.name}`;
+                const newPath = `photoshare/${newCode}/${f.name}`;
+                oldPaths.push(oldPath);
+
+                const { error: moveErr } = await supabaseClient.storage.from('client-proofs').move(oldPath, newPath);
+                if (moveErr) {
+                  try {
+                    const { data: signedData } = await supabaseClient.storage.from('client-proofs').createSignedUrl(oldPath, 300);
+                    if (signedData?.signedUrl) {
+                      const fResp = await fetch(signedData.signedUrl);
+                      const fBlob = await fResp.blob();
+                      await supabaseClient.storage.from('client-proofs').upload(newPath, fBlob, { upsert: true });
+                    }
+                  } catch (fbErr) {}
+                }
               }
+              // Elimina definitivamente tutti i file dal vecchio percorso per cancellare la cartella dal list
+              await supabaseClient.storage.from('client-proofs').remove(oldPaths);
             }
           } catch (mErr) {
-            console.warn("Miglioramento storage path:", mErr);
+            console.warn("Errore migrazione storage path:", mErr);
           }
 
           try {
