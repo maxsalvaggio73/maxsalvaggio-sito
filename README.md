@@ -79,6 +79,7 @@ Per eseguire il sito in locale, posiziona la cartella `Max Salvaggio Archivio/` 
 - **2026-07-25** – Fix funzionalità invito e registrazione Lead evento in admin.html.
 - **2026-07-25** – Fix salvataggio Lead tramite metadata evento anziché tabella SQL non presente.
 - **2026-07-25** – Aggiunto invio email credenziali con CC all'admin e login utente tramite Email + PIN evento.
+- **2026-07-25** – Aggiornato menù header/footer: nascosto Fashion, spostata e rinominata la sezione Unpublished Research in PORTRAITS II.
 
 ---
 

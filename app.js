@@ -985,7 +985,7 @@ document.addEventListener("DOMContentLoaded", () => {
       },
       {
         id: "unpublished-research",
-        title: "Unpublished Research",
+        title: "PORTRAITS II",
         hash: "unpublished-research",
         coverUrl: portfolioData.editorials.unpublished_research[0].url
       }
@@ -1380,12 +1380,12 @@ document.addEventListener("DOMContentLoaded", () => {
     if (portfolioData.editorials.unpublished_research && portfolioData.editorials.unpublished_research.length > 0) {
       projectsList.push({
         id: "unpublished-research",
-        title: "Unpublished Research",
+        title: "PORTRAITS II",
         images: portfolioData.editorials.unpublished_research
       });
     }
 
-    const currentIndex = projectsList.findIndex(p => p.id === project.id || (project.title === "Unpublished Research" && p.id === "unpublished-research"));
+    const currentIndex = projectsList.findIndex(p => p.id === project.id || ((project.title === "PORTRAITS II" || project.title === "Unpublished Research") && p.id === "unpublished-research"));
     
     if (currentIndex !== -1 && projectsList.length > 1) {
       const prevProject = projectsList[(currentIndex - 1 + projectsList.length) % projectsList.length];
@@ -1465,7 +1465,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (typeof portfolioData !== "undefined" && portfolioData.editorials && portfolioData.editorials.unpublished_research) {
       const curatedList = generateCuratedUnpublishedResearchList(portfolioData.editorials.unpublished_research);
       showEditorialProject({
-        title: "Unpublished Research",
+        title: "PORTRAITS II",
         id: "unpublished-research",
         place: "",
         magazine: "",
@@ -2008,7 +2008,7 @@ document.addEventListener("DOMContentLoaded", () => {
       lightboxTitle.textContent = parts.join(" - ");
       lightboxTag.style.display = "none";
     } else if (isUnpublished) {
-      lightboxTitle.textContent = "Unpublished Research";
+      lightboxTitle.textContent = "PORTRAITS II";
       lightboxTag.style.display = "none";
     } else {
       let groupTitle = (imgObj && imgObj.tag) || "PORTFOLIO";
@@ -2031,7 +2031,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!projectsList.some(p => p.id === "unpublished-research")) {
         projectsList.push({
           id: "unpublished-research",
-          title: "Unpublished Research",
+          title: "PORTRAITS II",
           place: "",
           magazine: "",
           images: portfolioData.editorials.unpublished_research
