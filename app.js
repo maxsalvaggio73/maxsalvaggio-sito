@@ -631,9 +631,6 @@ document.addEventListener("DOMContentLoaded", () => {
         targetSection.style.opacity = "1";
         targetSection.style.transform = "translateY(0)";
         
-        if (targetId === "unpublished-research") {
-          showUnpublishedResearchDirectly();
-        }
         if (targetId === "archive") {
           renderArchiveGrid();
         }
@@ -656,18 +653,13 @@ document.addEventListener("DOMContentLoaded", () => {
       targetSection.style.opacity = "1";
       targetSection.style.transform = "translateY(0)";
 
-      if (targetId === "unpublished-research") {
-        showUnpublishedResearchDirectly();
-      }
       if (targetId === "archive") {
         renderArchiveGrid();
       }
     }
     
     // Close detail view of editorial when leaving the editorials tab
-    if (targetId !== "unpublished-research") {
-      resetEditorialDetails();
-    }
+    resetEditorialDetails();
 
     // Update background when changing section
     updateBackgroundForSection(targetId);
