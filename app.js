@@ -556,9 +556,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const dropdownGroups = [
       {
         toggleSelector: '[data-dropdown="archive"]',
-        // portraits-beauty is included so that when Beauty tab is active (via Archive menu), Archive toggle stays highlighted
-        sections: ["editorials", "campaigns-fashion", "campaigns-lingerie", "campaigns-swimwear", "archive", "portraits-beauty"],
-        tabFilter: { section: "portraits-beauty", activeTab: "pb-beauty" } // only highlight archive if we're on the Beauty tab
+        sections: ["editorials", "campaigns-fashion", "campaigns-lingerie", "campaigns-swimwear", "archive"],
+        tabFilter: null
       },
       {
         toggleSelector: '[data-dropdown="portraits-beauty"]',
