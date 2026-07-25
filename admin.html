@@ -4850,6 +4850,7 @@ www.maxsalvaggio.com`;
 
     async function inviteUserToPhotoShareEvent() {
       if (!supabaseClient) return;
+      const btn = document.getElementById('btn-ps-invite');
       const nameEl = document.getElementById('ps-invite-fullname');
       const emailEl = document.getElementById('ps-invite-email');
       const codeEl = document.getElementById('ps-invite-code');
@@ -4864,28 +4865,41 @@ www.maxsalvaggio.com`;
         return;
       }
 
+      if (btn) btn.disabled = true;
+
       try {
-        const { error } = await supabaseClient
+        const { data, error } = await supabaseClient
           .from('photoshare_leads')
           .insert([{
             event_code: code,
             full_name: fullName,
             email: email,
             phone: 'Invito Admin'
-          }]);
+          }])
+          .select();
 
         if (error) {
+          console.error("Errore inserimento photoshare_leads:", error);
           alert("Impossibile registrare l'invito: " + error.message);
           return;
         }
 
-        alert(`Utente "${fullName}" (${email}) invitato con successo all'Evento #${code}!`);
-        nameEl.value = '';
-        emailEl.value = '';
-        if (codeEl) codeEl.value = '';
-        filterPhotoShareLeads(code);
+        const eventDisplayName = currentPhotoShareActiveEventName || `#${code}`;
+        alert(`Utente "${fullName}" (${email}) invitato e registrato con successo per l'Evento "${eventDisplayName}"!`);
+
+        if (nameEl) nameEl.value = '';
+        if (emailEl) emailEl.value = '';
+
+        // Ricarica tutti i lead e filtra in tempo reale per l'evento attivo
+        await loadPhotoShareLeads();
+        if (code) {
+          filterPhotoShareLeads(code);
+        }
       } catch (err) {
+        console.error("Eccezione durante l'invito utente:", err);
         alert("Errore durante l'invito utente: " + err.message);
+      } finally {
+        if (btn) btn.disabled = false;
       }
     }
 
