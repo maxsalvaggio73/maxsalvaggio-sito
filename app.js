@@ -556,12 +556,12 @@ document.addEventListener("DOMContentLoaded", () => {
       {
         toggleSelector: '[data-dropdown="archive"]',
         // portraits-beauty is included so that when Beauty tab is active (via Archive menu), Archive toggle stays highlighted
-        sections: ["editorials", "campaigns-fashion", "campaigns-lingerie", "campaigns-swimwear", "unpublished-research", "archive", "portraits-beauty"],
+        sections: ["editorials", "campaigns-fashion", "campaigns-lingerie", "campaigns-swimwear", "archive", "portraits-beauty"],
         tabFilter: { section: "portraits-beauty", activeTab: "pb-beauty" } // only highlight archive if we're on the Beauty tab
       },
       {
         toggleSelector: '[data-dropdown="portraits-beauty"]',
-        sections: ["portraits-beauty"],
+        sections: ["portraits-beauty", "unpublished-research"],
         tabFilter: null // highlight for any tab under portraits-beauty
       },
       {
