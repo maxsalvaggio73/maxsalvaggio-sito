@@ -4848,6 +4848,34 @@ www.maxsalvaggio.com`;
       loadPhotoShareEventPhotos(cleanCode);
     }
 
+    async function saveLeadToEventMetadata(code, leadObj) {
+      if (!supabaseClient || !code) return;
+      try {
+        let metaObj = { name: code, code: code, leads: [] };
+        try {
+          const { data: metaUrlData } = await supabaseClient.storage.from('client-proofs').createSignedUrl(`photoshare/${code}/_metadata.json`, 3600);
+          if (metaUrlData?.signedUrl) {
+            const resp = await fetch(metaUrlData.signedUrl);
+            if (resp.ok) {
+              metaObj = await resp.json();
+            }
+          }
+        } catch (e) {}
+
+        if (!Array.isArray(metaObj.leads)) {
+          metaObj.leads = [];
+        }
+
+        if (!metaObj.leads.some(l => l.email === leadObj.email && l.full_name === leadObj.full_name)) {
+          metaObj.leads.push(leadObj);
+          const metaBlob = new Blob([JSON.stringify(metaObj, null, 2)], { type: 'application/json' });
+          await supabaseClient.storage.from('client-proofs').upload(`photoshare/${code}/_metadata.json`, metaBlob, { upsert: true });
+        }
+      } catch (err) {
+        console.warn("Errore salvataggio lead in metadata.json:", err);
+      }
+    }
+
     async function inviteUserToPhotoShareEvent() {
       if (!supabaseClient) return;
       const btn = document.getElementById('btn-ps-invite');
@@ -4868,20 +4896,23 @@ www.maxsalvaggio.com`;
       if (btn) btn.disabled = true;
 
       try {
-        const { data, error } = await supabaseClient
-          .from('photoshare_leads')
-          .insert([{
-            event_code: code,
-            full_name: fullName,
-            email: email,
-            phone: 'Invito Admin'
-          }])
-          .select();
+        const newLead = {
+          id: Date.now(),
+          event_code: code,
+          full_name: fullName,
+          email: email,
+          phone: 'Invito Admin',
+          created_at: new Date().toISOString()
+        };
 
-        if (error) {
-          console.error("Errore inserimento photoshare_leads:", error);
-          alert("Impossibile registrare l'invito: " + error.message);
-          return;
+        // 1. Salva sempre nel file _metadata.json dell'evento nello Storage
+        await saveLeadToEventMetadata(code, newLead);
+
+        // 2. Prova in modalità tollerante il salvataggio nella tabella DB se presente
+        try {
+          await supabaseClient.from('photoshare_leads').insert([newLead]);
+        } catch (dbErr) {
+          console.warn("DB photoshare_leads non presente:", dbErr);
         }
 
         const eventDisplayName = currentPhotoShareActiveEventName || `#${code}`;
@@ -5261,23 +5292,58 @@ www.maxsalvaggio.com`;
 
       tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding:20px; color:var(--text-secondary);">Caricamento lead...</td></tr>';
 
+      let leadsList = [];
+
+      // 1. Prova prima dalla tabella DB se esistente
       try {
         const { data, error } = await supabaseClient
           .from('photoshare_leads')
           .select('*')
           .order('created_at', { ascending: false });
 
-        if (error || !data || data.length === 0) {
-          allPhotoShareLeads = [];
-          tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding:30px; color:var(--text-secondary);">Nessun contatto registrato al momento.</td></tr>';
-          if (badge) badge.textContent = "0 contatti";
-          return;
+        if (!error && data && data.length > 0) {
+          leadsList = data;
         }
+      } catch (dbErr) {}
 
-        allPhotoShareLeads = data;
+      // 2. Scansiona i file _metadata.json nello Storage per raccogliere tutti i lead registrati
+      try {
+        const { data: storageFolders } = await supabaseClient.storage.from('client-proofs').list('photoshare', { limit: 1000 });
+        if (storageFolders && storageFolders.length > 0) {
+          for (const item of storageFolders) {
+            const cleanCode = item.name.replace(/^#/, '').toUpperCase();
+            try {
+              const { data: metaUrlData } = await supabaseClient.storage.from('client-proofs').createSignedUrl(`photoshare/${cleanCode}/_metadata.json`, 3600);
+              if (metaUrlData?.signedUrl) {
+                const resp = await fetch(metaUrlData.signedUrl);
+                if (resp.ok) {
+                  const meta = await resp.json();
+                  if (Array.isArray(meta.leads)) {
+                    meta.leads.forEach(l => {
+                      if (!leadsList.some(existing => existing.email === l.email && existing.event_code === l.event_code)) {
+                        leadsList.push(l);
+                      }
+                    });
+                  }
+                }
+              }
+            } catch (e) {}
+          }
+        }
+      } catch (stErr) {}
+
+      allPhotoShareLeads = leadsList;
+
+      if (allPhotoShareLeads.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding:30px; color:var(--text-secondary);">Nessun contatto registrato al momento.</td></tr>';
+        if (badge) badge.textContent = "0 contatti";
+        return;
+      }
+
+      if (currentSelectedPhotoShareCode) {
+        filterPhotoShareLeads(currentSelectedPhotoShareCode);
+      } else {
         renderPhotoShareLeadsTable(allPhotoShareLeads);
-      } catch (err) {
-        tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding:20px; color:var(--text-secondary);">Nessun contatto disponibile.</td></tr>';
       }
     }
 

@@ -960,18 +960,38 @@
           } catch (e) {}
         }
 
-        // Save lead record in photoshare_leads
-        if (supabaseClient) {
+        // Save lead record in _metadata.json (and photoshare_leads if present)
+        if (supabaseClient && activeEventCode) {
+          const guestLead = {
+            id: Date.now(),
+            event_code: activeEventCode,
+            full_name: fullName,
+            email: email,
+            phone: phone || 'Verificato OTP',
+            instagram: instagram || null,
+            created_at: new Date().toISOString()
+          };
+
           try {
-            await supabaseClient
-              .from('photoshare_leads')
-              .insert([{
-                event_code: activeEventCode,
-                full_name: fullName,
-                email: email,
-                phone: phone || 'Verificato OTP',
-                instagram: instagram || null
-              }]);
+            let metaObj = { name: activeEventCode, code: activeEventCode, leads: [] };
+            try {
+              const { data: metaUrlData } = await supabaseClient.storage.from('client-proofs').createSignedUrl(`photoshare/${activeEventCode}/_metadata.json`, 3600);
+              if (metaUrlData?.signedUrl) {
+                const resp = await fetch(metaUrlData.signedUrl);
+                if (resp.ok) metaObj = await resp.json();
+              }
+            } catch (e) {}
+
+            if (!Array.isArray(metaObj.leads)) metaObj.leads = [];
+            if (!metaObj.leads.some(l => l.email === email)) {
+              metaObj.leads.push(guestLead);
+              const metaBlob = new Blob([JSON.stringify(metaObj, null, 2)], { type: 'application/json' });
+              await supabaseClient.storage.from('client-proofs').upload(`photoshare/${activeEventCode}/_metadata.json`, metaBlob, { upsert: true });
+            }
+          } catch (mErr) {}
+
+          try {
+            await supabaseClient.from('photoshare_leads').insert([guestLead]);
           } catch (err) {}
         }
 
