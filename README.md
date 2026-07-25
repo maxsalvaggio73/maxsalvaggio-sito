@@ -75,6 +75,7 @@ Per eseguire il sito in locale, posiziona la cartella `Max Salvaggio Archivio/` 
 - **2026-07-25** – Fix Nome Evento nei popup modali e aggiunta possibilità di modifica Codice/PIN evento in admin.html.
 - **2026-07-25** – Fix modifica PIN evento: rimossa duplicazione evento e corretta migrazione in-place dei file nello storage.
 - **2026-07-25** – Fix definitivo eliminazione vecchia cartella e metadata durante il cambio PIN evento.
+- **2026-07-25** – Fix definitivo migrazione URL foto e pulizia cartelle orfane al cambio PIN evento in admin.html.
 
 ---
 

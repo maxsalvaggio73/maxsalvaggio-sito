@@ -4707,6 +4707,11 @@ www.maxsalvaggio.com`;
         const metaBlob = new Blob([JSON.stringify(metaObj, null, 2)], { type: 'application/json' });
         await supabaseClient.storage.from('client-proofs').upload(`photoshare/${activeCode}/_metadata.json`, metaBlob, { upsert: true });
 
+        // Svuota cache locale selezioni e URL
+        psAdminSelectedFilePaths.clear();
+        currentPhotoShareLoadedPaths = [];
+        updatePhotoShareAdminDeleteButton();
+
         alert(`Evento "${metaObj.name}" aggiornato con successo!`);
         await loadPhotoShareEvents();
         selectPhotoShareEvent(activeCode);
