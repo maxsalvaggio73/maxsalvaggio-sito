@@ -1543,6 +1543,19 @@ create policy "Consenti agli admin la gestione di oggetti public-portfolio" on s
         </div>
       </div>
 
+      <!-- INVITA UTENTE MANUALE ALL'EVENTO -->
+      <div style="margin-top: 20px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; padding: 20px;">
+        <h3 style="font-size: 0.95rem; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">➕ Invita Utente all'Evento</h3>
+        <form style="display: flex; gap: 10px; flex-wrap: wrap; align-items: center;" onsubmit="event.preventDefault(); inviteUserToPhotoShareEvent();">
+          <input type="text" id="ps-invite-fullname" placeholder="Nome e Cognome" required style="flex: 1; min-width: 160px; background: rgba(0,0,0,0.25); border: 1px solid var(--border-color); border-radius: 4px; padding: 8px 12px; font-size: 0.8rem; color: #fff;">
+          <input type="email" id="ps-invite-email" placeholder="Email Utente" required style="flex: 1; min-width: 180px; background: rgba(0,0,0,0.25); border: 1px solid var(--border-color); border-radius: 4px; padding: 8px 12px; font-size: 0.8rem; color: #fff;">
+          <input type="text" id="ps-invite-code" placeholder="Codice / PIN Evento" required style="width: 160px; background: rgba(0,0,0,0.25); border: 1px solid var(--border-color); border-radius: 4px; padding: 8px 12px; font-size: 0.8rem; color: #fff; text-transform: uppercase;">
+          <button type="submit" class="btn-submit" id="btn-ps-invite" style="width: auto; padding: 8px 18px; font-size: 0.78rem; background-color: var(--accent); border-color: var(--accent);">
+            Invita &amp; Registra
+          </button>
+        </form>
+      </div>
+
       <!-- PHOTOSHARE EVENT PHOTOS SECTION -->
       <div style="margin-top: 30px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; padding: 20px;" id="ps-photos-section">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap: wrap; gap: 10px;">
@@ -4474,15 +4487,94 @@ www.maxsalvaggio.com`;
           const div = document.createElement("div");
           div.className = "client-item";
           div.dataset.code = cleanCode;
+          div.style.display = "flex";
+          div.style.alignItems = "center";
+          div.style.justifyContent = "space-between";
           div.onclick = () => selectPhotoShareEvent(cleanCode);
           div.innerHTML = `
-            <span class="client-email-text" style="font-weight:600; color:#fff;">#${cleanCode}</span>
-            <span class="mini-badge" style="background: rgba(229,9,20,0.15); color: #FF8A80;">Evento</span>
+            <div style="display: flex; align-items: center; gap: 6px; overflow: hidden;">
+              <span class="client-email-text" style="font-weight:600; color:#fff; font-size: 0.78rem;">#${cleanCode}</span>
+              <span class="mini-badge" style="background: rgba(229,9,20,0.15); color: #FF8A80; font-size: 0.65rem;">Evento</span>
+            </div>
+            <div style="display: flex; gap: 4px; flex-shrink: 0;" onclick="event.stopPropagation();">
+              <button style="background: none; border: none; color: #FFB74D; font-size: 0.8rem; cursor: pointer; padding: 2px 4px;" onclick="editPhotoShareEvent('${cleanCode}')" title="Modifica Evento">✏️</button>
+              <button style="background: none; border: none; color: #FF8A80; font-size: 0.8rem; cursor: pointer; padding: 2px 4px;" onclick="deletePhotoShareEventEntirely('${cleanCode}')" title="Elimina Evento e Foto">🗑️</button>
+            </div>
           `;
           container.appendChild(div);
         });
       } catch (err) {
         container.innerHTML = '<div class="empty-state" style="font-size:0.75rem; padding:10px 0;">Nessun evento trovato.</div>';
+      }
+    }
+
+    async function editPhotoShareEvent(code) {
+      if (!supabaseClient) return;
+      let existingMeta = { name: code, event_date: '', event_location: '', event_notes: '' };
+
+      try {
+        const { data } = await supabaseClient.storage.from('client-proofs').createSignedUrl(`photoshare/${code}/_metadata.json`, 3600);
+        if (data?.signedUrl) {
+          const resp = await fetch(data.signedUrl);
+          if (resp.ok) {
+            existingMeta = await resp.json();
+          }
+        }
+      } catch (e) {}
+
+      const newName = prompt(`Modifica Nome Evento #${code}:`, existingMeta.name || code);
+      if (newName === null) return;
+
+      const newDate = prompt(`Modifica Data Evento #${code}:`, existingMeta.event_date || '');
+      if (newDate === null) return;
+
+      const newLoc = prompt(`Modifica Luogo/Location Evento #${code}:`, existingMeta.event_location || '');
+      if (newLoc === null) return;
+
+      const newNotes = prompt(`Modifica Note Admin per gli Ospiti dell'Evento #${code}:`, existingMeta.event_notes || '');
+      if (newNotes === null) return;
+
+      try {
+        const metaObj = {
+          name: newName.trim() || code,
+          code: code,
+          event_date: newDate.trim(),
+          event_location: newLoc.trim(),
+          event_notes: newNotes.trim(),
+          updated_at: new Date().toISOString()
+        };
+        const metaBlob = new Blob([JSON.stringify(metaObj, null, 2)], { type: 'application/json' });
+        await supabaseClient.storage.from('client-proofs').upload(`photoshare/${code}/_metadata.json`, metaBlob, { upsert: true });
+
+        alert(`Evento #${code} aggiornato con successo!`);
+        await loadPhotoShareEvents();
+        selectPhotoShareEvent(code);
+      } catch (err) {
+        alert("Errore durante l'aggiornamento dei dati evento: " + err.message);
+      }
+    }
+
+    async function deletePhotoShareEventEntirely(code) {
+      if (!supabaseClient) return;
+      const confirmDel = confirm(`ATTENZIONE: Sei sicuro di voler eliminare DEFINITIVAMENTE l'Evento #${code} e TUTTI i file/foto contenuti?`);
+      if (!confirmDel) return;
+
+      try {
+        const candidatePaths = [`photoshare/${code}`, `photoshare/${code.toLowerCase()}`];
+        for (const path of candidatePaths) {
+          const { data } = await supabaseClient.storage.from('client-proofs').list(path);
+          if (data && data.length > 0) {
+            const filesToRemove = data.map(f => `${path}/${f.name}`);
+            await supabaseClient.storage.from('client-proofs').remove(filesToRemove);
+          }
+        }
+
+        alert(`Evento #${code} ed i relativi file sono stati eliminati definitivamente.`);
+        await loadPhotoShareEvents();
+        const grid = document.getElementById("ps-event-photos-grid");
+        if (grid) grid.innerHTML = '<div class="empty-state" style="grid-column: 1 / -1;">Seleziona un evento dall\'elenco a sinistra.</div>';
+      } catch (err) {
+        alert("Errore durante l'eliminazione dell'evento: " + err.message);
       }
     }
 
@@ -4506,6 +4598,47 @@ www.maxsalvaggio.com`;
 
       filterPhotoShareLeads(cleanCode);
       loadPhotoShareEventPhotos(cleanCode);
+    }
+
+    async function inviteUserToPhotoShareEvent() {
+      if (!supabaseClient) return;
+      const nameEl = document.getElementById('ps-invite-fullname');
+      const emailEl = document.getElementById('ps-invite-email');
+      const codeEl = document.getElementById('ps-invite-code');
+
+      const fullName = nameEl ? nameEl.value.trim() : '';
+      const email = emailEl ? emailEl.value.trim() : '';
+      const rawCode = codeEl ? codeEl.value.trim().toUpperCase() : '';
+      const code = rawCode.replace(/^#/, '').trim();
+
+      if (!fullName || !email || !code) {
+        alert("Compila tutti i campi (Nome, Email e PIN Evento).");
+        return;
+      }
+
+      try {
+        const { error } = await supabaseClient
+          .from('photoshare_leads')
+          .insert([{
+            event_code: code,
+            full_name: fullName,
+            email: email,
+            phone: 'Invito Admin'
+          }]);
+
+        if (error) {
+          alert("Impossibile registrare l'invito: " + error.message);
+          return;
+        }
+
+        alert(`Utente "${fullName}" (${email}) invitato con successo all'Evento #${code}!`);
+        nameEl.value = '';
+        emailEl.value = '';
+        if (codeEl) codeEl.value = '';
+        filterPhotoShareLeads(code);
+      } catch (err) {
+        alert("Errore durante l'invito utente: " + err.message);
+      }
     }
 
     async function uploadMorePhotosToActiveEvent(event) {

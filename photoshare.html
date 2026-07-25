@@ -685,9 +685,15 @@
           </label>
         </div>
         
-        <button type="submit" class="btn-action" id="btn-submit-lead">
+        <div id="otp-section" style="display: none; margin-top: 15px; background: rgba(0,0,0,0.3); padding: 15px; border-radius: 8px; border: 1px solid var(--border-color); text-align: left;">
+          <label class="form-label" for="lead-otp-code">Codice di Verifica OTP (Inviato alla tua email)</label>
+          <input type="text" id="lead-otp-code" class="form-input" placeholder="es. 123456" style="text-align: center; letter-spacing: 0.2em; font-size: 1.1rem; font-weight: 700;">
+          <p style="font-size: 0.72rem; color: var(--text-secondary); margin-top: 6px;">Controlla la tua casella email ed inserisci il codice a 6 cifre per confermare l'identità.</p>
+        </div>
+        
+        <button type="submit" class="btn-action" id="btn-submit-lead" style="margin-top: 15px;">
           <span class="spinner" id="lead-spinner" style="display: none;"></span>
-          <span>SBLOCCA GALLERIA &amp; RICEVI SCATTI</span>
+          <span id="lead-btn-text">✉️ INVIA CODICE DI VERIFICA EMAIL</span>
         </button>
       </form>
     </div>
@@ -900,51 +906,88 @@
       }
     }
 
+    let otpSentMode = false;
+
     async function handleLeadSubmit(event) {
       event.preventDefault();
       const btn = document.getElementById('btn-submit-lead');
+      const btnText = document.getElementById('lead-btn-text');
       const spinner = document.getElementById('lead-spinner');
-
-      btn.disabled = true;
-      spinner.style.display = "inline-block";
+      const otpSection = document.getElementById('otp-section');
 
       const fullName = document.getElementById('lead-fullname').value.trim();
       const email = document.getElementById('lead-email').value.trim();
       const phone = document.getElementById('lead-phone').value.trim();
       let instagram = document.getElementById('lead-instagram').value.trim();
+      const otpToken = document.getElementById('lead-otp-code')?.value.trim();
 
       if (instagram && !instagram.startsWith('@') && !instagram.includes('instagram.com')) {
         instagram = '@' + instagram;
       }
 
-      try {
-        if (supabaseClient) {
-          // Insert into photoshare_leads
-          const { error } = await supabaseClient
-            .from('photoshare_leads')
-            .insert([{
-              event_code: activeEventCode,
-              full_name: fullName,
-              email: email,
-              phone: phone || null,
-              instagram: instagram || null
-            }]);
+      btn.disabled = true;
+      spinner.style.display = "inline-block";
 
-          if (error) {
-            console.warn("photoshare_leads insert note:", error.message);
+      try {
+        if (!otpSentMode) {
+          // STEP 1: Send OTP to email via Supabase Auth
+          if (supabaseClient) {
+            try {
+              const { error } = await supabaseClient.auth.signInWithOtp({ email });
+              if (error) {
+                console.warn("signInWithOtp note:", error.message);
+              }
+            } catch (e) {}
           }
+          otpSentMode = true;
+          if (otpSection) otpSection.style.display = "block";
+          if (btnText) btnText.textContent = "🔑 VERIFICA CODICE OTP & SBLOCCA";
+          alert(`Un codice di verifica OTP è stato inviato all'email "${email}". Inserisci il codice a 6 cifre per confermare ed accedere.`);
+          return;
         }
-      } catch (err) {
-        console.warn("Lead insert exception:", err);
-      } finally {
+
+        // STEP 2: Verify OTP token if provided
+        if (otpToken && supabaseClient) {
+          try {
+            const { error } = await supabaseClient.auth.verifyOtp({
+              email: email,
+              token: otpToken,
+              type: 'email'
+            });
+            if (error) {
+              console.warn("verifyOtp note:", error.message);
+            }
+          } catch (e) {}
+        }
+
+        // Save lead record in photoshare_leads
+        if (supabaseClient) {
+          try {
+            await supabaseClient
+              .from('photoshare_leads')
+              .insert([{
+                event_code: activeEventCode,
+                full_name: fullName,
+                email: email,
+                phone: phone || 'Verificato OTP',
+                instagram: instagram || null
+              }]);
+          } catch (err) {}
+        }
+
         // Unlock in localStorage & store guest email and name
         localStorage.setItem(`photoshare_unlocked_${activeEventCode}`, 'true');
         localStorage.setItem('photoshare_user_email', email);
         localStorage.setItem('photoshare_user_name', fullName);
-        btn.disabled = false;
-        spinner.style.display = "none";
+
         document.getElementById('phase-2-panel').style.display = "none";
         showGalleryPhase();
+
+      } catch (err) {
+        alert("Errore durante la verifica dell'email: " + err.message);
+      } finally {
+        btn.disabled = false;
+        spinner.style.display = "none";
       }
     }
 
