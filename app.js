@@ -855,7 +855,7 @@ document.addEventListener("DOMContentLoaded", () => {
     renderGrid("body-shadows-grid", portfolioData.body_and_form.shadows_and_graphic_intimacy, "BODY & FORM");
 
     // 2.5 Portraits & Beauty Tabs Grids
-    renderGrid("pb-portraits-grid", portfolioData.portraits_and_beauty.portraits, "PORTRAITS");
+    renderGrid("pb-portraits-grid", portfolioData.portraits_and_beauty.portraits, "PORTRAITS I");
     renderGrid("pb-unpublished-grid", generateCuratedUnpublishedResearchList(portfolioData.editorials.unpublished_research), "PORTRAITS II");
     renderGrid("pb-beauty-grid", portfolioData.portraits_and_beauty.beauty, "BEAUTY");
     renderGrid("pb-pets-grid", portfolioData.portraits_and_beauty.pets_and_portraits, "PET & PORTRAITS");
@@ -880,7 +880,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Create standard gallery item with lazy image fade-in and hover background trigger
   function createGalleryItem(img, index, imagesList, tag) {
     const item = document.createElement("div");
-    const isOverviewStyle = ["OVERVIEW", "FASHION", "LINGERIE", "SWIMWEAR", "BODY & FORM", "EDITORIALS", "PORTRAITS", "BEAUTY", "PET & PORTRAITS", "PORTRAITS II"].includes(tag);
+    const isOverviewStyle = ["OVERVIEW", "FASHION", "LINGERIE", "SWIMWEAR", "BODY & FORM", "EDITORIALS", "PORTRAITS", "PORTRAITS I", "BEAUTY", "PET & PORTRAITS", "PORTRAITS II"].includes(tag);
     
     // Use overview-item for Overview and Campaigns sections (smaller, no text, original aspect ratios)
     // and gallery-item for other sections
