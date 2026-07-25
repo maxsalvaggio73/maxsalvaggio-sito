@@ -528,7 +528,8 @@ document.addEventListener("DOMContentLoaded", () => {
     let sectionId = targetId;
 
     if (targetId === "unpublished-research") {
-      sectionId = "editorials";
+      sectionId = "portraits-beauty";
+      localStorage.setItem("activeTab", "pb-unpublished");
     }
 
     const currentActive = document.querySelector(".spa-section.active");
@@ -723,6 +724,9 @@ document.addEventListener("DOMContentLoaded", () => {
       case "pb-portraits":
         changeBackgroundRandomly(portfolioData.portraits_and_beauty.portraits);
         break;
+      case "pb-unpublished":
+        changeBackgroundRandomly(portfolioData.editorials.unpublished_research);
+        break;
       case "pb-beauty":
         changeBackgroundRandomly(portfolioData.portraits_and_beauty.beauty);
         break;
@@ -853,6 +857,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 2.5 Portraits & Beauty Tabs Grids
     renderGrid("pb-portraits-grid", portfolioData.portraits_and_beauty.portraits, "PORTRAITS");
+    renderGrid("pb-unpublished-grid", generateCuratedUnpublishedResearchList(portfolioData.editorials.unpublished_research), "PORTRAITS II");
     renderGrid("pb-beauty-grid", portfolioData.portraits_and_beauty.beauty, "BEAUTY");
     renderGrid("pb-pets-grid", portfolioData.portraits_and_beauty.pets_and_portraits, "PET & PORTRAITS");
     
