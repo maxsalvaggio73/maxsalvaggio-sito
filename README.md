@@ -86,6 +86,7 @@ Per eseguire il sito in locale, posiziona la cartella `Max Salvaggio Archivio/` 
 - **2026-07-25** – Rimossa la voce Beauty dal menù Archive dell'header e del footer.
 - **2026-07-25** – Sostituita ancora #portraits-beauty con #portraits e sincronizzato stato attivo menù header con i tab di sezione.
 - **2026-07-25** – Rinominata la sotto-pagina Portraits in PORTRAITS I, aggiornata ancora in #portraits e sincronizzati gli stati attivi.
+- **2026-07-26** – Integrato servizio Resend.com per l'invio automatico delle credenziali via email.
 
 ---
 

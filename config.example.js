@@ -7,9 +7,7 @@ const config = {
   PASSWORD_RECOVERY_REDIRECT_URL: "https://www.tuosito.com/login.html",
   // Email dell'amministratore (riceve copia delle credenziali Guest create dall'Admin Panel)
   ADMIN_EMAIL: "tua@email.com",
-  // EmailJS (opzionale) — compila per l'invio automatico delle email
-  // EMAILJS_SERVICE_ID: "service_xxxxxxx",
-  // EMAILJS_TEMPLATE_ID: "template_xxxxxxx",       // Template approvazione clienti normali
-  // EMAILJS_GUEST_TEMPLATE_ID: "template_xxxxxxx", // Template credenziali Guest
-  // EMAILJS_PUBLIC_KEY: "xxxxxxxxxxxxxxx"
+  // Resend API (invio automatico credenziali via email)
+  RESEND_API_KEY: "re_xxxxxxxx_xxxxxxxxxxxxxxxxxxxxxxxx",
+  RESEND_FROM: "Max Salvaggio <info@maxsalvaggio.com>"
 };

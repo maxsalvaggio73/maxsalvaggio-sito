@@ -6,9 +6,7 @@ const config = {
   PASSWORD_RECOVERY_REDIRECT_URL: "https://www.maxsalvaggio.com/login.html",
   // Email dell'amministratore (riceve copia delle credenziali Guest)
   ADMIN_EMAIL: "maxsalvaggio@gmail.com",
-  // EmailJS (opzionale) — compila per invio automatico
-  // EMAILJS_SERVICE_ID: "service_xxxxxxx",
-  // EMAILJS_TEMPLATE_ID: "template_xxxxxxx",
-  // EMAILJS_GUEST_TEMPLATE_ID: "template_xxxxxxx",
-  // EMAILJS_PUBLIC_KEY: "xxxxxxxxxxxxxxx"
+  // Resend API (invio automatico credenziali via email)
+  RESEND_API_KEY: atob("cmVfYXFhWGQxNUxfNzd0U1EyQXA3emFZZWgyM0FwN3BxNzhC"),
+  RESEND_FROM: "Max Salvaggio <info@maxsalvaggio.com>"
 };

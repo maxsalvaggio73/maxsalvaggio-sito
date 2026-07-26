@@ -21,3 +21,9 @@
 # Ignore OS metadata
 .DS_Store
 Thumbs.db
+
+# Ignore environment & config secrets
+.env
+.env.*
+!.env.example
+config.js
