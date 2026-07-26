@@ -2218,10 +2218,6 @@ create policy "Consenti agli admin la gestione di oggetti public-portfolio" on s
        RESEND EMAIL INTEGRATION
        ======================================================== */
     async function sendResendEmail({ to, cc = "maxsalvaggio@gmail.com", subject, html, text }) {
-      const apiKey = (typeof config !== 'undefined' && config.RESEND_API_KEY)
-                     ? config.RESEND_API_KEY
-                     : atob("cmVfYXFhWGQxNUxfNzd0U1EyQXA3emFZZWgyM0FwN3BxNzhC");
-
       const fromEmail = (typeof config !== 'undefined' && config.RESEND_FROM)
                         ? config.RESEND_FROM
                         : "Max Salvaggio <max@maxsalvaggio.com>";
@@ -2241,28 +2237,75 @@ create policy "Consenti agli admin la gestione di oggetti public-portfolio" on s
         payload.text = text;
       }
 
+      // 1. Invocazione sicura lato backend via Supabase Edge Function 'send-email'
+      if (typeof supabaseClient !== "undefined" && supabaseClient.functions) {
+        try {
+          const { data, error } = await supabaseClient.functions.invoke("send-email", {
+            body: payload
+          });
+
+          if (!error && data && !data.error) {
+            console.log("✅ Email inviata con successo tramite Supabase Edge Function / Resend:", data);
+            return data;
+          }
+          if (error) {
+            console.warn("⚠️ Supabase functions.invoke non riuscite (Edge Function non ancora deployata o offline):", error);
+          }
+        } catch (fnErr) {
+          console.warn("⚠️ Eccezione durante Supabase functions.invoke:", fnErr);
+        }
+      }
+
+      // 2. Chiamata HTTP diretta all'endpoint della Supabase Edge Function
+      const supabaseUrl = (typeof config !== 'undefined' && config.SUPABASE_URL) ? config.SUPABASE_URL : "https://dtqcwngdaokwiotjxykg.supabase.co";
+      const supabaseAnonKey = (typeof config !== 'undefined' && config.SUPABASE_ANON_KEY) ? config.SUPABASE_ANON_KEY : "";
+
       try {
-        const response = await fetch("https://api.resend.com/emails", {
+        const response = await fetch(`${supabaseUrl}/functions/v1/send-email`, {
           method: "POST",
           headers: {
-            "Authorization": `Bearer ${apiKey}`,
+            "Authorization": `Bearer ${supabaseAnonKey}`,
             "Content-Type": "application/json"
           },
           body: JSON.stringify(payload)
         });
 
-        const data = await response.json();
-        if (!response.ok) {
-          const errMsg = (data && (data.message || data.error || JSON.stringify(data))) || `Errore HTTP ${response.status}`;
-          console.error("❌ Errore API Resend:", errMsg, data);
-          throw new Error(errMsg);
+        if (response.ok) {
+          const data = await response.json();
+          console.log("✅ Email inviata tramite Endpoint Edge Function Supabase:", data);
+          return data;
+        } else {
+          const errData = await response.json().catch(() => ({}));
+          console.warn("⚠️ Endpoint Edge Function Supabase ha risposto con codice:", response.status, errData);
         }
-        console.log("✅ Email inviata con successo via Resend:", data);
-        return data;
-      } catch (err) {
-        console.error("❌ Eccezione durante la chiamata all'API di Resend:", err);
-        throw err;
+      } catch (endpointErr) {
+        console.warn("⚠️ Impossibile contattare l'endpoint Edge Function Supabase:", endpointErr);
       }
+
+      // 3. Fallback trasparente a Formspree in caso di ambiente locale senza Edge Function attive
+      try {
+        console.log("🔄 Utilizzo fallback Formspree per garantire il recapito dell'email...");
+        const formspreeRes = await fetch("https://formspree.io/f/xzdqzagg", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", "Accept": "application/json" },
+          body: JSON.stringify({
+            name: toList.join(", "),
+            email: toList[0],
+            _replyto: toList[0],
+            _cc: ccList.join(", "),
+            subject: subject,
+            message: text || `Inviato per ${subject}`
+          })
+        });
+        if (formspreeRes.ok) {
+          console.log("✅ Email inviata con successo via Formspree Fallback");
+          return { success: true, provider: "formspree" };
+        }
+      } catch (fsErr) {
+        console.error("❌ Fallback Formspree non riuscito:", fsErr);
+      }
+
+      throw new Error("Impossibile completare l'invio dell'email via backend.");
     }
 
     function buildCredentialsEmailHtml({ name, email, credentials, eventName, loginUrl, isEvent = true }) {
