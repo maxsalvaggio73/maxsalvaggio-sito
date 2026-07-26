@@ -2237,88 +2237,26 @@ create policy "Consenti agli admin la gestione di oggetti public-portfolio" on s
         payload.text = text;
       }
 
-      let edgeFunctionError = null;
-
-      // 1. Invocazione sicura lato backend via Supabase Edge Function 'send-email'
       if (typeof supabaseClient !== "undefined" && supabaseClient.functions) {
-        try {
-          const { data, error } = await supabaseClient.functions.invoke("send-email", {
-            body: payload
-          });
+        const { data, error } = await supabaseClient.functions.invoke('send-email', { body: payload });
+        console.log('RISPOSTA EDGE FUNCTION:', { data, error });
 
-          if (!error && data && !data.error) {
-            console.log("✅ Email inviata con successo tramite Supabase Edge Function / Resend:", data);
-            return data;
-          }
-
-          if (error) {
-            edgeFunctionError = error.message || JSON.stringify(error);
-            console.error("❌ Errore Supabase functions.invoke:", error);
-          } else if (data && data.error) {
-            edgeFunctionError = typeof data.error === "object" ? JSON.stringify(data.error) : data.error;
-            console.error("❌ Errore restituito da Edge Function send-email:", data.error);
-          }
-        } catch (fnErr) {
-          edgeFunctionError = fnErr.message;
-          console.error("❌ Eccezione durante Supabase functions.invoke:", fnErr);
+        if (error !== null && typeof error !== "undefined") {
+          alert("Errore Edge Function: " + JSON.stringify(error));
+          throw new Error("Errore Edge Function: " + JSON.stringify(error));
         }
-      }
 
-      // 2. Chiamata HTTP diretta all'endpoint della Supabase Edge Function
-      const supabaseUrl = (typeof config !== 'undefined' && config.SUPABASE_URL) ? config.SUPABASE_URL : "https://dtqcwngdaokwiotjxykg.supabase.co";
-      const supabaseAnonKey = (typeof config !== 'undefined' && config.SUPABASE_ANON_KEY) ? config.SUPABASE_ANON_KEY : "";
-
-      try {
-        const response = await fetch(`${supabaseUrl}/functions/v1/send-email`, {
-          method: "POST",
-          headers: {
-            "Authorization": `Bearer ${supabaseAnonKey}`,
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify(payload)
-        });
-
-        if (response.ok) {
-          const data = await response.json();
-          if (!data.error) {
-            console.log("✅ Email inviata tramite Endpoint Edge Function Supabase:", data);
-            return data;
-          } else {
-            edgeFunctionError = typeof data.error === "object" ? JSON.stringify(data.error) : data.error;
-          }
-        } else {
-          const errData = await response.json().catch(() => ({}));
-          edgeFunctionError = errData.message || errData.error || `HTTP ${response.status}`;
-          console.warn("⚠️ Endpoint Edge Function Supabase ha risposto con codice:", response.status, errData);
+        if (data && data.error) {
+          alert("Errore Resend: " + JSON.stringify(data.error));
+          throw new Error("Errore Resend: " + JSON.stringify(data.error));
         }
-      } catch (endpointErr) {
-        console.warn("⚠️ Impossibile contattare l'endpoint Edge Function Supabase:", endpointErr);
-      }
 
-      // 3. Fallback trasparente a Formspree se le Edge Functions non sono attive
-      try {
-        console.log("🔄 Utilizzo fallback Formspree per garantire il recapito dell'email...");
-        const formspreeRes = await fetch("https://formspree.io/f/xzdqzagg", {
-          method: "POST",
-          headers: { "Content-Type": "application/json", "Accept": "application/json" },
-          body: JSON.stringify({
-            name: toList.join(", "),
-            email: toList[0],
-            _replyto: toList[0],
-            _cc: ccList.join(", "),
-            subject: subject,
-            message: text || `Inviato per ${subject}`
-          })
-        });
-        if (formspreeRes.ok) {
-          console.log("✅ Email inviata con successo via Formspree Fallback");
-          return { success: true, provider: "formspree" };
-        }
-      } catch (fsErr) {
-        console.error("❌ Fallback Formspree non riuscito:", fsErr);
+        return data;
+      } else {
+        const errObj = { message: "supabaseClient non disponibile" };
+        alert("Errore Edge Function: " + JSON.stringify(errObj));
+        throw new Error("supabaseClient non disponibile");
       }
-
-      throw new Error(edgeFunctionError || "Impossibile completare l'invio dell'email via backend");
     }
 
     function buildCredentialsEmailHtml({ name, email, credentials, eventName, loginUrl, isEvent = true }) {
