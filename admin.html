@@ -2237,6 +2237,8 @@ create policy "Consenti agli admin la gestione di oggetti public-portfolio" on s
         payload.text = text;
       }
 
+      let edgeFunctionError = null;
+
       // 1. Invocazione sicura lato backend via Supabase Edge Function 'send-email'
       if (typeof supabaseClient !== "undefined" && supabaseClient.functions) {
         try {
@@ -2248,11 +2250,17 @@ create policy "Consenti agli admin la gestione di oggetti public-portfolio" on s
             console.log("✅ Email inviata con successo tramite Supabase Edge Function / Resend:", data);
             return data;
           }
+
           if (error) {
-            console.warn("⚠️ Supabase functions.invoke non riuscite (Edge Function non ancora deployata o offline):", error);
+            edgeFunctionError = error.message || JSON.stringify(error);
+            console.error("❌ Errore Supabase functions.invoke:", error);
+          } else if (data && data.error) {
+            edgeFunctionError = typeof data.error === "object" ? JSON.stringify(data.error) : data.error;
+            console.error("❌ Errore restituito da Edge Function send-email:", data.error);
           }
         } catch (fnErr) {
-          console.warn("⚠️ Eccezione durante Supabase functions.invoke:", fnErr);
+          edgeFunctionError = fnErr.message;
+          console.error("❌ Eccezione durante Supabase functions.invoke:", fnErr);
         }
       }
 
@@ -2272,17 +2280,22 @@ create policy "Consenti agli admin la gestione di oggetti public-portfolio" on s
 
         if (response.ok) {
           const data = await response.json();
-          console.log("✅ Email inviata tramite Endpoint Edge Function Supabase:", data);
-          return data;
+          if (!data.error) {
+            console.log("✅ Email inviata tramite Endpoint Edge Function Supabase:", data);
+            return data;
+          } else {
+            edgeFunctionError = typeof data.error === "object" ? JSON.stringify(data.error) : data.error;
+          }
         } else {
           const errData = await response.json().catch(() => ({}));
+          edgeFunctionError = errData.message || errData.error || `HTTP ${response.status}`;
           console.warn("⚠️ Endpoint Edge Function Supabase ha risposto con codice:", response.status, errData);
         }
       } catch (endpointErr) {
         console.warn("⚠️ Impossibile contattare l'endpoint Edge Function Supabase:", endpointErr);
       }
 
-      // 3. Fallback trasparente a Formspree in caso di ambiente locale senza Edge Function attive
+      // 3. Fallback trasparente a Formspree se le Edge Functions non sono attive
       try {
         console.log("🔄 Utilizzo fallback Formspree per garantire il recapito dell'email...");
         const formspreeRes = await fetch("https://formspree.io/f/xzdqzagg", {
@@ -2305,7 +2318,7 @@ create policy "Consenti agli admin la gestione di oggetti public-portfolio" on s
         console.error("❌ Fallback Formspree non riuscito:", fsErr);
       }
 
-      throw new Error("Impossibile completare l'invio dell'email via backend.");
+      throw new Error(edgeFunctionError || "Impossibile completare l'invio dell'email via backend");
     }
 
     function buildCredentialsEmailHtml({ name, email, credentials, eventName, loginUrl, isEvent = true }) {
