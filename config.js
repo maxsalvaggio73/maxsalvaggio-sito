@@ -8,5 +8,5 @@ const config = {
   ADMIN_EMAIL: "maxsalvaggio@gmail.com",
   // Resend API (invio automatico credenziali via email)
   RESEND_API_KEY: atob("cmVfYXFhWGQxNUxfNzd0U1EyQXA3emFZZWgyM0FwN3BxNzhC"),
-  RESEND_FROM: "Max Salvaggio <info@maxsalvaggio.com>"
+  RESEND_FROM: "Max Salvaggio <max@maxsalvaggio.com>"
 };

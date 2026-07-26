@@ -9,5 +9,5 @@ const config = {
   ADMIN_EMAIL: "tua@email.com",
   // Resend API (invio automatico credenziali via email)
   RESEND_API_KEY: "re_xxxxxxxx_xxxxxxxxxxxxxxxxxxxxxxxx",
-  RESEND_FROM: "Max Salvaggio <info@maxsalvaggio.com>"
+  RESEND_FROM: "Max Salvaggio <max@maxsalvaggio.com>"
 };
