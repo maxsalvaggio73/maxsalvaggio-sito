@@ -105,7 +105,7 @@ def scan_all():
         "max-salvaggio-fotografo-moda-grazia-hong-kong-042.jpg",                 # Urbano notturno (Neon/Cinematic) - Modella asiatica/dettaglio
         "max-salvaggio-fotografo-beauty-001.jpg",                               # Beauty (Modella bionda/chiara) - Studio
         "max-salvaggio-fotografo-lingerie-010.jpg",                             # Lingerie (Ombre calde/Sensuale)
-        "max-salvaggio-fotografo-polo-cavallo-Anna-001.jpg",                     # Sport/Equitazione (Azione/Polo)
+        "max-salvaggio-fotografo-polo-cavallo-anna-001.jpg",                     # Sport/Equitazione (Azione/Polo)
         "max-salvaggio-fotografo-portrait-uomo-013.jpg",                         # Menswear (Ritratto maschile) - B&W
         "max-salvaggio-fotografo-moda-grazia-egypt-081.jpg",                     # Travel (Deserto Egitto/Sabbia)
         "max-salvaggio-fotografo-swimwear-014.jpg",                             # Swimwear (Campagna mare/Acqua azzurra)
@@ -113,7 +113,7 @@ def scan_all():
         "max-salvaggio-fotografo-lingerie-007.jpeg",                             # Lingerie (Luce soffusa/Modella chiara)
         "max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-mexico-088.jpeg",   # Beach Editorial (Tulum/Toni caldi)
         "max-salvaggio-fotografo-nudo-fine-art-009.jpg",                         # Fine Art (Abstract B&W)
-        "max-salvaggio-fotografo-polo-cavallo-Bea-001.jpg",                     # Sport/Fashion (Polo/Cavalli)
+        "max-salvaggio-fotografo-polo-cavallo-bea-001.jpg",                     # Sport/Fashion (Polo/Cavalli)
         "max-salvaggio-fotografo-moda-grazia-kenya-103.jpg",                     # Travel (Safari Kenya/Colori caldi)
         "max-salvaggio-fotografo-portrait-cane-cecilia-capriotti-001.jpg",       # Portrait/Pets (Cane & Celebrità)
         "max-salvaggio-fotografo-moda-grazia-shanghai-073.jpg",                   # Urban Travel (Shanghai/Toni rossi)
@@ -127,7 +127,7 @@ def scan_all():
         "max-salvaggio-fotografo-nudo-fine-art-011.jpg",                         # Fine Art (Profilo B&W)
         "max-salvaggio-fotografo-beauty-013.jpg",                               # Beauty (Close-up labbra/Dettaglio)
         "max-salvaggio-fotografo-moda-grazia-tulum-024.jpg",                     # Beach (Tulum spiaggia)
-        "max-salvaggio-fotografo-polo-cavallo-Anna-006.jpg",                     # Sport (Cavallo dettaglio)
+        "max-salvaggio-fotografo-polo-cavallo-anna-006.jpg",                     # Sport (Cavallo dettaglio)
         "max-salvaggio-fotografo-lingerie-005.jpg",                             # Lingerie (Ombre e luce finestra)
         "max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cambodia-147.jpg", # Location (Tempio Angkor Wat)
         "max-salvaggio-fotografo-swimwear-024.jpg",                             # Swimwear (Piscina/Toni freddi)

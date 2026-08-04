@@ -1,5 +1,5 @@
 // Database delle immagini generato automaticamente dallo script scan.py
-// Data di generazione: 2026-07-18T10:17:22.453841+00:00
+// Data di generazione: 2026-08-04T07:53:36.622979+00:00
 
 const portfolioData = {
   "overview": [
@@ -98,6 +98,14 @@ const portfolioData = {
       "width": 1518,
       "height": 1024,
       "is_horizontal": true
+    },
+    {
+      "url": "0 OVERVIEW/max-salvaggio-fotografo-polo-cavallo-anna-006.jpg",
+      "title": "Fotografo Polo Cavallo Anna 006",
+      "tag": "OVERVIEW",
+      "width": 900,
+      "height": 1200,
+      "is_horizontal": false
     },
     {
       "url": "0 OVERVIEW/max-salvaggio-fotografo-swimwear-024.jpg",
@@ -330,14 +338,6 @@ const portfolioData = {
       "width": 1807,
       "height": 1200,
       "is_horizontal": true
-    },
-    {
-      "url": "0 OVERVIEW/max-salvaggio-fotografo-polo-cavallo-anna-006.jpg",
-      "title": "Fotografo Polo Cavallo Anna 006",
-      "tag": "OVERVIEW",
-      "width": 900,
-      "height": 1200,
-      "is_horizontal": false
     },
     {
       "url": "0 OVERVIEW/max-salvaggio-fotografo-polo-cavallo-bea-005.jpg",
@@ -3407,7 +3407,7 @@ const portfolioData = {
     ],
     "pets_and_portraits": [
       {
-        "url": "4 PET and Portraits/max-salvaggio-fotografo-cane-Alessia-003.jpg",
+        "url": "4 PET and Portraits/max-salvaggio-fotografo-cane-alessia-003.jpg",
         "title": "Fotografo Cane Alessia 003",
         "tag": "PET & PORTRAITS",
         "width": 768,
@@ -3415,7 +3415,7 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "4 PET and Portraits/max-salvaggio-fotografo-cane-Alessia-004.jpg",
+        "url": "4 PET and Portraits/max-salvaggio-fotografo-cane-alessia-004.jpg",
         "title": "Fotografo Cane Alessia 004",
         "tag": "PET & PORTRAITS",
         "width": 768,
@@ -3471,7 +3471,7 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "4 PET and Portraits/max-salvaggio-fotografo-cavallo-Naomi-Tavian-001.jpg",
+        "url": "4 PET and Portraits/max-salvaggio-fotografo-cavallo-naomi-tavian-001.jpg",
         "title": "Fotografo Cavallo Naomi Tavian 001",
         "tag": "PET & PORTRAITS",
         "width": 683,
@@ -3479,7 +3479,7 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "4 PET and Portraits/max-salvaggio-fotografo-cavallo-Naomi-Tavian-003.jpg",
+        "url": "4 PET and Portraits/max-salvaggio-fotografo-cavallo-naomi-tavian-003.jpg",
         "title": "Fotografo Cavallo Naomi Tavian 003",
         "tag": "PET & PORTRAITS",
         "width": 683,
@@ -3487,7 +3487,7 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "4 PET and Portraits/max-salvaggio-fotografo-cavallo-Naomi-Tavian-004.jpg",
+        "url": "4 PET and Portraits/max-salvaggio-fotografo-cavallo-naomi-tavian-004.jpg",
         "title": "Fotografo Cavallo Naomi Tavian 004",
         "tag": "PET & PORTRAITS",
         "width": 1536,
@@ -3495,7 +3495,7 @@ const portfolioData = {
         "is_horizontal": true
       },
       {
-        "url": "4 PET and Portraits/max-salvaggio-fotografo-cavallo-Naomi-Tavian-005.jpg",
+        "url": "4 PET and Portraits/max-salvaggio-fotografo-cavallo-naomi-tavian-005.jpg",
         "title": "Fotografo Cavallo Naomi Tavian 005",
         "tag": "PET & PORTRAITS",
         "width": 683,
@@ -3503,7 +3503,7 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "4 PET and Portraits/max-salvaggio-fotografo-cavallo-Naomi-Tavian-006.jpg",
+        "url": "4 PET and Portraits/max-salvaggio-fotografo-cavallo-naomi-tavian-006.jpg",
         "title": "Fotografo Cavallo Naomi Tavian 006",
         "tag": "PET & PORTRAITS",
         "width": 1542,
@@ -3511,7 +3511,7 @@ const portfolioData = {
         "is_horizontal": true
       },
       {
-        "url": "4 PET and Portraits/max-salvaggio-fotografo-cavallo-Naomi-Tavian-007.jpg",
+        "url": "4 PET and Portraits/max-salvaggio-fotografo-cavallo-naomi-tavian-007.jpg",
         "title": "Fotografo Cavallo Naomi Tavian 007",
         "tag": "PET & PORTRAITS",
         "width": 1536,
@@ -3519,7 +3519,7 @@ const portfolioData = {
         "is_horizontal": true
       },
       {
-        "url": "4 PET and Portraits/max-salvaggio-fotografo-cavallo-Naomi-Tavian-008.jpg",
+        "url": "4 PET and Portraits/max-salvaggio-fotografo-cavallo-naomi-tavian-008.jpg",
         "title": "Fotografo Cavallo Naomi Tavian 008",
         "tag": "PET & PORTRAITS",
         "width": 683,
@@ -3527,7 +3527,7 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "4 PET and Portraits/max-salvaggio-fotografo-cavallo-Naomi-Tavian-009.jpg",
+        "url": "4 PET and Portraits/max-salvaggio-fotografo-cavallo-naomi-tavian-009.jpg",
         "title": "Fotografo Cavallo Naomi Tavian 009",
         "tag": "PET & PORTRAITS",
         "width": 683,
@@ -3535,7 +3535,7 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "4 PET and Portraits/max-salvaggio-fotografo-polo-cavallo-Anna-001.jpg",
+        "url": "4 PET and Portraits/max-salvaggio-fotografo-polo-cavallo-anna-001.jpg",
         "title": "Fotografo Polo Cavallo Anna 001",
         "tag": "PET & PORTRAITS",
         "width": 768,
@@ -3543,7 +3543,7 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "4 PET and Portraits/max-salvaggio-fotografo-polo-cavallo-Anna-002.jpg",
+        "url": "4 PET and Portraits/max-salvaggio-fotografo-polo-cavallo-anna-002.jpg",
         "title": "Fotografo Polo Cavallo Anna 002",
         "tag": "PET & PORTRAITS",
         "width": 768,
@@ -3551,7 +3551,7 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "4 PET and Portraits/max-salvaggio-fotografo-polo-cavallo-Anna-003.jpg",
+        "url": "4 PET and Portraits/max-salvaggio-fotografo-polo-cavallo-anna-003.jpg",
         "title": "Fotografo Polo Cavallo Anna 003",
         "tag": "PET & PORTRAITS",
         "width": 768,
@@ -3559,7 +3559,7 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "4 PET and Portraits/max-salvaggio-fotografo-polo-cavallo-Anna-004.jpg",
+        "url": "4 PET and Portraits/max-salvaggio-fotografo-polo-cavallo-anna-004.jpg",
         "title": "Fotografo Polo Cavallo Anna 004",
         "tag": "PET & PORTRAITS",
         "width": 768,
@@ -3567,7 +3567,7 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "4 PET and Portraits/max-salvaggio-fotografo-polo-cavallo-Anna-005.jpg",
+        "url": "4 PET and Portraits/max-salvaggio-fotografo-polo-cavallo-anna-005.jpg",
         "title": "Fotografo Polo Cavallo Anna 005",
         "tag": "PET & PORTRAITS",
         "width": 768,
@@ -3575,7 +3575,7 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "4 PET and Portraits/max-salvaggio-fotografo-polo-cavallo-Anna-006.jpg",
+        "url": "4 PET and Portraits/max-salvaggio-fotografo-polo-cavallo-anna-006.jpg",
         "title": "Fotografo Polo Cavallo Anna 006",
         "tag": "PET & PORTRAITS",
         "width": 768,
@@ -3583,7 +3583,7 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "4 PET and Portraits/max-salvaggio-fotografo-polo-cavallo-Bea-001.jpg",
+        "url": "4 PET and Portraits/max-salvaggio-fotografo-polo-cavallo-bea-001.jpg",
         "title": "Fotografo Polo Cavallo Bea 001",
         "tag": "PET & PORTRAITS",
         "width": 768,
@@ -3591,7 +3591,7 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "4 PET and Portraits/max-salvaggio-fotografo-polo-cavallo-Bea-002.jpg",
+        "url": "4 PET and Portraits/max-salvaggio-fotografo-polo-cavallo-bea-002.jpg",
         "title": "Fotografo Polo Cavallo Bea 002",
         "tag": "PET & PORTRAITS",
         "width": 768,
@@ -3599,7 +3599,7 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "4 PET and Portraits/max-salvaggio-fotografo-polo-cavallo-Bea-004.jpg",
+        "url": "4 PET and Portraits/max-salvaggio-fotografo-polo-cavallo-bea-004.jpg",
         "title": "Fotografo Polo Cavallo Bea 004",
         "tag": "PET & PORTRAITS",
         "width": 768,
@@ -3607,7 +3607,7 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "4 PET and Portraits/max-salvaggio-fotografo-polo-cavallo-Bea-006.jpg",
+        "url": "4 PET and Portraits/max-salvaggio-fotografo-polo-cavallo-bea-006.jpg",
         "title": "Fotografo Polo Cavallo Bea 006",
         "tag": "PET & PORTRAITS",
         "width": 768,
@@ -3615,7 +3615,7 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "4 PET and Portraits/max-salvaggio-fotografo-polo-cavallo-Bea-008.jpg",
+        "url": "4 PET and Portraits/max-salvaggio-fotografo-polo-cavallo-bea-008.jpg",
         "title": "Fotografo Polo Cavallo Bea 008",
         "tag": "PET & PORTRAITS",
         "width": 768,
