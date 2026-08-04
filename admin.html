@@ -1634,7 +1634,8 @@ create policy "Consenti agli admin la gestione di oggetti public-portfolio" on s
             <label class="btn-submit" style="width: auto; padding: 6px 12px; font-size: 0.75rem; background-color: var(--accent); border-color: var(--accent); cursor: pointer; flex-shrink: 0; white-space: nowrap;">
               <span class="spinner" id="ps-add-photos-spinner" style="display: none; width: 12px; height: 12px; border-width: 2px;"></span>
               <span>➕ Aggiungi altre foto all'evento</span>
-            </button>
+              <input type="file" id="ps-add-photos-input" multiple accept="image/*" style="display: none;" onchange="uploadMorePhotosToActiveEvent(event)">
+            </label>
           </div>
         </div>
         <div class="admin-gallery-grid" id="ps-event-photos-grid">
@@ -5018,28 +5019,24 @@ create policy "Consenti agli admin la gestione di oggetti public-portfolio" on s
                            : "maxsalvaggio@gmail.com";
 
         // 3. Invio email automatica credenziali all'utente con CC all'admin tramite Resend
-        try {
-          const emailSubject = `🔒 Credenziali di Accesso - Evento "${eventDisplayName}"`;
-          const htmlBody = buildCredentialsEmailHtml({
-            name: fullName,
-            email: email,
-            credentials: `#${code}`,
-            eventName: eventDisplayName,
-            loginUrl: loginUrl,
-            isEvent: true
-          });
-          const textBody = `Ciao ${fullName},\n\nSei stato invitato alla galleria fotografica dell'evento "${eventDisplayName}".\n\nCredenziali:\n• Email: ${email}\n• Codice PIN: #${code}\n\nAccedi qui: ${loginUrl}\n\nMax Salvaggio`;
+        const emailSubject = `🔒 Credenziali di Accesso - Evento "${eventDisplayName}"`;
+        const htmlBody = buildCredentialsEmailHtml({
+          name: fullName,
+          email: email,
+          credentials: `#${code}`,
+          eventName: eventDisplayName,
+          loginUrl: loginUrl,
+          isEvent: true
+        });
+        const textBody = `Ciao ${fullName},\n\nSei stato invitato alla galleria fotografica dell'evento "${eventDisplayName}".\n\nCredenziali:\n• Email: ${email}\n• Codice PIN: #${code}\n\nAccedi qui: ${loginUrl}\n\nMax Salvaggio`;
 
-          await sendResendEmail({
-            to: email,
-            cc: adminEmail,
-            subject: emailSubject,
-            html: htmlBody,
-            text: textBody
-          });
-        } catch (eErr) {
-          console.warn("Invio email Resend evento non riuscito:", eErr);
-        }
+        await sendResendEmail({
+          to: email,
+          cc: adminEmail,
+          subject: emailSubject,
+          html: htmlBody,
+          text: textBody
+        });
 
         alert(`Utente "${fullName}" (${email}) invitato con successo! Email con credenziali inviata all'utente e in CC a ${adminEmail} per l'Evento "${eventDisplayName}".`);
 
@@ -5048,9 +5045,7 @@ create policy "Consenti agli admin la gestione di oggetti public-portfolio" on s
 
         // Ricarica tutti i lead e filtra in tempo reale per l'evento attivo
         await loadPhotoShareLeads();
-        if (code) {
-          filterPhotoShareLeads(code);
-        }
+        filterPhotoShareLeads(code);
       } catch (err) {
         console.error("Eccezione durante l'invito utente:", err);
         alert("Errore durante l'invito utente: " + err.message);

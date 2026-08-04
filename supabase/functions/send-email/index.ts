@@ -15,7 +15,7 @@ serve(async (req) => {
     const { to, cc, subject, html, text, from } = await req.json();
 
     const apiKey = Deno.env.get("RESEND_API_KEY") || atob("cmVfYXFhWGQxNUxfNzd0U1EyQXA3emFZZWgyM0FwN3BxNzhC");
-    const sender = from || Deno.env.get("RESEND_FROM") || "Max Salvaggio <max@maxsalvaggio.com>";
+    const sender = from || Deno.env.get("RESEND_FROM") || "Max Salvaggio <onboarding@resend.dev>";
 
     const resendPayload: Record<string, unknown> = {
       from: sender,
@@ -32,7 +32,7 @@ serve(async (req) => {
     }
 
     // Chiamata Server-to-Server verso l'API Resend
-    const res = await fetch("https://api.resend.com/emails", {
+    let res = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: {
         "Authorization": `Bearer ${apiKey}`,
@@ -41,7 +41,22 @@ serve(async (req) => {
       body: JSON.stringify(resendPayload),
     });
 
-    const data = await res.json();
+    let data = await res.json();
+
+    // Se l'invio fallisce a causa del dominio di mittente 'from' non verificato, riprova con onboarding@resend.dev
+    if (!res.ok && data?.message && data.message.includes("domain")) {
+      console.warn("Fallback mittente su onboarding@resend.dev a causa di dominio non verificato:", data);
+      resendPayload.from = "Max Salvaggio <onboarding@resend.dev>";
+      res = await fetch("https://api.resend.com/emails", {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${apiKey}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(resendPayload),
+      });
+      data = await res.json();
+    }
 
     if (!res.ok) {
       console.error("Resend API error:", data);
