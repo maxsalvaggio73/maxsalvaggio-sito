@@ -1499,6 +1499,10 @@ body.light-mode .social-icon-svg {
   padding-bottom: 6px;
   text-align: center;
 }
+.contact-email-link:hover {
+  opacity: 0.7;
+  text-decoration: underline !important;
+}
 .contact-form {
   display: flex;
   flex-direction: column;
