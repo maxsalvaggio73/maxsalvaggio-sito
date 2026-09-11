@@ -87,7 +87,17 @@ Per eseguire il sito in locale, posiziona la cartella `Max Salvaggio Archivio/` 
 - **2026-07-25** – Sostituita ancora #portraits-beauty con #portraits e sincronizzato stato attivo menù header con i tab di sezione.
 - **2026-07-25** – Rinominata la sotto-pagina Portraits in PORTRAITS I, aggiornata ancora in #portraits e sincronizzati gli stati attivi.
 - **2026-07-26** – Integrato servizio Resend.com per l'invio automatico delle credenziali via email.
+- **2026-09-11** – Ottimizzazione rendering OVERVIEW: caricamento istantaneo miniature WebP locali dalla cartella `overview/`, bypass chiamate bloccanti Supabase, pulizia URL radice `/` ed eliminazione schermata di reindirizzamento. Creata mappa del sito `SITE_MAP.md` e tag di ripristino `STABLE_STATE_2026_09_11_2200`.
+
+## Flusso di Aggiornamento Portfolio (Automazione)
+
+Per aggiornare il portfolio con nuove immagini nell'archivio locale:
+1. Posiziona i nuovi file nelle rispettive cartelle (`0 OVERVIEW`, `1 EDITORIALS`, ecc.).
+2. Fai doppio clic sullo script eseguibile `Aggiorna_Portfolio.command` (oppure esegui `python3 scan.py` dal terminale).
+3. Lo script rigenererà automaticamente `archive-data.js` e le miniature WebP compresse.
+4. Esegui il commit ed il push su GitHub per aggiornare la versione live del sito.
 
 ---
 
 © Max Salvaggio — Tutti i diritti riservati
+
