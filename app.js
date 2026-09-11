@@ -165,8 +165,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
           switch(row.category) {
             case 'overview':
-              imgObj.tag = 'OVERVIEW';
-              newPortfolioData.overview.push(imgObj);
+              // OVERVIEW viene caricato DIRETTAMENTE dai percorsi locali statici in archive-data.js (bypassa Supabase)
               break;
             case 'campaigns-fashion':
               imgObj.tag = 'CAMPAIGNS';
@@ -248,7 +247,9 @@ document.addEventListener("DOMContentLoaded", () => {
           }
         });
 
-        // Assegna il nuovo database
+        // Assegna il nuovo database mantenendo OVERVIEW sempre da archive-data.js locale statico
+        const localOverview = (typeof portfolioData !== "undefined" && portfolioData.overview) ? portfolioData.overview : [];
+        newPortfolioData.overview = localOverview;
         window.portfolioData = newPortfolioData;
       } else {
         console.log("Il portfolio Supabase è vuoto. Caricamento del database locale come fallback.");
@@ -431,7 +432,9 @@ document.addEventListener("DOMContentLoaded", () => {
       activeSectionId = initialHash;
     } else {
       activeSectionId = "overview";
-      window.location.hash = "overview";
+      if (window.location.hash === "#overview") {
+        history.replaceState(null, "", window.location.pathname + window.location.search);
+      }
     }
     
     switchSection(activeSectionId, false);
@@ -467,7 +470,14 @@ document.addEventListener("DOMContentLoaded", () => {
               }
             }
             
-            window.location.hash = targetSection;
+            if (targetSection === "overview") {
+              if (window.location.hash) {
+                history.replaceState(null, "", window.location.pathname + window.location.search);
+              }
+              switchSection("overview", true);
+            } else {
+              window.location.hash = targetSection;
+            }
             closeMobileMenu();
           }
         });
@@ -486,7 +496,14 @@ document.addEventListener("DOMContentLoaded", () => {
           e.preventDefault();
           const targetSection = toggle.getAttribute("data-section");
           if (targetSection) {
-            window.location.hash = targetSection;
+            if (targetSection === "overview") {
+              if (window.location.hash) {
+                history.replaceState(null, "", window.location.pathname + window.location.search);
+              }
+              switchSection("overview", true);
+            } else {
+              window.location.hash = targetSection;
+            }
           }
         });
       });
@@ -511,7 +528,10 @@ document.addEventListener("DOMContentLoaded", () => {
       if (brandLogo) {
         brandLogo.addEventListener("click", (e) => {
           e.preventDefault();
-          window.location.hash = "overview";
+          if (window.location.hash) {
+            history.replaceState(null, "", window.location.pathname + window.location.search);
+          }
+          switchSection("overview", true);
         });
       }
     }
@@ -2379,11 +2399,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const remainingImages = [];
 
     images.forEach(img => {
-      const filename = img.url.split('/').pop().toLowerCase();
-      // Trova corrispondenze esatte ignorando maiuscole/minuscole
+      let filename = img.url.split('/').pop().toLowerCase();
+      // Rimuovi estensione (.webp, .jpg, .jpeg) per il confronto flessibile
+      const filenameBase = filename.replace(/\.(webp|jpg|jpeg)$/i, '');
       let foundIdx = -1;
       for (let i = 0; i < TOP_10_IMAGES.length; i++) {
-        if (filename === TOP_10_IMAGES[i].toLowerCase()) {
+        const targetBase = TOP_10_IMAGES[i].toLowerCase().replace(/\.(webp|jpg|jpeg)$/i, '');
+        if (filenameBase === targetBase) {
           foundIdx = i;
           break;
         }
