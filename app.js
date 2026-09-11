@@ -432,9 +432,6 @@ document.addEventListener("DOMContentLoaded", () => {
       activeSectionId = initialHash;
     } else {
       activeSectionId = "overview";
-      if (window.location.hash === "#overview") {
-        history.replaceState(null, "", window.location.pathname + window.location.search);
-      }
     }
     
     switchSection(activeSectionId, false);
@@ -470,14 +467,7 @@ document.addEventListener("DOMContentLoaded", () => {
               }
             }
             
-            if (targetSection === "overview") {
-              if (window.location.hash) {
-                history.replaceState(null, "", window.location.pathname + window.location.search);
-              }
-              switchSection("overview", true);
-            } else {
-              window.location.hash = targetSection;
-            }
+            window.location.hash = targetSection;
             closeMobileMenu();
           }
         });
@@ -496,14 +486,7 @@ document.addEventListener("DOMContentLoaded", () => {
           e.preventDefault();
           const targetSection = toggle.getAttribute("data-section");
           if (targetSection) {
-            if (targetSection === "overview") {
-              if (window.location.hash) {
-                history.replaceState(null, "", window.location.pathname + window.location.search);
-              }
-              switchSection("overview", true);
-            } else {
-              window.location.hash = targetSection;
-            }
+            window.location.hash = targetSection;
           }
         });
       });
@@ -528,10 +511,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (brandLogo) {
         brandLogo.addEventListener("click", (e) => {
           e.preventDefault();
-          if (window.location.hash) {
-            history.replaceState(null, "", window.location.pathname + window.location.search);
-          }
-          switchSection("overview", true);
+          window.location.hash = "overview";
         });
       }
     }
