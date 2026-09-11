@@ -31,6 +31,42 @@ def clean_title(filename):
     # Title Case
     return name.title()
 
+def create_thumbnail(orig_path, relative_base):
+    # Genera percorso relativo per la miniatura WebP in assets/thumbnails
+    rel_path = os.path.relpath(orig_path, relative_base)
+    name, _ = os.path.splitext(rel_path)
+    thumb_rel_path = os.path.join('assets', 'thumbnails', name + '.webp').replace('\\', '/')
+    thumb_full_path = os.path.join(relative_base, thumb_rel_path)
+    
+    os.makedirs(os.path.dirname(thumb_full_path), exist_ok=True)
+    
+    from PIL import Image as PILImage
+    try:
+        if not os.path.exists(thumb_full_path) or os.path.getmtime(orig_path) > os.path.getmtime(thumb_full_path):
+            with PILImage.open(orig_path) as img:
+                # Convert RGBA/P to RGB if needed
+                if img.mode in ('RGBA', 'LA', 'P'):
+                    img = img.convert('RGB')
+                
+                # Resize if width or height exceeds 800px
+                w, h = img.size
+                if w > 800 or h > 800:
+                    img.thumbnail((800, 800), PILImage.Resampling.LANCZOS)
+                
+                # Save as webp compressed
+                quality = 80
+                img.save(thumb_full_path, 'WEBP', quality=quality, optimize=True)
+                
+                # Ensure weight target < 150 KB
+                while os.path.getsize(thumb_full_path) > 150 * 1024 and quality > 30:
+                    quality -= 10
+                    img.save(thumb_full_path, 'WEBP', quality=quality, optimize=True)
+    except Exception as e:
+        print(f"Errore generazione miniatura per {orig_path}: {e}")
+        return rel_path.replace('\\', '/')
+        
+    return thumb_rel_path
+
 def get_images_in_dir(path, tag_name, relative_base):
     images = []
     if not os.path.exists(path):
@@ -42,10 +78,11 @@ def get_images_in_dir(path, tag_name, relative_base):
         if os.path.isfile(file_path):
             _, ext = os.path.splitext(file.lower())
             if ext in VALID_EXTENSIONS:
-                # Relative URL to be used in html/js
-                rel_url = os.path.relpath(file_path, relative_base)
-                # Normalize path separators for web (forward slashes)
-                rel_url = rel_url.replace('\\', '/')
+                # Relative URL for original high-res image
+                rel_url = os.path.relpath(file_path, relative_base).replace('\\', '/')
+                
+                # Genera / ottieni miniatura WebP fisica (<150KB, max 800px)
+                thumb_url = create_thumbnail(file_path, relative_base)
                 
                 # Leggi dimensioni per filtrare orientamento in JS
                 w, h = 0, 0
@@ -57,6 +94,8 @@ def get_images_in_dir(path, tag_name, relative_base):
 
                 images.append({
                     'url': rel_url,
+                    'fullResUrl': rel_url,
+                    'thumbnailUrl': thumb_url,
                     'title': clean_title(file),
                     'tag': tag_name,
                     'width': w,

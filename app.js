@@ -1917,9 +1917,9 @@ document.addEventListener("DOMContentLoaded", () => {
         const img1 = pairContainer.querySelector("#lightbox-pair-img-1");
         const img2 = pairContainer.querySelector("#lightbox-pair-img-2");
         
-        img1.src = currentSlide.images[0].url;
+        img1.src = currentSlide.images[0].fullResUrl || currentSlide.images[0].url;
         img1.alt = currentSlide.images[0].title || "";
-        img2.src = currentSlide.images[1].url;
+        img2.src = currentSlide.images[1].fullResUrl || currentSlide.images[1].url;
         img2.alt = currentSlide.images[1].title || "";
         
         lightboxImg.style.display = "none";
@@ -1958,7 +1958,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (pairDiv) pairDiv.style.display = "none";
         
         lightboxImg.style.display = "block";
-        lightboxImg.src = currentSlide.image.url;
+        lightboxImg.src = currentSlide.image.fullResUrl || currentSlide.image.url;
         lightboxImg.alt = currentSlide.image.title || "";
         lightboxImg.style.cursor = "zoom-in";
         

@@ -189,7 +189,7 @@
       if (audio) { audio.pause(); audio.src = ''; }
 
       if (item.type === 'image') {
-        img.src = item.url;
+        img.src = item.fullResUrl || item.url;
         img.style.display = 'block';
       } else if (item.type === 'video') {
         video.src = item.url;
