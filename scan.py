@@ -130,7 +130,7 @@ def scan_all():
     }
 
     # 1. OVERVIEW
-    overview_path = os.path.join(base_dir, '0 OVERVIEW')
+    overview_path = os.path.join(base_dir, 'overview')
     overview_images = get_images_in_dir(overview_path, 'OVERVIEW', base_dir)
     
     # 40 foto di altissimo profilo luxury ed estremamente variegate (Vogue style opener)
@@ -182,11 +182,12 @@ def scan_all():
     # poi le restanti raggruppate per tema/cromaticità (Vogue flow)
     def get_editorial_weight(img):
         url = img['url'].lower()
-        filename = os.path.basename(img['url'])
+        filename_base, _ = os.path.splitext(os.path.basename(img['url']))
+        priority_bases = [os.path.splitext(p)[0] for p in PRIORITY_IMAGES]
         
         # Se è nelle foto prioritari, assegna il peso di testa (gruppo 0)
-        if filename in PRIORITY_IMAGES:
-            return (0, PRIORITY_IMAGES.index(filename), url)
+        if filename_base in priority_bases:
+            return (0, priority_bases.index(filename_base), url)
             
         # Altrimenti assegna il peso tematico standard (gruppo 1) per le restanti
         # 1. INTRO / ICONIC
