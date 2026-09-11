@@ -547,7 +547,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function updateNavLinksActiveState(targetSectionId, explicitTabId) {
     const currentSec = targetSectionId || (activeSectionId === "unpublished-research" ? "portraits" : activeSectionId);
-    const activeTab = explicitTabId || localStorage.getItem("activeTab") || (document.querySelector(`#section-${currentSec} .tab-link.active`)?.getAttribute("data-tab") || (currentSec === "portraits" ? "pb-portraits" : ""));
+    const activeTab = explicitTabId || localStorage.getItem("activeTab") || (document.querySelector(`#section-${currentSec} .tab-link.active`)?.getAttribute("data-tab") || (currentSec === "portraits" ? "pb-portraits" : (currentSec === "body-form" ? "body-organic" : "")));
 
     navLinks.forEach(link => {
       const linkSection = link.getAttribute("data-section");
@@ -599,9 +599,13 @@ document.addEventListener("DOMContentLoaded", () => {
   function switchSection(targetId, animate = true) {
     let sectionId = targetId;
 
-    if (targetId === "body-organic" || targetId === "body-shadows") {
+    if (targetId === "body-form" || targetId === "body-organic" || targetId === "body-shadows") {
       sectionId = "body-form";
-      localStorage.setItem("activeTab", targetId);
+      if (targetId === "body-organic" || targetId === "body-shadows") {
+        localStorage.setItem("activeTab", targetId);
+      } else {
+        localStorage.setItem("activeTab", "body-organic");
+      }
     } else if (targetId === "unpublished-research" || targetId === "portraits-beauty" || targetId === "pb-unpublished" || targetId === "pb-portraits" || targetId === "pb-pets" || targetId === "pb-beauty") {
       sectionId = "portraits";
       if (targetId === "unpublished-research" || targetId === "pb-unpublished") {
