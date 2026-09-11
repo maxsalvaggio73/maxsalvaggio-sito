@@ -57,36 +57,50 @@ document.addEventListener("DOMContentLoaded", () => {
   // --- Initialize App Async ---
   initApp();
 
-  async function initApp() {
-    // 1. Carica i dati dal portfolio Supabase se disponibili
-    await loadSupabasePortfolioData();
-
-    // 2. Applica mescolamenti ed ordinamenti curati
+  function initApp() {
+    // 1. Iniezione IMMEDIATA ed asincrona non-bloccante della griglia OVERVIEW da archive-data.js locale
     if (typeof portfolioData !== "undefined" && portfolioData.overview) {
       portfolioData.overview = generateCuratedOverviewList(portfolioData.overview);
-    }
-    if (typeof portfolioData !== "undefined" && portfolioData.editorials && portfolioData.editorials.projects) {
-      portfolioData.editorials.projects = shuffleProjects(portfolioData.editorials.projects);
+      renderOverviewBatch();
+      const btnLoadMore = document.getElementById("btn-overview-load-more");
+      if (btnLoadMore) {
+        btnLoadMore.addEventListener("click", () => {
+          renderOverviewBatch();
+        });
+      }
     }
 
-    // 3. Avvia la visualizzazione
+    // Inizializza subito lo scheletro SPA
     initSPA();
-    initDynamicGrids();
-    initTabs();
-    
-    // Check if there is an active tab to restore (e.g. cross-page navigation from login/client-area)
-    const storedTab = localStorage.getItem("activeTab");
-    if (storedTab) {
-      const tabButton = document.querySelector(`.tab-link[data-tab="${storedTab}"]`);
-      if (tabButton) {
-        tabButton.click();
-      }
-      localStorage.removeItem("activeTab");
-    }
-    initContactForm();
-    initCursorTracker();
-    shuffleBackground();
-    initLandscapeFullscreen();
+
+    // 2. Differisci qualsiasi elaborazione secondaria/pesante (Supabase, altre griglie, listener) al frame successivo
+    requestAnimationFrame(() => {
+      setTimeout(async () => {
+        // Carica dati remoti Supabase per altre sezioni se disponibile
+        await loadSupabasePortfolioData();
+
+        if (typeof portfolioData !== "undefined" && portfolioData.editorials && portfolioData.editorials.projects) {
+          portfolioData.editorials.projects = shuffleProjects(portfolioData.editorials.projects);
+        }
+
+        initSecondaryGrids();
+        initTabs();
+
+        const storedTab = localStorage.getItem("activeTab");
+        if (storedTab) {
+          const tabButton = document.querySelector(`.tab-link[data-tab="${storedTab}"]`);
+          if (tabButton) {
+            tabButton.click();
+          }
+          localStorage.removeItem("activeTab");
+        }
+
+        initContactForm();
+        initCursorTracker();
+        shuffleBackground();
+        initLandscapeFullscreen();
+      }, 0);
+    });
   }
 
   async function loadSupabasePortfolioData() {
@@ -833,16 +847,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // ==========================================
   // 2. DYNAMIC GRIDS & RENDERING
   // ==========================================
-  function initDynamicGrids() {
-    // 2.1 Overview Grid (Paginated)
-    renderOverviewBatch();
-    const btnLoadMore = document.getElementById("btn-overview-load-more");
-    if (btnLoadMore) {
-      btnLoadMore.addEventListener("click", () => {
-        renderOverviewBatch();
-      });
-    }
-
+  function initSecondaryGrids() {
     // 2.2 Editorials Covers List
     renderEditorialsGrid();
 
@@ -861,7 +866,6 @@ document.addEventListener("DOMContentLoaded", () => {
     renderGrid("pb-beauty-grid", portfolioData.portraits_and_beauty.beauty, "BEAUTY");
     renderGrid("pb-pets-grid", portfolioData.portraits_and_beauty.pets_and_portraits, "PET & PORTRAITS");
     
-
     // 2.6 Archive landing page Categories Grid
     renderArchiveGrid();
   }
