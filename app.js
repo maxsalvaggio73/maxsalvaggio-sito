@@ -599,10 +599,19 @@ document.addEventListener("DOMContentLoaded", () => {
   function switchSection(targetId, animate = true) {
     let sectionId = targetId;
 
-    if (targetId === "unpublished-research" || targetId === "portraits-beauty") {
+    if (targetId === "body-organic" || targetId === "body-shadows") {
+      sectionId = "body-form";
+      localStorage.setItem("activeTab", targetId);
+    } else if (targetId === "unpublished-research" || targetId === "portraits-beauty" || targetId === "pb-unpublished" || targetId === "pb-portraits" || targetId === "pb-pets" || targetId === "pb-beauty") {
       sectionId = "portraits";
-      if (targetId === "unpublished-research") {
+      if (targetId === "unpublished-research" || targetId === "pb-unpublished") {
         localStorage.setItem("activeTab", "pb-unpublished");
+      } else if (targetId === "pb-portraits") {
+        localStorage.setItem("activeTab", "pb-portraits");
+      } else if (targetId === "pb-pets") {
+        localStorage.setItem("activeTab", "pb-pets");
+      } else if (targetId === "pb-beauty") {
+        localStorage.setItem("activeTab", "pb-beauty");
       }
     }
 
@@ -619,13 +628,13 @@ document.addEventListener("DOMContentLoaded", () => {
     // Update nav links active state
     updateNavLinksActiveState(sectionId);
 
+    const storedTab = localStorage.getItem("activeTab");
 
-    if (currentActive && currentActive.id === ("section-" + sectionId) && targetId !== "editorials" && targetId !== "unpublished-research") {
+    if (currentActive && currentActive.id === ("section-" + sectionId) && targetId !== "editorials" && targetId !== "unpublished-research" && !storedTab) {
       return;
     }
 
     // If navigating to portraits-beauty or body-form via a data-tab, activate that tab after transition
-    const storedTab = localStorage.getItem("activeTab");
     if (storedTab) {
       const triggerTab = () => {
         const tabButton = document.querySelector(`.tab-link[data-tab="${storedTab}"]`);
@@ -1082,34 +1091,33 @@ document.addEventListener("DOMContentLoaded", () => {
 
     grid.innerHTML = "";
 
+    const projects = portfolioData?.editorials?.projects || [];
+    if (projects.length === 0) return;
+
     // Render structured projects
-    portfolioData.editorials.projects.forEach(project => {
+    projects.forEach(project => {
+      if (!project || !project.images || project.images.length === 0) return;
+
       // Seleziona la cover ottimale: deve essere orizzontale (layout spread) e non la copertina singola
       let coverImg = null;
       if (project.id === "covers") {
         coverImg = project.images[0];
       } else {
         // Cerca la prima immagine orizzontale che non contenga "cover" nel nome
-        coverImg = project.images.find(img => img.is_horizontal && !img.url.toLowerCase().includes("cover"));
-        // Fallback 1: qualsiasi immagine orizzontale
-        if (!coverImg) {
-          coverImg = project.images.find(img => img.is_horizontal);
-        }
-        // Fallback 2: la prima immagine che non contenga "cover"
-        if (!coverImg) {
-          coverImg = project.images.find(img => !img.url.toLowerCase().includes("cover"));
-        }
-        // Fallback 3: la prima in assoluto
-        if (!coverImg) {
-          coverImg = project.images[0];
-        }
+        coverImg = project.images.find(img => img.is_horizontal && !img.url.toLowerCase().includes("cover")) ||
+                   project.images.find(img => img.is_horizontal) ||
+                   project.images.find(img => !img.url.toLowerCase().includes("cover")) ||
+                   project.images[0];
       }
+
+      if (!coverImg) return;
 
       const card = createEditorialCard(project.title, coverImg.url, () => {
         showEditorialProject(project);
       });
       grid.appendChild(card);
-    });  }
+    });
+  }
 
   function createEditorialCard(title, coverUrl, clickCallback) {
     const card = document.createElement("div");

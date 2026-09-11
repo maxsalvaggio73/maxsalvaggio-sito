@@ -151,6 +151,8 @@ def scan_all():
     editorials_master_path = os.path.join(photo_master_base, 'editorials')
     if os.path.exists(editorials_master_path):
         for item in sorted(os.listdir(editorials_master_path)):
+            if item.startswith('.') or item in ('.DS_Store', '.gitkeep'):
+                continue
             item_path = os.path.join(editorials_master_path, item)
             if os.path.isdir(item_path):
                 project_id = item.lower().replace(' ', '-').replace('_', '-')
@@ -165,10 +167,11 @@ def scan_all():
                         'images': images
                     })
             elif os.path.isfile(item_path):
-                # Immagini dirette in editorials/ vanno in unpublished_research
-                imgs = get_images_in_dir(editorials_master_path, 'EDITORIALS', base_dir, web_subfolder='editorials')
-                data['editorials']['unpublished_research'].extend(imgs)
-                break
+                _, ext = os.path.splitext(item.lower())
+                if ext in VALID_EXTENSIONS:
+                    imgs = get_images_in_dir(editorials_master_path, 'EDITORIALS', base_dir, web_subfolder='editorials')
+                    data['editorials']['unpublished_research'].extend(imgs)
+                    break
     else:
         # Backward compatibility con vecchie cartelle se photo master/editorials è vuota
         legacy_editorials = os.path.join(base_dir, '1 EDITORIALS', 'editorials')

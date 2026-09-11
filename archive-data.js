@@ -1,5 +1,5 @@
 // Database delle immagini generato automaticamente dallo script scan.py
-// Data di generazione: 2026-09-11T23:28:21.171384+00:00
+// Data di generazione: 2026-09-11T23:40:53.590346+00:00
 
 const portfolioData = {
   "overview": [
@@ -705,7 +705,1726 @@ const portfolioData = {
     }
   ],
   "editorials": {
-    "projects": [],
+    "projects": [
+      {
+        "id": "covers",
+        "title": "Covers",
+        "place": "",
+        "magazine": "",
+        "images": [
+          {
+            "url": "photo_web/editorials/covers/max-salvaggio-fotografo-moda-grazia-cover-38.webp",
+            "fullResUrl": "photo master/editorials/covers/max-salvaggio-fotografo-moda-grazia-cover-38.jpg",
+            "thumbnailUrl": "photo_web/editorials/covers/max-salvaggio-fotografo-moda-grazia-cover-38.webp",
+            "title": "Fotografo Moda Grazia Cover 38",
+            "tag": "EDITORIALS",
+            "width": 785,
+            "height": 1024,
+            "is_horizontal": false
+          },
+          {
+            "url": "photo_web/editorials/covers/max-salvaggio-fotografo-moda-grazia-cover-daniela-de-jesus-cambodia-137.webp",
+            "fullResUrl": "photo master/editorials/covers/max-salvaggio-fotografo-moda-grazia-cover-daniela-de-jesus-cambodia-137.jpg",
+            "thumbnailUrl": "photo_web/editorials/covers/max-salvaggio-fotografo-moda-grazia-cover-daniela-de-jesus-cambodia-137.webp",
+            "title": "Fotografo Moda Grazia Cover Daniela De Jesus Cambodia 137",
+            "tag": "EDITORIALS",
+            "width": 310,
+            "height": 406,
+            "is_horizontal": false
+          },
+          {
+            "url": "photo_web/editorials/covers/max-salvaggio-fotografo-moda-grazia-cover-daniela-de-jesus-cosio-mexico-028.webp",
+            "fullResUrl": "photo master/editorials/covers/max-salvaggio-fotografo-moda-grazia-cover-daniela-de-jesus-cosio-mexico-028.jpg",
+            "thumbnailUrl": "photo_web/editorials/covers/max-salvaggio-fotografo-moda-grazia-cover-daniela-de-jesus-cosio-mexico-028.webp",
+            "title": "Fotografo Moda Grazia Cover Daniela De Jesus Cosio Mexico 028",
+            "tag": "EDITORIALS",
+            "width": 787,
+            "height": 1024,
+            "is_horizontal": false
+          },
+          {
+            "url": "photo_web/editorials/covers/max-salvaggio-fotografo-moda-grazia-cover-egypt-080.webp",
+            "fullResUrl": "photo master/editorials/covers/max-salvaggio-fotografo-moda-grazia-cover-egypt-080.jpg",
+            "thumbnailUrl": "photo_web/editorials/covers/max-salvaggio-fotografo-moda-grazia-cover-egypt-080.webp",
+            "title": "Fotografo Moda Grazia Cover Egypt 080",
+            "tag": "EDITORIALS",
+            "width": 771,
+            "height": 1024,
+            "is_horizontal": false
+          },
+          {
+            "url": "photo_web/editorials/covers/max-salvaggio-fotografo-moda-grazia-cover-kenya-102.webp",
+            "fullResUrl": "photo master/editorials/covers/max-salvaggio-fotografo-moda-grazia-cover-kenya-102.jpg",
+            "thumbnailUrl": "photo_web/editorials/covers/max-salvaggio-fotografo-moda-grazia-cover-kenya-102.webp",
+            "title": "Fotografo Moda Grazia Cover Kenya 102",
+            "tag": "EDITORIALS",
+            "width": 793,
+            "height": 1024,
+            "is_horizontal": false
+          },
+          {
+            "url": "photo_web/editorials/covers/max-salvaggio-fotografo-moda-grazia-cover-miami-001.webp",
+            "fullResUrl": "photo master/editorials/covers/max-salvaggio-fotografo-moda-grazia-cover-miami-001.jpg",
+            "thumbnailUrl": "photo_web/editorials/covers/max-salvaggio-fotografo-moda-grazia-cover-miami-001.webp",
+            "title": "Fotografo Moda Grazia Cover Miami 001",
+            "tag": "EDITORIALS",
+            "width": 783,
+            "height": 1024,
+            "is_horizontal": false
+          }
+        ]
+      },
+      {
+        "id": "moda-grazia-bianco",
+        "title": "Moda Grazia Bianco",
+        "place": "",
+        "magazine": "",
+        "images": [
+          {
+            "url": "photo_web/editorials/moda-grazia-bianco/max-salvaggio-fotografo-moda-grazia-hong-kong-007.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-bianco/max-salvaggio-fotografo-moda-grazia-hong-kong-007.jpg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-bianco/max-salvaggio-fotografo-moda-grazia-hong-kong-007.webp",
+            "title": "Fotografo Moda Grazia Hong Kong 007",
+            "tag": "EDITORIALS",
+            "width": 1600,
+            "height": 1024,
+            "is_horizontal": true
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-bianco/max-salvaggio-fotografo-moda-grazia-hong-kong-008.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-bianco/max-salvaggio-fotografo-moda-grazia-hong-kong-008.jpg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-bianco/max-salvaggio-fotografo-moda-grazia-hong-kong-008.webp",
+            "title": "Fotografo Moda Grazia Hong Kong 008",
+            "tag": "EDITORIALS",
+            "width": 768,
+            "height": 1024,
+            "is_horizontal": false
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-bianco/max-salvaggio-fotografo-moda-grazia-hong-kong-009.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-bianco/max-salvaggio-fotografo-moda-grazia-hong-kong-009.jpeg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-bianco/max-salvaggio-fotografo-moda-grazia-hong-kong-009.webp",
+            "title": "Fotografo Moda Grazia Hong Kong 009",
+            "tag": "EDITORIALS",
+            "width": 682,
+            "height": 1024,
+            "is_horizontal": false
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-bianco/max-salvaggio-fotografo-moda-grazia-hong-kong-010.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-bianco/max-salvaggio-fotografo-moda-grazia-hong-kong-010.jpg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-bianco/max-salvaggio-fotografo-moda-grazia-hong-kong-010.webp",
+            "title": "Fotografo Moda Grazia Hong Kong 010",
+            "tag": "EDITORIALS",
+            "width": 781,
+            "height": 1024,
+            "is_horizontal": false
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-bianco/max-salvaggio-fotografo-moda-grazia-hong-kong-011.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-bianco/max-salvaggio-fotografo-moda-grazia-hong-kong-011.jpg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-bianco/max-salvaggio-fotografo-moda-grazia-hong-kong-011.webp",
+            "title": "Fotografo Moda Grazia Hong Kong 011",
+            "tag": "EDITORIALS",
+            "width": 781,
+            "height": 1024,
+            "is_horizontal": false
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-bianco/max-salvaggio-fotografo-moda-grazia-hong-kong-012.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-bianco/max-salvaggio-fotografo-moda-grazia-hong-kong-012.jpeg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-bianco/max-salvaggio-fotografo-moda-grazia-hong-kong-012.webp",
+            "title": "Fotografo Moda Grazia Hong Kong 012",
+            "tag": "EDITORIALS",
+            "width": 788,
+            "height": 1024,
+            "is_horizontal": false
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-bianco/max-salvaggio-fotografo-moda-grazia-hong-kong-013.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-bianco/max-salvaggio-fotografo-moda-grazia-hong-kong-013.JPG",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-bianco/max-salvaggio-fotografo-moda-grazia-hong-kong-013.webp",
+            "title": "Fotografo Moda Grazia Hong Kong 013",
+            "tag": "EDITORIALS",
+            "width": 1024,
+            "height": 683,
+            "is_horizontal": true
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-bianco/max-salvaggio-fotografo-moda-grazia-hong-kong-014.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-bianco/max-salvaggio-fotografo-moda-grazia-hong-kong-014.jpeg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-bianco/max-salvaggio-fotografo-moda-grazia-hong-kong-014.webp",
+            "title": "Fotografo Moda Grazia Hong Kong 014",
+            "tag": "EDITORIALS",
+            "width": 1024,
+            "height": 682,
+            "is_horizontal": true
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-bianco/max-salvaggio-fotografo-moda-grazia-hong-kong-015.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-bianco/max-salvaggio-fotografo-moda-grazia-hong-kong-015.jpeg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-bianco/max-salvaggio-fotografo-moda-grazia-hong-kong-015.webp",
+            "title": "Fotografo Moda Grazia Hong Kong 015",
+            "tag": "EDITORIALS",
+            "width": 794,
+            "height": 1024,
+            "is_horizontal": false
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-bianco/max-salvaggio-fotografo-moda-grazia-hong-kong-016.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-bianco/max-salvaggio-fotografo-moda-grazia-hong-kong-016.jpeg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-bianco/max-salvaggio-fotografo-moda-grazia-hong-kong-016.webp",
+            "title": "Fotografo Moda Grazia Hong Kong 016",
+            "tag": "EDITORIALS",
+            "width": 794,
+            "height": 1024,
+            "is_horizontal": false
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-bianco/max-salvaggio-fotografo-moda-grazia-hong-kong-017.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-bianco/max-salvaggio-fotografo-moda-grazia-hong-kong-017.jpeg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-bianco/max-salvaggio-fotografo-moda-grazia-hong-kong-017.webp",
+            "title": "Fotografo Moda Grazia Hong Kong 017",
+            "tag": "EDITORIALS",
+            "width": 1024,
+            "height": 682,
+            "is_horizontal": true
+          }
+        ]
+      },
+      {
+        "id": "moda-grazia-bon-ton-grinta",
+        "title": "Moda Grazia Bon Ton Grinta",
+        "place": "",
+        "magazine": "",
+        "images": [
+          {
+            "url": "photo_web/editorials/moda-grazia-bon_ton-grinta/max-salvaggio-fotografo-moda-grazia-sharm-el-sheik-egypt-018.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-bon_ton-grinta/max-salvaggio-fotografo-moda-grazia-sharm-el-sheik-egypt-018.jpg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-bon_ton-grinta/max-salvaggio-fotografo-moda-grazia-sharm-el-sheik-egypt-018.webp",
+            "title": "Fotografo Moda Grazia Sharm El Sheik Egypt 018",
+            "tag": "EDITORIALS",
+            "width": 1562,
+            "height": 989,
+            "is_horizontal": true
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-bon_ton-grinta/max-salvaggio-fotografo-moda-grazia-sharm-el-sheik-egypt-019.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-bon_ton-grinta/max-salvaggio-fotografo-moda-grazia-sharm-el-sheik-egypt-019.jpg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-bon_ton-grinta/max-salvaggio-fotografo-moda-grazia-sharm-el-sheik-egypt-019.webp",
+            "title": "Fotografo Moda Grazia Sharm El Sheik Egypt 019",
+            "tag": "EDITORIALS",
+            "width": 1350,
+            "height": 900,
+            "is_horizontal": true
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-bon_ton-grinta/max-salvaggio-fotografo-moda-grazia-sharm-el-sheik-egypt-020.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-bon_ton-grinta/max-salvaggio-fotografo-moda-grazia-sharm-el-sheik-egypt-020.jpg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-bon_ton-grinta/max-salvaggio-fotografo-moda-grazia-sharm-el-sheik-egypt-020.webp",
+            "title": "Fotografo Moda Grazia Sharm El Sheik Egypt 020",
+            "tag": "EDITORIALS",
+            "width": 1350,
+            "height": 900,
+            "is_horizontal": true
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-bon_ton-grinta/max-salvaggio-fotografo-moda-grazia-sharm-el-sheik-egypt-021.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-bon_ton-grinta/max-salvaggio-fotografo-moda-grazia-sharm-el-sheik-egypt-021.jpg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-bon_ton-grinta/max-salvaggio-fotografo-moda-grazia-sharm-el-sheik-egypt-021.webp",
+            "title": "Fotografo Moda Grazia Sharm El Sheik Egypt 021",
+            "tag": "EDITORIALS",
+            "width": 600,
+            "height": 900,
+            "is_horizontal": false
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-bon_ton-grinta/max-salvaggio-fotografo-moda-grazia-sharm-el-sheik-egypt-022.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-bon_ton-grinta/max-salvaggio-fotografo-moda-grazia-sharm-el-sheik-egypt-022.jpg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-bon_ton-grinta/max-salvaggio-fotografo-moda-grazia-sharm-el-sheik-egypt-022.webp",
+            "title": "Fotografo Moda Grazia Sharm El Sheik Egypt 022",
+            "tag": "EDITORIALS",
+            "width": 1350,
+            "height": 900,
+            "is_horizontal": true
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-bon_ton-grinta/max-salvaggio-fotografo-moda-grazia-sharm-el-sheik-egypt-023.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-bon_ton-grinta/max-salvaggio-fotografo-moda-grazia-sharm-el-sheik-egypt-023.jpg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-bon_ton-grinta/max-salvaggio-fotografo-moda-grazia-sharm-el-sheik-egypt-023.webp",
+            "title": "Fotografo Moda Grazia Sharm El Sheik Egypt 023",
+            "tag": "EDITORIALS",
+            "width": 1350,
+            "height": 900,
+            "is_horizontal": true
+          }
+        ]
+      },
+      {
+        "id": "moda-grazia-dettaglio",
+        "title": "Moda Grazia Dettaglio",
+        "place": "",
+        "magazine": "",
+        "images": [
+          {
+            "url": "photo_web/editorials/moda-grazia-dettaglio/max-salvaggio-fotografo-moda-grazia-cover-miami-001.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-dettaglio/max-salvaggio-fotografo-moda-grazia-cover-miami-001.jpg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-dettaglio/max-salvaggio-fotografo-moda-grazia-cover-miami-001.webp",
+            "title": "Fotografo Moda Grazia Cover Miami 001",
+            "tag": "EDITORIALS",
+            "width": 783,
+            "height": 1024,
+            "is_horizontal": false
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-dettaglio/max-salvaggio-fotografo-moda-grazia-miami-002.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-dettaglio/max-salvaggio-fotografo-moda-grazia-miami-002.jpg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-dettaglio/max-salvaggio-fotografo-moda-grazia-miami-002.webp",
+            "title": "Fotografo Moda Grazia Miami 002",
+            "tag": "EDITORIALS",
+            "width": 1562,
+            "height": 1001,
+            "is_horizontal": true
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-dettaglio/max-salvaggio-fotografo-moda-grazia-miami-003.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-dettaglio/max-salvaggio-fotografo-moda-grazia-miami-003.jpg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-dettaglio/max-salvaggio-fotografo-moda-grazia-miami-003.webp",
+            "title": "Fotografo Moda Grazia Miami 003",
+            "tag": "EDITORIALS",
+            "width": 683,
+            "height": 1024,
+            "is_horizontal": false
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-dettaglio/max-salvaggio-fotografo-moda-grazia-miami-004.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-dettaglio/max-salvaggio-fotografo-moda-grazia-miami-004.jpg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-dettaglio/max-salvaggio-fotografo-moda-grazia-miami-004.webp",
+            "title": "Fotografo Moda Grazia Miami 004",
+            "tag": "EDITORIALS",
+            "width": 682,
+            "height": 1024,
+            "is_horizontal": false
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-dettaglio/max-salvaggio-fotografo-moda-grazia-miami-005.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-dettaglio/max-salvaggio-fotografo-moda-grazia-miami-005.jpg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-dettaglio/max-salvaggio-fotografo-moda-grazia-miami-005.webp",
+            "title": "Fotografo Moda Grazia Miami 005",
+            "tag": "EDITORIALS",
+            "width": 600,
+            "height": 900,
+            "is_horizontal": false
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-dettaglio/max-salvaggio-fotografo-moda-grazia-miami-006.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-dettaglio/max-salvaggio-fotografo-moda-grazia-miami-006.jpg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-dettaglio/max-salvaggio-fotografo-moda-grazia-miami-006.webp",
+            "title": "Fotografo Moda Grazia Miami 006",
+            "tag": "EDITORIALS",
+            "width": 600,
+            "height": 900,
+            "is_horizontal": false
+          }
+        ]
+      },
+      {
+        "id": "moda-grazia-etnico-dark",
+        "title": "Moda Grazia Etnico Dark",
+        "place": "",
+        "magazine": "",
+        "images": [
+          {
+            "url": "photo_web/editorials/moda-grazia-etnico-dark/max-salvaggio-fotografo-moda-grazia-cover-daniela-de-jesus-cosio-mexico-028.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-etnico-dark/max-salvaggio-fotografo-moda-grazia-cover-daniela-de-jesus-cosio-mexico-028.jpg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-etnico-dark/max-salvaggio-fotografo-moda-grazia-cover-daniela-de-jesus-cosio-mexico-028.webp",
+            "title": "Fotografo Moda Grazia Cover Daniela De Jesus Cosio Mexico 028",
+            "tag": "EDITORIALS",
+            "width": 787,
+            "height": 1024,
+            "is_horizontal": false
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-etnico-dark/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cosio-mexico-029.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-etnico-dark/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cosio-mexico-029.jpg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-etnico-dark/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cosio-mexico-029.webp",
+            "title": "Fotografo Moda Grazia Daniela De Jesus Cosio Mexico 029",
+            "tag": "EDITORIALS",
+            "width": 1536,
+            "height": 1024,
+            "is_horizontal": true
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-etnico-dark/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cosio-mexico-030.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-etnico-dark/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cosio-mexico-030.jpeg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-etnico-dark/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cosio-mexico-030.webp",
+            "title": "Fotografo Moda Grazia Daniela De Jesus Cosio Mexico 030",
+            "tag": "EDITORIALS",
+            "width": 1024,
+            "height": 682,
+            "is_horizontal": true
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-etnico-dark/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cosio-mexico-031.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-etnico-dark/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cosio-mexico-031.jpeg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-etnico-dark/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cosio-mexico-031.webp",
+            "title": "Fotografo Moda Grazia Daniela De Jesus Cosio Mexico 031",
+            "tag": "EDITORIALS",
+            "width": 781,
+            "height": 1024,
+            "is_horizontal": false
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-etnico-dark/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cosio-mexico-032.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-etnico-dark/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cosio-mexico-032.jpeg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-etnico-dark/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cosio-mexico-032.webp",
+            "title": "Fotografo Moda Grazia Daniela De Jesus Cosio Mexico 032",
+            "tag": "EDITORIALS",
+            "width": 709,
+            "height": 953,
+            "is_horizontal": false
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-etnico-dark/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cosio-mexico-033.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-etnico-dark/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cosio-mexico-033.jpeg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-etnico-dark/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cosio-mexico-033.webp",
+            "title": "Fotografo Moda Grazia Daniela De Jesus Cosio Mexico 033",
+            "tag": "EDITORIALS",
+            "width": 1024,
+            "height": 682,
+            "is_horizontal": true
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-etnico-dark/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cosio-mexico-034.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-etnico-dark/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cosio-mexico-034.jpeg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-etnico-dark/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cosio-mexico-034.webp",
+            "title": "Fotografo Moda Grazia Daniela De Jesus Cosio Mexico 034",
+            "tag": "EDITORIALS",
+            "width": 1024,
+            "height": 682,
+            "is_horizontal": true
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-etnico-dark/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cosio-mexico-035.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-etnico-dark/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cosio-mexico-035.jpeg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-etnico-dark/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cosio-mexico-035.webp",
+            "title": "Fotografo Moda Grazia Daniela De Jesus Cosio Mexico 035",
+            "tag": "EDITORIALS",
+            "width": 682,
+            "height": 1024,
+            "is_horizontal": false
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-etnico-dark/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cosio-mexico-036.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-etnico-dark/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cosio-mexico-036.jpeg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-etnico-dark/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cosio-mexico-036.webp",
+            "title": "Fotografo Moda Grazia Daniela De Jesus Cosio Mexico 036",
+            "tag": "EDITORIALS",
+            "width": 682,
+            "height": 1024,
+            "is_horizontal": false
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-etnico-dark/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cosio-mexico-038.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-etnico-dark/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cosio-mexico-038.jpeg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-etnico-dark/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cosio-mexico-038.webp",
+            "title": "Fotografo Moda Grazia Daniela De Jesus Cosio Mexico 038",
+            "tag": "EDITORIALS",
+            "width": 1024,
+            "height": 667,
+            "is_horizontal": true
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-etnico-dark/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cosio-mexico-039.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-etnico-dark/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cosio-mexico-039.jpeg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-etnico-dark/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cosio-mexico-039.webp",
+            "title": "Fotografo Moda Grazia Daniela De Jesus Cosio Mexico 039",
+            "tag": "EDITORIALS",
+            "width": 1024,
+            "height": 682,
+            "is_horizontal": true
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-etnico-dark/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cosio-mexico-040.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-etnico-dark/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cosio-mexico-040.jpg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-etnico-dark/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cosio-mexico-040.webp",
+            "title": "Fotografo Moda Grazia Daniela De Jesus Cosio Mexico 040",
+            "tag": "EDITORIALS",
+            "width": 1536,
+            "height": 1024,
+            "is_horizontal": true
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-etnico-dark/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cosio-mexico-041.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-etnico-dark/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cosio-mexico-041.jpeg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-etnico-dark/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cosio-mexico-041.webp",
+            "title": "Fotografo Moda Grazia Daniela De Jesus Cosio Mexico 041",
+            "tag": "EDITORIALS",
+            "width": 1024,
+            "height": 682,
+            "is_horizontal": true
+          }
+        ]
+      },
+      {
+        "id": "moda-grazia-giungla-urbana",
+        "title": "Moda Grazia Giungla Urbana",
+        "place": "",
+        "magazine": "",
+        "images": [
+          {
+            "url": "photo_web/editorials/moda-grazia-giungla-urbana/max-salvaggio-fotografo-moda-grazia-hong-kong-042.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-giungla-urbana/max-salvaggio-fotografo-moda-grazia-hong-kong-042.jpg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-giungla-urbana/max-salvaggio-fotografo-moda-grazia-hong-kong-042.webp",
+            "title": "Fotografo Moda Grazia Hong Kong 042",
+            "tag": "EDITORIALS",
+            "width": 1510,
+            "height": 1024,
+            "is_horizontal": true
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-giungla-urbana/max-salvaggio-fotografo-moda-grazia-hong-kong-043.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-giungla-urbana/max-salvaggio-fotografo-moda-grazia-hong-kong-043.jpeg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-giungla-urbana/max-salvaggio-fotografo-moda-grazia-hong-kong-043.webp",
+            "title": "Fotografo Moda Grazia Hong Kong 043",
+            "tag": "EDITORIALS",
+            "width": 1024,
+            "height": 682,
+            "is_horizontal": true
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-giungla-urbana/max-salvaggio-fotografo-moda-grazia-hong-kong-044.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-giungla-urbana/max-salvaggio-fotografo-moda-grazia-hong-kong-044.jpg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-giungla-urbana/max-salvaggio-fotografo-moda-grazia-hong-kong-044.webp",
+            "title": "Fotografo Moda Grazia Hong Kong 044",
+            "tag": "EDITORIALS",
+            "width": 682,
+            "height": 1024,
+            "is_horizontal": false
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-giungla-urbana/max-salvaggio-fotografo-moda-grazia-hong-kong-045.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-giungla-urbana/max-salvaggio-fotografo-moda-grazia-hong-kong-045.jpeg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-giungla-urbana/max-salvaggio-fotografo-moda-grazia-hong-kong-045.webp",
+            "title": "Fotografo Moda Grazia Hong Kong 045",
+            "tag": "EDITORIALS",
+            "width": 785,
+            "height": 1024,
+            "is_horizontal": false
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-giungla-urbana/max-salvaggio-fotografo-moda-grazia-hong-kong-046.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-giungla-urbana/max-salvaggio-fotografo-moda-grazia-hong-kong-046.JPG",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-giungla-urbana/max-salvaggio-fotografo-moda-grazia-hong-kong-046.webp",
+            "title": "Fotografo Moda Grazia Hong Kong 046",
+            "tag": "EDITORIALS",
+            "width": 1536,
+            "height": 1024,
+            "is_horizontal": true
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-giungla-urbana/max-salvaggio-fotografo-moda-grazia-hong-kong-047.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-giungla-urbana/max-salvaggio-fotografo-moda-grazia-hong-kong-047.JPG",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-giungla-urbana/max-salvaggio-fotografo-moda-grazia-hong-kong-047.webp",
+            "title": "Fotografo Moda Grazia Hong Kong 047",
+            "tag": "EDITORIALS",
+            "width": 1536,
+            "height": 1024,
+            "is_horizontal": true
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-giungla-urbana/max-salvaggio-fotografo-moda-grazia-hong-kong-048.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-giungla-urbana/max-salvaggio-fotografo-moda-grazia-hong-kong-048.JPG",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-giungla-urbana/max-salvaggio-fotografo-moda-grazia-hong-kong-048.webp",
+            "title": "Fotografo Moda Grazia Hong Kong 048",
+            "tag": "EDITORIALS",
+            "width": 1536,
+            "height": 1024,
+            "is_horizontal": true
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-giungla-urbana/max-salvaggio-fotografo-moda-grazia-hong-kong-049.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-giungla-urbana/max-salvaggio-fotografo-moda-grazia-hong-kong-049.JPG",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-giungla-urbana/max-salvaggio-fotografo-moda-grazia-hong-kong-049.webp",
+            "title": "Fotografo Moda Grazia Hong Kong 049",
+            "tag": "EDITORIALS",
+            "width": 1536,
+            "height": 1024,
+            "is_horizontal": true
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-giungla-urbana/max-salvaggio-fotografo-moda-grazia-hong-kong-050.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-giungla-urbana/max-salvaggio-fotografo-moda-grazia-hong-kong-050.JPG",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-giungla-urbana/max-salvaggio-fotografo-moda-grazia-hong-kong-050.webp",
+            "title": "Fotografo Moda Grazia Hong Kong 050",
+            "tag": "EDITORIALS",
+            "width": 1536,
+            "height": 1024,
+            "is_horizontal": true
+          }
+        ]
+      },
+      {
+        "id": "moda-grazia-hong-kong-express",
+        "title": "Moda Grazia Hong Kong Express",
+        "place": "",
+        "magazine": "",
+        "images": [
+          {
+            "url": "photo_web/editorials/moda-grazia-hong-kong-express/max-salvaggio-fotografo-moda-grazia-hong-kong-051.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-hong-kong-express/max-salvaggio-fotografo-moda-grazia-hong-kong-051.jpeg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-hong-kong-express/max-salvaggio-fotografo-moda-grazia-hong-kong-051.webp",
+            "title": "Fotografo Moda Grazia Hong Kong 051",
+            "tag": "EDITORIALS",
+            "width": 1536,
+            "height": 1024,
+            "is_horizontal": true
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-hong-kong-express/max-salvaggio-fotografo-moda-grazia-hong-kong-052.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-hong-kong-express/max-salvaggio-fotografo-moda-grazia-hong-kong-052.jpg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-hong-kong-express/max-salvaggio-fotografo-moda-grazia-hong-kong-052.webp",
+            "title": "Fotografo Moda Grazia Hong Kong 052",
+            "tag": "EDITORIALS",
+            "width": 682,
+            "height": 1024,
+            "is_horizontal": false
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-hong-kong-express/max-salvaggio-fotografo-moda-grazia-hong-kong-053.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-hong-kong-express/max-salvaggio-fotografo-moda-grazia-hong-kong-053.JPG",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-hong-kong-express/max-salvaggio-fotografo-moda-grazia-hong-kong-053.webp",
+            "title": "Fotografo Moda Grazia Hong Kong 053",
+            "tag": "EDITORIALS",
+            "width": 1536,
+            "height": 1024,
+            "is_horizontal": true
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-hong-kong-express/max-salvaggio-fotografo-moda-grazia-hong-kong-054.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-hong-kong-express/max-salvaggio-fotografo-moda-grazia-hong-kong-054.jpeg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-hong-kong-express/max-salvaggio-fotografo-moda-grazia-hong-kong-054.webp",
+            "title": "Fotografo Moda Grazia Hong Kong 054",
+            "tag": "EDITORIALS",
+            "width": 1024,
+            "height": 682,
+            "is_horizontal": true
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-hong-kong-express/max-salvaggio-fotografo-moda-grazia-hong-kong-055.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-hong-kong-express/max-salvaggio-fotografo-moda-grazia-hong-kong-055.jpg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-hong-kong-express/max-salvaggio-fotografo-moda-grazia-hong-kong-055.webp",
+            "title": "Fotografo Moda Grazia Hong Kong 055",
+            "tag": "EDITORIALS",
+            "width": 1536,
+            "height": 1024,
+            "is_horizontal": true
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-hong-kong-express/max-salvaggio-fotografo-moda-grazia-hong-kong-056.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-hong-kong-express/max-salvaggio-fotografo-moda-grazia-hong-kong-056.jpeg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-hong-kong-express/max-salvaggio-fotografo-moda-grazia-hong-kong-056.webp",
+            "title": "Fotografo Moda Grazia Hong Kong 056",
+            "tag": "EDITORIALS",
+            "width": 682,
+            "height": 1024,
+            "is_horizontal": false
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-hong-kong-express/max-salvaggio-fotografo-moda-grazia-hong-kong-057.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-hong-kong-express/max-salvaggio-fotografo-moda-grazia-hong-kong-057.JPG",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-hong-kong-express/max-salvaggio-fotografo-moda-grazia-hong-kong-057.webp",
+            "title": "Fotografo Moda Grazia Hong Kong 057",
+            "tag": "EDITORIALS",
+            "width": 683,
+            "height": 1024,
+            "is_horizontal": false
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-hong-kong-express/max-salvaggio-fotografo-moda-grazia-hong-kong-058.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-hong-kong-express/max-salvaggio-fotografo-moda-grazia-hong-kong-058.jpeg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-hong-kong-express/max-salvaggio-fotografo-moda-grazia-hong-kong-058.webp",
+            "title": "Fotografo Moda Grazia Hong Kong 058",
+            "tag": "EDITORIALS",
+            "width": 794,
+            "height": 1024,
+            "is_horizontal": false
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-hong-kong-express/max-salvaggio-fotografo-moda-grazia-hong-kong-059.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-hong-kong-express/max-salvaggio-fotografo-moda-grazia-hong-kong-059.JPG",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-hong-kong-express/max-salvaggio-fotografo-moda-grazia-hong-kong-059.webp",
+            "title": "Fotografo Moda Grazia Hong Kong 059",
+            "tag": "EDITORIALS",
+            "width": 1536,
+            "height": 1024,
+            "is_horizontal": true
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-hong-kong-express/max-salvaggio-fotografo-moda-grazia-hong-kong-060.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-hong-kong-express/max-salvaggio-fotografo-moda-grazia-hong-kong-060.jpeg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-hong-kong-express/max-salvaggio-fotografo-moda-grazia-hong-kong-060.webp",
+            "title": "Fotografo Moda Grazia Hong Kong 060",
+            "tag": "EDITORIALS",
+            "width": 682,
+            "height": 1024,
+            "is_horizontal": false
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-hong-kong-express/max-salvaggio-fotografo-moda-grazia-hong-kong-061.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-hong-kong-express/max-salvaggio-fotografo-moda-grazia-hong-kong-061.jpeg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-hong-kong-express/max-salvaggio-fotografo-moda-grazia-hong-kong-061.webp",
+            "title": "Fotografo Moda Grazia Hong Kong 061",
+            "tag": "EDITORIALS",
+            "width": 1024,
+            "height": 682,
+            "is_horizontal": true
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-hong-kong-express/max-salvaggio-fotografo-moda-grazia-hong-kong-062.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-hong-kong-express/max-salvaggio-fotografo-moda-grazia-hong-kong-062.jpg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-hong-kong-express/max-salvaggio-fotografo-moda-grazia-hong-kong-062.webp",
+            "title": "Fotografo Moda Grazia Hong Kong 062",
+            "tag": "EDITORIALS",
+            "width": 1536,
+            "height": 1024,
+            "is_horizontal": true
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-hong-kong-express/max-salvaggio-fotografo-moda-grazia-hong-kong-063.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-hong-kong-express/max-salvaggio-fotografo-moda-grazia-hong-kong-063.jpeg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-hong-kong-express/max-salvaggio-fotografo-moda-grazia-hong-kong-063.webp",
+            "title": "Fotografo Moda Grazia Hong Kong 063",
+            "tag": "EDITORIALS",
+            "width": 1024,
+            "height": 682,
+            "is_horizontal": true
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-hong-kong-express/max-salvaggio-fotografo-moda-grazia-hong-kong-064.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-hong-kong-express/max-salvaggio-fotografo-moda-grazia-hong-kong-064.jpg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-hong-kong-express/max-salvaggio-fotografo-moda-grazia-hong-kong-064.webp",
+            "title": "Fotografo Moda Grazia Hong Kong 064",
+            "tag": "EDITORIALS",
+            "width": 1536,
+            "height": 1024,
+            "is_horizontal": true
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-hong-kong-express/max-salvaggio-fotografo-moda-grazia-hong-kong-065.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-hong-kong-express/max-salvaggio-fotografo-moda-grazia-hong-kong-065.jpeg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-hong-kong-express/max-salvaggio-fotografo-moda-grazia-hong-kong-065.webp",
+            "title": "Fotografo Moda Grazia Hong Kong 065",
+            "tag": "EDITORIALS",
+            "width": 1024,
+            "height": 682,
+            "is_horizontal": true
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-hong-kong-express/max-salvaggio-fotografo-moda-grazia-hong-kong-066.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-hong-kong-express/max-salvaggio-fotografo-moda-grazia-hong-kong-066.JPG",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-hong-kong-express/max-salvaggio-fotografo-moda-grazia-hong-kong-066.webp",
+            "title": "Fotografo Moda Grazia Hong Kong 066",
+            "tag": "EDITORIALS",
+            "width": 683,
+            "height": 1024,
+            "is_horizontal": false
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-hong-kong-express/max-salvaggio-fotografo-moda-grazia-hong-kong-067.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-hong-kong-express/max-salvaggio-fotografo-moda-grazia-hong-kong-067.jpeg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-hong-kong-express/max-salvaggio-fotografo-moda-grazia-hong-kong-067.webp",
+            "title": "Fotografo Moda Grazia Hong Kong 067",
+            "tag": "EDITORIALS",
+            "width": 1024,
+            "height": 652,
+            "is_horizontal": true
+          }
+        ]
+      },
+      {
+        "id": "moda-grazia-leggerezza",
+        "title": "Moda Grazia Leggerezza",
+        "place": "",
+        "magazine": "",
+        "images": [
+          {
+            "url": "photo_web/editorials/moda-grazia-leggerezza/max-salvaggio-fotografo-moda-grazia-cover-egypt-080.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-leggerezza/max-salvaggio-fotografo-moda-grazia-cover-egypt-080.jpg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-leggerezza/max-salvaggio-fotografo-moda-grazia-cover-egypt-080.webp",
+            "title": "Fotografo Moda Grazia Cover Egypt 080",
+            "tag": "EDITORIALS",
+            "width": 771,
+            "height": 1024,
+            "is_horizontal": false
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-leggerezza/max-salvaggio-fotografo-moda-grazia-egypt-081.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-leggerezza/max-salvaggio-fotografo-moda-grazia-egypt-081.jpg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-leggerezza/max-salvaggio-fotografo-moda-grazia-egypt-081.webp",
+            "title": "Fotografo Moda Grazia Egypt 081",
+            "tag": "EDITORIALS",
+            "width": 1559,
+            "height": 1024,
+            "is_horizontal": true
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-leggerezza/max-salvaggio-fotografo-moda-grazia-egypt-082.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-leggerezza/max-salvaggio-fotografo-moda-grazia-egypt-082.jpg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-leggerezza/max-salvaggio-fotografo-moda-grazia-egypt-082.webp",
+            "title": "Fotografo Moda Grazia Egypt 082",
+            "tag": "EDITORIALS",
+            "width": 1373,
+            "height": 900,
+            "is_horizontal": true
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-leggerezza/max-salvaggio-fotografo-moda-grazia-egypt-083.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-leggerezza/max-salvaggio-fotografo-moda-grazia-egypt-083.jpg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-leggerezza/max-salvaggio-fotografo-moda-grazia-egypt-083.webp",
+            "title": "Fotografo Moda Grazia Egypt 083",
+            "tag": "EDITORIALS",
+            "width": 686,
+            "height": 900,
+            "is_horizontal": false
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-leggerezza/max-salvaggio-fotografo-moda-grazia-egypt-084.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-leggerezza/max-salvaggio-fotografo-moda-grazia-egypt-084.jpg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-leggerezza/max-salvaggio-fotografo-moda-grazia-egypt-084.webp",
+            "title": "Fotografo Moda Grazia Egypt 084",
+            "tag": "EDITORIALS",
+            "width": 682,
+            "height": 1024,
+            "is_horizontal": false
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-leggerezza/max-salvaggio-fotografo-moda-grazia-egypt-085.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-leggerezza/max-salvaggio-fotografo-moda-grazia-egypt-085.jpg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-leggerezza/max-salvaggio-fotografo-moda-grazia-egypt-085.webp",
+            "title": "Fotografo Moda Grazia Egypt 085",
+            "tag": "EDITORIALS",
+            "width": 686,
+            "height": 900,
+            "is_horizontal": false
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-leggerezza/max-salvaggio-fotografo-moda-grazia-egypt-086.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-leggerezza/max-salvaggio-fotografo-moda-grazia-egypt-086.jpg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-leggerezza/max-salvaggio-fotografo-moda-grazia-egypt-086.webp",
+            "title": "Fotografo Moda Grazia Egypt 086",
+            "tag": "EDITORIALS",
+            "width": 1373,
+            "height": 900,
+            "is_horizontal": true
+          }
+        ]
+      },
+      {
+        "id": "moda-grazia-love-shanghai",
+        "title": "Moda Grazia Love Shanghai",
+        "place": "",
+        "magazine": "",
+        "images": [
+          {
+            "url": "photo_web/editorials/moda-grazia-love-shanghai/max-salvaggio-fotografo-moda-grazia-shanghai-068x.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-love-shanghai/max-salvaggio-fotografo-moda-grazia-shanghai-068x.jpg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-love-shanghai/max-salvaggio-fotografo-moda-grazia-shanghai-068x.webp",
+            "title": "Fotografo Moda Grazia Shanghai 068X",
+            "tag": "EDITORIALS",
+            "width": 1529,
+            "height": 1024,
+            "is_horizontal": true
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-love-shanghai/max-salvaggio-fotografo-moda-grazia-shanghai-069.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-love-shanghai/max-salvaggio-fotografo-moda-grazia-shanghai-069.jpg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-love-shanghai/max-salvaggio-fotografo-moda-grazia-shanghai-069.webp",
+            "title": "Fotografo Moda Grazia Shanghai 069",
+            "tag": "EDITORIALS",
+            "width": 600,
+            "height": 900,
+            "is_horizontal": false
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-love-shanghai/max-salvaggio-fotografo-moda-grazia-shanghai-070.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-love-shanghai/max-salvaggio-fotografo-moda-grazia-shanghai-070.jpg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-love-shanghai/max-salvaggio-fotografo-moda-grazia-shanghai-070.webp",
+            "title": "Fotografo Moda Grazia Shanghai 070",
+            "tag": "EDITORIALS",
+            "width": 600,
+            "height": 900,
+            "is_horizontal": false
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-love-shanghai/max-salvaggio-fotografo-moda-grazia-shanghai-071.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-love-shanghai/max-salvaggio-fotografo-moda-grazia-shanghai-071.jpg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-love-shanghai/max-salvaggio-fotografo-moda-grazia-shanghai-071.webp",
+            "title": "Fotografo Moda Grazia Shanghai 071",
+            "tag": "EDITORIALS",
+            "width": 600,
+            "height": 900,
+            "is_horizontal": false
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-love-shanghai/max-salvaggio-fotografo-moda-grazia-shanghai-072.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-love-shanghai/max-salvaggio-fotografo-moda-grazia-shanghai-072.jpg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-love-shanghai/max-salvaggio-fotografo-moda-grazia-shanghai-072.webp",
+            "title": "Fotografo Moda Grazia Shanghai 072",
+            "tag": "EDITORIALS",
+            "width": 591,
+            "height": 887,
+            "is_horizontal": false
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-love-shanghai/max-salvaggio-fotografo-moda-grazia-shanghai-073.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-love-shanghai/max-salvaggio-fotografo-moda-grazia-shanghai-073.jpg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-love-shanghai/max-salvaggio-fotografo-moda-grazia-shanghai-073.webp",
+            "title": "Fotografo Moda Grazia Shanghai 073",
+            "tag": "EDITORIALS",
+            "width": 600,
+            "height": 900,
+            "is_horizontal": false
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-love-shanghai/max-salvaggio-fotografo-moda-grazia-shanghai-074.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-love-shanghai/max-salvaggio-fotografo-moda-grazia-shanghai-074.jpg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-love-shanghai/max-salvaggio-fotografo-moda-grazia-shanghai-074.webp",
+            "title": "Fotografo Moda Grazia Shanghai 074",
+            "tag": "EDITORIALS",
+            "width": 600,
+            "height": 900,
+            "is_horizontal": false
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-love-shanghai/max-salvaggio-fotografo-moda-grazia-shanghai-075.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-love-shanghai/max-salvaggio-fotografo-moda-grazia-shanghai-075.jpg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-love-shanghai/max-salvaggio-fotografo-moda-grazia-shanghai-075.webp",
+            "title": "Fotografo Moda Grazia Shanghai 075",
+            "tag": "EDITORIALS",
+            "width": 1107,
+            "height": 738,
+            "is_horizontal": true
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-love-shanghai/max-salvaggio-fotografo-moda-grazia-shanghai-076.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-love-shanghai/max-salvaggio-fotografo-moda-grazia-shanghai-076.jpg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-love-shanghai/max-salvaggio-fotografo-moda-grazia-shanghai-076.webp",
+            "title": "Fotografo Moda Grazia Shanghai 076",
+            "tag": "EDITORIALS",
+            "width": 783,
+            "height": 1024,
+            "is_horizontal": false
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-love-shanghai/max-salvaggio-fotografo-moda-grazia-shanghai-077.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-love-shanghai/max-salvaggio-fotografo-moda-grazia-shanghai-077.jpg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-love-shanghai/max-salvaggio-fotografo-moda-grazia-shanghai-077.webp",
+            "title": "Fotografo Moda Grazia Shanghai 077",
+            "tag": "EDITORIALS",
+            "width": 600,
+            "height": 900,
+            "is_horizontal": false
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-love-shanghai/max-salvaggio-fotografo-moda-grazia-shanghai-078.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-love-shanghai/max-salvaggio-fotografo-moda-grazia-shanghai-078.jpg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-love-shanghai/max-salvaggio-fotografo-moda-grazia-shanghai-078.webp",
+            "title": "Fotografo Moda Grazia Shanghai 078",
+            "tag": "EDITORIALS",
+            "width": 600,
+            "height": 900,
+            "is_horizontal": false
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-love-shanghai/max-salvaggio-fotografo-moda-grazia-shanghai-079.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-love-shanghai/max-salvaggio-fotografo-moda-grazia-shanghai-079.jpg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-love-shanghai/max-salvaggio-fotografo-moda-grazia-shanghai-079.webp",
+            "title": "Fotografo Moda Grazia Shanghai 079",
+            "tag": "EDITORIALS",
+            "width": 600,
+            "height": 900,
+            "is_horizontal": false
+          }
+        ]
+      },
+      {
+        "id": "moda-grazia-mito-futuro",
+        "title": "Moda Grazia Mito Futuro",
+        "place": "",
+        "magazine": "",
+        "images": [
+          {
+            "url": "photo_web/editorials/moda-grazia-mito-futuro/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-mexico-087.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-mito-futuro/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-mexico-087.jpg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-mito-futuro/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-mexico-087.webp",
+            "title": "Fotografo Moda Grazia Daniela De Jesus Mexico 087",
+            "tag": "EDITORIALS",
+            "width": 1553,
+            "height": 1024,
+            "is_horizontal": true
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-mito-futuro/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-mexico-088.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-mito-futuro/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-mexico-088.jpg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-mito-futuro/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-mexico-088.webp",
+            "title": "Fotografo Moda Grazia Daniela De Jesus Mexico 088",
+            "tag": "EDITORIALS",
+            "width": 1536,
+            "height": 1024,
+            "is_horizontal": true
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-mito-futuro/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-mexico-089.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-mito-futuro/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-mexico-089.jpeg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-mito-futuro/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-mexico-089.webp",
+            "title": "Fotografo Moda Grazia Daniela De Jesus Mexico 089",
+            "tag": "EDITORIALS",
+            "width": 682,
+            "height": 1024,
+            "is_horizontal": false
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-mito-futuro/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-mexico-090.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-mito-futuro/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-mexico-090.jpg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-mito-futuro/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-mexico-090.webp",
+            "title": "Fotografo Moda Grazia Daniela De Jesus Mexico 090",
+            "tag": "EDITORIALS",
+            "width": 1536,
+            "height": 1024,
+            "is_horizontal": true
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-mito-futuro/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-mexico-091.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-mito-futuro/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-mexico-091.jpeg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-mito-futuro/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-mexico-091.webp",
+            "title": "Fotografo Moda Grazia Daniela De Jesus Mexico 091",
+            "tag": "EDITORIALS",
+            "width": 789,
+            "height": 1024,
+            "is_horizontal": false
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-mito-futuro/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-mexico-092.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-mito-futuro/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-mexico-092.jpeg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-mito-futuro/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-mexico-092.webp",
+            "title": "Fotografo Moda Grazia Daniela De Jesus Mexico 092",
+            "tag": "EDITORIALS",
+            "width": 682,
+            "height": 1024,
+            "is_horizontal": false
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-mito-futuro/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-mexico-093.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-mito-futuro/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-mexico-093.jpeg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-mito-futuro/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-mexico-093.webp",
+            "title": "Fotografo Moda Grazia Daniela De Jesus Mexico 093",
+            "tag": "EDITORIALS",
+            "width": 702,
+            "height": 1024,
+            "is_horizontal": false
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-mito-futuro/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-mexico-094.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-mito-futuro/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-mexico-094.jpeg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-mito-futuro/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-mexico-094.webp",
+            "title": "Fotografo Moda Grazia Daniela De Jesus Mexico 094",
+            "tag": "EDITORIALS",
+            "width": 785,
+            "height": 1024,
+            "is_horizontal": false
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-mito-futuro/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-mexico-095.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-mito-futuro/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-mexico-095.jpeg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-mito-futuro/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-mexico-095.webp",
+            "title": "Fotografo Moda Grazia Daniela De Jesus Mexico 095",
+            "tag": "EDITORIALS",
+            "width": 682,
+            "height": 1024,
+            "is_horizontal": false
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-mito-futuro/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-mexico-096.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-mito-futuro/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-mexico-096.jpeg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-mito-futuro/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-mexico-096.webp",
+            "title": "Fotografo Moda Grazia Daniela De Jesus Mexico 096",
+            "tag": "EDITORIALS",
+            "width": 785,
+            "height": 1024,
+            "is_horizontal": false
+          }
+        ]
+      },
+      {
+        "id": "moda-grazia-nero-diverso",
+        "title": "Moda Grazia Nero Diverso",
+        "place": "",
+        "magazine": "",
+        "images": [
+          {
+            "url": "photo_web/editorials/moda-grazia-nero-diverso/max-salvaggio-fotografo-moda-grazia-sicilia-097.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-nero-diverso/max-salvaggio-fotografo-moda-grazia-sicilia-097.jpg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-nero-diverso/max-salvaggio-fotografo-moda-grazia-sicilia-097.webp",
+            "title": "Fotografo Moda Grazia Sicilia 097",
+            "tag": "EDITORIALS",
+            "width": 1507,
+            "height": 1024,
+            "is_horizontal": true
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-nero-diverso/max-salvaggio-fotografo-moda-grazia-sicilia-098.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-nero-diverso/max-salvaggio-fotografo-moda-grazia-sicilia-098.jpg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-nero-diverso/max-salvaggio-fotografo-moda-grazia-sicilia-098.webp",
+            "title": "Fotografo Moda Grazia Sicilia 098",
+            "tag": "EDITORIALS",
+            "width": 598,
+            "height": 900,
+            "is_horizontal": false
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-nero-diverso/max-salvaggio-fotografo-moda-grazia-sicilia-099.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-nero-diverso/max-salvaggio-fotografo-moda-grazia-sicilia-099.jpg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-nero-diverso/max-salvaggio-fotografo-moda-grazia-sicilia-099.webp",
+            "title": "Fotografo Moda Grazia Sicilia 099",
+            "tag": "EDITORIALS",
+            "width": 598,
+            "height": 900,
+            "is_horizontal": false
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-nero-diverso/max-salvaggio-fotografo-moda-grazia-sicilia-100.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-nero-diverso/max-salvaggio-fotografo-moda-grazia-sicilia-100.jpg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-nero-diverso/max-salvaggio-fotografo-moda-grazia-sicilia-100.webp",
+            "title": "Fotografo Moda Grazia Sicilia 100",
+            "tag": "EDITORIALS",
+            "width": 598,
+            "height": 900,
+            "is_horizontal": false
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-nero-diverso/max-salvaggio-fotografo-moda-grazia-sicilia-101.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-nero-diverso/max-salvaggio-fotografo-moda-grazia-sicilia-101.jpg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-nero-diverso/max-salvaggio-fotografo-moda-grazia-sicilia-101.webp",
+            "title": "Fotografo Moda Grazia Sicilia 101",
+            "tag": "EDITORIALS",
+            "width": 598,
+            "height": 900,
+            "is_horizontal": false
+          }
+        ]
+      },
+      {
+        "id": "moda-grazia-safari-chic",
+        "title": "Moda Grazia Safari Chic",
+        "place": "",
+        "magazine": "",
+        "images": [
+          {
+            "url": "photo_web/editorials/moda-grazia-safari-chic/max-salvaggio-fotografo-moda-grazia-kenya-102.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-safari-chic/max-salvaggio-fotografo-moda-grazia-kenya-102.jpg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-safari-chic/max-salvaggio-fotografo-moda-grazia-kenya-102.webp",
+            "title": "Fotografo Moda Grazia Kenya 102",
+            "tag": "EDITORIALS",
+            "width": 793,
+            "height": 1024,
+            "is_horizontal": false
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-safari-chic/max-salvaggio-fotografo-moda-grazia-kenya-103.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-safari-chic/max-salvaggio-fotografo-moda-grazia-kenya-103.jpg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-safari-chic/max-salvaggio-fotografo-moda-grazia-kenya-103.webp",
+            "title": "Fotografo Moda Grazia Kenya 103",
+            "tag": "EDITORIALS",
+            "width": 1584,
+            "height": 1024,
+            "is_horizontal": true
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-safari-chic/max-salvaggio-fotografo-moda-grazia-kenya-104.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-safari-chic/max-salvaggio-fotografo-moda-grazia-kenya-104.jpg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-safari-chic/max-salvaggio-fotografo-moda-grazia-kenya-104.webp",
+            "title": "Fotografo Moda Grazia Kenya 104",
+            "tag": "EDITORIALS",
+            "width": 600,
+            "height": 900,
+            "is_horizontal": false
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-safari-chic/max-salvaggio-fotografo-moda-grazia-kenya-105.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-safari-chic/max-salvaggio-fotografo-moda-grazia-kenya-105.jpg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-safari-chic/max-salvaggio-fotografo-moda-grazia-kenya-105.webp",
+            "title": "Fotografo Moda Grazia Kenya 105",
+            "tag": "EDITORIALS",
+            "width": 600,
+            "height": 900,
+            "is_horizontal": false
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-safari-chic/max-salvaggio-fotografo-moda-grazia-kenya-106.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-safari-chic/max-salvaggio-fotografo-moda-grazia-kenya-106.jpg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-safari-chic/max-salvaggio-fotografo-moda-grazia-kenya-106.webp",
+            "title": "Fotografo Moda Grazia Kenya 106",
+            "tag": "EDITORIALS",
+            "width": 683,
+            "height": 1024,
+            "is_horizontal": false
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-safari-chic/max-salvaggio-fotografo-moda-grazia-kenya-107.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-safari-chic/max-salvaggio-fotografo-moda-grazia-kenya-107.jpg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-safari-chic/max-salvaggio-fotografo-moda-grazia-kenya-107.webp",
+            "title": "Fotografo Moda Grazia Kenya 107",
+            "tag": "EDITORIALS",
+            "width": 1536,
+            "height": 1024,
+            "is_horizontal": true
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-safari-chic/max-salvaggio-fotografo-moda-grazia-kenya-108.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-safari-chic/max-salvaggio-fotografo-moda-grazia-kenya-108.jpg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-safari-chic/max-salvaggio-fotografo-moda-grazia-kenya-108.webp",
+            "title": "Fotografo Moda Grazia Kenya 108",
+            "tag": "EDITORIALS",
+            "width": 600,
+            "height": 900,
+            "is_horizontal": false
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-safari-chic/max-salvaggio-fotografo-moda-grazia-kenya-109.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-safari-chic/max-salvaggio-fotografo-moda-grazia-kenya-109.jpg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-safari-chic/max-salvaggio-fotografo-moda-grazia-kenya-109.webp",
+            "title": "Fotografo Moda Grazia Kenya 109",
+            "tag": "EDITORIALS",
+            "width": 1350,
+            "height": 900,
+            "is_horizontal": true
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-safari-chic/max-salvaggio-fotografo-moda-grazia-kenya-110.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-safari-chic/max-salvaggio-fotografo-moda-grazia-kenya-110.jpg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-safari-chic/max-salvaggio-fotografo-moda-grazia-kenya-110.webp",
+            "title": "Fotografo Moda Grazia Kenya 110",
+            "tag": "EDITORIALS",
+            "width": 600,
+            "height": 900,
+            "is_horizontal": false
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-safari-chic/max-salvaggio-fotografo-moda-grazia-kenya-111.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-safari-chic/max-salvaggio-fotografo-moda-grazia-kenya-111.jpg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-safari-chic/max-salvaggio-fotografo-moda-grazia-kenya-111.webp",
+            "title": "Fotografo Moda Grazia Kenya 111",
+            "tag": "EDITORIALS",
+            "width": 1350,
+            "height": 900,
+            "is_horizontal": true
+          }
+        ]
+      },
+      {
+        "id": "moda-grazia-seduzioni-oriente",
+        "title": "Moda Grazia Seduzioni Oriente",
+        "place": "",
+        "magazine": "",
+        "images": [
+          {
+            "url": "photo_web/editorials/moda-grazia-seduzioni-oriente/max-salvaggio-fotografo-moda-grazia-hong-kong-112.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-seduzioni-oriente/max-salvaggio-fotografo-moda-grazia-hong-kong-112.jpeg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-seduzioni-oriente/max-salvaggio-fotografo-moda-grazia-hong-kong-112.webp",
+            "title": "Fotografo Moda Grazia Hong Kong 112",
+            "tag": "EDITORIALS",
+            "width": 1024,
+            "height": 670,
+            "is_horizontal": true
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-seduzioni-oriente/max-salvaggio-fotografo-moda-grazia-hong-kong-113.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-seduzioni-oriente/max-salvaggio-fotografo-moda-grazia-hong-kong-113.jpg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-seduzioni-oriente/max-salvaggio-fotografo-moda-grazia-hong-kong-113.webp",
+            "title": "Fotografo Moda Grazia Hong Kong 113",
+            "tag": "EDITORIALS",
+            "width": 1536,
+            "height": 1024,
+            "is_horizontal": true
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-seduzioni-oriente/max-salvaggio-fotografo-moda-grazia-hong-kong-114.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-seduzioni-oriente/max-salvaggio-fotografo-moda-grazia-hong-kong-114.jpeg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-seduzioni-oriente/max-salvaggio-fotografo-moda-grazia-hong-kong-114.webp",
+            "title": "Fotografo Moda Grazia Hong Kong 114",
+            "tag": "EDITORIALS",
+            "width": 1024,
+            "height": 682,
+            "is_horizontal": true
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-seduzioni-oriente/max-salvaggio-fotografo-moda-grazia-hong-kong-115.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-seduzioni-oriente/max-salvaggio-fotografo-moda-grazia-hong-kong-115.jpg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-seduzioni-oriente/max-salvaggio-fotografo-moda-grazia-hong-kong-115.webp",
+            "title": "Fotografo Moda Grazia Hong Kong 115",
+            "tag": "EDITORIALS",
+            "width": 1365,
+            "height": 1024,
+            "is_horizontal": true
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-seduzioni-oriente/max-salvaggio-fotografo-moda-grazia-hong-kong-116.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-seduzioni-oriente/max-salvaggio-fotografo-moda-grazia-hong-kong-116.jpeg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-seduzioni-oriente/max-salvaggio-fotografo-moda-grazia-hong-kong-116.webp",
+            "title": "Fotografo Moda Grazia Hong Kong 116",
+            "tag": "EDITORIALS",
+            "width": 1024,
+            "height": 682,
+            "is_horizontal": true
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-seduzioni-oriente/max-salvaggio-fotografo-moda-grazia-hong-kong-117.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-seduzioni-oriente/max-salvaggio-fotografo-moda-grazia-hong-kong-117.jpeg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-seduzioni-oriente/max-salvaggio-fotografo-moda-grazia-hong-kong-117.webp",
+            "title": "Fotografo Moda Grazia Hong Kong 117",
+            "tag": "EDITORIALS",
+            "width": 1024,
+            "height": 682,
+            "is_horizontal": true
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-seduzioni-oriente/max-salvaggio-fotografo-moda-grazia-hong-kong-118.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-seduzioni-oriente/max-salvaggio-fotografo-moda-grazia-hong-kong-118.jpg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-seduzioni-oriente/max-salvaggio-fotografo-moda-grazia-hong-kong-118.webp",
+            "title": "Fotografo Moda Grazia Hong Kong 118",
+            "tag": "EDITORIALS",
+            "width": 682,
+            "height": 1024,
+            "is_horizontal": false
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-seduzioni-oriente/max-salvaggio-fotografo-moda-grazia-hong-kong-119.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-seduzioni-oriente/max-salvaggio-fotografo-moda-grazia-hong-kong-119.JPG",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-seduzioni-oriente/max-salvaggio-fotografo-moda-grazia-hong-kong-119.webp",
+            "title": "Fotografo Moda Grazia Hong Kong 119",
+            "tag": "EDITORIALS",
+            "width": 4416,
+            "height": 3312,
+            "is_horizontal": true
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-seduzioni-oriente/max-salvaggio-fotografo-moda-grazia-hong-kong-120.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-seduzioni-oriente/max-salvaggio-fotografo-moda-grazia-hong-kong-120.jpg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-seduzioni-oriente/max-salvaggio-fotografo-moda-grazia-hong-kong-120.webp",
+            "title": "Fotografo Moda Grazia Hong Kong 120",
+            "tag": "EDITORIALS",
+            "width": 682,
+            "height": 1024,
+            "is_horizontal": false
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-seduzioni-oriente/max-salvaggio-fotografo-moda-grazia-hong-kong-121.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-seduzioni-oriente/max-salvaggio-fotografo-moda-grazia-hong-kong-121.jpeg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-seduzioni-oriente/max-salvaggio-fotografo-moda-grazia-hong-kong-121.webp",
+            "title": "Fotografo Moda Grazia Hong Kong 121",
+            "tag": "EDITORIALS",
+            "width": 1024,
+            "height": 682,
+            "is_horizontal": true
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-seduzioni-oriente/max-salvaggio-fotografo-moda-grazia-hong-kong-122.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-seduzioni-oriente/max-salvaggio-fotografo-moda-grazia-hong-kong-122.JPG",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-seduzioni-oriente/max-salvaggio-fotografo-moda-grazia-hong-kong-122.webp",
+            "title": "Fotografo Moda Grazia Hong Kong 122",
+            "tag": "EDITORIALS",
+            "width": 4080,
+            "height": 2720,
+            "is_horizontal": true
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-seduzioni-oriente/max-salvaggio-fotografo-moda-grazia-hong-kong-123.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-seduzioni-oriente/max-salvaggio-fotografo-moda-grazia-hong-kong-123.jpg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-seduzioni-oriente/max-salvaggio-fotografo-moda-grazia-hong-kong-123.webp",
+            "title": "Fotografo Moda Grazia Hong Kong 123",
+            "tag": "EDITORIALS",
+            "width": 1920,
+            "height": 1280,
+            "is_horizontal": true
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-seduzioni-oriente/max-salvaggio-fotografo-moda-grazia-hong-kong-125.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-seduzioni-oriente/max-salvaggio-fotografo-moda-grazia-hong-kong-125.jpeg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-seduzioni-oriente/max-salvaggio-fotografo-moda-grazia-hong-kong-125.webp",
+            "title": "Fotografo Moda Grazia Hong Kong 125",
+            "tag": "EDITORIALS",
+            "width": 1024,
+            "height": 682,
+            "is_horizontal": true
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-seduzioni-oriente/max-salvaggio-fotografo-moda-grazia-hong-kong-126.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-seduzioni-oriente/max-salvaggio-fotografo-moda-grazia-hong-kong-126.jpeg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-seduzioni-oriente/max-salvaggio-fotografo-moda-grazia-hong-kong-126.webp",
+            "title": "Fotografo Moda Grazia Hong Kong 126",
+            "tag": "EDITORIALS",
+            "width": 1024,
+            "height": 682,
+            "is_horizontal": true
+          }
+        ]
+      },
+      {
+        "id": "moda-grazia-specie",
+        "title": "Moda Grazia Specie",
+        "place": "",
+        "magazine": "",
+        "images": [
+          {
+            "url": "photo_web/editorials/moda-grazia-specie/max-salvaggio-fotografo-moda-grazia-tulum-024.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-specie/max-salvaggio-fotografo-moda-grazia-tulum-024.jpg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-specie/max-salvaggio-fotografo-moda-grazia-tulum-024.webp",
+            "title": "Fotografo Moda Grazia Tulum 024",
+            "tag": "EDITORIALS",
+            "width": 1518,
+            "height": 1024,
+            "is_horizontal": true
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-specie/max-salvaggio-fotografo-moda-grazia-tulum-025.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-specie/max-salvaggio-fotografo-moda-grazia-tulum-025.jpg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-specie/max-salvaggio-fotografo-moda-grazia-tulum-025.webp",
+            "title": "Fotografo Moda Grazia Tulum 025",
+            "tag": "EDITORIALS",
+            "width": 680,
+            "height": 1020,
+            "is_horizontal": false
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-specie/max-salvaggio-fotografo-moda-grazia-tulum-026.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-specie/max-salvaggio-fotografo-moda-grazia-tulum-026.jpg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-specie/max-salvaggio-fotografo-moda-grazia-tulum-026.webp",
+            "title": "Fotografo Moda Grazia Tulum 026",
+            "tag": "EDITORIALS",
+            "width": 680,
+            "height": 1020,
+            "is_horizontal": false
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-specie/max-salvaggio-fotografo-moda-grazia-tulum-027.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-specie/max-salvaggio-fotografo-moda-grazia-tulum-027.jpg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-specie/max-salvaggio-fotografo-moda-grazia-tulum-027.webp",
+            "title": "Fotografo Moda Grazia Tulum 027",
+            "tag": "EDITORIALS",
+            "width": 768,
+            "height": 1024,
+            "is_horizontal": false
+          }
+        ]
+      },
+      {
+        "id": "moda-grazia-stile-romanzo",
+        "title": "Moda Grazia Stile Romanzo",
+        "place": "",
+        "magazine": "",
+        "images": [
+          {
+            "url": "photo_web/editorials/moda-grazia-stile-romanzo/max-salvaggio-fotografo-moda-grazia-vietnam-127.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-stile-romanzo/max-salvaggio-fotografo-moda-grazia-vietnam-127.jpg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-stile-romanzo/max-salvaggio-fotografo-moda-grazia-vietnam-127.webp",
+            "title": "Fotografo Moda Grazia Vietnam 127",
+            "tag": "EDITORIALS",
+            "width": 1920,
+            "height": 1201,
+            "is_horizontal": true
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-stile-romanzo/max-salvaggio-fotografo-moda-grazia-vietnam-128.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-stile-romanzo/max-salvaggio-fotografo-moda-grazia-vietnam-128.jpg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-stile-romanzo/max-salvaggio-fotografo-moda-grazia-vietnam-128.webp",
+            "title": "Fotografo Moda Grazia Vietnam 128",
+            "tag": "EDITORIALS",
+            "width": 686,
+            "height": 900,
+            "is_horizontal": false
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-stile-romanzo/max-salvaggio-fotografo-moda-grazia-vietnam-129.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-stile-romanzo/max-salvaggio-fotografo-moda-grazia-vietnam-129.jpg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-stile-romanzo/max-salvaggio-fotografo-moda-grazia-vietnam-129.webp",
+            "title": "Fotografo Moda Grazia Vietnam 129",
+            "tag": "EDITORIALS",
+            "width": 781,
+            "height": 1024,
+            "is_horizontal": false
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-stile-romanzo/max-salvaggio-fotografo-moda-grazia-vietnam-130.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-stile-romanzo/max-salvaggio-fotografo-moda-grazia-vietnam-130.jpg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-stile-romanzo/max-salvaggio-fotografo-moda-grazia-vietnam-130.webp",
+            "title": "Fotografo Moda Grazia Vietnam 130",
+            "tag": "EDITORIALS",
+            "width": 686,
+            "height": 900,
+            "is_horizontal": false
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-stile-romanzo/max-salvaggio-fotografo-moda-grazia-vietnam-131.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-stile-romanzo/max-salvaggio-fotografo-moda-grazia-vietnam-131.jpg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-stile-romanzo/max-salvaggio-fotografo-moda-grazia-vietnam-131.webp",
+            "title": "Fotografo Moda Grazia Vietnam 131",
+            "tag": "EDITORIALS",
+            "width": 686,
+            "height": 900,
+            "is_horizontal": false
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-stile-romanzo/max-salvaggio-fotografo-moda-grazia-vietnam-132.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-stile-romanzo/max-salvaggio-fotografo-moda-grazia-vietnam-132.jpg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-stile-romanzo/max-salvaggio-fotografo-moda-grazia-vietnam-132.webp",
+            "title": "Fotografo Moda Grazia Vietnam 132",
+            "tag": "EDITORIALS",
+            "width": 675,
+            "height": 900,
+            "is_horizontal": false
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-stile-romanzo/max-salvaggio-fotografo-moda-grazia-vietnam-133.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-stile-romanzo/max-salvaggio-fotografo-moda-grazia-vietnam-133.jpg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-stile-romanzo/max-salvaggio-fotografo-moda-grazia-vietnam-133.webp",
+            "title": "Fotografo Moda Grazia Vietnam 133",
+            "tag": "EDITORIALS",
+            "width": 686,
+            "height": 900,
+            "is_horizontal": false
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-stile-romanzo/max-salvaggio-fotografo-moda-grazia-vietnam-134.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-stile-romanzo/max-salvaggio-fotografo-moda-grazia-vietnam-134.jpg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-stile-romanzo/max-salvaggio-fotografo-moda-grazia-vietnam-134.webp",
+            "title": "Fotografo Moda Grazia Vietnam 134",
+            "tag": "EDITORIALS",
+            "width": 686,
+            "height": 900,
+            "is_horizontal": false
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-stile-romanzo/max-salvaggio-fotografo-moda-grazia-vietnam-135.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-stile-romanzo/max-salvaggio-fotografo-moda-grazia-vietnam-135.jpg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-stile-romanzo/max-salvaggio-fotografo-moda-grazia-vietnam-135.webp",
+            "title": "Fotografo Moda Grazia Vietnam 135",
+            "tag": "EDITORIALS",
+            "width": 686,
+            "height": 900,
+            "is_horizontal": false
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-stile-romanzo/max-salvaggio-fotografo-moda-grazia-vietnam-136.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-stile-romanzo/max-salvaggio-fotografo-moda-grazia-vietnam-136.jpg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-stile-romanzo/max-salvaggio-fotografo-moda-grazia-vietnam-136.webp",
+            "title": "Fotografo Moda Grazia Vietnam 136",
+            "tag": "EDITORIALS",
+            "width": 1350,
+            "height": 900,
+            "is_horizontal": true
+          }
+        ]
+      },
+      {
+        "id": "moda-grazia-viaggio-oriente",
+        "title": "Moda Grazia Viaggio Oriente",
+        "place": "",
+        "magazine": "",
+        "images": [
+          {
+            "url": "photo_web/editorials/moda-grazia-viaggio-oriente/max-salvaggio-fotografo-moda-grazia-cover-daniela-de-jesus-cambodia-137.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-viaggio-oriente/max-salvaggio-fotografo-moda-grazia-cover-daniela-de-jesus-cambodia-137.jpg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-viaggio-oriente/max-salvaggio-fotografo-moda-grazia-cover-daniela-de-jesus-cambodia-137.webp",
+            "title": "Fotografo Moda Grazia Cover Daniela De Jesus Cambodia 137",
+            "tag": "EDITORIALS",
+            "width": 310,
+            "height": 406,
+            "is_horizontal": false
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-viaggio-oriente/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cambodia-138.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-viaggio-oriente/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cambodia-138.jpg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-viaggio-oriente/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cambodia-138.webp",
+            "title": "Fotografo Moda Grazia Daniela De Jesus Cambodia 138",
+            "tag": "EDITORIALS",
+            "width": 1591,
+            "height": 1024,
+            "is_horizontal": true
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-viaggio-oriente/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cambodia-139.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-viaggio-oriente/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cambodia-139.jpg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-viaggio-oriente/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cambodia-139.webp",
+            "title": "Fotografo Moda Grazia Daniela De Jesus Cambodia 139",
+            "tag": "EDITORIALS",
+            "width": 682,
+            "height": 1024,
+            "is_horizontal": false
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-viaggio-oriente/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cambodia-140.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-viaggio-oriente/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cambodia-140.jpeg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-viaggio-oriente/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cambodia-140.webp",
+            "title": "Fotografo Moda Grazia Daniela De Jesus Cambodia 140",
+            "tag": "EDITORIALS",
+            "width": 1024,
+            "height": 726,
+            "is_horizontal": true
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-viaggio-oriente/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cambodia-141.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-viaggio-oriente/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cambodia-141.jpg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-viaggio-oriente/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cambodia-141.webp",
+            "title": "Fotografo Moda Grazia Daniela De Jesus Cambodia 141",
+            "tag": "EDITORIALS",
+            "width": 600,
+            "height": 900,
+            "is_horizontal": false
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-viaggio-oriente/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cambodia-142.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-viaggio-oriente/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cambodia-142.jpeg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-viaggio-oriente/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cambodia-142.webp",
+            "title": "Fotografo Moda Grazia Daniela De Jesus Cambodia 142",
+            "tag": "EDITORIALS",
+            "width": 748,
+            "height": 1024,
+            "is_horizontal": false
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-viaggio-oriente/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cambodia-143.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-viaggio-oriente/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cambodia-143.jpg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-viaggio-oriente/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cambodia-143.webp",
+            "title": "Fotografo Moda Grazia Daniela De Jesus Cambodia 143",
+            "tag": "EDITORIALS",
+            "width": 692,
+            "height": 900,
+            "is_horizontal": false
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-viaggio-oriente/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cambodia-144.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-viaggio-oriente/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cambodia-144.jpeg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-viaggio-oriente/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cambodia-144.webp",
+            "title": "Fotografo Moda Grazia Daniela De Jesus Cambodia 144",
+            "tag": "EDITORIALS",
+            "width": 748,
+            "height": 1024,
+            "is_horizontal": false
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-viaggio-oriente/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cambodia-145.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-viaggio-oriente/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cambodia-145.jpg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-viaggio-oriente/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cambodia-145.webp",
+            "title": "Fotografo Moda Grazia Daniela De Jesus Cambodia 145",
+            "tag": "EDITORIALS",
+            "width": 600,
+            "height": 900,
+            "is_horizontal": false
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-viaggio-oriente/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cambodia-146.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-viaggio-oriente/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cambodia-146.jpeg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-viaggio-oriente/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cambodia-146.webp",
+            "title": "Fotografo Moda Grazia Daniela De Jesus Cambodia 146",
+            "tag": "EDITORIALS",
+            "width": 1024,
+            "height": 726,
+            "is_horizontal": true
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-viaggio-oriente/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cambodia-147.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-viaggio-oriente/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cambodia-147.jpg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-viaggio-oriente/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cambodia-147.webp",
+            "title": "Fotografo Moda Grazia Daniela De Jesus Cambodia 147",
+            "tag": "EDITORIALS",
+            "width": 600,
+            "height": 900,
+            "is_horizontal": false
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-viaggio-oriente/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cambodia-148.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-viaggio-oriente/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cambodia-148.jpeg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-viaggio-oriente/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cambodia-148.webp",
+            "title": "Fotografo Moda Grazia Daniela De Jesus Cambodia 148",
+            "tag": "EDITORIALS",
+            "width": 748,
+            "height": 1024,
+            "is_horizontal": false
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-viaggio-oriente/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cambodia-149.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-viaggio-oriente/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cambodia-149.jpg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-viaggio-oriente/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cambodia-149.webp",
+            "title": "Fotografo Moda Grazia Daniela De Jesus Cambodia 149",
+            "tag": "EDITORIALS",
+            "width": 781,
+            "height": 1024,
+            "is_horizontal": false
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-viaggio-oriente/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cambodia-150.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-viaggio-oriente/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cambodia-150.jpeg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-viaggio-oriente/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cambodia-150.webp",
+            "title": "Fotografo Moda Grazia Daniela De Jesus Cambodia 150",
+            "tag": "EDITORIALS",
+            "width": 1024,
+            "height": 726,
+            "is_horizontal": true
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-viaggio-oriente/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cambodia-151.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-viaggio-oriente/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cambodia-151.jpg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-viaggio-oriente/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cambodia-151.webp",
+            "title": "Fotografo Moda Grazia Daniela De Jesus Cambodia 151",
+            "tag": "EDITORIALS",
+            "width": 1350,
+            "height": 900,
+            "is_horizontal": true
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-viaggio-oriente/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cambodia-152.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-viaggio-oriente/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cambodia-152.jpeg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-viaggio-oriente/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cambodia-152.webp",
+            "title": "Fotografo Moda Grazia Daniela De Jesus Cambodia 152",
+            "tag": "EDITORIALS",
+            "width": 748,
+            "height": 1024,
+            "is_horizontal": false
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-viaggio-oriente/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cambodia-153.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-viaggio-oriente/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cambodia-153.jpeg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-viaggio-oriente/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cambodia-153.webp",
+            "title": "Fotografo Moda Grazia Daniela De Jesus Cambodia 153",
+            "tag": "EDITORIALS",
+            "width": 748,
+            "height": 1024,
+            "is_horizontal": false
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-viaggio-oriente/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cambodia-154.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-viaggio-oriente/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cambodia-154.jpeg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-viaggio-oriente/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cambodia-154.webp",
+            "title": "Fotografo Moda Grazia Daniela De Jesus Cambodia 154",
+            "tag": "EDITORIALS",
+            "width": 748,
+            "height": 1024,
+            "is_horizontal": false
+          },
+          {
+            "url": "photo_web/editorials/moda-grazia-viaggio-oriente/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cambodia-155.webp",
+            "fullResUrl": "photo master/editorials/moda-grazia-viaggio-oriente/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cambodia-155.jpeg",
+            "thumbnailUrl": "photo_web/editorials/moda-grazia-viaggio-oriente/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-cambodia-155.webp",
+            "title": "Fotografo Moda Grazia Daniela De Jesus Cambodia 155",
+            "tag": "EDITORIALS",
+            "width": 1024,
+            "height": 726,
+            "is_horizontal": true
+          }
+        ]
+      }
+    ],
     "unpublished_research": [
       {
         "url": "photo_web/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-giacomo-cavalli-portraits-milano-169.webp",
