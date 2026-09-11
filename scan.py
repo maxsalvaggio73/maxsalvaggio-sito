@@ -100,6 +100,17 @@ def get_images_in_dir(path, tag_name, relative_base, web_subfolder=None):
                     })
     return images
 
+def find_dir_by_keywords(parent_dir, keywords):
+    if not os.path.exists(parent_dir):
+        return None
+    for entry in os.listdir(parent_dir):
+        full_p = os.path.join(parent_dir, entry)
+        if os.path.isdir(full_p):
+            entry_lower = entry.lower()
+            if any(kw.lower() in entry_lower for kw in keywords):
+                return full_p
+    return None
+
 def scan_all():
     print("Inizio scansione cartelle photo master...")
     
@@ -195,12 +206,19 @@ def scan_all():
 
     # 4. BODY & FORM (photo master/body)
     body_master_path = os.path.join(photo_master_base, 'body')
-    data['body_and_form']['organic_sculptures'] = get_images_in_dir(os.path.join(body_master_path, 'organic sculptures'), 'BODY & FORM', base_dir, web_subfolder='body/organic sculptures') if os.path.exists(os.path.join(body_master_path, 'organic sculptures')) else get_images_in_dir(body_master_path, 'BODY & FORM', base_dir, web_subfolder='body')
-    data['body_and_form']['shadows_and_graphic_intimacy'] = get_images_in_dir(os.path.join(body_master_path, 'shadows'), 'BODY & FORM', base_dir, web_subfolder='body/shadows')
+    organic_path = find_dir_by_keywords(body_master_path, ['organic'])
+    shadows_path = find_dir_by_keywords(body_master_path, ['shadow'])
 
-    if not data['body_and_form']['organic_sculptures']:
+    if organic_path:
+        rel_sub = os.path.relpath(organic_path, photo_master_base).replace('\\', '/')
+        data['body_and_form']['organic_sculptures'] = get_images_in_dir(organic_path, 'BODY & FORM', base_dir, web_subfolder=rel_sub)
+    else:
         data['body_and_form']['organic_sculptures'] = get_images_in_dir(os.path.join(base_dir, '3 BODY & FORM', 'ORGANIC SCULPTURES'), 'BODY & FORM', base_dir, web_subfolder='body/organic sculptures')
-    if not data['body_and_form']['shadows_and_graphic_intimacy']:
+
+    if shadows_path:
+        rel_sub = os.path.relpath(shadows_path, photo_master_base).replace('\\', '/')
+        data['body_and_form']['shadows_and_graphic_intimacy'] = get_images_in_dir(shadows_path, 'BODY & FORM', base_dir, web_subfolder=rel_sub)
+    else:
         data['body_and_form']['shadows_and_graphic_intimacy'] = get_images_in_dir(os.path.join(base_dir, '3 BODY & FORM', 'SHADOWS & GRAPHIC INTIMACY'), 'BODY & FORM', base_dir, web_subfolder='body/shadows')
 
     # 5. PORTRAITS & BEAUTY (photo master/portraits & photo master/pet & portraits)
@@ -220,6 +238,7 @@ def scan_all():
         
     data['portraits_and_beauty']['pets_and_portraits'] = pets_imgs if pets_imgs else get_images_in_dir(os.path.join(base_dir, '4 PET and Portraits'), 'PET & PORTRAITS', base_dir, web_subfolder='pet & portraits')
     data['portraits_and_beauty']['beauty'] = get_images_in_dir(os.path.join(base_dir, '4 beauty'), 'BEAUTY', base_dir, web_subfolder='beauty')
+
 
     # Output JSON database to file
     js_content = f"""// Database delle immagini generato automaticamente dallo script scan.py

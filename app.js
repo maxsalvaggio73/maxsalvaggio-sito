@@ -73,12 +73,9 @@ document.addEventListener("DOMContentLoaded", () => {
     // Inizializza subito lo scheletro SPA
     initSPA();
 
-    // 2. Differisci qualsiasi elaborazione secondaria/pesante (Supabase, altre griglie, listener) al frame successivo
+    // 2. Inizializza subito le griglie secondarie e i tab dal database locale statico (risoluzione immediata ritardo 20s)
     requestAnimationFrame(() => {
-      setTimeout(async () => {
-        // Carica dati remoti Supabase per altre sezioni se disponibile
-        await loadSupabasePortfolioData();
-
+      setTimeout(() => {
         if (typeof portfolioData !== "undefined" && portfolioData.editorials && portfolioData.editorials.projects) {
           portfolioData.editorials.projects = shuffleProjects(portfolioData.editorials.projects);
         }
@@ -99,6 +96,11 @@ document.addEventListener("DOMContentLoaded", () => {
         initCursorTracker();
         shuffleBackground();
         initLandscapeFullscreen();
+
+        // 3. Carica i dati da Supabase in background senza bloccare la navigazione o il rendering
+        loadSupabasePortfolioData().catch(err => {
+          console.warn("Supabase background sync bypassed:", err);
+        });
       }, 0);
     });
   }
@@ -967,214 +969,68 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Render Archive landing page Categories Grid with random shuffle and chromatic coherence
+  // Render Archive landing page Categories Grid
   function renderArchiveGrid() {
     const grid = document.getElementById("archive-categories-grid");
     if (!grid) return;
 
     grid.innerHTML = "";
 
-    // 1. Initial Render with first image of each category for instant load
+    const getCoverUrl = (list) => {
+      if (!list || !list.length) return "";
+      if (list[0].url) return list[0].url;
+      if (list[0].thumbnailUrl) return list[0].thumbnailUrl;
+      if (list[0].images && list[0].images.length > 0) return list[0].images[0].url || list[0].images[0].thumbnailUrl || "";
+      return "";
+    };
+
+    const editorialsCover = (portfolioData?.editorials?.projects?.[0]?.images?.[0]?.url) ||
+                            getCoverUrl(portfolioData?.editorials?.unpublished_research);
+
+    const fashionCover = getCoverUrl(portfolioData?.campaigns?.fashion);
+    const lingerieCover = getCoverUrl(portfolioData?.campaigns?.lingerie);
+    const swimwearCover = getCoverUrl(portfolioData?.campaigns?.swimwear);
+    const unpublishedCover = getCoverUrl(portfolioData?.editorials?.unpublished_research);
+
     const categories = [
       {
         id: "editorials",
         title: "Editorials",
         hash: "editorials",
-        coverUrl: portfolioData.editorials.projects[0].images[0].url
+        coverUrl: editorialsCover
       },
       {
         id: "fashion",
         title: "Fashion",
         hash: "campaigns-fashion",
-        coverUrl: portfolioData.campaigns.fashion[0].url
+        coverUrl: fashionCover
       },
       {
         id: "lingerie",
         title: "Lingerie",
         hash: "campaigns-lingerie",
-        coverUrl: portfolioData.campaigns.lingerie[0].url
+        coverUrl: lingerieCover
       },
       {
         id: "swimwear",
         title: "Swimwear",
         hash: "campaigns-swimwear",
-        coverUrl: portfolioData.campaigns.swimwear[0].url
+        coverUrl: swimwearCover
       },
       {
         id: "unpublished-research",
         title: "PORTRAITS II",
         hash: "unpublished-research",
-        coverUrl: portfolioData.editorials.unpublished_research[0].url
+        coverUrl: unpublishedCover
       }
     ];
 
-    const cardsMap = {};
-
     categories.forEach(cat => {
+      if (!cat.coverUrl) return;
       const card = createArchiveCategoryCard(cat.title, cat.coverUrl, () => {
         window.location.hash = cat.hash;
       });
-      const img = card.querySelector(".editorial-card-img");
-      if (img) {
-        cardsMap[cat.id] = img;
-      }
       grid.appendChild(card);
-    });
-
-    // 2. Select a random target theme
-    const themes = ["BW", "COLOR_WARM", "COLOR_COOL"];
-    const targetTheme = themes[Math.floor(Math.random() * themes.length)];
-
-    // 3. Helper to get N random items from a list
-    const getRandomSubarray = (arr, size) => {
-      if (!arr || arr.length === 0) return [];
-      const shuffled = arr.slice(0);
-      let i = arr.length;
-      const tempSize = Math.min(size, i);
-      const min = i - tempSize;
-      while (i-- > min) {
-        const index = Math.floor((i + 1) * Math.random());
-        const temp = shuffled[index];
-        shuffled[index] = shuffled[i];
-        shuffled[i] = temp;
-      }
-      return shuffled.slice(min);
-    };
-
-    // Gather candidate pools
-    const editorialsImages = [];
-    portfolioData.editorials.projects.forEach(p => {
-      if (p.images) editorialsImages.push(...p.images);
-    });
-
-    const pools = {
-      "editorials": getRandomSubarray(editorialsImages, 8),
-      "fashion": getRandomSubarray(portfolioData.campaigns.fashion, 8),
-      "lingerie": getRandomSubarray(portfolioData.campaigns.lingerie, 8),
-      "swimwear": getRandomSubarray(portfolioData.campaigns.swimwear, 8),
-      "unpublished-research": getRandomSubarray(portfolioData.editorials.unpublished_research, 8)
-    };
-
-    // 4. Color analysis function (asynchronous using temporary HTML Canvas)
-    const analyzeImageColor = (imgObj) => {
-      return new Promise((resolve) => {
-        const url = imgObj.url;
-        const img = new Image();
-        img.crossOrigin = "Anonymous";
-        img.onload = () => {
-          const canvas = document.createElement("canvas");
-          canvas.width = 5;
-          canvas.height = 5;
-          const ctx = canvas.getContext("2d");
-          ctx.drawImage(img, 0, 0, 5, 5);
-          try {
-            const data = ctx.getImageData(0, 0, 5, 5).data;
-            let sumR = 0, sumG = 0, sumB = 0;
-            for (let i = 0; i < data.length; i += 4) {
-              sumR += data[i];
-              sumG += data[i+1];
-              sumB += data[i+2];
-            }
-            const r = sumR / 25;
-            const g = sumG / 25;
-            const b = sumB / 25;
-            
-            // RGB to HSL conversion
-            const rNorm = r / 255;
-            const gNorm = g / 255;
-            const bNorm = b / 255;
-            const max = Math.max(rNorm, gNorm, bNorm);
-            const min = Math.min(rNorm, gNorm, bNorm);
-            let h, s, l = (max + min) / 2;
-            
-            if (max === min) {
-              h = s = 0;
-            } else {
-              const d = max - min;
-              s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
-              switch (max) {
-                case rNorm: h = (gNorm - bNorm) / d + (gNorm < bNorm ? 6 : 0); break;
-                case gNorm: h = (bNorm - rNorm) / d + 2; break;
-                case bNorm: h = (rNorm - gNorm) / d + 4; break;
-              }
-              h /= 6;
-            }
-            
-            const hue = h * 360;
-            let type = "COLOR_WARM";
-            if (s < 0.15) {
-              type = "BW";
-            } else if (hue >= 60 && hue <= 250) {
-              type = "COLOR_COOL";
-            }
-            
-            resolve({ url, r, g, b, hue, saturation: s, lightness: l, type });
-          } catch (e) {
-            resolve({ url, type: "UNKNOWN", saturation: 0.5 });
-          }
-        };
-        img.onerror = () => {
-          resolve({ url, type: "UNKNOWN", saturation: 0.5 });
-        };
-        img.src = url;
-      });
-    };
-
-    // 5. Analyze pools and pick best matches
-    const promises = [];
-    const keys = Object.keys(pools);
-
-    keys.forEach(key => {
-      const poolPromises = pools[key].map(imgObj => {
-        return analyzeImageColor(imgObj).then(res => ({ key, res }));
-      });
-      promises.push(...poolPromises);
-    });
-
-    Promise.all(promises).then(results => {
-      const resultsByKey = {
-        "editorials": [],
-        "fashion": [],
-        "lingerie": [],
-        "swimwear": [],
-        "unpublished-research": []
-      };
-
-      results.forEach(item => {
-        resultsByKey[item.key].push(item.res);
-      });
-
-      // Sort and pick best matches based on theme
-      keys.forEach(key => {
-        const categoryResults = resultsByKey[key];
-        if (categoryResults.length === 0) return;
-
-        let bestMatch = null;
-        if (targetTheme === "BW") {
-          categoryResults.sort((a, b) => a.saturation - b.saturation);
-          bestMatch = categoryResults[0];
-        } else if (targetTheme === "COLOR_COOL") {
-          categoryResults.sort((a, b) => {
-            const aIsCool = a.type === "COLOR_COOL" ? 1 : 0;
-            const bIsCool = b.type === "COLOR_COOL" ? 1 : 0;
-            if (aIsCool !== bIsCool) return bIsCool - aIsCool;
-            return b.saturation - a.saturation;
-          });
-          bestMatch = categoryResults[0];
-        } else {
-          // COLOR_WARM
-          categoryResults.sort((a, b) => {
-            const aIsWarm = a.type === "COLOR_WARM" ? 1 : 0;
-            const bIsWarm = b.type === "COLOR_WARM" ? 1 : 0;
-            if (aIsWarm !== bIsWarm) return bIsWarm - aIsWarm;
-            return b.saturation - a.saturation;
-          });
-          bestMatch = categoryResults[0];
-        }
-
-        if (bestMatch && cardsMap[key]) {
-          updateCardImageSmoothly(cardsMap[key], bestMatch.url);
-        }
-      });
     });
   }
 
@@ -2088,13 +1944,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Portraits & Beauty
     if (currentList === portfolioData.portraits_and_beauty.portraits) {
-      return { nextList: portfolioData.portraits_and_beauty.beauty, tabId: "pb-beauty" };
+      return { nextList: portfolioData.editorials.unpublished_research, tabId: "pb-unpublished" };
     }
-    if (currentList === portfolioData.portraits_and_beauty.beauty) {
+    if (currentList === portfolioData.editorials.unpublished_research) {
       return { nextList: portfolioData.portraits_and_beauty.pets_and_portraits, tabId: "pb-pets" };
     }
     if (currentList === portfolioData.portraits_and_beauty.pets_and_portraits) {
       return { nextList: portfolioData.portraits_and_beauty.portraits, tabId: "pb-portraits" };
+    }
+    if (currentList === portfolioData.portraits_and_beauty.beauty) {
+      return { nextList: portfolioData.portraits_and_beauty.pets_and_portraits, tabId: "pb-pets" };
     }
 
     // Body & Form
@@ -2126,11 +1985,14 @@ document.addEventListener("DOMContentLoaded", () => {
     if (currentList === portfolioData.portraits_and_beauty.portraits) {
       return { prevList: portfolioData.portraits_and_beauty.pets_and_portraits, tabId: "pb-pets" };
     }
-    if (currentList === portfolioData.portraits_and_beauty.beauty) {
+    if (currentList === portfolioData.editorials.unpublished_research) {
       return { prevList: portfolioData.portraits_and_beauty.portraits, tabId: "pb-portraits" };
     }
     if (currentList === portfolioData.portraits_and_beauty.pets_and_portraits) {
-      return { prevList: portfolioData.portraits_and_beauty.beauty, tabId: "pb-beauty" };
+      return { prevList: portfolioData.editorials.unpublished_research, tabId: "pb-unpublished" };
+    }
+    if (currentList === portfolioData.portraits_and_beauty.beauty) {
+      return { prevList: portfolioData.portraits_and_beauty.portraits, tabId: "pb-portraits" };
     }
 
     // Body & Form

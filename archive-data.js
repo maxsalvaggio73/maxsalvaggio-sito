@@ -1,5 +1,5 @@
 // Database delle immagini generato automaticamente dallo script scan.py
-// Data di generazione: 2026-09-11T23:11:46.147951+00:00
+// Data di generazione: 2026-09-11T23:28:21.171384+00:00
 
 const portfolioData = {
   "overview": [
@@ -1800,9 +1800,9 @@ const portfolioData = {
   "body_and_form": {
     "organic_sculptures": [
       {
-        "url": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-001.webp",
-        "fullResUrl": "photo master/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-001.jpg",
-        "thumbnailUrl": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-001.webp",
+        "url": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-001.webp",
+        "fullResUrl": "photo master/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-001.jpg",
+        "thumbnailUrl": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-001.webp",
         "title": "Fotografo Nudo Fine Art 001",
         "tag": "BODY & FORM",
         "width": 745,
@@ -1810,9 +1810,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-002.webp",
-        "fullResUrl": "photo master/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-002.jpg",
-        "thumbnailUrl": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-002.webp",
+        "url": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-002.webp",
+        "fullResUrl": "photo master/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-002.jpg",
+        "thumbnailUrl": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-002.webp",
         "title": "Fotografo Nudo Fine Art 002",
         "tag": "BODY & FORM",
         "width": 683,
@@ -1820,9 +1820,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-003.webp",
-        "fullResUrl": "photo master/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-003.jpg",
-        "thumbnailUrl": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-003.webp",
+        "url": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-003.webp",
+        "fullResUrl": "photo master/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-003.jpg",
+        "thumbnailUrl": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-003.webp",
         "title": "Fotografo Nudo Fine Art 003",
         "tag": "BODY & FORM",
         "width": 1536,
@@ -1830,9 +1830,9 @@ const portfolioData = {
         "is_horizontal": true
       },
       {
-        "url": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-004.webp",
-        "fullResUrl": "photo master/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-004.jpg",
-        "thumbnailUrl": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-004.webp",
+        "url": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-004.webp",
+        "fullResUrl": "photo master/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-004.jpg",
+        "thumbnailUrl": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-004.webp",
         "title": "Fotografo Nudo Fine Art 004",
         "tag": "BODY & FORM",
         "width": 683,
@@ -1840,9 +1840,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-005.webp",
-        "fullResUrl": "photo master/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-005.jpg",
-        "thumbnailUrl": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-005.webp",
+        "url": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-005.webp",
+        "fullResUrl": "photo master/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-005.jpg",
+        "thumbnailUrl": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-005.webp",
         "title": "Fotografo Nudo Fine Art 005",
         "tag": "BODY & FORM",
         "width": 683,
@@ -1850,9 +1850,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-006.webp",
-        "fullResUrl": "photo master/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-006.jpg",
-        "thumbnailUrl": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-006.webp",
+        "url": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-006.webp",
+        "fullResUrl": "photo master/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-006.jpg",
+        "thumbnailUrl": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-006.webp",
         "title": "Fotografo Nudo Fine Art 006",
         "tag": "BODY & FORM",
         "width": 768,
@@ -1860,9 +1860,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-007.webp",
-        "fullResUrl": "photo master/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-007.jpg",
-        "thumbnailUrl": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-007.webp",
+        "url": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-007.webp",
+        "fullResUrl": "photo master/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-007.jpg",
+        "thumbnailUrl": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-007.webp",
         "title": "Fotografo Nudo Fine Art 007",
         "tag": "BODY & FORM",
         "width": 1536,
@@ -1870,9 +1870,9 @@ const portfolioData = {
         "is_horizontal": true
       },
       {
-        "url": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-008.webp",
-        "fullResUrl": "photo master/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-008.png",
-        "thumbnailUrl": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-008.webp",
+        "url": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-008.webp",
+        "fullResUrl": "photo master/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-008.png",
+        "thumbnailUrl": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-008.webp",
         "title": "Fotografo Nudo Fine Art 008",
         "tag": "BODY & FORM",
         "width": 1264,
@@ -1880,9 +1880,9 @@ const portfolioData = {
         "is_horizontal": true
       },
       {
-        "url": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-009.webp",
-        "fullResUrl": "photo master/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-009.jpg",
-        "thumbnailUrl": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-009.webp",
+        "url": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-009.webp",
+        "fullResUrl": "photo master/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-009.jpg",
+        "thumbnailUrl": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-009.webp",
         "title": "Fotografo Nudo Fine Art 009",
         "tag": "BODY & FORM",
         "width": 683,
@@ -1890,9 +1890,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-010.webp",
-        "fullResUrl": "photo master/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-010.jpg",
-        "thumbnailUrl": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-010.webp",
+        "url": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-010.webp",
+        "fullResUrl": "photo master/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-010.jpg",
+        "thumbnailUrl": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-010.webp",
         "title": "Fotografo Nudo Fine Art 010",
         "tag": "BODY & FORM",
         "width": 683,
@@ -1900,9 +1900,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-011.webp",
-        "fullResUrl": "photo master/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-011.jpg",
-        "thumbnailUrl": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-011.webp",
+        "url": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-011.webp",
+        "fullResUrl": "photo master/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-011.jpg",
+        "thumbnailUrl": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-011.webp",
         "title": "Fotografo Nudo Fine Art 011",
         "tag": "BODY & FORM",
         "width": 683,
@@ -1910,9 +1910,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-012.webp",
-        "fullResUrl": "photo master/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-012.jpg",
-        "thumbnailUrl": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-012.webp",
+        "url": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-012.webp",
+        "fullResUrl": "photo master/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-012.jpg",
+        "thumbnailUrl": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-012.webp",
         "title": "Fotografo Nudo Fine Art 012",
         "tag": "BODY & FORM",
         "width": 1000,
@@ -1920,9 +1920,9 @@ const portfolioData = {
         "is_horizontal": true
       },
       {
-        "url": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-013.webp",
-        "fullResUrl": "photo master/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-013.jpg",
-        "thumbnailUrl": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-013.webp",
+        "url": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-013.webp",
+        "fullResUrl": "photo master/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-013.jpg",
+        "thumbnailUrl": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-013.webp",
         "title": "Fotografo Nudo Fine Art 013",
         "tag": "BODY & FORM",
         "width": 667,
@@ -1930,9 +1930,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-014.webp",
-        "fullResUrl": "photo master/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-014.jpg",
-        "thumbnailUrl": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-014.webp",
+        "url": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-014.webp",
+        "fullResUrl": "photo master/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-014.jpg",
+        "thumbnailUrl": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-014.webp",
         "title": "Fotografo Nudo Fine Art 014",
         "tag": "BODY & FORM",
         "width": 1536,
@@ -1940,9 +1940,9 @@ const portfolioData = {
         "is_horizontal": true
       },
       {
-        "url": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-015.webp",
-        "fullResUrl": "photo master/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-015.jpeg",
-        "thumbnailUrl": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-015.webp",
+        "url": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-015.webp",
+        "fullResUrl": "photo master/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-015.jpeg",
+        "thumbnailUrl": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-015.webp",
         "title": "Fotografo Nudo Fine Art 015",
         "tag": "BODY & FORM",
         "width": 748,
@@ -1950,9 +1950,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-016.webp",
-        "fullResUrl": "photo master/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-016.jpeg",
-        "thumbnailUrl": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-016.webp",
+        "url": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-016.webp",
+        "fullResUrl": "photo master/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-016.jpeg",
+        "thumbnailUrl": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-016.webp",
         "title": "Fotografo Nudo Fine Art 016",
         "tag": "BODY & FORM",
         "width": 1024,
@@ -1960,9 +1960,9 @@ const portfolioData = {
         "is_horizontal": true
       },
       {
-        "url": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-017.webp",
-        "fullResUrl": "photo master/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-017.jpeg",
-        "thumbnailUrl": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-017.webp",
+        "url": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-017.webp",
+        "fullResUrl": "photo master/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-017.jpeg",
+        "thumbnailUrl": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-017.webp",
         "title": "Fotografo Nudo Fine Art 017",
         "tag": "BODY & FORM",
         "width": 748,
@@ -1970,9 +1970,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-018.webp",
-        "fullResUrl": "photo master/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-018.jpeg",
-        "thumbnailUrl": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-018.webp",
+        "url": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-018.webp",
+        "fullResUrl": "photo master/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-018.jpeg",
+        "thumbnailUrl": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-018.webp",
         "title": "Fotografo Nudo Fine Art 018",
         "tag": "BODY & FORM",
         "width": 748,
@@ -1980,9 +1980,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-019.webp",
-        "fullResUrl": "photo master/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-019.jpeg",
-        "thumbnailUrl": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-019.webp",
+        "url": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-019.webp",
+        "fullResUrl": "photo master/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-019.jpeg",
+        "thumbnailUrl": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-019.webp",
         "title": "Fotografo Nudo Fine Art 019",
         "tag": "BODY & FORM",
         "width": 748,
@@ -1990,9 +1990,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-020.webp",
-        "fullResUrl": "photo master/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-020.jpeg",
-        "thumbnailUrl": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-020.webp",
+        "url": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-020.webp",
+        "fullResUrl": "photo master/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-020.jpeg",
+        "thumbnailUrl": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-020.webp",
         "title": "Fotografo Nudo Fine Art 020",
         "tag": "BODY & FORM",
         "width": 748,
@@ -2000,9 +2000,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-021.webp",
-        "fullResUrl": "photo master/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-021.jpeg",
-        "thumbnailUrl": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-021.webp",
+        "url": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-021.webp",
+        "fullResUrl": "photo master/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-021.jpeg",
+        "thumbnailUrl": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-021.webp",
         "title": "Fotografo Nudo Fine Art 021",
         "tag": "BODY & FORM",
         "width": 1024,
@@ -2010,9 +2010,9 @@ const portfolioData = {
         "is_horizontal": true
       },
       {
-        "url": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-022.webp",
-        "fullResUrl": "photo master/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-022.jpeg",
-        "thumbnailUrl": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-022.webp",
+        "url": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-022.webp",
+        "fullResUrl": "photo master/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-022.jpeg",
+        "thumbnailUrl": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-022.webp",
         "title": "Fotografo Nudo Fine Art 022",
         "tag": "BODY & FORM",
         "width": 748,
@@ -2020,9 +2020,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-023.webp",
-        "fullResUrl": "photo master/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-023.jpeg",
-        "thumbnailUrl": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-023.webp",
+        "url": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-023.webp",
+        "fullResUrl": "photo master/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-023.jpeg",
+        "thumbnailUrl": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-023.webp",
         "title": "Fotografo Nudo Fine Art 023",
         "tag": "BODY & FORM",
         "width": 748,
@@ -2030,9 +2030,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-024.webp",
-        "fullResUrl": "photo master/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-024.jpeg",
-        "thumbnailUrl": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-024.webp",
+        "url": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-024.webp",
+        "fullResUrl": "photo master/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-024.jpeg",
+        "thumbnailUrl": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-024.webp",
         "title": "Fotografo Nudo Fine Art 024",
         "tag": "BODY & FORM",
         "width": 748,
@@ -2040,9 +2040,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-025.webp",
-        "fullResUrl": "photo master/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-025.jpeg",
-        "thumbnailUrl": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-025.webp",
+        "url": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-025.webp",
+        "fullResUrl": "photo master/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-025.jpeg",
+        "thumbnailUrl": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-025.webp",
         "title": "Fotografo Nudo Fine Art 025",
         "tag": "BODY & FORM",
         "width": 1024,
@@ -2050,9 +2050,9 @@ const portfolioData = {
         "is_horizontal": true
       },
       {
-        "url": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-026.webp",
-        "fullResUrl": "photo master/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-026.jpeg",
-        "thumbnailUrl": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-026.webp",
+        "url": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-026.webp",
+        "fullResUrl": "photo master/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-026.jpeg",
+        "thumbnailUrl": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-026.webp",
         "title": "Fotografo Nudo Fine Art 026",
         "tag": "BODY & FORM",
         "width": 748,
@@ -2060,7 +2060,158 @@ const portfolioData = {
         "is_horizontal": false
       }
     ],
-    "shadows_and_graphic_intimacy": []
+    "shadows_and_graphic_intimacy": [
+      {
+        "url": "photo_web/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-001.webp",
+        "fullResUrl": "photo master/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-001.jpeg",
+        "thumbnailUrl": "photo_web/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-001.webp",
+        "title": "Fotografo Nude Fine Art 001",
+        "tag": "BODY & FORM",
+        "width": 682,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-002.webp",
+        "fullResUrl": "photo master/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-002.jpeg",
+        "thumbnailUrl": "photo_web/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-002.webp",
+        "title": "Fotografo Nude Fine Art 002",
+        "tag": "BODY & FORM",
+        "width": 748,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-003.webp",
+        "fullResUrl": "photo master/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-003.jpeg",
+        "thumbnailUrl": "photo_web/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-003.webp",
+        "title": "Fotografo Nude Fine Art 003",
+        "tag": "BODY & FORM",
+        "width": 748,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-004.webp",
+        "fullResUrl": "photo master/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-004.jpeg",
+        "thumbnailUrl": "photo_web/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-004.webp",
+        "title": "Fotografo Nude Fine Art 004",
+        "tag": "BODY & FORM",
+        "width": 748,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-005.webp",
+        "fullResUrl": "photo master/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-005.jpeg",
+        "thumbnailUrl": "photo_web/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-005.webp",
+        "title": "Fotografo Nude Fine Art 005",
+        "tag": "BODY & FORM",
+        "width": 748,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-006.webp",
+        "fullResUrl": "photo master/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-006.jpg",
+        "thumbnailUrl": "photo_web/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-006.webp",
+        "title": "Fotografo Nude Fine Art 006",
+        "tag": "BODY & FORM",
+        "width": 747,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-007.webp",
+        "fullResUrl": "photo master/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-007.jpeg",
+        "thumbnailUrl": "photo_web/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-007.webp",
+        "title": "Fotografo Nude Fine Art 007",
+        "tag": "BODY & FORM",
+        "width": 748,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-008.webp",
+        "fullResUrl": "photo master/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-008.jpeg",
+        "thumbnailUrl": "photo_web/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-008.webp",
+        "title": "Fotografo Nude Fine Art 008",
+        "tag": "BODY & FORM",
+        "width": 748,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-009.webp",
+        "fullResUrl": "photo master/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-009.jpeg",
+        "thumbnailUrl": "photo_web/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-009.webp",
+        "title": "Fotografo Nude Fine Art 009",
+        "tag": "BODY & FORM",
+        "width": 748,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-010.webp",
+        "fullResUrl": "photo master/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-010.jpeg",
+        "thumbnailUrl": "photo_web/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-010.webp",
+        "title": "Fotografo Nude Fine Art 010",
+        "tag": "BODY & FORM",
+        "width": 1024,
+        "height": 726,
+        "is_horizontal": true
+      },
+      {
+        "url": "photo_web/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-011.webp",
+        "fullResUrl": "photo master/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-011.jpeg",
+        "thumbnailUrl": "photo_web/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-011.webp",
+        "title": "Fotografo Nude Fine Art 011",
+        "tag": "BODY & FORM",
+        "width": 748,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-012.webp",
+        "fullResUrl": "photo master/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-012.jpeg",
+        "thumbnailUrl": "photo_web/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-012.webp",
+        "title": "Fotografo Nude Fine Art 012",
+        "tag": "BODY & FORM",
+        "width": 748,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-013.webp",
+        "fullResUrl": "photo master/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-013.jpg",
+        "thumbnailUrl": "photo_web/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-013.webp",
+        "title": "Fotografo Nude Fine Art 013",
+        "tag": "BODY & FORM",
+        "width": 427,
+        "height": 640,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-014.webp",
+        "fullResUrl": "photo master/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-014.jpg",
+        "thumbnailUrl": "photo_web/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-014.webp",
+        "title": "Fotografo Nude Fine Art 014",
+        "tag": "BODY & FORM",
+        "width": 827,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-015.webp",
+        "fullResUrl": "photo master/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-015.jpg",
+        "thumbnailUrl": "photo_web/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-015.webp",
+        "title": "Fotografo Nude Fine Art 015",
+        "tag": "BODY & FORM",
+        "width": 682,
+        "height": 1024,
+        "is_horizontal": false
+      }
+    ]
   },
   "portraits_and_beauty": {
     "portraits": [
