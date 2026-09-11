@@ -1,5 +1,5 @@
 // Database delle immagini generato automaticamente dallo script scan.py
-// Data di generazione: 2026-09-11T22:36:08.790966+00:00
+// Data di generazione: 2026-09-11T23:11:46.147951+00:00
 
 const portfolioData = {
   "overview": [
@@ -2277,6 +2277,327 @@ const portfolioData = {
         "is_horizontal": false
       }
     ],
-    "pets_and_portraits": []
+    "pets_and_portraits": [
+      {
+        "url": "photo_web/pet & portraits/max-salvaggio-fotografo-polo-cavallo-anna-001.webp",
+        "fullResUrl": "photo master/pet & portraits/Ania/max-salvaggio-fotografo-polo-cavallo-anna-001.jpg",
+        "thumbnailUrl": "photo_web/pet & portraits/max-salvaggio-fotografo-polo-cavallo-anna-001.webp",
+        "title": "Fotografo Polo Cavallo Anna 001",
+        "tag": "PET & PORTRAITS",
+        "width": 768,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/pet & portraits/max-salvaggio-fotografo-polo-cavallo-anna-002.webp",
+        "fullResUrl": "photo master/pet & portraits/Ania/max-salvaggio-fotografo-polo-cavallo-anna-002.jpg",
+        "thumbnailUrl": "photo_web/pet & portraits/max-salvaggio-fotografo-polo-cavallo-anna-002.webp",
+        "title": "Fotografo Polo Cavallo Anna 002",
+        "tag": "PET & PORTRAITS",
+        "width": 768,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/pet & portraits/max-salvaggio-fotografo-polo-cavallo-anna-003.webp",
+        "fullResUrl": "photo master/pet & portraits/Ania/max-salvaggio-fotografo-polo-cavallo-anna-003.jpg",
+        "thumbnailUrl": "photo_web/pet & portraits/max-salvaggio-fotografo-polo-cavallo-anna-003.webp",
+        "title": "Fotografo Polo Cavallo Anna 003",
+        "tag": "PET & PORTRAITS",
+        "width": 768,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/pet & portraits/max-salvaggio-fotografo-polo-cavallo-anna-004.webp",
+        "fullResUrl": "photo master/pet & portraits/Ania/max-salvaggio-fotografo-polo-cavallo-anna-004.jpg",
+        "thumbnailUrl": "photo_web/pet & portraits/max-salvaggio-fotografo-polo-cavallo-anna-004.webp",
+        "title": "Fotografo Polo Cavallo Anna 004",
+        "tag": "PET & PORTRAITS",
+        "width": 768,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/pet & portraits/max-salvaggio-fotografo-polo-cavallo-anna-005.webp",
+        "fullResUrl": "photo master/pet & portraits/Ania/max-salvaggio-fotografo-polo-cavallo-anna-005.jpg",
+        "thumbnailUrl": "photo_web/pet & portraits/max-salvaggio-fotografo-polo-cavallo-anna-005.webp",
+        "title": "Fotografo Polo Cavallo Anna 005",
+        "tag": "PET & PORTRAITS",
+        "width": 768,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/pet & portraits/max-salvaggio-fotografo-polo-cavallo-anna-006.webp",
+        "fullResUrl": "photo master/pet & portraits/Ania/max-salvaggio-fotografo-polo-cavallo-anna-006.jpg",
+        "thumbnailUrl": "photo_web/pet & portraits/max-salvaggio-fotografo-polo-cavallo-anna-006.webp",
+        "title": "Fotografo Polo Cavallo Anna 006",
+        "tag": "PET & PORTRAITS",
+        "width": 768,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/pet & portraits/max-salvaggio-fotografo-polo-cavallo-bea-001.webp",
+        "fullResUrl": "photo master/pet & portraits/Bea/max-salvaggio-fotografo-polo-cavallo-bea-001.jpg",
+        "thumbnailUrl": "photo_web/pet & portraits/max-salvaggio-fotografo-polo-cavallo-bea-001.webp",
+        "title": "Fotografo Polo Cavallo Bea 001",
+        "tag": "PET & PORTRAITS",
+        "width": 768,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/pet & portraits/max-salvaggio-fotografo-polo-cavallo-bea-002.webp",
+        "fullResUrl": "photo master/pet & portraits/Bea/max-salvaggio-fotografo-polo-cavallo-bea-002.jpg",
+        "thumbnailUrl": "photo_web/pet & portraits/max-salvaggio-fotografo-polo-cavallo-bea-002.webp",
+        "title": "Fotografo Polo Cavallo Bea 002",
+        "tag": "PET & PORTRAITS",
+        "width": 768,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/pet & portraits/max-salvaggio-fotografo-polo-cavallo-bea-004.webp",
+        "fullResUrl": "photo master/pet & portraits/Bea/max-salvaggio-fotografo-polo-cavallo-bea-004.jpg",
+        "thumbnailUrl": "photo_web/pet & portraits/max-salvaggio-fotografo-polo-cavallo-bea-004.webp",
+        "title": "Fotografo Polo Cavallo Bea 004",
+        "tag": "PET & PORTRAITS",
+        "width": 768,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/pet & portraits/max-salvaggio-fotografo-polo-cavallo-bea-006.webp",
+        "fullResUrl": "photo master/pet & portraits/Bea/max-salvaggio-fotografo-polo-cavallo-bea-006.jpg",
+        "thumbnailUrl": "photo_web/pet & portraits/max-salvaggio-fotografo-polo-cavallo-bea-006.webp",
+        "title": "Fotografo Polo Cavallo Bea 006",
+        "tag": "PET & PORTRAITS",
+        "width": 768,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/pet & portraits/max-salvaggio-fotografo-polo-cavallo-bea-008.webp",
+        "fullResUrl": "photo master/pet & portraits/Bea/max-salvaggio-fotografo-polo-cavallo-bea-008.jpg",
+        "thumbnailUrl": "photo_web/pet & portraits/max-salvaggio-fotografo-polo-cavallo-bea-008.webp",
+        "title": "Fotografo Polo Cavallo Bea 008",
+        "tag": "PET & PORTRAITS",
+        "width": 768,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/pet & portraits/max-salvaggio-fotografo-cavallo-naomi-tavian-001.webp",
+        "fullResUrl": "photo master/pet & portraits/Noemi/max-salvaggio-fotografo-cavallo-naomi-tavian-001.jpg",
+        "thumbnailUrl": "photo_web/pet & portraits/max-salvaggio-fotografo-cavallo-naomi-tavian-001.webp",
+        "title": "Fotografo Cavallo Naomi Tavian 001",
+        "tag": "PET & PORTRAITS",
+        "width": 683,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/pet & portraits/max-salvaggio-fotografo-cavallo-naomi-tavian-003.webp",
+        "fullResUrl": "photo master/pet & portraits/Noemi/max-salvaggio-fotografo-cavallo-naomi-tavian-003.jpg",
+        "thumbnailUrl": "photo_web/pet & portraits/max-salvaggio-fotografo-cavallo-naomi-tavian-003.webp",
+        "title": "Fotografo Cavallo Naomi Tavian 003",
+        "tag": "PET & PORTRAITS",
+        "width": 683,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/pet & portraits/max-salvaggio-fotografo-cavallo-naomi-tavian-004.webp",
+        "fullResUrl": "photo master/pet & portraits/Noemi/max-salvaggio-fotografo-cavallo-naomi-tavian-004.jpg",
+        "thumbnailUrl": "photo_web/pet & portraits/max-salvaggio-fotografo-cavallo-naomi-tavian-004.webp",
+        "title": "Fotografo Cavallo Naomi Tavian 004",
+        "tag": "PET & PORTRAITS",
+        "width": 1536,
+        "height": 1024,
+        "is_horizontal": true
+      },
+      {
+        "url": "photo_web/pet & portraits/max-salvaggio-fotografo-cavallo-naomi-tavian-005.webp",
+        "fullResUrl": "photo master/pet & portraits/Noemi/max-salvaggio-fotografo-cavallo-naomi-tavian-005.jpg",
+        "thumbnailUrl": "photo_web/pet & portraits/max-salvaggio-fotografo-cavallo-naomi-tavian-005.webp",
+        "title": "Fotografo Cavallo Naomi Tavian 005",
+        "tag": "PET & PORTRAITS",
+        "width": 683,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/pet & portraits/max-salvaggio-fotografo-cavallo-naomi-tavian-006.webp",
+        "fullResUrl": "photo master/pet & portraits/Noemi/max-salvaggio-fotografo-cavallo-naomi-tavian-006.jpg",
+        "thumbnailUrl": "photo_web/pet & portraits/max-salvaggio-fotografo-cavallo-naomi-tavian-006.webp",
+        "title": "Fotografo Cavallo Naomi Tavian 006",
+        "tag": "PET & PORTRAITS",
+        "width": 1542,
+        "height": 1024,
+        "is_horizontal": true
+      },
+      {
+        "url": "photo_web/pet & portraits/max-salvaggio-fotografo-cavallo-naomi-tavian-007.webp",
+        "fullResUrl": "photo master/pet & portraits/Noemi/max-salvaggio-fotografo-cavallo-naomi-tavian-007.jpg",
+        "thumbnailUrl": "photo_web/pet & portraits/max-salvaggio-fotografo-cavallo-naomi-tavian-007.webp",
+        "title": "Fotografo Cavallo Naomi Tavian 007",
+        "tag": "PET & PORTRAITS",
+        "width": 1536,
+        "height": 1024,
+        "is_horizontal": true
+      },
+      {
+        "url": "photo_web/pet & portraits/max-salvaggio-fotografo-cavallo-naomi-tavian-008.webp",
+        "fullResUrl": "photo master/pet & portraits/Noemi/max-salvaggio-fotografo-cavallo-naomi-tavian-008.jpg",
+        "thumbnailUrl": "photo_web/pet & portraits/max-salvaggio-fotografo-cavallo-naomi-tavian-008.webp",
+        "title": "Fotografo Cavallo Naomi Tavian 008",
+        "tag": "PET & PORTRAITS",
+        "width": 683,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/pet & portraits/max-salvaggio-fotografo-cavallo-naomi-tavian-009.webp",
+        "fullResUrl": "photo master/pet & portraits/Noemi/max-salvaggio-fotografo-cavallo-naomi-tavian-009.jpg",
+        "thumbnailUrl": "photo_web/pet & portraits/max-salvaggio-fotografo-cavallo-naomi-tavian-009.webp",
+        "title": "Fotografo Cavallo Naomi Tavian 009",
+        "tag": "PET & PORTRAITS",
+        "width": 683,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/pet & portraits/max-salvaggio-fotografo-cane-pamela-001.webp",
+        "fullResUrl": "photo master/pet & portraits/Pamela/max-salvaggio-fotografo-cane-pamela-001.jpg",
+        "thumbnailUrl": "photo_web/pet & portraits/max-salvaggio-fotografo-cane-pamela-001.webp",
+        "title": "Fotografo Cane Pamela 001",
+        "tag": "PET & PORTRAITS",
+        "width": 768,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/pet & portraits/max-salvaggio-fotografo-cane-pamela-005.webp",
+        "fullResUrl": "photo master/pet & portraits/Pamela/max-salvaggio-fotografo-cane-pamela-005.jpg",
+        "thumbnailUrl": "photo_web/pet & portraits/max-salvaggio-fotografo-cane-pamela-005.webp",
+        "title": "Fotografo Cane Pamela 005",
+        "tag": "PET & PORTRAITS",
+        "width": 768,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/pet & portraits/max-salvaggio-fotografo-cane-pamela-007.webp",
+        "fullResUrl": "photo master/pet & portraits/Pamela/max-salvaggio-fotografo-cane-pamela-007.jpg",
+        "thumbnailUrl": "photo_web/pet & portraits/max-salvaggio-fotografo-cane-pamela-007.webp",
+        "title": "Fotografo Cane Pamela 007",
+        "tag": "PET & PORTRAITS",
+        "width": 768,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/pet & portraits/max-salvaggio-fotografo-cane-pamela-009.webp",
+        "fullResUrl": "photo master/pet & portraits/Pamela/max-salvaggio-fotografo-cane-pamela-009.jpg",
+        "thumbnailUrl": "photo_web/pet & portraits/max-salvaggio-fotografo-cane-pamela-009.webp",
+        "title": "Fotografo Cane Pamela 009",
+        "tag": "PET & PORTRAITS",
+        "width": 1536,
+        "height": 1024,
+        "is_horizontal": true
+      },
+      {
+        "url": "photo_web/pet & portraits/max-salvaggio-fotografo-cane-pamela-010.webp",
+        "fullResUrl": "photo master/pet & portraits/Pamela/max-salvaggio-fotografo-cane-pamela-010.jpg",
+        "thumbnailUrl": "photo_web/pet & portraits/max-salvaggio-fotografo-cane-pamela-010.webp",
+        "title": "Fotografo Cane Pamela 010",
+        "tag": "PET & PORTRAITS",
+        "width": 768,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/pet & portraits/max-salvaggio-fotografo-cane-alessia-003.webp",
+        "fullResUrl": "photo master/pet & portraits/Studio I/max-salvaggio-fotografo-cane-alessia-003.jpg",
+        "thumbnailUrl": "photo_web/pet & portraits/max-salvaggio-fotografo-cane-alessia-003.webp",
+        "title": "Fotografo Cane Alessia 003",
+        "tag": "PET & PORTRAITS",
+        "width": 768,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/pet & portraits/max-salvaggio-fotografo-cane-alessia-004.webp",
+        "fullResUrl": "photo master/pet & portraits/Studio I/max-salvaggio-fotografo-cane-alessia-004.jpg",
+        "thumbnailUrl": "photo_web/pet & portraits/max-salvaggio-fotografo-cane-alessia-004.webp",
+        "title": "Fotografo Cane Alessia 004",
+        "tag": "PET & PORTRAITS",
+        "width": 768,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/pet & portraits/max-salvaggio-fotografo-cane-francesco-007.webp",
+        "fullResUrl": "photo master/pet & portraits/Studio I/max-salvaggio-fotografo-cane-francesco-007.jpg",
+        "thumbnailUrl": "photo_web/pet & portraits/max-salvaggio-fotografo-cane-francesco-007.webp",
+        "title": "Fotografo Cane Francesco 007",
+        "tag": "PET & PORTRAITS",
+        "width": 683,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/pet & portraits/max-salvaggio-fotografo-portrait-cane-cecilia-capriotti-001.webp",
+        "fullResUrl": "photo master/pet & portraits/Studio I/max-salvaggio-fotografo-portrait-cane-cecilia-capriotti-001.jpg",
+        "thumbnailUrl": "photo_web/pet & portraits/max-salvaggio-fotografo-portrait-cane-cecilia-capriotti-001.webp",
+        "title": "Fotografo Portrait Cane Cecilia Capriotti 001",
+        "tag": "PET & PORTRAITS",
+        "width": 783,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/pet & portraits/max-salvaggio-fotografo-portrait-cane-dante-vincenzo-001.webp",
+        "fullResUrl": "photo master/pet & portraits/Studio I/max-salvaggio-fotografo-portrait-cane-dante-vincenzo-001.jpg",
+        "thumbnailUrl": "photo_web/pet & portraits/max-salvaggio-fotografo-portrait-cane-dante-vincenzo-001.webp",
+        "title": "Fotografo Portrait Cane Dante Vincenzo 001",
+        "tag": "PET & PORTRAITS",
+        "width": 683,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/pet & portraits/max-salvaggio-fotografo-portrait-cane-jessica-1.webp",
+        "fullResUrl": "photo master/pet & portraits/Studio I/max-salvaggio-fotografo-portrait-cane-jessica-1.jpg",
+        "thumbnailUrl": "photo_web/pet & portraits/max-salvaggio-fotografo-portrait-cane-jessica-1.webp",
+        "title": "Fotografo Portrait Cane Jessica 1",
+        "tag": "PET & PORTRAITS",
+        "width": 683,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/pet & portraits/max-salvaggio-fotografo-portrait-cane-jessica-2.webp",
+        "fullResUrl": "photo master/pet & portraits/Studio I/max-salvaggio-fotografo-portrait-cane-jessica-2.jpg",
+        "thumbnailUrl": "photo_web/pet & portraits/max-salvaggio-fotografo-portrait-cane-jessica-2.webp",
+        "title": "Fotografo Portrait Cane Jessica 2",
+        "tag": "PET & PORTRAITS",
+        "width": 683,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/pet & portraits/max-salvaggio-fotografo-portrait-cane-jessica-3.webp",
+        "fullResUrl": "photo master/pet & portraits/Studio I/max-salvaggio-fotografo-portrait-cane-jessica-3.jpg",
+        "thumbnailUrl": "photo_web/pet & portraits/max-salvaggio-fotografo-portrait-cane-jessica-3.webp",
+        "title": "Fotografo Portrait Cane Jessica 3",
+        "tag": "PET & PORTRAITS",
+        "width": 683,
+        "height": 1024,
+        "is_horizontal": false
+      }
+    ]
   }
 };

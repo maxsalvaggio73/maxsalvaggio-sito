@@ -62,40 +62,42 @@ def get_images_in_dir(path, tag_name, relative_base, web_subfolder=None):
         return images
     
     from PIL import Image as PILImage
-    for file in sorted(os.listdir(path)):
-        file_path = os.path.join(path, file)
-        if os.path.isfile(file_path):
-            _, ext = os.path.splitext(file.lower())
-            if ext in VALID_EXTENSIONS:
-                # Relative URL per l'immagine originale ad alta risoluzione (photo master/...)
-                full_res_url = os.path.relpath(file_path, relative_base).replace('\\', '/')
-                
-                # Sotto-cartella target per la miniatura WebP in photo_web/
-                if web_subfolder is None:
-                    target_subfolder = os.path.relpath(path, os.path.join(relative_base, 'photo master')).replace('\\', '/')
-                else:
-                    target_subfolder = web_subfolder
-                
-                # Genera miniatura in photo_web/
-                thumb_url = create_thumbnail_custom(file_path, target_subfolder, relative_base)
-                
-                w, h = 0, 0
-                try:
-                    with PILImage.open(file_path) as pimg:
-                        w, h = pimg.size
-                except Exception:
-                    pass
+    for root, dirs, files in os.walk(path):
+        dirs.sort()
+        for file in sorted(files):
+            file_path = os.path.join(root, file)
+            if os.path.isfile(file_path):
+                _, ext = os.path.splitext(file.lower())
+                if ext in VALID_EXTENSIONS:
+                    # Relative URL per l'immagine originale ad alta risoluzione (photo master/...)
+                    full_res_url = os.path.relpath(file_path, relative_base).replace('\\', '/')
+                    
+                    # Sotto-cartella target per la miniatura WebP in photo_web/
+                    if web_subfolder is None:
+                        target_subfolder = os.path.relpath(root, os.path.join(relative_base, 'photo master')).replace('\\', '/')
+                    else:
+                        target_subfolder = web_subfolder
+                    
+                    # Genera miniatura in photo_web/
+                    thumb_url = create_thumbnail_custom(file_path, target_subfolder, relative_base)
+                    
+                    w, h = 0, 0
+                    try:
+                        with PILImage.open(file_path) as pimg:
+                            w, h = pimg.size
+                    except Exception:
+                        pass
 
-                images.append({
-                    'url': thumb_url,
-                    'fullResUrl': full_res_url,
-                    'thumbnailUrl': thumb_url,
-                    'title': clean_title(file),
-                    'tag': tag_name,
-                    'width': w,
-                    'height': h,
-                    'is_horizontal': w > h
-                })
+                    images.append({
+                        'url': thumb_url,
+                        'fullResUrl': full_res_url,
+                        'thumbnailUrl': thumb_url,
+                        'title': clean_title(file),
+                        'tag': tag_name,
+                        'width': w,
+                        'height': h,
+                        'is_horizontal': w > h
+                    })
     return images
 
 def scan_all():
