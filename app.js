@@ -156,6 +156,7 @@ document.addEventListener("DOMContentLoaded", () => {
         dbRows.forEach(row => {
           const imgObj = {
             url: row.url,
+            thumbnailUrl: row.thumbnail_url || row.url,
             title: row.title,
             width: row.width || 0,
             height: row.height || 0,
@@ -877,8 +878,8 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Create standard gallery item with lazy image fade-in and hover background trigger
-  function createGalleryItem(img, index, imagesList, tag) {
+  // Create standard gallery item with lazy/eager loading and hover background trigger
+  function createGalleryItem(img, index, imagesList, tag, isEager = false) {
     const item = document.createElement("div");
     const isOverviewStyle = ["OVERVIEW", "FASHION", "LINGERIE", "SWIMWEAR", "BODY & FORM", "EDITORIALS", "PORTRAITS", "PORTRAITS I", "BEAUTY", "PET & PORTRAITS", "PORTRAITS II"].includes(tag);
     
@@ -891,9 +892,15 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     
     const imageElement = document.createElement("img");
-    imageElement.src = img.url;
+    imageElement.src = img.thumbnailUrl || img.url;
     imageElement.alt = img.title;
-    imageElement.loading = "lazy";
+    
+    if (isEager) {
+      imageElement.loading = "eager";
+      imageElement.setAttribute("fetchpriority", "high");
+    } else {
+      imageElement.loading = "lazy";
+    }
     
     // Fade-in when fully loaded
     imageElement.addEventListener("load", () => {
@@ -938,7 +945,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const end = Math.min(start + OVERVIEW_BATCH_SIZE, allImages.length);
 
     for (let i = start; i < end; i++) {
-      const item = createGalleryItem(allImages[i], i, allImages, "OVERVIEW");
+      const isEager = (i < 4);
+      const item = createGalleryItem(allImages[i], i, allImages, "OVERVIEW", isEager);
       grid.appendChild(item);
     }
 
