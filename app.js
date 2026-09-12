@@ -454,7 +454,7 @@ document.addEventListener("DOMContentLoaded", () => {
       "campaigns-fashion",
       "campaigns-lingerie",
       "campaigns-swimwear",
-      "body-form",
+      "body",
       "portraits",
       "portraits-beauty",
       "film-work",
@@ -577,7 +577,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function updateNavLinksActiveState(targetSectionId, explicitTabId) {
     const currentSec = targetSectionId || (activeSectionId === "unpublished-research" ? "portraits" : activeSectionId);
-    const activeTab = explicitTabId || localStorage.getItem("activeTab") || (document.querySelector(`#section-${currentSec} .tab-link.active`)?.getAttribute("data-tab") || (currentSec === "portraits" ? "pb-portraits" : (currentSec === "body-form" ? "body-organic" : "")));
+    const activeTab = explicitTabId || localStorage.getItem("activeTab") || (document.querySelector(`#section-${currentSec} .tab-link.active`)?.getAttribute("data-tab") || (currentSec === "portraits" ? "pb-portraits" : (currentSec === "body" ? "body-organic" : "")));
 
     const secAlias = {
       "campaigns": "campaigns-fashion",
@@ -616,8 +616,8 @@ document.addEventListener("DOMContentLoaded", () => {
         sections: ["portraits", "portraits-beauty", "unpublished-research"]
       },
       {
-        toggleSelector: '[data-dropdown="body-form"]',
-        sections: ["body-form"]
+        toggleSelector: '[data-dropdown="body"]',
+        sections: ["body"]
       }
     ];
 
@@ -645,8 +645,8 @@ document.addEventListener("DOMContentLoaded", () => {
       sectionId = "campaigns-lingerie";
     } else if (targetId === "info" || targetId === "contact") {
       sectionId = "contact";
-    } else if (targetId === "body-form" || targetId === "body-organic" || targetId === "body-shadows") {
-      sectionId = "body-form";
+    } else if (targetId === "body" || targetId === "body-organic" || targetId === "body-shadows") {
+      sectionId = "body";
       if (targetId === "body-shadows") {
         localStorage.setItem("activeTab", "body-shadows");
       }
@@ -667,15 +667,15 @@ document.addEventListener("DOMContentLoaded", () => {
     const targetSection = document.getElementById("section-" + sectionId);
     if (!targetSection) return;
 
-    // Direct grid display for body-form without async sub-tab guard clauses when activating body-form directly
-    if (sectionId === "body-form" && targetId !== "body-shadows") {
+    // Direct grid display for body without async sub-tab guard clauses when activating body directly
+    if (sectionId === "body" && targetId !== "body-shadows") {
       const organicTab = document.getElementById("body-organic");
       const shadowsTab = document.getElementById("body-shadows");
       const organicGrid = document.getElementById("body-organic-grid");
       if (organicTab) organicTab.classList.add("active");
       if (shadowsTab) shadowsTab.classList.remove("active");
       if (organicGrid) organicGrid.style.display = "grid";
-      document.querySelectorAll("#section-body-form .tab-link").forEach(b => {
+      document.querySelectorAll("#section-body .tab-link").forEach(b => {
         if (b.getAttribute("data-tab") === "body-organic") b.classList.add("active");
         else b.classList.remove("active");
       });
@@ -693,20 +693,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const storedTab = localStorage.getItem("activeTab");
 
-    if (currentActive && currentActive.id === ("section-" + sectionId) && targetId !== "editorials" && targetId !== "unpublished-research" && targetId !== "body-form" && targetId !== "portraits" && !storedTab) {
+    if (currentActive && currentActive.id === ("section-" + sectionId) && targetId !== "editorials" && targetId !== "unpublished-research" && targetId !== "body" && targetId !== "portraits" && !storedTab) {
       return;
     }
 
     // For tab-sections navigated without a storedTab, force-activate the default tab
     if (!storedTab) {
-      if (sectionId === "body-form") {
+      if (sectionId === "body") {
         localStorage.setItem("activeTab", "body-organic");
       } else if (sectionId === "portraits") {
         localStorage.setItem("activeTab", "pb-portraits");
       }
     }
 
-    // If navigating to portraits-beauty or body-form via a data-tab, activate that tab after transition
+    // If navigating to portraits-beauty or body via a data-tab, activate that tab after transition
     const activeTabToTrigger = localStorage.getItem("activeTab");
     if (activeTabToTrigger) {
       const triggerTab = () => {
@@ -831,8 +831,8 @@ document.addEventListener("DOMContentLoaded", () => {
       case "pb-pets":
         changeBackgroundRandomly(portfolioData.portraits_and_beauty.pets_and_portraits);
         break;
-      case "body-form": {
-        const activeTab = document.querySelector("#section-body-form .tab-link.active");
+      case "body": {
+        const activeTab = document.querySelector("#section-body .tab-link.active");
         const activeTabId = activeTab ? activeTab.getAttribute("data-tab") : "body-organic";
         updateBackgroundForSection(activeTabId);
         break;
