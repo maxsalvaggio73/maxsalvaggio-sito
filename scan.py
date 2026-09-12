@@ -1,6 +1,7 @@
 import os
 import json
 import re
+import shutil
 from datetime import datetime, timezone
 
 base_dir = os.path.dirname(os.path.abspath(__file__))
@@ -29,6 +30,24 @@ def clean_folder_title(foldername):
     name = re.sub(r'\s+', ' ', name).strip()
     name = name.replace(' and ', ' & ').replace(' And ', ' & ')
     return name.title()
+
+def get_web_subfolder_for_relpath(rel_path):
+    """
+    Normalizza la sotto-cartella web per garantire la perfetta corrispondenza tra photo master e photo_web.
+    """
+    rel_clean = rel_path.replace('\\', '/').strip('/')
+    rel_lower = rel_clean.lower()
+    
+    if rel_lower == 'swimwear' or rel_lower.startswith('swimwear/'):
+        return 'campaigns/swimwear'
+    if rel_lower == 'lingerie' or rel_lower.startswith('lingerie/'):
+        return 'campaigns/lingerie'
+    if rel_lower == 'fashion' or rel_lower.startswith('fashion/') or rel_lower == 'campaigns':
+        return 'campaigns/fashion'
+    if rel_lower.startswith('pet & portraits') or rel_lower.startswith('pet_and_portraits'):
+        return 'pet & portraits'
+    
+    return rel_lower
 
 def create_thumbnail_custom(orig_path, target_rel_subfolder, relative_base):
     """
@@ -80,17 +99,14 @@ def get_images_in_dir(path, tag_name, relative_base, web_subfolder=None):
             if os.path.isfile(file_path):
                 _, ext = os.path.splitext(file.lower())
                 if ext in VALID_EXTENSIONS:
-                    # Relative URL per l'immagine originale ad alta risoluzione (photo master/...)
                     full_res_url = os.path.relpath(file_path, relative_base).replace('\\', '/')
                     
-                    # Sotto-cartella target per la miniatura WebP in photo_web/
                     if web_subfolder is None:
                         rel_sub = os.path.relpath(root, os.path.join(relative_base, 'photo master')).replace('\\', '/')
-                        target_subfolder = rel_sub.lower()
+                        target_subfolder = get_web_subfolder_for_relpath(rel_sub)
                     else:
-                        target_subfolder = web_subfolder.lower()
+                        target_subfolder = get_web_subfolder_for_relpath(web_subfolder)
                     
-                    # Genera miniatura in photo_web/
                     thumb_url = create_thumbnail_custom(file_path, target_subfolder, relative_base)
                     
                     w, h = 0, 0
@@ -122,6 +138,51 @@ def find_dir_by_keywords(parent_dir, keywords):
             if any(kw.lower() in entry_lower for kw in keywords):
                 return full_p
     return None
+
+def cleanup_orphans(base_dir, valid_files, valid_dirs):
+    """
+    Scansiona photo_web/ e rimuove file .webp e cartelle orfane che non hanno piu un corrispettivo originale in photo master/
+    """
+    photo_web_base = os.path.join(base_dir, 'photo_web')
+    if not os.path.exists(photo_web_base):
+        return
+
+    print("Verifica ed eliminazione automatica orfani in photo_web/...")
+
+    removed_files = 0
+    for root, dirs, files in os.walk(photo_web_base):
+        for f in files:
+            if f.startswith('.') or f in ('.DS_Store', '.gitkeep'):
+                continue
+            full_p = os.path.join(root, f)
+            rel_p = os.path.normpath(os.path.relpath(full_p, base_dir)).replace('\\', '/').lower()
+            if rel_p not in valid_files:
+                try:
+                    os.remove(full_p)
+                    removed_files += 1
+                    print(f"  [Orfano rimosso]: {rel_p}")
+                except Exception as e:
+                    print(f"  Errore rimozione file orfano {rel_p}: {e}")
+
+    removed_dirs = 0
+    for root, dirs, files in os.walk(photo_web_base, topdown=False):
+        for d in dirs:
+            dir_full = os.path.join(root, d)
+            dir_rel = os.path.normpath(os.path.relpath(dir_full, base_dir)).replace('\\', '/').lower()
+            
+            try:
+                contents = [c for c in os.listdir(dir_full) if not c.startswith('.')]
+                if not contents or dir_rel not in valid_dirs:
+                    shutil.rmtree(dir_full, ignore_errors=True)
+                    removed_dirs += 1
+                    print(f"  [Cartella orfana rimossa]: {dir_rel}")
+            except Exception as e:
+                pass
+
+    if removed_files > 0 or removed_dirs > 0:
+        print(f"Sincronizzazione completata: {removed_files} file orfani e {removed_dirs} cartelle orfane rimosse.\n")
+    else:
+        print("Sincronizzazione completata: nessun file o cartella orfana trovata.\n")
 
 def scan_all():
     print("Inizio scansione automatica e ricorsiva cartelle photo master...")
@@ -161,7 +222,7 @@ def scan_all():
                 rel_path = os.path.relpath(root, photo_master_base).replace('\\', '/')
                 folder_name = os.path.basename(root)
                 clean_name = clean_folder_title(folder_name)
-                web_sub = rel_path.lower()
+                web_sub = get_web_subfolder_for_relpath(rel_path)
                 
                 tag = rel_path.split('/')[0].upper() if '/' in rel_path else rel_path.upper()
                 imgs = get_images_in_dir(root, tag, base_dir, web_subfolder=web_sub)
@@ -233,7 +294,7 @@ def scan_all():
 
     # 3. CAMPAIGNS
     campaigns_master_path = os.path.join(photo_master_base, 'campaigns')
-    data['campaigns']['fashion'] = get_images_in_dir(os.path.join(campaigns_master_path, 'fashion'), 'CAMPAIGNS', base_dir, web_subfolder='campaigns/fashion') if os.path.exists(os.path.join(campaigns_master_path, 'fashion')) else get_images_in_dir(campaigns_master_path, 'CAMPAIGNS', base_dir, web_subfolder='campaigns')
+    data['campaigns']['fashion'] = get_images_in_dir(os.path.join(campaigns_master_path, 'fashion'), 'CAMPAIGNS', base_dir, web_subfolder='campaigns/fashion') if os.path.exists(os.path.join(campaigns_master_path, 'fashion')) else get_images_in_dir(campaigns_master_path, 'CAMPAIGNS', base_dir, web_subfolder='campaigns/fashion')
     
     lingerie_master_path = os.path.join(photo_master_base, 'lingerie')
     if not os.path.exists(lingerie_master_path):
@@ -308,6 +369,32 @@ def scan_all():
     data['portraits_and_beauty']['pets_and_portraits'] = pets_imgs if pets_imgs else get_images_in_dir(os.path.join(base_dir, '4 PET and Portraits'), 'PET & PORTRAITS', base_dir, web_subfolder='pet & portraits')
     data['portraits_and_beauty']['beauty'] = get_images_in_dir(os.path.join(base_dir, '4 beauty'), 'BEAUTY', base_dir, web_subfolder='beauty')
 
+    # Estrai tutti i percorsi validi di miniature e directory generati per portfolioData
+    valid_files = set()
+    valid_dirs = set()
+
+    def extract_valid_paths(obj):
+        if isinstance(obj, dict):
+            for k in ('url', 'cover', 'preview_icon'):
+                key_val = obj.get(k)
+                if key_val and isinstance(key_val, str):
+                    p = os.path.normpath(key_val).replace('\\', '/').lower()
+                    valid_files.add(p)
+                    curr = os.path.dirname(p)
+                    while curr and curr != 'photo_web':
+                        valid_dirs.add(curr.lower())
+                        curr = os.path.dirname(curr)
+            for v in obj.values():
+                extract_valid_paths(v)
+        elif isinstance(obj, list):
+            for item in obj:
+                extract_valid_paths(item)
+
+    extract_valid_paths(data)
+
+    # Pulizia bidirezionale orfani in photo_web/
+    cleanup_orphans(base_dir, valid_files, valid_dirs)
+
     # Output JSON database to file
     js_content = f"""// Database delle immagini generato automaticamente dallo script scan.py
 // Data di generazione: {datetime.now(timezone.utc).isoformat()}
@@ -317,7 +404,7 @@ const portfolioData = {json.dumps(data, indent=2, ensure_ascii=False)};
     with open(output_file, 'w', encoding='utf-8') as f:
         f.write(js_content)
         
-    print(f"\nSuccesso! Scansione completata. Database scritto in: {output_file}")
+    print(f"Successo! Scansione completata. Database scritto in: {output_file}")
 
 if __name__ == '__main__':
     scan_all()

@@ -1,5 +1,5 @@
 // Database delle immagini generato automaticamente dallo script scan.py
-// Data di generazione: 2026-09-12T02:01:01.264120+00:00
+// Data di generazione: 2026-09-12T02:12:10.961622+00:00
 
 const portfolioData = {
   "overview": [
@@ -2913,9 +2913,9 @@ const portfolioData = {
   "campaigns": {
     "fashion": [
       {
-        "url": "photo_web/campaigns/max-salvaggio-fotografo-adv-bag-dee-ocleppo.webp",
+        "url": "photo_web/campaigns/fashion/max-salvaggio-fotografo-adv-bag-dee-ocleppo.webp",
         "fullResUrl": "photo master/campaigns/max-salvaggio-fotografo-adv-bag-dee-ocleppo.jpg",
-        "thumbnailUrl": "photo_web/campaigns/max-salvaggio-fotografo-adv-bag-dee-ocleppo.webp",
+        "thumbnailUrl": "photo_web/campaigns/fashion/max-salvaggio-fotografo-adv-bag-dee-ocleppo.webp",
         "title": "Fotografo Adv Bag Dee Ocleppo",
         "tag": "CAMPAIGNS",
         "width": 1536,
@@ -2923,9 +2923,9 @@ const portfolioData = {
         "is_horizontal": true
       },
       {
-        "url": "photo_web/campaigns/max-salvaggio-fotografo-moda-jeans-re-hash002.webp",
+        "url": "photo_web/campaigns/fashion/max-salvaggio-fotografo-moda-jeans-re-hash002.webp",
         "fullResUrl": "photo master/campaigns/max-salvaggio-fotografo-moda-jeans-re-hash002.jpg",
-        "thumbnailUrl": "photo_web/campaigns/max-salvaggio-fotografo-moda-jeans-re-hash002.webp",
+        "thumbnailUrl": "photo_web/campaigns/fashion/max-salvaggio-fotografo-moda-jeans-re-hash002.webp",
         "title": "Fotografo Moda Jeans Re Hash002",
         "tag": "CAMPAIGNS",
         "width": 1785,
@@ -2933,9 +2933,9 @@ const portfolioData = {
         "is_horizontal": true
       },
       {
-        "url": "photo_web/campaigns/max-salvaggio-fotografo-moda-jeans-re-hash003.webp",
+        "url": "photo_web/campaigns/fashion/max-salvaggio-fotografo-moda-jeans-re-hash003.webp",
         "fullResUrl": "photo master/campaigns/max-salvaggio-fotografo-moda-jeans-re-hash003.jpg",
-        "thumbnailUrl": "photo_web/campaigns/max-salvaggio-fotografo-moda-jeans-re-hash003.webp",
+        "thumbnailUrl": "photo_web/campaigns/fashion/max-salvaggio-fotografo-moda-jeans-re-hash003.webp",
         "title": "Fotografo Moda Jeans Re Hash003",
         "tag": "CAMPAIGNS",
         "width": 683,
@@ -2943,9 +2943,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/campaigns/max-salvaggio-fotografo-moda-jeans-re-hash004.webp",
+        "url": "photo_web/campaigns/fashion/max-salvaggio-fotografo-moda-jeans-re-hash004.webp",
         "fullResUrl": "photo master/campaigns/max-salvaggio-fotografo-moda-jeans-re-hash004.jpg",
-        "thumbnailUrl": "photo_web/campaigns/max-salvaggio-fotografo-moda-jeans-re-hash004.webp",
+        "thumbnailUrl": "photo_web/campaigns/fashion/max-salvaggio-fotografo-moda-jeans-re-hash004.webp",
         "title": "Fotografo Moda Jeans Re Hash004",
         "tag": "CAMPAIGNS",
         "width": 1267,
@@ -2953,9 +2953,9 @@ const portfolioData = {
         "is_horizontal": true
       },
       {
-        "url": "photo_web/campaigns/max-salvaggio-fotografo-moda-jeans-re-hash004_1.webp",
+        "url": "photo_web/campaigns/fashion/max-salvaggio-fotografo-moda-jeans-re-hash004_1.webp",
         "fullResUrl": "photo master/campaigns/max-salvaggio-fotografo-moda-jeans-re-hash004_1.jpg",
-        "thumbnailUrl": "photo_web/campaigns/max-salvaggio-fotografo-moda-jeans-re-hash004_1.webp",
+        "thumbnailUrl": "photo_web/campaigns/fashion/max-salvaggio-fotografo-moda-jeans-re-hash004_1.webp",
         "title": "Fotografo Moda Jeans Re Hash004 1",
         "tag": "CAMPAIGNS",
         "width": 683,
@@ -2963,9 +2963,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/campaigns/max-salvaggio-fotografo-moda-jeans-re-hash005.webp",
+        "url": "photo_web/campaigns/fashion/max-salvaggio-fotografo-moda-jeans-re-hash005.webp",
         "fullResUrl": "photo master/campaigns/max-salvaggio-fotografo-moda-jeans-re-hash005.jpg",
-        "thumbnailUrl": "photo_web/campaigns/max-salvaggio-fotografo-moda-jeans-re-hash005.webp",
+        "thumbnailUrl": "photo_web/campaigns/fashion/max-salvaggio-fotografo-moda-jeans-re-hash005.webp",
         "title": "Fotografo Moda Jeans Re Hash005",
         "tag": "CAMPAIGNS",
         "width": 768,
@@ -4935,10 +4935,10 @@ const portfolioData = {
       "preview_icon": "photo_web/body/water-and-stones/max-salvaggio-fotografo-nudo-fine-art-001.webp",
       "count": 26
     },
-    "campaigns": {
+    "campaigns/fashion": {
       "title": "Campaigns",
-      "cover": "photo_web/campaigns/max-salvaggio-fotografo-adv-bag-dee-ocleppo.webp",
-      "preview_icon": "photo_web/campaigns/max-salvaggio-fotografo-adv-bag-dee-ocleppo.webp",
+      "cover": "photo_web/campaigns/fashion/max-salvaggio-fotografo-adv-bag-dee-ocleppo.webp",
+      "preview_icon": "photo_web/campaigns/fashion/max-salvaggio-fotografo-adv-bag-dee-ocleppo.webp",
       "count": 6
     },
     "editorials/covers": {
@@ -5037,40 +5037,16 @@ const portfolioData = {
       "preview_icon": "photo_web/editorials/moda-grazia-viaggio-oriente/max-salvaggio-fotografo-moda-grazia-cover-daniela-de-jesus-cambodia-137.webp",
       "count": 19
     },
-    "lingerie": {
+    "campaigns/lingerie": {
       "title": "Lingerie",
-      "cover": "photo_web/lingerie/max-salvaggio-fotografo-lingerie-002.webp",
-      "preview_icon": "photo_web/lingerie/max-salvaggio-fotografo-lingerie-002.webp",
+      "cover": "photo_web/campaigns/lingerie/max-salvaggio-fotografo-lingerie-002.webp",
+      "preview_icon": "photo_web/campaigns/lingerie/max-salvaggio-fotografo-lingerie-002.webp",
       "count": 24
     },
-    "pet & portraits/ania": {
-      "title": "Ania",
-      "cover": "photo_web/pet & portraits/ania/max-salvaggio-fotografo-polo-cavallo-anna-001.webp",
-      "preview_icon": "photo_web/pet & portraits/ania/max-salvaggio-fotografo-polo-cavallo-anna-001.webp",
-      "count": 6
-    },
-    "pet & portraits/bea": {
-      "title": "Bea",
-      "cover": "photo_web/pet & portraits/bea/max-salvaggio-fotografo-polo-cavallo-bea-001.webp",
-      "preview_icon": "photo_web/pet & portraits/bea/max-salvaggio-fotografo-polo-cavallo-bea-001.webp",
-      "count": 5
-    },
-    "pet & portraits/noemi": {
-      "title": "Noemi",
-      "cover": "photo_web/pet & portraits/noemi/max-salvaggio-fotografo-cavallo-naomi-tavian-001.webp",
-      "preview_icon": "photo_web/pet & portraits/noemi/max-salvaggio-fotografo-cavallo-naomi-tavian-001.webp",
-      "count": 8
-    },
-    "pet & portraits/pamela": {
-      "title": "Pamela",
-      "cover": "photo_web/pet & portraits/pamela/max-salvaggio-fotografo-cane-pamela-001.webp",
-      "preview_icon": "photo_web/pet & portraits/pamela/max-salvaggio-fotografo-cane-pamela-001.webp",
-      "count": 5
-    },
-    "pet & portraits/studio i": {
+    "pet & portraits": {
       "title": "Studio I",
-      "cover": "photo_web/pet & portraits/studio i/max-salvaggio-fotografo-cane-alessia-003.webp",
-      "preview_icon": "photo_web/pet & portraits/studio i/max-salvaggio-fotografo-cane-alessia-003.webp",
+      "cover": "photo_web/pet & portraits/max-salvaggio-fotografo-cane-alessia-003.webp",
+      "preview_icon": "photo_web/pet & portraits/max-salvaggio-fotografo-cane-alessia-003.webp",
       "count": 8
     },
     "portraits/portraits i": {
@@ -5085,10 +5061,10 @@ const portfolioData = {
       "preview_icon": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-giacomo-cavalli-portraits-milano-169.webp",
       "count": 45
     },
-    "swimwear": {
+    "campaigns/swimwear": {
       "title": "Swimwear",
-      "cover": "photo_web/swimwear/max-salvaggio-fotografo-swimwear-001.webp",
-      "preview_icon": "photo_web/swimwear/max-salvaggio-fotografo-swimwear-001.webp",
+      "cover": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-001.webp",
+      "preview_icon": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-001.webp",
       "count": 33
     }
   }
