@@ -1,5 +1,5 @@
 // Database delle immagini generato automaticamente dallo script scan.py
-// Data di generazione: 2026-09-12T03:24:30.381480+00:00
+// Data di generazione: 2026-09-12T03:26:05.890438+00:00
 
 const portfolioData = {
   "overview": [
@@ -2457,7 +2457,458 @@ const portfolioData = {
         ]
       }
     ],
-    "unpublished_research": []
+    "unpublished_research": [
+      {
+        "url": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-giacomo-cavalli-portraits-milano-169.webp",
+        "fullResUrl": "photo master/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-giacomo-cavalli-portraits-milano-169.jpg",
+        "thumbnailUrl": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-giacomo-cavalli-portraits-milano-169.webp",
+        "title": "Fotografo Moda Uomo Giacomo Cavalli Portraits Milano 169",
+        "tag": "PORTRAITS",
+        "width": 1500,
+        "height": 1000,
+        "is_horizontal": true
+      },
+      {
+        "url": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-giacomo-cavalli-portraits-milano-171.webp",
+        "fullResUrl": "photo master/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-giacomo-cavalli-portraits-milano-171.jpg",
+        "thumbnailUrl": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-giacomo-cavalli-portraits-milano-171.webp",
+        "title": "Fotografo Moda Uomo Giacomo Cavalli Portraits Milano 171",
+        "tag": "PORTRAITS",
+        "width": 1500,
+        "height": 1000,
+        "is_horizontal": true
+      },
+      {
+        "url": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-giacomo-cavalli-portraits-milano-172.webp",
+        "fullResUrl": "photo master/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-giacomo-cavalli-portraits-milano-172.jpg",
+        "thumbnailUrl": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-giacomo-cavalli-portraits-milano-172.webp",
+        "title": "Fotografo Moda Uomo Giacomo Cavalli Portraits Milano 172",
+        "tag": "PORTRAITS",
+        "width": 667,
+        "height": 1000,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-giacomo-cavalli-portraits-milano-173.webp",
+        "fullResUrl": "photo master/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-giacomo-cavalli-portraits-milano-173.jpg",
+        "thumbnailUrl": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-giacomo-cavalli-portraits-milano-173.webp",
+        "title": "Fotografo Moda Uomo Giacomo Cavalli Portraits Milano 173",
+        "tag": "PORTRAITS",
+        "width": 768,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-174.webp",
+        "fullResUrl": "photo master/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-174.jpg",
+        "thumbnailUrl": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-174.webp",
+        "title": "Fotografo Moda Uomo Portraits Milano 174",
+        "tag": "PORTRAITS",
+        "width": 667,
+        "height": 1000,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-175.webp",
+        "fullResUrl": "photo master/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-175.jpg",
+        "thumbnailUrl": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-175.webp",
+        "title": "Fotografo Moda Uomo Portraits Milano 175",
+        "tag": "PORTRAITS",
+        "width": 667,
+        "height": 1000,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-176.webp",
+        "fullResUrl": "photo master/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-176.jpg",
+        "thumbnailUrl": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-176.webp",
+        "title": "Fotografo Moda Uomo Portraits Milano 176",
+        "tag": "PORTRAITS",
+        "width": 1500,
+        "height": 1000,
+        "is_horizontal": true
+      },
+      {
+        "url": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-177.webp",
+        "fullResUrl": "photo master/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-177.jpg",
+        "thumbnailUrl": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-177.webp",
+        "title": "Fotografo Moda Uomo Portraits Milano 177",
+        "tag": "PORTRAITS",
+        "width": 667,
+        "height": 1000,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-178.webp",
+        "fullResUrl": "photo master/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-178.jpg",
+        "thumbnailUrl": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-178.webp",
+        "title": "Fotografo Moda Uomo Portraits Milano 178",
+        "tag": "PORTRAITS",
+        "width": 667,
+        "height": 1000,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-179.webp",
+        "fullResUrl": "photo master/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-179.jpg",
+        "thumbnailUrl": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-179.webp",
+        "title": "Fotografo Moda Uomo Portraits Milano 179",
+        "tag": "PORTRAITS",
+        "width": 667,
+        "height": 1000,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-180.webp",
+        "fullResUrl": "photo master/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-180.jpg",
+        "thumbnailUrl": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-180.webp",
+        "title": "Fotografo Moda Uomo Portraits Milano 180",
+        "tag": "PORTRAITS",
+        "width": 667,
+        "height": 1000,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-181.webp",
+        "fullResUrl": "photo master/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-181.jpg",
+        "thumbnailUrl": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-181.webp",
+        "title": "Fotografo Moda Uomo Portraits Milano 181",
+        "tag": "PORTRAITS",
+        "width": 667,
+        "height": 1000,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-182.webp",
+        "fullResUrl": "photo master/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-182.jpg",
+        "thumbnailUrl": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-182.webp",
+        "title": "Fotografo Moda Uomo Portraits Milano 182",
+        "tag": "PORTRAITS",
+        "width": 667,
+        "height": 1000,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-183.webp",
+        "fullResUrl": "photo master/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-183.jpg",
+        "thumbnailUrl": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-183.webp",
+        "title": "Fotografo Moda Uomo Portraits Milano 183",
+        "tag": "PORTRAITS",
+        "width": 667,
+        "height": 1000,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-184.webp",
+        "fullResUrl": "photo master/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-184.jpg",
+        "thumbnailUrl": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-184.webp",
+        "title": "Fotografo Moda Uomo Portraits Milano 184",
+        "tag": "PORTRAITS",
+        "width": 667,
+        "height": 1000,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-185.webp",
+        "fullResUrl": "photo master/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-185.jpg",
+        "thumbnailUrl": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-185.webp",
+        "title": "Fotografo Moda Uomo Portraits Milano 185",
+        "tag": "PORTRAITS",
+        "width": 667,
+        "height": 1000,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-186.webp",
+        "fullResUrl": "photo master/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-186.jpg",
+        "thumbnailUrl": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-186.webp",
+        "title": "Fotografo Moda Uomo Portraits Milano 186",
+        "tag": "PORTRAITS",
+        "width": 667,
+        "height": 1000,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-187.webp",
+        "fullResUrl": "photo master/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-187.jpg",
+        "thumbnailUrl": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-187.webp",
+        "title": "Fotografo Moda Uomo Portraits Milano 187",
+        "tag": "PORTRAITS",
+        "width": 667,
+        "height": 1000,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-188.webp",
+        "fullResUrl": "photo master/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-188.jpg",
+        "thumbnailUrl": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-188.webp",
+        "title": "Fotografo Moda Uomo Portraits Milano 188",
+        "tag": "PORTRAITS",
+        "width": 667,
+        "height": 1000,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-189.webp",
+        "fullResUrl": "photo master/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-189.jpg",
+        "thumbnailUrl": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-189.webp",
+        "title": "Fotografo Moda Uomo Portraits Milano 189",
+        "tag": "PORTRAITS",
+        "width": 667,
+        "height": 1000,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-190.webp",
+        "fullResUrl": "photo master/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-190.jpg",
+        "thumbnailUrl": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-190.webp",
+        "title": "Fotografo Moda Uomo Portraits Milano 190",
+        "tag": "PORTRAITS",
+        "width": 667,
+        "height": 1000,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-191.webp",
+        "fullResUrl": "photo master/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-191.jpg",
+        "thumbnailUrl": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-191.webp",
+        "title": "Fotografo Moda Uomo Portraits Milano 191",
+        "tag": "PORTRAITS",
+        "width": 667,
+        "height": 1000,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-192.webp",
+        "fullResUrl": "photo master/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-192.jpg",
+        "thumbnailUrl": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-192.webp",
+        "title": "Fotografo Moda Uomo Portraits Milano 192",
+        "tag": "PORTRAITS",
+        "width": 682,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-193.webp",
+        "fullResUrl": "photo master/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-193.jpg",
+        "thumbnailUrl": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-193.webp",
+        "title": "Fotografo Moda Uomo Portraits Milano 193",
+        "tag": "PORTRAITS",
+        "width": 682,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-194.webp",
+        "fullResUrl": "photo master/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-194.jpeg",
+        "thumbnailUrl": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-194.webp",
+        "title": "Fotografo Moda Uomo Portraits Milano 194",
+        "tag": "PORTRAITS",
+        "width": 682,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-195.webp",
+        "fullResUrl": "photo master/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-195.jpeg",
+        "thumbnailUrl": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-195.webp",
+        "title": "Fotografo Moda Uomo Portraits Milano 195",
+        "tag": "PORTRAITS",
+        "width": 682,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-196.webp",
+        "fullResUrl": "photo master/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-196.jpeg",
+        "thumbnailUrl": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-196.webp",
+        "title": "Fotografo Moda Uomo Portraits Milano 196",
+        "tag": "PORTRAITS",
+        "width": 682,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-197.webp",
+        "fullResUrl": "photo master/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-197.jpeg",
+        "thumbnailUrl": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-197.webp",
+        "title": "Fotografo Moda Uomo Portraits Milano 197",
+        "tag": "PORTRAITS",
+        "width": 682,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-198.webp",
+        "fullResUrl": "photo master/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-198.jpeg",
+        "thumbnailUrl": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-198.webp",
+        "title": "Fotografo Moda Uomo Portraits Milano 198",
+        "tag": "PORTRAITS",
+        "width": 682,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-199.webp",
+        "fullResUrl": "photo master/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-199.jpeg",
+        "thumbnailUrl": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-199.webp",
+        "title": "Fotografo Moda Uomo Portraits Milano 199",
+        "tag": "PORTRAITS",
+        "width": 1024,
+        "height": 682,
+        "is_horizontal": true
+      },
+      {
+        "url": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-200.webp",
+        "fullResUrl": "photo master/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-200.jpg",
+        "thumbnailUrl": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-200.webp",
+        "title": "Fotografo Moda Uomo Portraits Milano 200",
+        "tag": "PORTRAITS",
+        "width": 741,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-201.webp",
+        "fullResUrl": "photo master/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-201.jpg",
+        "thumbnailUrl": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-201.webp",
+        "title": "Fotografo Moda Uomo Portraits Milano 201",
+        "tag": "PORTRAITS",
+        "width": 667,
+        "height": 1000,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-156.webp",
+        "fullResUrl": "photo master/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-156.jpg",
+        "thumbnailUrl": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-156.webp",
+        "title": "Fotografo Moda Uomo Portraits Street Style Milano 156",
+        "tag": "PORTRAITS",
+        "width": 768,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-157.webp",
+        "fullResUrl": "photo master/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-157.jpg",
+        "thumbnailUrl": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-157.webp",
+        "title": "Fotografo Moda Uomo Portraits Street Style Milano 157",
+        "tag": "PORTRAITS",
+        "width": 768,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-158.webp",
+        "fullResUrl": "photo master/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-158.jpg",
+        "thumbnailUrl": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-158.webp",
+        "title": "Fotografo Moda Uomo Portraits Street Style Milano 158",
+        "tag": "PORTRAITS",
+        "width": 768,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-159.webp",
+        "fullResUrl": "photo master/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-159.jpg",
+        "thumbnailUrl": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-159.webp",
+        "title": "Fotografo Moda Uomo Portraits Street Style Milano 159",
+        "tag": "PORTRAITS",
+        "width": 768,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-160.webp",
+        "fullResUrl": "photo master/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-160.jpg",
+        "thumbnailUrl": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-160.webp",
+        "title": "Fotografo Moda Uomo Portraits Street Style Milano 160",
+        "tag": "PORTRAITS",
+        "width": 768,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-161.webp",
+        "fullResUrl": "photo master/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-161.jpg",
+        "thumbnailUrl": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-161.webp",
+        "title": "Fotografo Moda Uomo Portraits Street Style Milano 161",
+        "tag": "PORTRAITS",
+        "width": 768,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-162.webp",
+        "fullResUrl": "photo master/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-162.jpg",
+        "thumbnailUrl": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-162.webp",
+        "title": "Fotografo Moda Uomo Portraits Street Style Milano 162",
+        "tag": "PORTRAITS",
+        "width": 768,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-163.webp",
+        "fullResUrl": "photo master/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-163.jpg",
+        "thumbnailUrl": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-163.webp",
+        "title": "Fotografo Moda Uomo Portraits Street Style Milano 163",
+        "tag": "PORTRAITS",
+        "width": 667,
+        "height": 1000,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-164.webp",
+        "fullResUrl": "photo master/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-164.jpg",
+        "thumbnailUrl": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-164.webp",
+        "title": "Fotografo Moda Uomo Portraits Street Style Milano 164",
+        "tag": "PORTRAITS",
+        "width": 667,
+        "height": 1000,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-165.webp",
+        "fullResUrl": "photo master/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-165.jpg",
+        "thumbnailUrl": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-165.webp",
+        "title": "Fotografo Moda Uomo Portraits Street Style Milano 165",
+        "tag": "PORTRAITS",
+        "width": 1500,
+        "height": 1000,
+        "is_horizontal": true
+      },
+      {
+        "url": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-166.webp",
+        "fullResUrl": "photo master/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-166.jpg",
+        "thumbnailUrl": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-166.webp",
+        "title": "Fotografo Moda Uomo Portraits Street Style Milano 166",
+        "tag": "PORTRAITS",
+        "width": 667,
+        "height": 1000,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-167.webp",
+        "fullResUrl": "photo master/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-167.jpg",
+        "thumbnailUrl": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-167.webp",
+        "title": "Fotografo Moda Uomo Portraits Street Style Milano 167",
+        "tag": "PORTRAITS",
+        "width": 667,
+        "height": 1000,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-168.webp",
+        "fullResUrl": "photo master/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-168.jpg",
+        "thumbnailUrl": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-168.webp",
+        "title": "Fotografo Moda Uomo Portraits Street Style Milano 168",
+        "tag": "PORTRAITS",
+        "width": 667,
+        "height": 1000,
+        "is_horizontal": false
+      }
+    ]
   },
   "campaigns": {
     "fashion": [
@@ -4331,17 +4782,17 @@ const portfolioData = {
       "preview_icon": "photo_web/pet & portraits/max-salvaggio-fotografo-cane-alessia-003.webp",
       "count": 8
     },
-    "portraits/portaits ii": {
-      "title": "Portaits Ii",
-      "cover": "photo_web/portraits/portaits ii/max-salvaggio-fotografo-moda-uomo-giacomo-cavalli-portraits-milano-169.webp",
-      "preview_icon": "photo_web/portraits/portaits ii/max-salvaggio-fotografo-moda-uomo-giacomo-cavalli-portraits-milano-169.webp",
-      "count": 45
-    },
     "portraits/portraits i": {
       "title": "Portraits I",
       "cover": "photo_web/portraits/portraits i/max-salvaggio-fotografo-beauty-001.webp",
       "preview_icon": "photo_web/portraits/portraits i/max-salvaggio-fotografo-beauty-001.webp",
       "count": 18
+    },
+    "portraits/portraits ii": {
+      "title": "Portraits Ii",
+      "cover": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-giacomo-cavalli-portraits-milano-169.webp",
+      "preview_icon": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-giacomo-cavalli-portraits-milano-169.webp",
+      "count": 45
     },
     "campaigns/swimwear": {
       "title": "Swimwear",
