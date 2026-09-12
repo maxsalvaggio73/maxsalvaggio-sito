@@ -1366,19 +1366,20 @@ body.light-mode .social-icon-svg {
 .bio-text-column {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  height: 360px; /* ridotto ulteriormente */
+  justify-content: flex-start;
+  height: auto;
   width: 100%;
-  max-width: 350px; /* ridotto ulteriormente */
+  max-width: 450px;
   margin-right: auto;
   box-sizing: border-box;
 }
 
 .profile-frame-large {
   width: 100%;
-  max-width: 350px; /* ridotto ulteriormente */
+  max-width: 450px;
   margin-left: auto;
-  height: 360px; /* ridotto ulteriormente */
+  height: 100%;
+  min-height: 400px;
   border-radius: 4px;
   overflow: hidden;
   box-shadow: 0 15px 40px rgba(0,0,0,0.5);
@@ -1399,24 +1400,39 @@ body.light-mode .social-icon-svg {
 }
 
 .bio-text {
-  font-size: 0.70rem; /* ridotto ulteriormente */
-  line-height: 1.45; /* ridotto ulteriormente */
-  color: rgba(255, 255, 255, 0.65);
+  font-size: 14px;
+  line-height: 1.6;
+  color: #111;
   display: flex;
   flex-direction: column;
-  justify-content: space-between; /* Giustificato in altezza */
-  height: 100%; /* Copre l'altezza della colonna */
-  font-weight: 300;
+  gap: 12px;
+  height: auto;
+  font-weight: 400;
 }
 .bio-text p:not(.signature) {
-  text-align: justify;
+  text-align: left;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #111;
+  opacity: 1;
 }
 .bio-text .lead-text {
-  font-size: 0.78rem; /* ridotto ulteriormente */
-  line-height: 1.4; /* ridotto ulteriormente */
-  color: var(--text-primary);
+  font-size: 14px;
+  line-height: 1.6;
+  color: #111;
   font-weight: 400;
   font-family: var(--font-body);
+  opacity: 1;
+}
+.bio-quote {
+  font-size: 14px;
+  line-height: 1.6;
+  font-style: italic;
+  border-left: 2px solid #111;
+  padding-left: 12px;
+  margin-top: 14px;
+  color: #111 !important;
+  opacity: 1 !important;
 }
 .signature {
   font-family: var(--font-display);
@@ -1463,14 +1479,13 @@ body.light-mode .social-icon-svg {
   align-items: center;
 }
 
-/* When contact section also contains bio, add spacing divider */
+#section-contact .contact-container {
+  margin: 0 auto 35px auto;
+  padding-top: 0;
+  border-top: none;
+}
 #section-contact .bio-container-split {
   margin-bottom: 60px;
-}
-#section-contact .contact-container {
-  padding-top: 10px;
-  border-top: 1px solid rgba(255,255,255,0.1);
-  margin-top: 10px;
 }
 
 
@@ -2430,12 +2445,12 @@ body.light-mode .dropdown-menu {
   border-color: rgba(0, 0, 0, 0.08);
 }
 
-body.light-mode .bio-text {
-  color: rgba(0, 0, 0, 0.75);
-}
-
-body.light-mode .bio-text .lead-text {
-  color: #121214;
+body.light-mode .bio-text,
+body.light-mode .bio-text p,
+body.light-mode .bio-text .lead-text,
+body.light-mode .bio-quote {
+  color: #111 !important;
+  opacity: 1 !important;
 }
 
 body.light-mode .contact-form-glass-card {
