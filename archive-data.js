@@ -1,5 +1,5 @@
 // Database delle immagini generato automaticamente dallo script scan.py
-// Data di generazione: 2026-09-12T17:34:28.579396+00:00
+// Data di generazione: 2026-09-12T17:43:29.210842+00:00
 
 const portfolioData = {
   "overview": [
@@ -3181,6 +3181,96 @@ const portfolioData = {
         "width": 768,
         "height": 1024,
         "is_horizontal": false
+      },
+      {
+        "url": "photo_web/campaigns/fashion/max-salvaggio-watch-longines-001.webp",
+        "fullResUrl": "photo master/campaigns/max-salvaggio-watch-longines-001.jpg",
+        "thumbnailUrl": "photo_web/campaigns/fashion/max-salvaggio-watch-longines-001.webp",
+        "title": "Watch Longines 001",
+        "tag": "CAMPAIGNS",
+        "width": 1772,
+        "height": 1181,
+        "is_horizontal": true
+      },
+      {
+        "url": "photo_web/campaigns/fashion/max-salvaggio-watch-longines-002.webp",
+        "fullResUrl": "photo master/campaigns/max-salvaggio-watch-longines-002.jpg",
+        "thumbnailUrl": "photo_web/campaigns/fashion/max-salvaggio-watch-longines-002.webp",
+        "title": "Watch Longines 002",
+        "tag": "CAMPAIGNS",
+        "width": 1772,
+        "height": 1181,
+        "is_horizontal": true
+      },
+      {
+        "url": "photo_web/campaigns/fashion/max-salvaggio-watch-longines-003.webp",
+        "fullResUrl": "photo master/campaigns/max-salvaggio-watch-longines-003.jpg",
+        "thumbnailUrl": "photo_web/campaigns/fashion/max-salvaggio-watch-longines-003.webp",
+        "title": "Watch Longines 003",
+        "tag": "CAMPAIGNS",
+        "width": 1772,
+        "height": 1181,
+        "is_horizontal": true
+      },
+      {
+        "url": "photo_web/campaigns/fashion/max-salvaggio-watch-longines-004.webp",
+        "fullResUrl": "photo master/campaigns/max-salvaggio-watch-longines-004.jpg",
+        "thumbnailUrl": "photo_web/campaigns/fashion/max-salvaggio-watch-longines-004.webp",
+        "title": "Watch Longines 004",
+        "tag": "CAMPAIGNS",
+        "width": 3543,
+        "height": 2362,
+        "is_horizontal": true
+      },
+      {
+        "url": "photo_web/campaigns/fashion/max-salvaggio-watch-longines-005.webp",
+        "fullResUrl": "photo master/campaigns/max-salvaggio-watch-longines-005.jpg",
+        "thumbnailUrl": "photo_web/campaigns/fashion/max-salvaggio-watch-longines-005.webp",
+        "title": "Watch Longines 005",
+        "tag": "CAMPAIGNS",
+        "width": 1772,
+        "height": 1181,
+        "is_horizontal": true
+      },
+      {
+        "url": "photo_web/campaigns/fashion/max-salvaggio-watch-longines-006.webp",
+        "fullResUrl": "photo master/campaigns/max-salvaggio-watch-longines-006.jpg",
+        "thumbnailUrl": "photo_web/campaigns/fashion/max-salvaggio-watch-longines-006.webp",
+        "title": "Watch Longines 006",
+        "tag": "CAMPAIGNS",
+        "width": 2048,
+        "height": 1365,
+        "is_horizontal": true
+      },
+      {
+        "url": "photo_web/campaigns/fashion/max-salvaggio-watch-longines-007.webp",
+        "fullResUrl": "photo master/campaigns/max-salvaggio-watch-longines-007.jpg",
+        "thumbnailUrl": "photo_web/campaigns/fashion/max-salvaggio-watch-longines-007.webp",
+        "title": "Watch Longines 007",
+        "tag": "CAMPAIGNS",
+        "width": 5760,
+        "height": 3840,
+        "is_horizontal": true
+      },
+      {
+        "url": "photo_web/campaigns/fashion/max-salvaggio-watch-longines-008.webp",
+        "fullResUrl": "photo master/campaigns/max-salvaggio-watch-longines-008.jpg",
+        "thumbnailUrl": "photo_web/campaigns/fashion/max-salvaggio-watch-longines-008.webp",
+        "title": "Watch Longines 008",
+        "tag": "CAMPAIGNS",
+        "width": 1772,
+        "height": 1181,
+        "is_horizontal": true
+      },
+      {
+        "url": "photo_web/campaigns/fashion/max-salvaggio-watch-longines-009.webp",
+        "fullResUrl": "photo master/campaigns/max-salvaggio-watch-longines-009.jpg",
+        "thumbnailUrl": "photo_web/campaigns/fashion/max-salvaggio-watch-longines-009.webp",
+        "title": "Watch Longines 009",
+        "tag": "CAMPAIGNS",
+        "width": 1772,
+        "height": 1181,
+        "is_horizontal": true
       }
     ],
     "lingerie": [
@@ -4732,7 +4822,7 @@ const portfolioData = {
       "title": "Campaigns",
       "cover": "photo_web/campaigns/fashion/max-salvaggio-a-campaign-campari-drink.webp",
       "preview_icon": "photo_web/campaigns/fashion/max-salvaggio-a-campaign-campari-drink.webp",
-      "count": 27
+      "count": 36
     },
     "editorials/covers": {
       "title": "Covers",
