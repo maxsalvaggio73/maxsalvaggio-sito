@@ -445,6 +445,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const initialHash = window.location.hash.replace("#", "");
     const validSections = [
       "overview",
+      "campaigns",
+      "swimwear",
+      "lingerie",
+      "info",
       "archive",
       "editorials",
       "campaigns-fashion",
@@ -575,18 +579,26 @@ document.addEventListener("DOMContentLoaded", () => {
     const currentSec = targetSectionId || (activeSectionId === "unpublished-research" ? "portraits" : activeSectionId);
     const activeTab = explicitTabId || localStorage.getItem("activeTab") || (document.querySelector(`#section-${currentSec} .tab-link.active`)?.getAttribute("data-tab") || (currentSec === "portraits" ? "pb-portraits" : (currentSec === "body-form" ? "body-organic" : "")));
 
+    const secAlias = {
+      "campaigns": "campaigns-fashion",
+      "swimwear": "campaigns-swimwear",
+      "lingerie": "campaigns-lingerie",
+      "info": "contact"
+    };
+
     navLinks.forEach(link => {
       const linkSection = link.getAttribute("data-section");
       const linkTab = link.getAttribute("data-tab");
+      const mappedSec = secAlias[linkSection] || linkSection;
 
       if (linkTab) {
-        if ((linkSection === currentSec || (linkSection === "portraits-beauty" && currentSec === "portraits")) && linkTab === activeTab) {
+        if ((mappedSec === currentSec || (linkSection === "portraits-beauty" && currentSec === "portraits")) && linkTab === activeTab) {
           link.classList.add("active");
         } else {
           link.classList.remove("active");
         }
       } else {
-        if (linkSection === currentSec || (linkSection === "portraits-beauty" && currentSec === "portraits")) {
+        if (mappedSec === currentSec || linkSection === activeSectionId || (linkSection === "portraits-beauty" && currentSec === "portraits")) {
           link.classList.add("active");
         } else {
           link.classList.remove("active");
@@ -625,12 +637,18 @@ document.addEventListener("DOMContentLoaded", () => {
   function switchSection(targetId, animate = true) {
     let sectionId = targetId;
 
-    if (targetId === "body-form" || targetId === "body-organic" || targetId === "body-shadows") {
+    if (targetId === "campaigns" || targetId === "campaigns-fashion") {
+      sectionId = "campaigns-fashion";
+    } else if (targetId === "swimwear" || targetId === "campaigns-swimwear") {
+      sectionId = "campaigns-swimwear";
+    } else if (targetId === "lingerie" || targetId === "campaigns-lingerie") {
+      sectionId = "campaigns-lingerie";
+    } else if (targetId === "info" || targetId === "contact") {
+      sectionId = "contact";
+    } else if (targetId === "body-form" || targetId === "body-organic" || targetId === "body-shadows") {
       sectionId = "body-form";
-      if (targetId === "body-organic" || targetId === "body-shadows") {
-        localStorage.setItem("activeTab", targetId);
-      } else {
-        localStorage.setItem("activeTab", "body-organic");
+      if (targetId === "body-shadows") {
+        localStorage.setItem("activeTab", "body-shadows");
       }
     } else if (targetId === "unpublished-research" || targetId === "portraits-beauty" || targetId === "pb-unpublished" || targetId === "pb-portraits" || targetId === "pb-pets" || targetId === "pb-beauty") {
       sectionId = "portraits";
@@ -648,6 +666,21 @@ document.addEventListener("DOMContentLoaded", () => {
     const currentActive = document.querySelector(".spa-section.active");
     const targetSection = document.getElementById("section-" + sectionId);
     if (!targetSection) return;
+
+    // Direct grid display for body-form without async sub-tab guard clauses when activating body-form directly
+    if (sectionId === "body-form" && targetId !== "body-shadows") {
+      const organicTab = document.getElementById("body-organic");
+      const shadowsTab = document.getElementById("body-shadows");
+      const organicGrid = document.getElementById("body-organic-grid");
+      if (organicTab) organicTab.classList.add("active");
+      if (shadowsTab) shadowsTab.classList.remove("active");
+      if (organicGrid) organicGrid.style.display = "grid";
+      document.querySelectorAll("#section-body-form .tab-link").forEach(b => {
+        if (b.getAttribute("data-tab") === "body-organic") b.classList.add("active");
+        else b.classList.remove("active");
+      });
+      localStorage.removeItem("activeTab");
+    }
 
     // Update state
     if (activeSectionId !== targetId) {
