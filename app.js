@@ -264,8 +264,34 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         // Assegna il nuovo database mantenendo OVERVIEW sempre da archive-data.js locale statico
-        const localOverview = (typeof portfolioData !== "undefined" && portfolioData.overview) ? portfolioData.overview : [];
+        const localData = (typeof portfolioData !== "undefined") ? portfolioData : {};
+        const localOverview = localData.overview || [];
         newPortfolioData.overview = localOverview;
+
+        // Per ogni sotto-categoria, se Supabase ha restituito un array vuoto,
+        // mantieni i dati locali da archive-data.js come fallback
+        const localBodyForm = localData.body_and_form || {};
+        if (!newPortfolioData.body_and_form.organic_sculptures.length && localBodyForm.organic_sculptures && localBodyForm.organic_sculptures.length)
+          newPortfolioData.body_and_form.organic_sculptures = localBodyForm.organic_sculptures;
+        if (!newPortfolioData.body_and_form.shadows_and_graphic_intimacy.length && localBodyForm.shadows_and_graphic_intimacy && localBodyForm.shadows_and_graphic_intimacy.length)
+          newPortfolioData.body_and_form.shadows_and_graphic_intimacy = localBodyForm.shadows_and_graphic_intimacy;
+
+        const localPB = localData.portraits_and_beauty || {};
+        if (!newPortfolioData.portraits_and_beauty.portraits.length && localPB.portraits && localPB.portraits.length)
+          newPortfolioData.portraits_and_beauty.portraits = localPB.portraits;
+        if (!newPortfolioData.portraits_and_beauty.beauty.length && localPB.beauty && localPB.beauty.length)
+          newPortfolioData.portraits_and_beauty.beauty = localPB.beauty;
+        if (!newPortfolioData.portraits_and_beauty.pets_and_portraits.length && localPB.pets_and_portraits && localPB.pets_and_portraits.length)
+          newPortfolioData.portraits_and_beauty.pets_and_portraits = localPB.pets_and_portraits;
+
+        const localCamp = localData.campaigns || {};
+        if (!newPortfolioData.campaigns.fashion.length && localCamp.fashion && localCamp.fashion.length)
+          newPortfolioData.campaigns.fashion = localCamp.fashion;
+        if (!newPortfolioData.campaigns.lingerie.length && localCamp.lingerie && localCamp.lingerie.length)
+          newPortfolioData.campaigns.lingerie = localCamp.lingerie;
+        if (!newPortfolioData.campaigns.swimwear.length && localCamp.swimwear && localCamp.swimwear.length)
+          newPortfolioData.campaigns.swimwear = localCamp.swimwear;
+
         window.portfolioData = newPortfolioData;
       } else {
         console.log("Il portfolio Supabase è vuoto. Caricamento del database locale come fallback.");
