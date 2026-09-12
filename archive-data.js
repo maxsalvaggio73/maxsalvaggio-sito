@@ -1,5 +1,5 @@
 // Database delle immagini generato automaticamente dallo script scan.py
-// Data di generazione: 2026-09-12T16:09:10.858103+00:00
+// Data di generazione: 2026-09-12T17:30:01.277691+00:00
 
 const portfolioData = {
   "overview": [
@@ -2913,6 +2913,66 @@ const portfolioData = {
   "campaigns": {
     "fashion": [
       {
+        "url": "photo_web/campaigns/fashion/max-salvaggio-azm-swimwear-001.webp",
+        "fullResUrl": "photo master/campaigns/max-salvaggio-azm-swimwear-001.jpg",
+        "thumbnailUrl": "photo_web/campaigns/fashion/max-salvaggio-azm-swimwear-001.webp",
+        "title": "Azm Swimwear 001",
+        "tag": "CAMPAIGNS",
+        "width": 683,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/campaigns/fashion/max-salvaggio-azm-swimwear-002.webp",
+        "fullResUrl": "photo master/campaigns/max-salvaggio-azm-swimwear-002.jpg",
+        "thumbnailUrl": "photo_web/campaigns/fashion/max-salvaggio-azm-swimwear-002.webp",
+        "title": "Azm Swimwear 002",
+        "tag": "CAMPAIGNS",
+        "width": 1365,
+        "height": 2048,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/campaigns/fashion/max-salvaggio-azm-swimwear-003.webp",
+        "fullResUrl": "photo master/campaigns/max-salvaggio-azm-swimwear-003.jpg",
+        "thumbnailUrl": "photo_web/campaigns/fashion/max-salvaggio-azm-swimwear-003.webp",
+        "title": "Azm Swimwear 003",
+        "tag": "CAMPAIGNS",
+        "width": 683,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/campaigns/fashion/max-salvaggio-azm-swimwear-004.webp",
+        "fullResUrl": "photo master/campaigns/max-salvaggio-azm-swimwear-004.jpg",
+        "thumbnailUrl": "photo_web/campaigns/fashion/max-salvaggio-azm-swimwear-004.webp",
+        "title": "Azm Swimwear 004",
+        "tag": "CAMPAIGNS",
+        "width": 683,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/campaigns/fashion/max-salvaggio-azm-swimwear-005.webp",
+        "fullResUrl": "photo master/campaigns/max-salvaggio-azm-swimwear-005.jpg",
+        "thumbnailUrl": "photo_web/campaigns/fashion/max-salvaggio-azm-swimwear-005.webp",
+        "title": "Azm Swimwear 005",
+        "tag": "CAMPAIGNS",
+        "width": 683,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/campaigns/fashion/max-salvaggio-azm-swimwear-006.webp",
+        "fullResUrl": "photo master/campaigns/max-salvaggio-azm-swimwear-006.jpg",
+        "thumbnailUrl": "photo_web/campaigns/fashion/max-salvaggio-azm-swimwear-006.webp",
+        "title": "Azm Swimwear 006",
+        "tag": "CAMPAIGNS",
+        "width": 683,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
         "url": "photo_web/campaigns/fashion/max-salvaggio-campaign-campari-drink.webp",
         "fullResUrl": "photo master/campaigns/max-salvaggio-campaign-campari-drink.jpg",
         "thumbnailUrl": "photo_web/campaigns/fashion/max-salvaggio-campaign-campari-drink.webp",
@@ -4680,9 +4740,9 @@ const portfolioData = {
     },
     "campaigns/fashion": {
       "title": "Campaigns",
-      "cover": "photo_web/campaigns/fashion/max-salvaggio-campaign-campari-drink.webp",
-      "preview_icon": "photo_web/campaigns/fashion/max-salvaggio-campaign-campari-drink.webp",
-      "count": 22
+      "cover": "photo_web/campaigns/fashion/max-salvaggio-azm-swimwear-001.webp",
+      "preview_icon": "photo_web/campaigns/fashion/max-salvaggio-azm-swimwear-001.webp",
+      "count": 28
     },
     "editorials/covers": {
       "title": "Covers",
