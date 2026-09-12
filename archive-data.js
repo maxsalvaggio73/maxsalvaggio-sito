@@ -1,5 +1,5 @@
 // Database delle immagini generato automaticamente dallo script scan.py
-// Data di generazione: 2026-09-12T03:18:50.684254+00:00
+// Data di generazione: 2026-09-12T03:20:17.897883+00:00
 
 const portfolioData = {
   "overview": [
