@@ -196,7 +196,7 @@ document.addEventListener("DOMContentLoaded", () => {
               imgObj.tag = 'CAMPAIGNS';
               newPortfolioData.campaigns.swimwear.push(imgObj);
               break;
-            case 'body-organic':
+            // case 'body-organic': (removed)
               imgObj.tag = 'BODY & FORM';
               newPortfolioData.body_and_form.organic_sculptures.push(imgObj);
               break;
@@ -471,7 +471,7 @@ document.addEventListener("DOMContentLoaded", () => {
       "pb-portraits",
       "pb-beauty",
       "pb-pets",
-      "body-organic",
+      "body-water-stones",
       "body-water-stones",
       "body-shadows"
     ];
@@ -586,7 +586,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function updateNavLinksActiveState(targetSectionId, explicitTabId) {
     const currentSec = targetSectionId || (activeSectionId === "unpublished-research" ? "portraits" : activeSectionId);
-    const activeTab = explicitTabId || localStorage.getItem("activeTab") || (document.querySelector(`#section-${currentSec} .tab-link.active`)?.getAttribute("data-tab") || (currentSec === "portraits" ? "pb-portraits" : (currentSec === "body" ? "body-organic" : "")));
+    const activeTab = explicitTabId || localStorage.getItem("activeTab") || (document.querySelector(`#section-${currentSec} .tab-link.active`)?.getAttribute("data-tab") || (currentSec === "portraits" ? "pb-portraits" : (currentSec === "body" ? "body-water-stones" : "")));
 
     const secAlias = {
       "campaigns": "campaigns-fashion",
@@ -654,7 +654,7 @@ document.addEventListener("DOMContentLoaded", () => {
       sectionId = "campaigns-lingerie";
     } else if (targetId === "info" || targetId === "contact") {
       sectionId = "contact";
-    } else if (targetId === "body" || targetId === "body-organic" || targetId === "body-water-stones" || targetId === "body-shadows") {
+    } else if (targetId === "body" || targetId === "body-water-stones" || targetId === "body-shadows") {
       sectionId = "body";
       if (targetId === "body-shadows") {
         localStorage.setItem("activeTab", "body-shadows");
@@ -679,21 +679,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!targetSection) return;
 
     // Direct grid display for body without async sub-tab guard clauses when activating body directly
-    if (sectionId === "body" && targetId !== "body-shadows" && targetId !== "body-water-stones") {
-      const organicTab = document.getElementById("body-organic");
-      const waterTab = document.getElementById("body-water-stones");
-      const shadowsTab = document.getElementById("body-shadows");
-      const organicGrid = document.getElementById("body-organic-grid");
-      if (organicTab) organicTab.classList.add("active");
-      if (waterTab) waterTab.classList.remove("active");
-      if (shadowsTab) shadowsTab.classList.remove("active");
-      if (organicGrid) organicGrid.style.display = "grid";
-      document.querySelectorAll("#section-body .tab-link").forEach(b => {
-        if (b.getAttribute("data-tab") === "body-organic") b.classList.add("active");
-        else b.classList.remove("active");
-      });
-      localStorage.removeItem("activeTab");
-    }
+    
 
     // Update state
     if (activeSectionId !== targetId) {
@@ -713,7 +699,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // For tab-sections navigated without a storedTab, force-activate the default tab
     if (!storedTab) {
       if (sectionId === "body") {
-        localStorage.setItem("activeTab", "body-organic");
+        localStorage.setItem("activeTab", "body-water-stones");
       } else if (sectionId === "portraits") {
         localStorage.setItem("activeTab", "pb-portraits");
       }
@@ -846,12 +832,12 @@ document.addEventListener("DOMContentLoaded", () => {
         break;
       case "body": {
         const activeTab = document.querySelector("#section-body .tab-link.active");
-        const activeTabId = activeTab ? activeTab.getAttribute("data-tab") : "body-organic";
+        const activeTabId = activeTab ? activeTab.getAttribute("data-tab") : "body-water-stones";
         updateBackgroundForSection(activeTabId);
         break;
       }
-      case "body-organic":
-        changeBackgroundRandomly(portfolioData.body_and_form.organic_sculptures);
+
+  
         break;
       case "body-water-stones":
         changeBackgroundRandomly(portfolioData.body_and_form.water_and_stones);
@@ -957,7 +943,7 @@ document.addEventListener("DOMContentLoaded", () => {
     renderGrid("campaigns-swimwear-grid", portfolioData.campaigns.swimwear, "SWIMWEAR");
 
     // 2.4 Body & Form Tabs Grids
-    renderGrid("body-organic-grid", portfolioData.body_and_form.organic_sculptures, "BODY & FORM");
+    // renderGrid("body-organic-grid", portfolioData.body_and_form.organic_sculptures, "BODY & FORM");
     renderGrid("body-water-stones-grid", portfolioData.body_and_form.water_and_stones, "BODY & FORM");
     renderGrid("body-shadows-grid", portfolioData.body_and_form.shadows_and_graphic_intimacy, "BODY & FORM");
 
@@ -2062,7 +2048,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return { nextList: portfolioData.body_and_form.shadows_and_graphic_intimacy, tabId: "body-shadows" };
     }
     if (currentList === portfolioData.body_and_form.shadows_and_graphic_intimacy) {
-      return { nextList: portfolioData.body_and_form.organic_sculptures, tabId: "body-organic" };
+      // return { nextList: portfolioData.body_and_form.organic_sculptures, tabId: "body-organic" };
     }
 
     // Campaigns (Archive subpages)
@@ -2101,7 +2087,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return { prevList: portfolioData.body_and_form.shadows_and_graphic_intimacy, tabId: "body-shadows" };
     }
     if (currentList === portfolioData.body_and_form.water_and_stones) {
-      return { prevList: portfolioData.body_and_form.organic_sculptures, tabId: "body-organic" };
+      // return { prevList: portfolioData.body_and_form.organic_sculptures, tabId: "body-organic" };
     }
     if (currentList === portfolioData.body_and_form.shadows_and_graphic_intimacy) {
       return { prevList: portfolioData.body_and_form.water_and_stones, tabId: "body-water-stones" };
