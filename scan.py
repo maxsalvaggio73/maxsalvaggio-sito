@@ -356,9 +356,22 @@ def scan_all():
     portraits_ii_path = find_dir_by_keywords(os.path.join(photo_master_base, 'portraits'), ['portrait ii', 'portraits ii', 'portraits 2', 'portrait 2'])
     pets_master_path = os.path.join(photo_master_base, 'pet & portraits')
 
-    portraits_i_imgs = get_images_in_dir(portraits_i_path, 'PORTRAITS', base_dir, web_subfolder='portraits/portraits I')
-    portraits_ii_imgs = get_images_in_dir(portraits_ii_path, 'PORTRAITS II', base_dir, web_subfolder='portraits/portraits II')
-    pets_imgs = get_images_in_dir(pets_master_path, 'PET & PORTRAITS', base_dir, web_subfolder='pet & portraits')
+    # Defensive loading of optional portrait and pet folders
+    if portraits_i_path and os.path.isdir(portraits_i_path):
+        portraits_i_imgs = get_images_in_dir(portraits_i_path, 'PORTRAITS', base_dir, web_subfolder='portraits/portraits I')
+    else:
+        print('Warning: Portraits I folder not found; skipping.')
+        portraits_i_imgs = []
+    if portraits_ii_path and os.path.isdir(portraits_ii_path):
+        portraits_ii_imgs = get_images_in_dir(portraits_ii_path, 'PORTRAITS', base_dir, web_subfolder='portraits/portraits II')
+    else:
+        print('Warning: Portraits II folder not found; skipping.')
+        portraits_ii_imgs = []
+    if pets_master_path and os.path.isdir(pets_master_path):
+        pets_imgs = get_images_in_dir(pets_master_path, 'PET & PORTRAITS', base_dir, web_subfolder='pet & portraits')
+    else:
+        print('Warning: Pets & Portraits folder not found; skipping.')
+        pets_imgs = []
 
     data['portraits_and_beauty']['portraits'] = portraits_i_imgs if portraits_i_imgs else get_images_in_dir(os.path.join(base_dir, '4 PORTRAITS I'), 'PORTRAITS', base_dir, web_subfolder='portraits/portraits I')
     if portraits_ii_imgs:
