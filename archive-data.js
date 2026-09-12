@@ -1,5 +1,5 @@
 // Database delle immagini generato automaticamente dallo script scan.py
-// Data di generazione: 2026-09-12T03:20:17.897883+00:00
+// Data di generazione: 2026-09-12T03:22:53.512518+00:00
 
 const portfolioData = {
   "overview": [
@@ -3667,7 +3667,188 @@ const portfolioData = {
     ]
   },
   "portraits_and_beauty": {
-    "portraits": [],
+    "portraits": [
+      {
+        "url": "photo_web/portraits/portraits i/max-salvaggio-fotografo-beauty-001.webp",
+        "fullResUrl": "photo master/portraits/portraits I/max-salvaggio-fotografo-beauty-001.jpg",
+        "thumbnailUrl": "photo_web/portraits/portraits i/max-salvaggio-fotografo-beauty-001.webp",
+        "title": "Fotografo Beauty 001",
+        "tag": "PORTRAITS",
+        "width": 686,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/portraits/portraits i/max-salvaggio-fotografo-beauty-005.webp",
+        "fullResUrl": "photo master/portraits/portraits I/max-salvaggio-fotografo-beauty-005.jpg",
+        "thumbnailUrl": "photo_web/portraits/portraits i/max-salvaggio-fotografo-beauty-005.webp",
+        "title": "Fotografo Beauty 005",
+        "tag": "PORTRAITS",
+        "width": 819,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/portraits/portraits i/max-salvaggio-fotografo-beauty-006.webp",
+        "fullResUrl": "photo master/portraits/portraits I/max-salvaggio-fotografo-beauty-006.jpg",
+        "thumbnailUrl": "photo_web/portraits/portraits i/max-salvaggio-fotografo-beauty-006.webp",
+        "title": "Fotografo Beauty 006",
+        "tag": "PORTRAITS",
+        "width": 785,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/portraits/portraits i/max-salvaggio-fotografo-beauty-008.webp",
+        "fullResUrl": "photo master/portraits/portraits I/max-salvaggio-fotografo-beauty-008.jpg",
+        "thumbnailUrl": "photo_web/portraits/portraits i/max-salvaggio-fotografo-beauty-008.webp",
+        "title": "Fotografo Beauty 008",
+        "tag": "PORTRAITS",
+        "width": 567,
+        "height": 850,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/portraits/portraits i/max-salvaggio-fotografo-beauty-009.webp",
+        "fullResUrl": "photo master/portraits/portraits I/max-salvaggio-fotografo-beauty-009.jpg",
+        "thumbnailUrl": "photo_web/portraits/portraits i/max-salvaggio-fotografo-beauty-009.webp",
+        "title": "Fotografo Beauty 009",
+        "tag": "PORTRAITS",
+        "width": 682,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/portraits/portraits i/max-salvaggio-fotografo-beauty-014.webp",
+        "fullResUrl": "photo master/portraits/portraits I/max-salvaggio-fotografo-beauty-014.jpg",
+        "thumbnailUrl": "photo_web/portraits/portraits i/max-salvaggio-fotografo-beauty-014.webp",
+        "title": "Fotografo Beauty 014",
+        "tag": "PORTRAITS",
+        "width": 426,
+        "height": 640,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/portraits/portraits i/max-salvaggio-fotografo-beauty-016.webp",
+        "fullResUrl": "photo master/portraits/portraits I/max-salvaggio-fotografo-beauty-016.jpg",
+        "thumbnailUrl": "photo_web/portraits/portraits i/max-salvaggio-fotografo-beauty-016.webp",
+        "title": "Fotografo Beauty 016",
+        "tag": "PORTRAITS",
+        "width": 640,
+        "height": 898,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/portraits/portraits i/max-salvaggio-fotografo-beauty-017.webp",
+        "fullResUrl": "photo master/portraits/portraits I/max-salvaggio-fotografo-beauty-017.jpg",
+        "thumbnailUrl": "photo_web/portraits/portraits i/max-salvaggio-fotografo-beauty-017.webp",
+        "title": "Fotografo Beauty 017",
+        "tag": "PORTRAITS",
+        "width": 683,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/portraits/portraits i/max-salvaggio-fotografo-beauty-018.webp",
+        "fullResUrl": "photo master/portraits/portraits I/max-salvaggio-fotografo-beauty-018.jpg",
+        "thumbnailUrl": "photo_web/portraits/portraits i/max-salvaggio-fotografo-beauty-018.webp",
+        "title": "Fotografo Beauty 018",
+        "tag": "PORTRAITS",
+        "width": 683,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/portraits/portraits i/max-salvaggio-fotografo-beauty-ray-bitancourt-021.webp",
+        "fullResUrl": "photo master/portraits/portraits I/max-salvaggio-fotografo-beauty-ray-bitancourt-021.jpg",
+        "thumbnailUrl": "photo_web/portraits/portraits i/max-salvaggio-fotografo-beauty-ray-bitancourt-021.webp",
+        "title": "Fotografo Beauty Ray Bitancourt 021",
+        "tag": "PORTRAITS",
+        "width": 819,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/portraits/portraits i/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-mexico-095.webp",
+        "fullResUrl": "photo master/portraits/portraits I/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-mexico-095.jpeg",
+        "thumbnailUrl": "photo_web/portraits/portraits i/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-mexico-095.webp",
+        "title": "Fotografo Moda Grazia Daniela De Jesus Mexico 095",
+        "tag": "PORTRAITS",
+        "width": 682,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/portraits/portraits i/max-salvaggio-fotografo-portrait-001.webp",
+        "fullResUrl": "photo master/portraits/portraits I/max-salvaggio-fotografo-portrait-001.jpg",
+        "thumbnailUrl": "photo_web/portraits/portraits i/max-salvaggio-fotografo-portrait-001.webp",
+        "title": "Fotografo Portrait 001",
+        "tag": "PORTRAITS",
+        "width": 683,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/portraits/portraits i/max-salvaggio-fotografo-portrait-003.webp",
+        "fullResUrl": "photo master/portraits/portraits I/max-salvaggio-fotografo-portrait-003.jpg",
+        "thumbnailUrl": "photo_web/portraits/portraits i/max-salvaggio-fotografo-portrait-003.webp",
+        "title": "Fotografo Portrait 003",
+        "tag": "PORTRAITS",
+        "width": 683,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/portraits/portraits i/max-salvaggio-fotografo-portrait-004.webp",
+        "fullResUrl": "photo master/portraits/portraits I/max-salvaggio-fotografo-portrait-004.jpg",
+        "thumbnailUrl": "photo_web/portraits/portraits i/max-salvaggio-fotografo-portrait-004.webp",
+        "title": "Fotografo Portrait 004",
+        "tag": "PORTRAITS",
+        "width": 683,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/portraits/portraits i/max-salvaggio-fotografo-portrait-005.webp",
+        "fullResUrl": "photo master/portraits/portraits I/max-salvaggio-fotografo-portrait-005.jpg",
+        "thumbnailUrl": "photo_web/portraits/portraits i/max-salvaggio-fotografo-portrait-005.webp",
+        "title": "Fotografo Portrait 005",
+        "tag": "PORTRAITS",
+        "width": 683,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/portraits/portraits i/max-salvaggio-fotografo-portrait-006.webp",
+        "fullResUrl": "photo master/portraits/portraits I/max-salvaggio-fotografo-portrait-006.jpg",
+        "thumbnailUrl": "photo_web/portraits/portraits i/max-salvaggio-fotografo-portrait-006.webp",
+        "title": "Fotografo Portrait 006",
+        "tag": "PORTRAITS",
+        "width": 683,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/portraits/portraits i/max-salvaggio-fotografo-portrait-007.webp",
+        "fullResUrl": "photo master/portraits/portraits I/max-salvaggio-fotografo-portrait-007.jpg",
+        "thumbnailUrl": "photo_web/portraits/portraits i/max-salvaggio-fotografo-portrait-007.webp",
+        "title": "Fotografo Portrait 007",
+        "tag": "PORTRAITS",
+        "width": 683,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/portraits/portraits i/max-salvaggio-fotografo-portrait-cane-jessica-4.webp",
+        "fullResUrl": "photo master/portraits/portraits I/max-salvaggio-fotografo-portrait-cane-jessica-4.jpg",
+        "thumbnailUrl": "photo_web/portraits/portraits i/max-salvaggio-fotografo-portrait-cane-jessica-4.webp",
+        "title": "Fotografo Portrait Cane Jessica 4",
+        "tag": "PORTRAITS",
+        "width": 768,
+        "height": 1024,
+        "is_horizontal": false
+      }
+    ],
     "beauty": [
       {
         "url": "photo_web/beauty/max-salvaggio-fotografo-portrait-uomo-011.webp",
@@ -4150,11 +4331,17 @@ const portfolioData = {
       "preview_icon": "photo_web/pet & portraits/max-salvaggio-fotografo-cane-alessia-003.webp",
       "count": 8
     },
-    "portraits": {
-      "title": "Portraits",
-      "cover": "photo_web/portraits/max-salvaggio-fotografo-beauty-001.webp",
-      "preview_icon": "photo_web/portraits/max-salvaggio-fotografo-beauty-001.webp",
-      "count": 63
+    "portraits/portaits ii": {
+      "title": "Portaits Ii",
+      "cover": "photo_web/portraits/portaits ii/max-salvaggio-fotografo-moda-uomo-giacomo-cavalli-portraits-milano-169.webp",
+      "preview_icon": "photo_web/portraits/portaits ii/max-salvaggio-fotografo-moda-uomo-giacomo-cavalli-portraits-milano-169.webp",
+      "count": 45
+    },
+    "portraits/portraits i": {
+      "title": "Portraits I",
+      "cover": "photo_web/portraits/portraits i/max-salvaggio-fotografo-beauty-001.webp",
+      "preview_icon": "photo_web/portraits/portraits i/max-salvaggio-fotografo-beauty-001.webp",
+      "count": 18
     },
     "campaigns/swimwear": {
       "title": "Swimwear",
