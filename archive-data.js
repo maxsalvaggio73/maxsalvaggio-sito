@@ -1,5 +1,5 @@
 // Database delle immagini generato automaticamente dallo script scan.py
-// Data di generazione: 2026-09-12T03:26:05.890438+00:00
+// Data di generazione: 2026-09-12T15:57:37.465162+00:00
 
 const portfolioData = {
   "overview": [
@@ -2923,6 +2923,16 @@ const portfolioData = {
         "is_horizontal": true
       },
       {
+        "url": "photo_web/campaigns/fashion/max-salvaggio-fotografo-drink-campaign-campari.webp",
+        "fullResUrl": "photo master/campaigns/max-salvaggio-fotografo-drink-campaign-campari.jpg",
+        "thumbnailUrl": "photo_web/campaigns/fashion/max-salvaggio-fotografo-drink-campaign-campari.webp",
+        "title": "Fotografo Drink Campaign Campari",
+        "tag": "CAMPAIGNS",
+        "width": 819,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
         "url": "photo_web/campaigns/fashion/max-salvaggio-fotografo-moda-jeans-re-hash002.webp",
         "fullResUrl": "photo master/campaigns/max-salvaggio-fotografo-moda-jeans-re-hash002.jpg",
         "thumbnailUrl": "photo_web/campaigns/fashion/max-salvaggio-fotografo-moda-jeans-re-hash002.webp",
@@ -2967,6 +2977,156 @@ const portfolioData = {
         "fullResUrl": "photo master/campaigns/max-salvaggio-fotografo-moda-jeans-re-hash005.jpg",
         "thumbnailUrl": "photo_web/campaigns/fashion/max-salvaggio-fotografo-moda-jeans-re-hash005.webp",
         "title": "Fotografo Moda Jeans Re Hash005",
+        "tag": "CAMPAIGNS",
+        "width": 768,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/campaigns/fashion/max-salvaggio-fotografo-swimwear-014.webp",
+        "fullResUrl": "photo master/campaigns/max-salvaggio-fotografo-swimwear-014.jpg",
+        "thumbnailUrl": "photo_web/campaigns/fashion/max-salvaggio-fotografo-swimwear-014.webp",
+        "title": "Fotografo Swimwear 014",
+        "tag": "CAMPAIGNS",
+        "width": 1536,
+        "height": 1024,
+        "is_horizontal": true
+      },
+      {
+        "url": "photo_web/campaigns/fashion/max-salvaggio-fotografo-swimwear-015.webp",
+        "fullResUrl": "photo master/campaigns/max-salvaggio-fotografo-swimwear-015.jpg",
+        "thumbnailUrl": "photo_web/campaigns/fashion/max-salvaggio-fotografo-swimwear-015.webp",
+        "title": "Fotografo Swimwear 015",
+        "tag": "CAMPAIGNS",
+        "width": 683,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/campaigns/fashion/max-salvaggio-fotografo-swimwear-016.webp",
+        "fullResUrl": "photo master/campaigns/max-salvaggio-fotografo-swimwear-016.jpg",
+        "thumbnailUrl": "photo_web/campaigns/fashion/max-salvaggio-fotografo-swimwear-016.webp",
+        "title": "Fotografo Swimwear 016",
+        "tag": "CAMPAIGNS",
+        "width": 1536,
+        "height": 1024,
+        "is_horizontal": true
+      },
+      {
+        "url": "photo_web/campaigns/fashion/max-salvaggio-fotografo-swimwear-017.webp",
+        "fullResUrl": "photo master/campaigns/max-salvaggio-fotografo-swimwear-017.jpg",
+        "thumbnailUrl": "photo_web/campaigns/fashion/max-salvaggio-fotografo-swimwear-017.webp",
+        "title": "Fotografo Swimwear 017",
+        "tag": "CAMPAIGNS",
+        "width": 683,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/campaigns/fashion/max-salvaggio-fotografo-swimwear-018.webp",
+        "fullResUrl": "photo master/campaigns/max-salvaggio-fotografo-swimwear-018.jpg",
+        "thumbnailUrl": "photo_web/campaigns/fashion/max-salvaggio-fotografo-swimwear-018.webp",
+        "title": "Fotografo Swimwear 018",
+        "tag": "CAMPAIGNS",
+        "width": 1536,
+        "height": 1024,
+        "is_horizontal": true
+      },
+      {
+        "url": "photo_web/campaigns/fashion/max-salvaggio-fotografo-swimwear-019.webp",
+        "fullResUrl": "photo master/campaigns/max-salvaggio-fotografo-swimwear-019.jpg",
+        "thumbnailUrl": "photo_web/campaigns/fashion/max-salvaggio-fotografo-swimwear-019.webp",
+        "title": "Fotografo Swimwear 019",
+        "tag": "CAMPAIGNS",
+        "width": 751,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/campaigns/fashion/max-salvaggio-fotografo-swimwear-020.webp",
+        "fullResUrl": "photo master/campaigns/max-salvaggio-fotografo-swimwear-020.jpg",
+        "thumbnailUrl": "photo_web/campaigns/fashion/max-salvaggio-fotografo-swimwear-020.webp",
+        "title": "Fotografo Swimwear 020",
+        "tag": "CAMPAIGNS",
+        "width": 683,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/campaigns/fashion/max-salvaggio-fotografo-swimwear-021.webp",
+        "fullResUrl": "photo master/campaigns/max-salvaggio-fotografo-swimwear-021.jpg",
+        "thumbnailUrl": "photo_web/campaigns/fashion/max-salvaggio-fotografo-swimwear-021.webp",
+        "title": "Fotografo Swimwear 021",
+        "tag": "CAMPAIGNS",
+        "width": 683,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/campaigns/fashion/max-salvaggio-fotografo-swimwear-022.webp",
+        "fullResUrl": "photo master/campaigns/max-salvaggio-fotografo-swimwear-022.jpg",
+        "thumbnailUrl": "photo_web/campaigns/fashion/max-salvaggio-fotografo-swimwear-022.webp",
+        "title": "Fotografo Swimwear 022",
+        "tag": "CAMPAIGNS",
+        "width": 683,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/campaigns/fashion/max-salvaggio-fotografo-swimwear-025.webp",
+        "fullResUrl": "photo master/campaigns/max-salvaggio-fotografo-swimwear-025.jpg",
+        "thumbnailUrl": "photo_web/campaigns/fashion/max-salvaggio-fotografo-swimwear-025.webp",
+        "title": "Fotografo Swimwear 025",
+        "tag": "CAMPAIGNS",
+        "width": 683,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/campaigns/fashion/max-salvaggio-fotografo-swimwear-026.webp",
+        "fullResUrl": "photo master/campaigns/max-salvaggio-fotografo-swimwear-026.jpg",
+        "thumbnailUrl": "photo_web/campaigns/fashion/max-salvaggio-fotografo-swimwear-026.webp",
+        "title": "Fotografo Swimwear 026",
+        "tag": "CAMPAIGNS",
+        "width": 683,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/campaigns/fashion/max-salvaggio-fotografo-swimwear-027.webp",
+        "fullResUrl": "photo master/campaigns/max-salvaggio-fotografo-swimwear-027.jpg",
+        "thumbnailUrl": "photo_web/campaigns/fashion/max-salvaggio-fotografo-swimwear-027.webp",
+        "title": "Fotografo Swimwear 027",
+        "tag": "CAMPAIGNS",
+        "width": 683,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/campaigns/fashion/max-salvaggio-fotografo-swimwear-028.webp",
+        "fullResUrl": "photo master/campaigns/max-salvaggio-fotografo-swimwear-028.jpg",
+        "thumbnailUrl": "photo_web/campaigns/fashion/max-salvaggio-fotografo-swimwear-028.webp",
+        "title": "Fotografo Swimwear 028",
+        "tag": "CAMPAIGNS",
+        "width": 683,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/campaigns/fashion/max-salvaggio-fotografo-swimwear-029.webp",
+        "fullResUrl": "photo master/campaigns/max-salvaggio-fotografo-swimwear-029.jpg",
+        "thumbnailUrl": "photo_web/campaigns/fashion/max-salvaggio-fotografo-swimwear-029.webp",
+        "title": "Fotografo Swimwear 029",
+        "tag": "CAMPAIGNS",
+        "width": 768,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/campaigns/fashion/max-salvaggio-fotografo-swimwear-030.webp",
+        "fullResUrl": "photo master/campaigns/max-salvaggio-fotografo-swimwear-030.jpg",
+        "thumbnailUrl": "photo_web/campaigns/fashion/max-salvaggio-fotografo-swimwear-030.webp",
+        "title": "Fotografo Swimwear 030",
         "tag": "CAMPAIGNS",
         "width": 768,
         "height": 1024,
@@ -3347,96 +3507,6 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-014.webp",
-        "fullResUrl": "photo master/swimwear/max-salvaggio-fotografo-swimwear-014.jpg",
-        "thumbnailUrl": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-014.webp",
-        "title": "Fotografo Swimwear 014",
-        "tag": "CAMPAIGNS",
-        "width": 1536,
-        "height": 1024,
-        "is_horizontal": true
-      },
-      {
-        "url": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-015.webp",
-        "fullResUrl": "photo master/swimwear/max-salvaggio-fotografo-swimwear-015.jpg",
-        "thumbnailUrl": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-015.webp",
-        "title": "Fotografo Swimwear 015",
-        "tag": "CAMPAIGNS",
-        "width": 683,
-        "height": 1024,
-        "is_horizontal": false
-      },
-      {
-        "url": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-016.webp",
-        "fullResUrl": "photo master/swimwear/max-salvaggio-fotografo-swimwear-016.jpg",
-        "thumbnailUrl": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-016.webp",
-        "title": "Fotografo Swimwear 016",
-        "tag": "CAMPAIGNS",
-        "width": 1536,
-        "height": 1024,
-        "is_horizontal": true
-      },
-      {
-        "url": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-017.webp",
-        "fullResUrl": "photo master/swimwear/max-salvaggio-fotografo-swimwear-017.jpg",
-        "thumbnailUrl": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-017.webp",
-        "title": "Fotografo Swimwear 017",
-        "tag": "CAMPAIGNS",
-        "width": 683,
-        "height": 1024,
-        "is_horizontal": false
-      },
-      {
-        "url": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-018.webp",
-        "fullResUrl": "photo master/swimwear/max-salvaggio-fotografo-swimwear-018.jpg",
-        "thumbnailUrl": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-018.webp",
-        "title": "Fotografo Swimwear 018",
-        "tag": "CAMPAIGNS",
-        "width": 1536,
-        "height": 1024,
-        "is_horizontal": true
-      },
-      {
-        "url": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-019.webp",
-        "fullResUrl": "photo master/swimwear/max-salvaggio-fotografo-swimwear-019.jpg",
-        "thumbnailUrl": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-019.webp",
-        "title": "Fotografo Swimwear 019",
-        "tag": "CAMPAIGNS",
-        "width": 751,
-        "height": 1024,
-        "is_horizontal": false
-      },
-      {
-        "url": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-020.webp",
-        "fullResUrl": "photo master/swimwear/max-salvaggio-fotografo-swimwear-020.jpg",
-        "thumbnailUrl": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-020.webp",
-        "title": "Fotografo Swimwear 020",
-        "tag": "CAMPAIGNS",
-        "width": 683,
-        "height": 1024,
-        "is_horizontal": false
-      },
-      {
-        "url": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-021.webp",
-        "fullResUrl": "photo master/swimwear/max-salvaggio-fotografo-swimwear-021.jpg",
-        "thumbnailUrl": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-021.webp",
-        "title": "Fotografo Swimwear 021",
-        "tag": "CAMPAIGNS",
-        "width": 683,
-        "height": 1024,
-        "is_horizontal": false
-      },
-      {
-        "url": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-022.webp",
-        "fullResUrl": "photo master/swimwear/max-salvaggio-fotografo-swimwear-022.jpg",
-        "thumbnailUrl": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-022.webp",
-        "title": "Fotografo Swimwear 022",
-        "tag": "CAMPAIGNS",
-        "width": 683,
-        "height": 1024,
-        "is_horizontal": false
-      },
-      {
         "url": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-023.webp",
         "fullResUrl": "photo master/swimwear/max-salvaggio-fotografo-swimwear-023.jpg",
         "thumbnailUrl": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-023.webp",
@@ -3453,66 +3523,6 @@ const portfolioData = {
         "title": "Fotografo Swimwear 024",
         "tag": "CAMPAIGNS",
         "width": 683,
-        "height": 1024,
-        "is_horizontal": false
-      },
-      {
-        "url": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-025.webp",
-        "fullResUrl": "photo master/swimwear/max-salvaggio-fotografo-swimwear-025.jpg",
-        "thumbnailUrl": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-025.webp",
-        "title": "Fotografo Swimwear 025",
-        "tag": "CAMPAIGNS",
-        "width": 683,
-        "height": 1024,
-        "is_horizontal": false
-      },
-      {
-        "url": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-026.webp",
-        "fullResUrl": "photo master/swimwear/max-salvaggio-fotografo-swimwear-026.jpg",
-        "thumbnailUrl": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-026.webp",
-        "title": "Fotografo Swimwear 026",
-        "tag": "CAMPAIGNS",
-        "width": 683,
-        "height": 1024,
-        "is_horizontal": false
-      },
-      {
-        "url": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-027.webp",
-        "fullResUrl": "photo master/swimwear/max-salvaggio-fotografo-swimwear-027.jpg",
-        "thumbnailUrl": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-027.webp",
-        "title": "Fotografo Swimwear 027",
-        "tag": "CAMPAIGNS",
-        "width": 683,
-        "height": 1024,
-        "is_horizontal": false
-      },
-      {
-        "url": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-028.webp",
-        "fullResUrl": "photo master/swimwear/max-salvaggio-fotografo-swimwear-028.jpg",
-        "thumbnailUrl": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-028.webp",
-        "title": "Fotografo Swimwear 028",
-        "tag": "CAMPAIGNS",
-        "width": 683,
-        "height": 1024,
-        "is_horizontal": false
-      },
-      {
-        "url": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-029.webp",
-        "fullResUrl": "photo master/swimwear/max-salvaggio-fotografo-swimwear-029.jpg",
-        "thumbnailUrl": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-029.webp",
-        "title": "Fotografo Swimwear 029",
-        "tag": "CAMPAIGNS",
-        "width": 768,
-        "height": 1024,
-        "is_horizontal": false
-      },
-      {
-        "url": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-030.webp",
-        "fullResUrl": "photo master/swimwear/max-salvaggio-fotografo-swimwear-030.jpg",
-        "thumbnailUrl": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-030.webp",
-        "title": "Fotografo Swimwear 030",
-        "tag": "CAMPAIGNS",
-        "width": 768,
         "height": 1024,
         "is_horizontal": false
       },
@@ -4672,7 +4682,7 @@ const portfolioData = {
       "title": "Campaigns",
       "cover": "photo_web/campaigns/fashion/max-salvaggio-fotografo-adv-bag-dee-ocleppo.webp",
       "preview_icon": "photo_web/campaigns/fashion/max-salvaggio-fotografo-adv-bag-dee-ocleppo.webp",
-      "count": 6
+      "count": 22
     },
     "editorials/covers": {
       "title": "Covers",
@@ -4798,7 +4808,7 @@ const portfolioData = {
       "title": "Swimwear",
       "cover": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-001.webp",
       "preview_icon": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-001.webp",
-      "count": 33
+      "count": 18
     }
   }
 };
