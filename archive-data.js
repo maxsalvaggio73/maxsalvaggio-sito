@@ -1,5 +1,5 @@
 // Database delle immagini generato automaticamente dallo script scan.py
-// Data di generazione: 2026-09-12T17:43:29.210842+00:00
+// Data di generazione: 2026-09-12T18:02:55.739571+00:00
 
 const portfolioData = {
   "overview": [
@@ -2993,6 +2993,26 @@ const portfolioData = {
         "is_horizontal": true
       },
       {
+        "url": "photo_web/campaigns/fashion/max-salvaggio-fotografo-moda-jeans-re-hash003 1.webp",
+        "fullResUrl": "photo master/campaigns/max-salvaggio-fotografo-moda-jeans-re-hash003 1.jpg",
+        "thumbnailUrl": "photo_web/campaigns/fashion/max-salvaggio-fotografo-moda-jeans-re-hash003 1.webp",
+        "title": "Fotografo Moda Jeans Re Hash003 1",
+        "tag": "CAMPAIGNS",
+        "width": 683,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/campaigns/fashion/max-salvaggio-fotografo-moda-jeans-re-hash003 2 2.webp",
+        "fullResUrl": "photo master/campaigns/max-salvaggio-fotografo-moda-jeans-re-hash003 2 2.jpg",
+        "thumbnailUrl": "photo_web/campaigns/fashion/max-salvaggio-fotografo-moda-jeans-re-hash003 2 2.webp",
+        "title": "Fotografo Moda Jeans Re Hash003 2 2",
+        "tag": "CAMPAIGNS",
+        "width": 683,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
         "url": "photo_web/campaigns/fashion/max-salvaggio-fotografo-moda-jeans-re-hash003.webp",
         "fullResUrl": "photo master/campaigns/max-salvaggio-fotografo-moda-jeans-re-hash003.jpg",
         "thumbnailUrl": "photo_web/campaigns/fashion/max-salvaggio-fotografo-moda-jeans-re-hash003.webp",
@@ -3183,6 +3203,86 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
+        "url": "photo_web/campaigns/fashion/max-salvaggio-moda-001.webp",
+        "fullResUrl": "photo master/campaigns/max-salvaggio-moda-001.jpg",
+        "thumbnailUrl": "photo_web/campaigns/fashion/max-salvaggio-moda-001.webp",
+        "title": "Moda 001",
+        "tag": "CAMPAIGNS",
+        "width": 769,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/campaigns/fashion/max-salvaggio-moda-002.webp",
+        "fullResUrl": "photo master/campaigns/max-salvaggio-moda-002.jpg",
+        "thumbnailUrl": "photo_web/campaigns/fashion/max-salvaggio-moda-002.webp",
+        "title": "Moda 002",
+        "tag": "CAMPAIGNS",
+        "width": 1364,
+        "height": 1024,
+        "is_horizontal": true
+      },
+      {
+        "url": "photo_web/campaigns/fashion/max-salvaggio-moda-003.webp",
+        "fullResUrl": "photo master/campaigns/max-salvaggio-moda-003.jpg",
+        "thumbnailUrl": "photo_web/campaigns/fashion/max-salvaggio-moda-003.webp",
+        "title": "Moda 003",
+        "tag": "CAMPAIGNS",
+        "width": 767,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/campaigns/fashion/max-salvaggio-moda-004.webp",
+        "fullResUrl": "photo master/campaigns/max-salvaggio-moda-004.jpg",
+        "thumbnailUrl": "photo_web/campaigns/fashion/max-salvaggio-moda-004.webp",
+        "title": "Moda 004",
+        "tag": "CAMPAIGNS",
+        "width": 1536,
+        "height": 1024,
+        "is_horizontal": true
+      },
+      {
+        "url": "photo_web/campaigns/fashion/max-salvaggio-moda-vivienne-westwood001.webp",
+        "fullResUrl": "photo master/campaigns/max-salvaggio-moda-vivienne-westwood001.jpg",
+        "thumbnailUrl": "photo_web/campaigns/fashion/max-salvaggio-moda-vivienne-westwood001.webp",
+        "title": "Moda Vivienne Westwood001",
+        "tag": "CAMPAIGNS",
+        "width": 683,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/campaigns/fashion/max-salvaggio-moda-vivienne-westwood002.webp",
+        "fullResUrl": "photo master/campaigns/max-salvaggio-moda-vivienne-westwood002.jpg",
+        "thumbnailUrl": "photo_web/campaigns/fashion/max-salvaggio-moda-vivienne-westwood002.webp",
+        "title": "Moda Vivienne Westwood002",
+        "tag": "CAMPAIGNS",
+        "width": 683,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/campaigns/fashion/max-salvaggio-shoes-001.webp",
+        "fullResUrl": "photo master/campaigns/max-salvaggio-shoes-001.jpg",
+        "thumbnailUrl": "photo_web/campaigns/fashion/max-salvaggio-shoes-001.webp",
+        "title": "Shoes 001",
+        "tag": "CAMPAIGNS",
+        "width": 1536,
+        "height": 1024,
+        "is_horizontal": true
+      },
+      {
+        "url": "photo_web/campaigns/fashion/max-salvaggio-shoes-002.webp",
+        "fullResUrl": "photo master/campaigns/max-salvaggio-shoes-002.jpg",
+        "thumbnailUrl": "photo_web/campaigns/fashion/max-salvaggio-shoes-002.webp",
+        "title": "Shoes 002",
+        "tag": "CAMPAIGNS",
+        "width": 832,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
         "url": "photo_web/campaigns/fashion/max-salvaggio-watch-longines-001.webp",
         "fullResUrl": "photo master/campaigns/max-salvaggio-watch-longines-001.jpg",
         "thumbnailUrl": "photo_web/campaigns/fashion/max-salvaggio-watch-longines-001.webp",
@@ -3270,6 +3370,26 @@ const portfolioData = {
         "tag": "CAMPAIGNS",
         "width": 1772,
         "height": 1181,
+        "is_horizontal": true
+      },
+      {
+        "url": "photo_web/campaigns/fashion/max-salvaggio-watch-longines-020.webp",
+        "fullResUrl": "photo master/campaigns/max-salvaggio-watch-longines-020.jpg",
+        "thumbnailUrl": "photo_web/campaigns/fashion/max-salvaggio-watch-longines-020.webp",
+        "title": "Watch Longines 020",
+        "tag": "CAMPAIGNS",
+        "width": 1536,
+        "height": 1024,
+        "is_horizontal": true
+      },
+      {
+        "url": "photo_web/campaigns/fashion/max-salvaggio-watch-longines-021.webp",
+        "fullResUrl": "photo master/campaigns/max-salvaggio-watch-longines-021.jpg",
+        "thumbnailUrl": "photo_web/campaigns/fashion/max-salvaggio-watch-longines-021.webp",
+        "title": "Watch Longines 021",
+        "tag": "CAMPAIGNS",
+        "width": 1536,
+        "height": 1024,
         "is_horizontal": true
       }
     ],
@@ -4822,7 +4942,7 @@ const portfolioData = {
       "title": "Campaigns",
       "cover": "photo_web/campaigns/fashion/max-salvaggio-a-campaign-campari-drink.webp",
       "preview_icon": "photo_web/campaigns/fashion/max-salvaggio-a-campaign-campari-drink.webp",
-      "count": 36
+      "count": 48
     },
     "editorials/covers": {
       "title": "Covers",
