@@ -160,6 +160,7 @@ document.addEventListener("DOMContentLoaded", () => {
           },
           body_and_form: {
             organic_sculptures: [],
+            water_and_stones: [],
             shadows_and_graphic_intimacy: []
           },
           portraits_and_beauty: {
@@ -198,6 +199,11 @@ document.addEventListener("DOMContentLoaded", () => {
             case 'body-organic':
               imgObj.tag = 'BODY & FORM';
               newPortfolioData.body_and_form.organic_sculptures.push(imgObj);
+              break;
+            case 'body-water-stones':
+            case 'body-water':
+              imgObj.tag = 'BODY & FORM';
+              newPortfolioData.body_and_form.water_and_stones.push(imgObj);
               break;
             case 'body-shadows':
               imgObj.tag = 'BODY & FORM';
@@ -273,6 +279,8 @@ document.addEventListener("DOMContentLoaded", () => {
         const localBodyForm = localData.body_and_form || {};
         if (!newPortfolioData.body_and_form.organic_sculptures.length && localBodyForm.organic_sculptures && localBodyForm.organic_sculptures.length)
           newPortfolioData.body_and_form.organic_sculptures = localBodyForm.organic_sculptures;
+        if ((!newPortfolioData.body_and_form.water_and_stones || !newPortfolioData.body_and_form.water_and_stones.length) && localBodyForm.water_and_stones && localBodyForm.water_and_stones.length)
+          newPortfolioData.body_and_form.water_and_stones = localBodyForm.water_and_stones;
         if (!newPortfolioData.body_and_form.shadows_and_graphic_intimacy.length && localBodyForm.shadows_and_graphic_intimacy && localBodyForm.shadows_and_graphic_intimacy.length)
           newPortfolioData.body_and_form.shadows_and_graphic_intimacy = localBodyForm.shadows_and_graphic_intimacy;
 
@@ -464,6 +472,7 @@ document.addEventListener("DOMContentLoaded", () => {
       "pb-beauty",
       "pb-pets",
       "body-organic",
+      "body-water-stones",
       "body-shadows"
     ];
     
@@ -645,10 +654,12 @@ document.addEventListener("DOMContentLoaded", () => {
       sectionId = "campaigns-lingerie";
     } else if (targetId === "info" || targetId === "contact") {
       sectionId = "contact";
-    } else if (targetId === "body" || targetId === "body-organic" || targetId === "body-shadows") {
+    } else if (targetId === "body" || targetId === "body-organic" || targetId === "body-water-stones" || targetId === "body-shadows") {
       sectionId = "body";
       if (targetId === "body-shadows") {
         localStorage.setItem("activeTab", "body-shadows");
+      } else if (targetId === "body-water-stones") {
+        localStorage.setItem("activeTab", "body-water-stones");
       }
     } else if (targetId === "unpublished-research" || targetId === "portraits-beauty" || targetId === "pb-unpublished" || targetId === "pb-portraits" || targetId === "pb-pets" || targetId === "pb-beauty") {
       sectionId = "portraits";
@@ -668,11 +679,13 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!targetSection) return;
 
     // Direct grid display for body without async sub-tab guard clauses when activating body directly
-    if (sectionId === "body" && targetId !== "body-shadows") {
+    if (sectionId === "body" && targetId !== "body-shadows" && targetId !== "body-water-stones") {
       const organicTab = document.getElementById("body-organic");
+      const waterTab = document.getElementById("body-water-stones");
       const shadowsTab = document.getElementById("body-shadows");
       const organicGrid = document.getElementById("body-organic-grid");
       if (organicTab) organicTab.classList.add("active");
+      if (waterTab) waterTab.classList.remove("active");
       if (shadowsTab) shadowsTab.classList.remove("active");
       if (organicGrid) organicGrid.style.display = "grid";
       document.querySelectorAll("#section-body .tab-link").forEach(b => {
@@ -840,6 +853,9 @@ document.addEventListener("DOMContentLoaded", () => {
       case "body-organic":
         changeBackgroundRandomly(portfolioData.body_and_form.organic_sculptures);
         break;
+      case "body-water-stones":
+        changeBackgroundRandomly(portfolioData.body_and_form.water_and_stones);
+        break;
       case "body-shadows":
         changeBackgroundRandomly(portfolioData.body_and_form.shadows_and_graphic_intimacy);
         break;
@@ -942,6 +958,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 2.4 Body & Form Tabs Grids
     renderGrid("body-organic-grid", portfolioData.body_and_form.organic_sculptures, "BODY & FORM");
+    renderGrid("body-water-stones-grid", portfolioData.body_and_form.water_and_stones, "BODY & FORM");
     renderGrid("body-shadows-grid", portfolioData.body_and_form.shadows_and_graphic_intimacy, "BODY & FORM");
 
     // 2.5 Portraits & Beauty Tabs Grids
@@ -2039,6 +2056,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Body & Form
     if (currentList === portfolioData.body_and_form.organic_sculptures) {
+      return { nextList: portfolioData.body_and_form.water_and_stones, tabId: "body-water-stones" };
+    }
+    if (currentList === portfolioData.body_and_form.water_and_stones) {
       return { nextList: portfolioData.body_and_form.shadows_and_graphic_intimacy, tabId: "body-shadows" };
     }
     if (currentList === portfolioData.body_and_form.shadows_and_graphic_intimacy) {
@@ -2080,8 +2100,11 @@ document.addEventListener("DOMContentLoaded", () => {
     if (currentList === portfolioData.body_and_form.organic_sculptures) {
       return { prevList: portfolioData.body_and_form.shadows_and_graphic_intimacy, tabId: "body-shadows" };
     }
-    if (currentList === portfolioData.body_and_form.shadows_and_graphic_intimacy) {
+    if (currentList === portfolioData.body_and_form.water_and_stones) {
       return { prevList: portfolioData.body_and_form.organic_sculptures, tabId: "body-organic" };
+    }
+    if (currentList === portfolioData.body_and_form.shadows_and_graphic_intimacy) {
+      return { prevList: portfolioData.body_and_form.water_and_stones, tabId: "body-water-stones" };
     }
 
     // Campaigns (Archive subpages)

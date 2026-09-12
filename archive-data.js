@@ -1,5 +1,5 @@
 // Database delle immagini generato automaticamente dallo script scan.py
-// Data di generazione: 2026-09-12T00:08:03.746538+00:00
+// Data di generazione: 2026-09-12T02:01:01.264120+00:00
 
 const portfolioData = {
   "overview": [
@@ -709,6 +709,8 @@ const portfolioData = {
       {
         "id": "covers",
         "title": "Covers",
+        "cover": "photo_web/editorials/covers/max-salvaggio-fotografo-moda-grazia-cover-38.webp",
+        "preview_icon": "photo_web/editorials/covers/max-salvaggio-fotografo-moda-grazia-cover-38.webp",
         "place": "",
         "magazine": "",
         "images": [
@@ -777,6 +779,8 @@ const portfolioData = {
       {
         "id": "moda-grazia-bianco",
         "title": "Moda Grazia Bianco",
+        "cover": "photo_web/editorials/moda-grazia-bianco/max-salvaggio-fotografo-moda-grazia-hong-kong-007.webp",
+        "preview_icon": "photo_web/editorials/moda-grazia-bianco/max-salvaggio-fotografo-moda-grazia-hong-kong-007.webp",
         "place": "",
         "magazine": "",
         "images": [
@@ -895,6 +899,8 @@ const portfolioData = {
       {
         "id": "moda-grazia-bon-ton-grinta",
         "title": "Moda Grazia Bon Ton Grinta",
+        "cover": "photo_web/editorials/moda-grazia-bon_ton-grinta/max-salvaggio-fotografo-moda-grazia-sharm-el-sheik-egypt-018.webp",
+        "preview_icon": "photo_web/editorials/moda-grazia-bon_ton-grinta/max-salvaggio-fotografo-moda-grazia-sharm-el-sheik-egypt-018.webp",
         "place": "",
         "magazine": "",
         "images": [
@@ -963,6 +969,8 @@ const portfolioData = {
       {
         "id": "moda-grazia-dettaglio",
         "title": "Moda Grazia Dettaglio",
+        "cover": "photo_web/editorials/moda-grazia-dettaglio/max-salvaggio-fotografo-moda-grazia-cover-miami-001.webp",
+        "preview_icon": "photo_web/editorials/moda-grazia-dettaglio/max-salvaggio-fotografo-moda-grazia-cover-miami-001.webp",
         "place": "",
         "magazine": "",
         "images": [
@@ -1031,6 +1039,8 @@ const portfolioData = {
       {
         "id": "moda-grazia-etnico-dark",
         "title": "Moda Grazia Etnico Dark",
+        "cover": "photo_web/editorials/moda-grazia-etnico-dark/max-salvaggio-fotografo-moda-grazia-cover-daniela-de-jesus-cosio-mexico-028.webp",
+        "preview_icon": "photo_web/editorials/moda-grazia-etnico-dark/max-salvaggio-fotografo-moda-grazia-cover-daniela-de-jesus-cosio-mexico-028.webp",
         "place": "",
         "magazine": "",
         "images": [
@@ -1169,6 +1179,8 @@ const portfolioData = {
       {
         "id": "moda-grazia-giungla-urbana",
         "title": "Moda Grazia Giungla Urbana",
+        "cover": "photo_web/editorials/moda-grazia-giungla-urbana/max-salvaggio-fotografo-moda-grazia-hong-kong-042.webp",
+        "preview_icon": "photo_web/editorials/moda-grazia-giungla-urbana/max-salvaggio-fotografo-moda-grazia-hong-kong-042.webp",
         "place": "",
         "magazine": "",
         "images": [
@@ -1267,6 +1279,8 @@ const portfolioData = {
       {
         "id": "moda-grazia-hong-kong-express",
         "title": "Moda Grazia Hong Kong Express",
+        "cover": "photo_web/editorials/moda-grazia-hong-kong-express/max-salvaggio-fotografo-moda-grazia-hong-kong-051.webp",
+        "preview_icon": "photo_web/editorials/moda-grazia-hong-kong-express/max-salvaggio-fotografo-moda-grazia-hong-kong-051.webp",
         "place": "",
         "magazine": "",
         "images": [
@@ -1445,6 +1459,8 @@ const portfolioData = {
       {
         "id": "moda-grazia-leggerezza",
         "title": "Moda Grazia Leggerezza",
+        "cover": "photo_web/editorials/moda-grazia-leggerezza/max-salvaggio-fotografo-moda-grazia-cover-egypt-080.webp",
+        "preview_icon": "photo_web/editorials/moda-grazia-leggerezza/max-salvaggio-fotografo-moda-grazia-cover-egypt-080.webp",
         "place": "",
         "magazine": "",
         "images": [
@@ -1523,6 +1539,8 @@ const portfolioData = {
       {
         "id": "moda-grazia-love-shanghai",
         "title": "Moda Grazia Love Shanghai",
+        "cover": "photo_web/editorials/moda-grazia-love-shanghai/max-salvaggio-fotografo-moda-grazia-shanghai-068x.webp",
+        "preview_icon": "photo_web/editorials/moda-grazia-love-shanghai/max-salvaggio-fotografo-moda-grazia-shanghai-068x.webp",
         "place": "",
         "magazine": "",
         "images": [
@@ -1651,6 +1669,8 @@ const portfolioData = {
       {
         "id": "moda-grazia-mito-futuro",
         "title": "Moda Grazia Mito Futuro",
+        "cover": "photo_web/editorials/moda-grazia-mito-futuro/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-mexico-087.webp",
+        "preview_icon": "photo_web/editorials/moda-grazia-mito-futuro/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-mexico-087.webp",
         "place": "",
         "magazine": "",
         "images": [
@@ -1759,6 +1779,8 @@ const portfolioData = {
       {
         "id": "moda-grazia-nero-diverso",
         "title": "Moda Grazia Nero Diverso",
+        "cover": "photo_web/editorials/moda-grazia-nero-diverso/max-salvaggio-fotografo-moda-grazia-sicilia-097.webp",
+        "preview_icon": "photo_web/editorials/moda-grazia-nero-diverso/max-salvaggio-fotografo-moda-grazia-sicilia-097.webp",
         "place": "",
         "magazine": "",
         "images": [
@@ -1817,6 +1839,8 @@ const portfolioData = {
       {
         "id": "moda-grazia-safari-chic",
         "title": "Moda Grazia Safari Chic",
+        "cover": "photo_web/editorials/moda-grazia-safari-chic/max-salvaggio-fotografo-moda-grazia-kenya-102.webp",
+        "preview_icon": "photo_web/editorials/moda-grazia-safari-chic/max-salvaggio-fotografo-moda-grazia-kenya-102.webp",
         "place": "",
         "magazine": "",
         "images": [
@@ -1925,6 +1949,8 @@ const portfolioData = {
       {
         "id": "moda-grazia-seduzioni-oriente",
         "title": "Moda Grazia Seduzioni Oriente",
+        "cover": "photo_web/editorials/moda-grazia-seduzioni-oriente/max-salvaggio-fotografo-moda-grazia-hong-kong-112.webp",
+        "preview_icon": "photo_web/editorials/moda-grazia-seduzioni-oriente/max-salvaggio-fotografo-moda-grazia-hong-kong-112.webp",
         "place": "",
         "magazine": "",
         "images": [
@@ -2073,6 +2099,8 @@ const portfolioData = {
       {
         "id": "moda-grazia-specie",
         "title": "Moda Grazia Specie",
+        "cover": "photo_web/editorials/moda-grazia-specie/max-salvaggio-fotografo-moda-grazia-tulum-024.webp",
+        "preview_icon": "photo_web/editorials/moda-grazia-specie/max-salvaggio-fotografo-moda-grazia-tulum-024.webp",
         "place": "",
         "magazine": "",
         "images": [
@@ -2121,6 +2149,8 @@ const portfolioData = {
       {
         "id": "moda-grazia-stile-romanzo",
         "title": "Moda Grazia Stile Romanzo",
+        "cover": "photo_web/editorials/moda-grazia-stile-romanzo/max-salvaggio-fotografo-moda-grazia-vietnam-127.webp",
+        "preview_icon": "photo_web/editorials/moda-grazia-stile-romanzo/max-salvaggio-fotografo-moda-grazia-vietnam-127.webp",
         "place": "",
         "magazine": "",
         "images": [
@@ -2229,6 +2259,8 @@ const portfolioData = {
       {
         "id": "moda-grazia-viaggio-oriente",
         "title": "Moda Grazia Viaggio Oriente",
+        "cover": "photo_web/editorials/moda-grazia-viaggio-oriente/max-salvaggio-fotografo-moda-grazia-cover-daniela-de-jesus-cambodia-137.webp",
+        "preview_icon": "photo_web/editorials/moda-grazia-viaggio-oriente/max-salvaggio-fotografo-moda-grazia-cover-daniela-de-jesus-cambodia-137.webp",
         "place": "",
         "magazine": "",
         "images": [
@@ -2427,9 +2459,9 @@ const portfolioData = {
     ],
     "unpublished_research": [
       {
-        "url": "photo_web/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-giacomo-cavalli-portraits-milano-169.webp",
+        "url": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-giacomo-cavalli-portraits-milano-169.webp",
         "fullResUrl": "photo master/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-giacomo-cavalli-portraits-milano-169.jpg",
-        "thumbnailUrl": "photo_web/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-giacomo-cavalli-portraits-milano-169.webp",
+        "thumbnailUrl": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-giacomo-cavalli-portraits-milano-169.webp",
         "title": "Fotografo Moda Uomo Giacomo Cavalli Portraits Milano 169",
         "tag": "PORTRAITS II",
         "width": 1500,
@@ -2437,9 +2469,9 @@ const portfolioData = {
         "is_horizontal": true
       },
       {
-        "url": "photo_web/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-giacomo-cavalli-portraits-milano-171.webp",
+        "url": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-giacomo-cavalli-portraits-milano-171.webp",
         "fullResUrl": "photo master/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-giacomo-cavalli-portraits-milano-171.jpg",
-        "thumbnailUrl": "photo_web/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-giacomo-cavalli-portraits-milano-171.webp",
+        "thumbnailUrl": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-giacomo-cavalli-portraits-milano-171.webp",
         "title": "Fotografo Moda Uomo Giacomo Cavalli Portraits Milano 171",
         "tag": "PORTRAITS II",
         "width": 1500,
@@ -2447,9 +2479,9 @@ const portfolioData = {
         "is_horizontal": true
       },
       {
-        "url": "photo_web/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-giacomo-cavalli-portraits-milano-172.webp",
+        "url": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-giacomo-cavalli-portraits-milano-172.webp",
         "fullResUrl": "photo master/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-giacomo-cavalli-portraits-milano-172.jpg",
-        "thumbnailUrl": "photo_web/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-giacomo-cavalli-portraits-milano-172.webp",
+        "thumbnailUrl": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-giacomo-cavalli-portraits-milano-172.webp",
         "title": "Fotografo Moda Uomo Giacomo Cavalli Portraits Milano 172",
         "tag": "PORTRAITS II",
         "width": 667,
@@ -2457,9 +2489,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-giacomo-cavalli-portraits-milano-173.webp",
+        "url": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-giacomo-cavalli-portraits-milano-173.webp",
         "fullResUrl": "photo master/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-giacomo-cavalli-portraits-milano-173.jpg",
-        "thumbnailUrl": "photo_web/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-giacomo-cavalli-portraits-milano-173.webp",
+        "thumbnailUrl": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-giacomo-cavalli-portraits-milano-173.webp",
         "title": "Fotografo Moda Uomo Giacomo Cavalli Portraits Milano 173",
         "tag": "PORTRAITS II",
         "width": 768,
@@ -2467,9 +2499,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-174.webp",
+        "url": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-174.webp",
         "fullResUrl": "photo master/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-174.jpg",
-        "thumbnailUrl": "photo_web/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-174.webp",
+        "thumbnailUrl": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-174.webp",
         "title": "Fotografo Moda Uomo Portraits Milano 174",
         "tag": "PORTRAITS II",
         "width": 667,
@@ -2477,9 +2509,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-175.webp",
+        "url": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-175.webp",
         "fullResUrl": "photo master/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-175.jpg",
-        "thumbnailUrl": "photo_web/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-175.webp",
+        "thumbnailUrl": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-175.webp",
         "title": "Fotografo Moda Uomo Portraits Milano 175",
         "tag": "PORTRAITS II",
         "width": 667,
@@ -2487,9 +2519,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-176.webp",
+        "url": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-176.webp",
         "fullResUrl": "photo master/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-176.jpg",
-        "thumbnailUrl": "photo_web/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-176.webp",
+        "thumbnailUrl": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-176.webp",
         "title": "Fotografo Moda Uomo Portraits Milano 176",
         "tag": "PORTRAITS II",
         "width": 1500,
@@ -2497,9 +2529,9 @@ const portfolioData = {
         "is_horizontal": true
       },
       {
-        "url": "photo_web/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-177.webp",
+        "url": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-177.webp",
         "fullResUrl": "photo master/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-177.jpg",
-        "thumbnailUrl": "photo_web/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-177.webp",
+        "thumbnailUrl": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-177.webp",
         "title": "Fotografo Moda Uomo Portraits Milano 177",
         "tag": "PORTRAITS II",
         "width": 667,
@@ -2507,9 +2539,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-178.webp",
+        "url": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-178.webp",
         "fullResUrl": "photo master/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-178.jpg",
-        "thumbnailUrl": "photo_web/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-178.webp",
+        "thumbnailUrl": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-178.webp",
         "title": "Fotografo Moda Uomo Portraits Milano 178",
         "tag": "PORTRAITS II",
         "width": 667,
@@ -2517,9 +2549,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-179.webp",
+        "url": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-179.webp",
         "fullResUrl": "photo master/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-179.jpg",
-        "thumbnailUrl": "photo_web/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-179.webp",
+        "thumbnailUrl": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-179.webp",
         "title": "Fotografo Moda Uomo Portraits Milano 179",
         "tag": "PORTRAITS II",
         "width": 667,
@@ -2527,9 +2559,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-180.webp",
+        "url": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-180.webp",
         "fullResUrl": "photo master/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-180.jpg",
-        "thumbnailUrl": "photo_web/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-180.webp",
+        "thumbnailUrl": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-180.webp",
         "title": "Fotografo Moda Uomo Portraits Milano 180",
         "tag": "PORTRAITS II",
         "width": 667,
@@ -2537,9 +2569,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-181.webp",
+        "url": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-181.webp",
         "fullResUrl": "photo master/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-181.jpg",
-        "thumbnailUrl": "photo_web/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-181.webp",
+        "thumbnailUrl": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-181.webp",
         "title": "Fotografo Moda Uomo Portraits Milano 181",
         "tag": "PORTRAITS II",
         "width": 667,
@@ -2547,9 +2579,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-182.webp",
+        "url": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-182.webp",
         "fullResUrl": "photo master/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-182.jpg",
-        "thumbnailUrl": "photo_web/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-182.webp",
+        "thumbnailUrl": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-182.webp",
         "title": "Fotografo Moda Uomo Portraits Milano 182",
         "tag": "PORTRAITS II",
         "width": 667,
@@ -2557,9 +2589,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-183.webp",
+        "url": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-183.webp",
         "fullResUrl": "photo master/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-183.jpg",
-        "thumbnailUrl": "photo_web/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-183.webp",
+        "thumbnailUrl": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-183.webp",
         "title": "Fotografo Moda Uomo Portraits Milano 183",
         "tag": "PORTRAITS II",
         "width": 667,
@@ -2567,9 +2599,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-184.webp",
+        "url": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-184.webp",
         "fullResUrl": "photo master/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-184.jpg",
-        "thumbnailUrl": "photo_web/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-184.webp",
+        "thumbnailUrl": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-184.webp",
         "title": "Fotografo Moda Uomo Portraits Milano 184",
         "tag": "PORTRAITS II",
         "width": 667,
@@ -2577,9 +2609,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-185.webp",
+        "url": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-185.webp",
         "fullResUrl": "photo master/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-185.jpg",
-        "thumbnailUrl": "photo_web/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-185.webp",
+        "thumbnailUrl": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-185.webp",
         "title": "Fotografo Moda Uomo Portraits Milano 185",
         "tag": "PORTRAITS II",
         "width": 667,
@@ -2587,9 +2619,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-186.webp",
+        "url": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-186.webp",
         "fullResUrl": "photo master/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-186.jpg",
-        "thumbnailUrl": "photo_web/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-186.webp",
+        "thumbnailUrl": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-186.webp",
         "title": "Fotografo Moda Uomo Portraits Milano 186",
         "tag": "PORTRAITS II",
         "width": 667,
@@ -2597,9 +2629,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-187.webp",
+        "url": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-187.webp",
         "fullResUrl": "photo master/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-187.jpg",
-        "thumbnailUrl": "photo_web/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-187.webp",
+        "thumbnailUrl": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-187.webp",
         "title": "Fotografo Moda Uomo Portraits Milano 187",
         "tag": "PORTRAITS II",
         "width": 667,
@@ -2607,9 +2639,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-188.webp",
+        "url": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-188.webp",
         "fullResUrl": "photo master/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-188.jpg",
-        "thumbnailUrl": "photo_web/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-188.webp",
+        "thumbnailUrl": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-188.webp",
         "title": "Fotografo Moda Uomo Portraits Milano 188",
         "tag": "PORTRAITS II",
         "width": 667,
@@ -2617,9 +2649,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-189.webp",
+        "url": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-189.webp",
         "fullResUrl": "photo master/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-189.jpg",
-        "thumbnailUrl": "photo_web/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-189.webp",
+        "thumbnailUrl": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-189.webp",
         "title": "Fotografo Moda Uomo Portraits Milano 189",
         "tag": "PORTRAITS II",
         "width": 667,
@@ -2627,9 +2659,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-190.webp",
+        "url": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-190.webp",
         "fullResUrl": "photo master/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-190.jpg",
-        "thumbnailUrl": "photo_web/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-190.webp",
+        "thumbnailUrl": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-190.webp",
         "title": "Fotografo Moda Uomo Portraits Milano 190",
         "tag": "PORTRAITS II",
         "width": 667,
@@ -2637,9 +2669,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-191.webp",
+        "url": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-191.webp",
         "fullResUrl": "photo master/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-191.jpg",
-        "thumbnailUrl": "photo_web/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-191.webp",
+        "thumbnailUrl": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-191.webp",
         "title": "Fotografo Moda Uomo Portraits Milano 191",
         "tag": "PORTRAITS II",
         "width": 667,
@@ -2647,9 +2679,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-192.webp",
+        "url": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-192.webp",
         "fullResUrl": "photo master/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-192.jpg",
-        "thumbnailUrl": "photo_web/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-192.webp",
+        "thumbnailUrl": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-192.webp",
         "title": "Fotografo Moda Uomo Portraits Milano 192",
         "tag": "PORTRAITS II",
         "width": 682,
@@ -2657,9 +2689,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-193.webp",
+        "url": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-193.webp",
         "fullResUrl": "photo master/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-193.jpg",
-        "thumbnailUrl": "photo_web/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-193.webp",
+        "thumbnailUrl": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-193.webp",
         "title": "Fotografo Moda Uomo Portraits Milano 193",
         "tag": "PORTRAITS II",
         "width": 682,
@@ -2667,9 +2699,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-194.webp",
+        "url": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-194.webp",
         "fullResUrl": "photo master/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-194.jpeg",
-        "thumbnailUrl": "photo_web/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-194.webp",
+        "thumbnailUrl": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-194.webp",
         "title": "Fotografo Moda Uomo Portraits Milano 194",
         "tag": "PORTRAITS II",
         "width": 682,
@@ -2677,9 +2709,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-195.webp",
+        "url": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-195.webp",
         "fullResUrl": "photo master/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-195.jpeg",
-        "thumbnailUrl": "photo_web/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-195.webp",
+        "thumbnailUrl": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-195.webp",
         "title": "Fotografo Moda Uomo Portraits Milano 195",
         "tag": "PORTRAITS II",
         "width": 682,
@@ -2687,9 +2719,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-196.webp",
+        "url": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-196.webp",
         "fullResUrl": "photo master/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-196.jpeg",
-        "thumbnailUrl": "photo_web/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-196.webp",
+        "thumbnailUrl": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-196.webp",
         "title": "Fotografo Moda Uomo Portraits Milano 196",
         "tag": "PORTRAITS II",
         "width": 682,
@@ -2697,9 +2729,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-197.webp",
+        "url": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-197.webp",
         "fullResUrl": "photo master/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-197.jpeg",
-        "thumbnailUrl": "photo_web/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-197.webp",
+        "thumbnailUrl": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-197.webp",
         "title": "Fotografo Moda Uomo Portraits Milano 197",
         "tag": "PORTRAITS II",
         "width": 682,
@@ -2707,9 +2739,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-198.webp",
+        "url": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-198.webp",
         "fullResUrl": "photo master/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-198.jpeg",
-        "thumbnailUrl": "photo_web/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-198.webp",
+        "thumbnailUrl": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-198.webp",
         "title": "Fotografo Moda Uomo Portraits Milano 198",
         "tag": "PORTRAITS II",
         "width": 682,
@@ -2717,9 +2749,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-199.webp",
+        "url": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-199.webp",
         "fullResUrl": "photo master/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-199.jpeg",
-        "thumbnailUrl": "photo_web/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-199.webp",
+        "thumbnailUrl": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-199.webp",
         "title": "Fotografo Moda Uomo Portraits Milano 199",
         "tag": "PORTRAITS II",
         "width": 1024,
@@ -2727,9 +2759,9 @@ const portfolioData = {
         "is_horizontal": true
       },
       {
-        "url": "photo_web/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-200.webp",
+        "url": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-200.webp",
         "fullResUrl": "photo master/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-200.jpg",
-        "thumbnailUrl": "photo_web/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-200.webp",
+        "thumbnailUrl": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-200.webp",
         "title": "Fotografo Moda Uomo Portraits Milano 200",
         "tag": "PORTRAITS II",
         "width": 741,
@@ -2737,9 +2769,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-201.webp",
+        "url": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-201.webp",
         "fullResUrl": "photo master/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-201.jpg",
-        "thumbnailUrl": "photo_web/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-milano-201.webp",
+        "thumbnailUrl": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-milano-201.webp",
         "title": "Fotografo Moda Uomo Portraits Milano 201",
         "tag": "PORTRAITS II",
         "width": 667,
@@ -2747,9 +2779,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-156.webp",
+        "url": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-156.webp",
         "fullResUrl": "photo master/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-156.jpg",
-        "thumbnailUrl": "photo_web/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-156.webp",
+        "thumbnailUrl": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-156.webp",
         "title": "Fotografo Moda Uomo Portraits Street Style Milano 156",
         "tag": "PORTRAITS II",
         "width": 768,
@@ -2757,9 +2789,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-157.webp",
+        "url": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-157.webp",
         "fullResUrl": "photo master/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-157.jpg",
-        "thumbnailUrl": "photo_web/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-157.webp",
+        "thumbnailUrl": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-157.webp",
         "title": "Fotografo Moda Uomo Portraits Street Style Milano 157",
         "tag": "PORTRAITS II",
         "width": 768,
@@ -2767,9 +2799,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-158.webp",
+        "url": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-158.webp",
         "fullResUrl": "photo master/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-158.jpg",
-        "thumbnailUrl": "photo_web/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-158.webp",
+        "thumbnailUrl": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-158.webp",
         "title": "Fotografo Moda Uomo Portraits Street Style Milano 158",
         "tag": "PORTRAITS II",
         "width": 768,
@@ -2777,9 +2809,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-159.webp",
+        "url": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-159.webp",
         "fullResUrl": "photo master/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-159.jpg",
-        "thumbnailUrl": "photo_web/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-159.webp",
+        "thumbnailUrl": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-159.webp",
         "title": "Fotografo Moda Uomo Portraits Street Style Milano 159",
         "tag": "PORTRAITS II",
         "width": 768,
@@ -2787,9 +2819,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-160.webp",
+        "url": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-160.webp",
         "fullResUrl": "photo master/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-160.jpg",
-        "thumbnailUrl": "photo_web/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-160.webp",
+        "thumbnailUrl": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-160.webp",
         "title": "Fotografo Moda Uomo Portraits Street Style Milano 160",
         "tag": "PORTRAITS II",
         "width": 768,
@@ -2797,9 +2829,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-161.webp",
+        "url": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-161.webp",
         "fullResUrl": "photo master/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-161.jpg",
-        "thumbnailUrl": "photo_web/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-161.webp",
+        "thumbnailUrl": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-161.webp",
         "title": "Fotografo Moda Uomo Portraits Street Style Milano 161",
         "tag": "PORTRAITS II",
         "width": 768,
@@ -2807,9 +2839,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-162.webp",
+        "url": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-162.webp",
         "fullResUrl": "photo master/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-162.jpg",
-        "thumbnailUrl": "photo_web/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-162.webp",
+        "thumbnailUrl": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-162.webp",
         "title": "Fotografo Moda Uomo Portraits Street Style Milano 162",
         "tag": "PORTRAITS II",
         "width": 768,
@@ -2817,9 +2849,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-163.webp",
+        "url": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-163.webp",
         "fullResUrl": "photo master/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-163.jpg",
-        "thumbnailUrl": "photo_web/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-163.webp",
+        "thumbnailUrl": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-163.webp",
         "title": "Fotografo Moda Uomo Portraits Street Style Milano 163",
         "tag": "PORTRAITS II",
         "width": 667,
@@ -2827,9 +2859,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-164.webp",
+        "url": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-164.webp",
         "fullResUrl": "photo master/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-164.jpg",
-        "thumbnailUrl": "photo_web/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-164.webp",
+        "thumbnailUrl": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-164.webp",
         "title": "Fotografo Moda Uomo Portraits Street Style Milano 164",
         "tag": "PORTRAITS II",
         "width": 667,
@@ -2837,9 +2869,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-165.webp",
+        "url": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-165.webp",
         "fullResUrl": "photo master/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-165.jpg",
-        "thumbnailUrl": "photo_web/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-165.webp",
+        "thumbnailUrl": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-165.webp",
         "title": "Fotografo Moda Uomo Portraits Street Style Milano 165",
         "tag": "PORTRAITS II",
         "width": 1500,
@@ -2847,9 +2879,9 @@ const portfolioData = {
         "is_horizontal": true
       },
       {
-        "url": "photo_web/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-166.webp",
+        "url": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-166.webp",
         "fullResUrl": "photo master/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-166.jpg",
-        "thumbnailUrl": "photo_web/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-166.webp",
+        "thumbnailUrl": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-166.webp",
         "title": "Fotografo Moda Uomo Portraits Street Style Milano 166",
         "tag": "PORTRAITS II",
         "width": 667,
@@ -2857,9 +2889,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-167.webp",
+        "url": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-167.webp",
         "fullResUrl": "photo master/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-167.jpg",
-        "thumbnailUrl": "photo_web/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-167.webp",
+        "thumbnailUrl": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-167.webp",
         "title": "Fotografo Moda Uomo Portraits Street Style Milano 167",
         "tag": "PORTRAITS II",
         "width": 667,
@@ -2867,9 +2899,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-168.webp",
+        "url": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-168.webp",
         "fullResUrl": "photo master/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-168.jpg",
-        "thumbnailUrl": "photo_web/portraits/portraits II/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-168.webp",
+        "thumbnailUrl": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-portraits-street-style-milano-168.webp",
         "title": "Fotografo Moda Uomo Portraits Street Style Milano 168",
         "tag": "PORTRAITS II",
         "width": 667,
@@ -2943,9 +2975,9 @@ const portfolioData = {
     ],
     "lingerie": [
       {
-        "url": "photo_web/lingerie/max-salvaggio-fotografo-lingerie-002.webp",
+        "url": "photo_web/campaigns/lingerie/max-salvaggio-fotografo-lingerie-002.webp",
         "fullResUrl": "photo master/lingerie/max-salvaggio-fotografo-lingerie-002.jpg",
-        "thumbnailUrl": "photo_web/lingerie/max-salvaggio-fotografo-lingerie-002.webp",
+        "thumbnailUrl": "photo_web/campaigns/lingerie/max-salvaggio-fotografo-lingerie-002.webp",
         "title": "Fotografo Lingerie 002",
         "tag": "CAMPAIGNS",
         "width": 667,
@@ -2953,9 +2985,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/lingerie/max-salvaggio-fotografo-lingerie-003.webp",
+        "url": "photo_web/campaigns/lingerie/max-salvaggio-fotografo-lingerie-003.webp",
         "fullResUrl": "photo master/lingerie/max-salvaggio-fotografo-lingerie-003.jpg",
-        "thumbnailUrl": "photo_web/lingerie/max-salvaggio-fotografo-lingerie-003.webp",
+        "thumbnailUrl": "photo_web/campaigns/lingerie/max-salvaggio-fotografo-lingerie-003.webp",
         "title": "Fotografo Lingerie 003",
         "tag": "CAMPAIGNS",
         "width": 960,
@@ -2963,9 +2995,9 @@ const portfolioData = {
         "is_horizontal": true
       },
       {
-        "url": "photo_web/lingerie/max-salvaggio-fotografo-lingerie-004.webp",
+        "url": "photo_web/campaigns/lingerie/max-salvaggio-fotografo-lingerie-004.webp",
         "fullResUrl": "photo master/lingerie/max-salvaggio-fotografo-lingerie-004.jpg",
-        "thumbnailUrl": "photo_web/lingerie/max-salvaggio-fotografo-lingerie-004.webp",
+        "thumbnailUrl": "photo_web/campaigns/lingerie/max-salvaggio-fotografo-lingerie-004.webp",
         "title": "Fotografo Lingerie 004",
         "tag": "CAMPAIGNS",
         "width": 800,
@@ -2973,9 +3005,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/lingerie/max-salvaggio-fotografo-lingerie-005.webp",
+        "url": "photo_web/campaigns/lingerie/max-salvaggio-fotografo-lingerie-005.webp",
         "fullResUrl": "photo master/lingerie/max-salvaggio-fotografo-lingerie-005.jpg",
-        "thumbnailUrl": "photo_web/lingerie/max-salvaggio-fotografo-lingerie-005.webp",
+        "thumbnailUrl": "photo_web/campaigns/lingerie/max-salvaggio-fotografo-lingerie-005.webp",
         "title": "Fotografo Lingerie 005",
         "tag": "CAMPAIGNS",
         "width": 680,
@@ -2983,9 +3015,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/lingerie/max-salvaggio-fotografo-lingerie-006.webp",
+        "url": "photo_web/campaigns/lingerie/max-salvaggio-fotografo-lingerie-006.webp",
         "fullResUrl": "photo master/lingerie/max-salvaggio-fotografo-lingerie-006.jpg",
-        "thumbnailUrl": "photo_web/lingerie/max-salvaggio-fotografo-lingerie-006.webp",
+        "thumbnailUrl": "photo_web/campaigns/lingerie/max-salvaggio-fotografo-lingerie-006.webp",
         "title": "Fotografo Lingerie 006",
         "tag": "CAMPAIGNS",
         "width": 1361,
@@ -2993,9 +3025,9 @@ const portfolioData = {
         "is_horizontal": true
       },
       {
-        "url": "photo_web/lingerie/max-salvaggio-fotografo-lingerie-007.webp",
+        "url": "photo_web/campaigns/lingerie/max-salvaggio-fotografo-lingerie-007.webp",
         "fullResUrl": "photo master/lingerie/max-salvaggio-fotografo-lingerie-007.jpeg",
-        "thumbnailUrl": "photo_web/lingerie/max-salvaggio-fotografo-lingerie-007.webp",
+        "thumbnailUrl": "photo_web/campaigns/lingerie/max-salvaggio-fotografo-lingerie-007.webp",
         "title": "Fotografo Lingerie 007",
         "tag": "CAMPAIGNS",
         "width": 1562,
@@ -3003,9 +3035,9 @@ const portfolioData = {
         "is_horizontal": true
       },
       {
-        "url": "photo_web/lingerie/max-salvaggio-fotografo-lingerie-008.webp",
+        "url": "photo_web/campaigns/lingerie/max-salvaggio-fotografo-lingerie-008.webp",
         "fullResUrl": "photo master/lingerie/max-salvaggio-fotografo-lingerie-008.jpeg",
-        "thumbnailUrl": "photo_web/lingerie/max-salvaggio-fotografo-lingerie-008.webp",
+        "thumbnailUrl": "photo_web/campaigns/lingerie/max-salvaggio-fotografo-lingerie-008.webp",
         "title": "Fotografo Lingerie 008",
         "tag": "CAMPAIGNS",
         "width": 850,
@@ -3013,9 +3045,9 @@ const portfolioData = {
         "is_horizontal": true
       },
       {
-        "url": "photo_web/lingerie/max-salvaggio-fotografo-lingerie-009.webp",
+        "url": "photo_web/campaigns/lingerie/max-salvaggio-fotografo-lingerie-009.webp",
         "fullResUrl": "photo master/lingerie/max-salvaggio-fotografo-lingerie-009.jpg",
-        "thumbnailUrl": "photo_web/lingerie/max-salvaggio-fotografo-lingerie-009.webp",
+        "thumbnailUrl": "photo_web/campaigns/lingerie/max-salvaggio-fotografo-lingerie-009.webp",
         "title": "Fotografo Lingerie 009",
         "tag": "CAMPAIGNS",
         "width": 682,
@@ -3023,9 +3055,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/lingerie/max-salvaggio-fotografo-lingerie-010.webp",
+        "url": "photo_web/campaigns/lingerie/max-salvaggio-fotografo-lingerie-010.webp",
         "fullResUrl": "photo master/lingerie/max-salvaggio-fotografo-lingerie-010.jpg",
-        "thumbnailUrl": "photo_web/lingerie/max-salvaggio-fotografo-lingerie-010.webp",
+        "thumbnailUrl": "photo_web/campaigns/lingerie/max-salvaggio-fotografo-lingerie-010.webp",
         "title": "Fotografo Lingerie 010",
         "tag": "CAMPAIGNS",
         "width": 1500,
@@ -3033,9 +3065,9 @@ const portfolioData = {
         "is_horizontal": true
       },
       {
-        "url": "photo_web/lingerie/max-salvaggio-fotografo-lingerie-011.webp",
+        "url": "photo_web/campaigns/lingerie/max-salvaggio-fotografo-lingerie-011.webp",
         "fullResUrl": "photo master/lingerie/max-salvaggio-fotografo-lingerie-011.jpg",
-        "thumbnailUrl": "photo_web/lingerie/max-salvaggio-fotografo-lingerie-011.webp",
+        "thumbnailUrl": "photo_web/campaigns/lingerie/max-salvaggio-fotografo-lingerie-011.webp",
         "title": "Fotografo Lingerie 011",
         "tag": "CAMPAIGNS",
         "width": 683,
@@ -3043,9 +3075,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/lingerie/max-salvaggio-fotografo-lingerie-012.webp",
+        "url": "photo_web/campaigns/lingerie/max-salvaggio-fotografo-lingerie-012.webp",
         "fullResUrl": "photo master/lingerie/max-salvaggio-fotografo-lingerie-012.jpg",
-        "thumbnailUrl": "photo_web/lingerie/max-salvaggio-fotografo-lingerie-012.webp",
+        "thumbnailUrl": "photo_web/campaigns/lingerie/max-salvaggio-fotografo-lingerie-012.webp",
         "title": "Fotografo Lingerie 012",
         "tag": "CAMPAIGNS",
         "width": 1024,
@@ -3053,9 +3085,9 @@ const portfolioData = {
         "is_horizontal": true
       },
       {
-        "url": "photo_web/lingerie/max-salvaggio-fotografo-lingerie-014.webp",
+        "url": "photo_web/campaigns/lingerie/max-salvaggio-fotografo-lingerie-014.webp",
         "fullResUrl": "photo master/lingerie/max-salvaggio-fotografo-lingerie-014.jpg",
-        "thumbnailUrl": "photo_web/lingerie/max-salvaggio-fotografo-lingerie-014.webp",
+        "thumbnailUrl": "photo_web/campaigns/lingerie/max-salvaggio-fotografo-lingerie-014.webp",
         "title": "Fotografo Lingerie 014",
         "tag": "CAMPAIGNS",
         "width": 1024,
@@ -3063,9 +3095,9 @@ const portfolioData = {
         "is_horizontal": true
       },
       {
-        "url": "photo_web/lingerie/max-salvaggio-fotografo-lingerie-015.webp",
+        "url": "photo_web/campaigns/lingerie/max-salvaggio-fotografo-lingerie-015.webp",
         "fullResUrl": "photo master/lingerie/max-salvaggio-fotografo-lingerie-015.jpg",
-        "thumbnailUrl": "photo_web/lingerie/max-salvaggio-fotografo-lingerie-015.webp",
+        "thumbnailUrl": "photo_web/campaigns/lingerie/max-salvaggio-fotografo-lingerie-015.webp",
         "title": "Fotografo Lingerie 015",
         "tag": "CAMPAIGNS",
         "width": 1536,
@@ -3073,9 +3105,9 @@ const portfolioData = {
         "is_horizontal": true
       },
       {
-        "url": "photo_web/lingerie/max-salvaggio-fotografo-lingerie-016.webp",
+        "url": "photo_web/campaigns/lingerie/max-salvaggio-fotografo-lingerie-016.webp",
         "fullResUrl": "photo master/lingerie/max-salvaggio-fotografo-lingerie-016.jpg",
-        "thumbnailUrl": "photo_web/lingerie/max-salvaggio-fotografo-lingerie-016.webp",
+        "thumbnailUrl": "photo_web/campaigns/lingerie/max-salvaggio-fotografo-lingerie-016.webp",
         "title": "Fotografo Lingerie 016",
         "tag": "CAMPAIGNS",
         "width": 819,
@@ -3083,9 +3115,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/lingerie/max-salvaggio-fotografo-lingerie-017.webp",
+        "url": "photo_web/campaigns/lingerie/max-salvaggio-fotografo-lingerie-017.webp",
         "fullResUrl": "photo master/lingerie/max-salvaggio-fotografo-lingerie-017.jpg",
-        "thumbnailUrl": "photo_web/lingerie/max-salvaggio-fotografo-lingerie-017.webp",
+        "thumbnailUrl": "photo_web/campaigns/lingerie/max-salvaggio-fotografo-lingerie-017.webp",
         "title": "Fotografo Lingerie 017",
         "tag": "CAMPAIGNS",
         "width": 819,
@@ -3093,9 +3125,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/lingerie/max-salvaggio-fotografo-lingerie-018.webp",
+        "url": "photo_web/campaigns/lingerie/max-salvaggio-fotografo-lingerie-018.webp",
         "fullResUrl": "photo master/lingerie/max-salvaggio-fotografo-lingerie-018.jpg",
-        "thumbnailUrl": "photo_web/lingerie/max-salvaggio-fotografo-lingerie-018.webp",
+        "thumbnailUrl": "photo_web/campaigns/lingerie/max-salvaggio-fotografo-lingerie-018.webp",
         "title": "Fotografo Lingerie 018",
         "tag": "CAMPAIGNS",
         "width": 1024,
@@ -3103,9 +3135,9 @@ const portfolioData = {
         "is_horizontal": true
       },
       {
-        "url": "photo_web/lingerie/max-salvaggio-fotografo-lingerie-019.webp",
+        "url": "photo_web/campaigns/lingerie/max-salvaggio-fotografo-lingerie-019.webp",
         "fullResUrl": "photo master/lingerie/max-salvaggio-fotografo-lingerie-019.jpg",
-        "thumbnailUrl": "photo_web/lingerie/max-salvaggio-fotografo-lingerie-019.webp",
+        "thumbnailUrl": "photo_web/campaigns/lingerie/max-salvaggio-fotografo-lingerie-019.webp",
         "title": "Fotografo Lingerie 019",
         "tag": "CAMPAIGNS",
         "width": 1024,
@@ -3113,9 +3145,9 @@ const portfolioData = {
         "is_horizontal": true
       },
       {
-        "url": "photo_web/lingerie/max-salvaggio-fotografo-lingerie-020.webp",
+        "url": "photo_web/campaigns/lingerie/max-salvaggio-fotografo-lingerie-020.webp",
         "fullResUrl": "photo master/lingerie/max-salvaggio-fotografo-lingerie-020.jpeg",
-        "thumbnailUrl": "photo_web/lingerie/max-salvaggio-fotografo-lingerie-020.webp",
+        "thumbnailUrl": "photo_web/campaigns/lingerie/max-salvaggio-fotografo-lingerie-020.webp",
         "title": "Fotografo Lingerie 020",
         "tag": "CAMPAIGNS",
         "width": 682,
@@ -3123,9 +3155,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/lingerie/max-salvaggio-fotografo-lingerie-021.webp",
+        "url": "photo_web/campaigns/lingerie/max-salvaggio-fotografo-lingerie-021.webp",
         "fullResUrl": "photo master/lingerie/max-salvaggio-fotografo-lingerie-021.jpg",
-        "thumbnailUrl": "photo_web/lingerie/max-salvaggio-fotografo-lingerie-021.webp",
+        "thumbnailUrl": "photo_web/campaigns/lingerie/max-salvaggio-fotografo-lingerie-021.webp",
         "title": "Fotografo Lingerie 021",
         "tag": "CAMPAIGNS",
         "width": 683,
@@ -3133,9 +3165,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/lingerie/max-salvaggio-fotografo-lingerie-022.webp",
+        "url": "photo_web/campaigns/lingerie/max-salvaggio-fotografo-lingerie-022.webp",
         "fullResUrl": "photo master/lingerie/max-salvaggio-fotografo-lingerie-022.jpg",
-        "thumbnailUrl": "photo_web/lingerie/max-salvaggio-fotografo-lingerie-022.webp",
+        "thumbnailUrl": "photo_web/campaigns/lingerie/max-salvaggio-fotografo-lingerie-022.webp",
         "title": "Fotografo Lingerie 022",
         "tag": "CAMPAIGNS",
         "width": 1195,
@@ -3143,9 +3175,9 @@ const portfolioData = {
         "is_horizontal": true
       },
       {
-        "url": "photo_web/lingerie/max-salvaggio-fotografo-lingerie-023.webp",
+        "url": "photo_web/campaigns/lingerie/max-salvaggio-fotografo-lingerie-023.webp",
         "fullResUrl": "photo master/lingerie/max-salvaggio-fotografo-lingerie-023.jpg",
-        "thumbnailUrl": "photo_web/lingerie/max-salvaggio-fotografo-lingerie-023.webp",
+        "thumbnailUrl": "photo_web/campaigns/lingerie/max-salvaggio-fotografo-lingerie-023.webp",
         "title": "Fotografo Lingerie 023",
         "tag": "CAMPAIGNS",
         "width": 1536,
@@ -3153,9 +3185,9 @@ const portfolioData = {
         "is_horizontal": true
       },
       {
-        "url": "photo_web/lingerie/max-salvaggio-fotografo-lingerie-024.webp",
+        "url": "photo_web/campaigns/lingerie/max-salvaggio-fotografo-lingerie-024.webp",
         "fullResUrl": "photo master/lingerie/max-salvaggio-fotografo-lingerie-024.jpg",
-        "thumbnailUrl": "photo_web/lingerie/max-salvaggio-fotografo-lingerie-024.webp",
+        "thumbnailUrl": "photo_web/campaigns/lingerie/max-salvaggio-fotografo-lingerie-024.webp",
         "title": "Fotografo Lingerie 024",
         "tag": "CAMPAIGNS",
         "width": 1535,
@@ -3163,9 +3195,9 @@ const portfolioData = {
         "is_horizontal": true
       },
       {
-        "url": "photo_web/lingerie/max-salvaggio-fotografo-lingerie-025.webp",
+        "url": "photo_web/campaigns/lingerie/max-salvaggio-fotografo-lingerie-025.webp",
         "fullResUrl": "photo master/lingerie/max-salvaggio-fotografo-lingerie-025.jpg",
-        "thumbnailUrl": "photo_web/lingerie/max-salvaggio-fotografo-lingerie-025.webp",
+        "thumbnailUrl": "photo_web/campaigns/lingerie/max-salvaggio-fotografo-lingerie-025.webp",
         "title": "Fotografo Lingerie 025",
         "tag": "CAMPAIGNS",
         "width": 772,
@@ -3173,9 +3205,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/lingerie/max-salvaggio-fotografo-lingerie-055.webp",
+        "url": "photo_web/campaigns/lingerie/max-salvaggio-fotografo-lingerie-055.webp",
         "fullResUrl": "photo master/lingerie/max-salvaggio-fotografo-lingerie-055.jpg",
-        "thumbnailUrl": "photo_web/lingerie/max-salvaggio-fotografo-lingerie-055.webp",
+        "thumbnailUrl": "photo_web/campaigns/lingerie/max-salvaggio-fotografo-lingerie-055.webp",
         "title": "Fotografo Lingerie 055",
         "tag": "CAMPAIGNS",
         "width": 819,
@@ -3185,9 +3217,9 @@ const portfolioData = {
     ],
     "swimwear": [
       {
-        "url": "photo_web/swimwear/max-salvaggio-fotografo-swimwear-001.webp",
+        "url": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-001.webp",
         "fullResUrl": "photo master/swimwear/max-salvaggio-fotografo-swimwear-001.jpg",
-        "thumbnailUrl": "photo_web/swimwear/max-salvaggio-fotografo-swimwear-001.webp",
+        "thumbnailUrl": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-001.webp",
         "title": "Fotografo Swimwear 001",
         "tag": "CAMPAIGNS",
         "width": 683,
@@ -3195,9 +3227,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/swimwear/max-salvaggio-fotografo-swimwear-002.webp",
+        "url": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-002.webp",
         "fullResUrl": "photo master/swimwear/max-salvaggio-fotografo-swimwear-002.jpeg",
-        "thumbnailUrl": "photo_web/swimwear/max-salvaggio-fotografo-swimwear-002.webp",
+        "thumbnailUrl": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-002.webp",
         "title": "Fotografo Swimwear 002",
         "tag": "CAMPAIGNS",
         "width": 1024,
@@ -3205,9 +3237,9 @@ const portfolioData = {
         "is_horizontal": true
       },
       {
-        "url": "photo_web/swimwear/max-salvaggio-fotografo-swimwear-003.webp",
+        "url": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-003.webp",
         "fullResUrl": "photo master/swimwear/max-salvaggio-fotografo-swimwear-003.jpg",
-        "thumbnailUrl": "photo_web/swimwear/max-salvaggio-fotografo-swimwear-003.webp",
+        "thumbnailUrl": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-003.webp",
         "title": "Fotografo Swimwear 003",
         "tag": "CAMPAIGNS",
         "width": 1536,
@@ -3215,9 +3247,9 @@ const portfolioData = {
         "is_horizontal": true
       },
       {
-        "url": "photo_web/swimwear/max-salvaggio-fotografo-swimwear-004.webp",
+        "url": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-004.webp",
         "fullResUrl": "photo master/swimwear/max-salvaggio-fotografo-swimwear-004.jpg",
-        "thumbnailUrl": "photo_web/swimwear/max-salvaggio-fotografo-swimwear-004.webp",
+        "thumbnailUrl": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-004.webp",
         "title": "Fotografo Swimwear 004",
         "tag": "CAMPAIGNS",
         "width": 683,
@@ -3225,9 +3257,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/swimwear/max-salvaggio-fotografo-swimwear-005.webp",
+        "url": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-005.webp",
         "fullResUrl": "photo master/swimwear/max-salvaggio-fotografo-swimwear-005.jpg",
-        "thumbnailUrl": "photo_web/swimwear/max-salvaggio-fotografo-swimwear-005.webp",
+        "thumbnailUrl": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-005.webp",
         "title": "Fotografo Swimwear 005",
         "tag": "CAMPAIGNS",
         "width": 683,
@@ -3235,9 +3267,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/swimwear/max-salvaggio-fotografo-swimwear-006.webp",
+        "url": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-006.webp",
         "fullResUrl": "photo master/swimwear/max-salvaggio-fotografo-swimwear-006.jpg",
-        "thumbnailUrl": "photo_web/swimwear/max-salvaggio-fotografo-swimwear-006.webp",
+        "thumbnailUrl": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-006.webp",
         "title": "Fotografo Swimwear 006",
         "tag": "CAMPAIGNS",
         "width": 683,
@@ -3245,9 +3277,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/swimwear/max-salvaggio-fotografo-swimwear-007.webp",
+        "url": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-007.webp",
         "fullResUrl": "photo master/swimwear/max-salvaggio-fotografo-swimwear-007.jpg",
-        "thumbnailUrl": "photo_web/swimwear/max-salvaggio-fotografo-swimwear-007.webp",
+        "thumbnailUrl": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-007.webp",
         "title": "Fotografo Swimwear 007",
         "tag": "CAMPAIGNS",
         "width": 683,
@@ -3255,9 +3287,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/swimwear/max-salvaggio-fotografo-swimwear-008.webp",
+        "url": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-008.webp",
         "fullResUrl": "photo master/swimwear/max-salvaggio-fotografo-swimwear-008.jpg",
-        "thumbnailUrl": "photo_web/swimwear/max-salvaggio-fotografo-swimwear-008.webp",
+        "thumbnailUrl": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-008.webp",
         "title": "Fotografo Swimwear 008",
         "tag": "CAMPAIGNS",
         "width": 683,
@@ -3265,9 +3297,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/swimwear/max-salvaggio-fotografo-swimwear-009.webp",
+        "url": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-009.webp",
         "fullResUrl": "photo master/swimwear/max-salvaggio-fotografo-swimwear-009.jpg",
-        "thumbnailUrl": "photo_web/swimwear/max-salvaggio-fotografo-swimwear-009.webp",
+        "thumbnailUrl": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-009.webp",
         "title": "Fotografo Swimwear 009",
         "tag": "CAMPAIGNS",
         "width": 683,
@@ -3275,9 +3307,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/swimwear/max-salvaggio-fotografo-swimwear-010.webp",
+        "url": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-010.webp",
         "fullResUrl": "photo master/swimwear/max-salvaggio-fotografo-swimwear-010.jpg",
-        "thumbnailUrl": "photo_web/swimwear/max-salvaggio-fotografo-swimwear-010.webp",
+        "thumbnailUrl": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-010.webp",
         "title": "Fotografo Swimwear 010",
         "tag": "CAMPAIGNS",
         "width": 683,
@@ -3285,9 +3317,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/swimwear/max-salvaggio-fotografo-swimwear-011.webp",
+        "url": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-011.webp",
         "fullResUrl": "photo master/swimwear/max-salvaggio-fotografo-swimwear-011.jpg",
-        "thumbnailUrl": "photo_web/swimwear/max-salvaggio-fotografo-swimwear-011.webp",
+        "thumbnailUrl": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-011.webp",
         "title": "Fotografo Swimwear 011",
         "tag": "CAMPAIGNS",
         "width": 683,
@@ -3295,9 +3327,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/swimwear/max-salvaggio-fotografo-swimwear-012.webp",
+        "url": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-012.webp",
         "fullResUrl": "photo master/swimwear/max-salvaggio-fotografo-swimwear-012.jpg",
-        "thumbnailUrl": "photo_web/swimwear/max-salvaggio-fotografo-swimwear-012.webp",
+        "thumbnailUrl": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-012.webp",
         "title": "Fotografo Swimwear 012",
         "tag": "CAMPAIGNS",
         "width": 1536,
@@ -3305,9 +3337,9 @@ const portfolioData = {
         "is_horizontal": true
       },
       {
-        "url": "photo_web/swimwear/max-salvaggio-fotografo-swimwear-013.webp",
+        "url": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-013.webp",
         "fullResUrl": "photo master/swimwear/max-salvaggio-fotografo-swimwear-013.jpg",
-        "thumbnailUrl": "photo_web/swimwear/max-salvaggio-fotografo-swimwear-013.webp",
+        "thumbnailUrl": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-013.webp",
         "title": "Fotografo Swimwear 013",
         "tag": "CAMPAIGNS",
         "width": 819,
@@ -3315,9 +3347,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/swimwear/max-salvaggio-fotografo-swimwear-014.webp",
+        "url": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-014.webp",
         "fullResUrl": "photo master/swimwear/max-salvaggio-fotografo-swimwear-014.jpg",
-        "thumbnailUrl": "photo_web/swimwear/max-salvaggio-fotografo-swimwear-014.webp",
+        "thumbnailUrl": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-014.webp",
         "title": "Fotografo Swimwear 014",
         "tag": "CAMPAIGNS",
         "width": 1536,
@@ -3325,9 +3357,9 @@ const portfolioData = {
         "is_horizontal": true
       },
       {
-        "url": "photo_web/swimwear/max-salvaggio-fotografo-swimwear-015.webp",
+        "url": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-015.webp",
         "fullResUrl": "photo master/swimwear/max-salvaggio-fotografo-swimwear-015.jpg",
-        "thumbnailUrl": "photo_web/swimwear/max-salvaggio-fotografo-swimwear-015.webp",
+        "thumbnailUrl": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-015.webp",
         "title": "Fotografo Swimwear 015",
         "tag": "CAMPAIGNS",
         "width": 683,
@@ -3335,9 +3367,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/swimwear/max-salvaggio-fotografo-swimwear-016.webp",
+        "url": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-016.webp",
         "fullResUrl": "photo master/swimwear/max-salvaggio-fotografo-swimwear-016.jpg",
-        "thumbnailUrl": "photo_web/swimwear/max-salvaggio-fotografo-swimwear-016.webp",
+        "thumbnailUrl": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-016.webp",
         "title": "Fotografo Swimwear 016",
         "tag": "CAMPAIGNS",
         "width": 1536,
@@ -3345,9 +3377,9 @@ const portfolioData = {
         "is_horizontal": true
       },
       {
-        "url": "photo_web/swimwear/max-salvaggio-fotografo-swimwear-017.webp",
+        "url": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-017.webp",
         "fullResUrl": "photo master/swimwear/max-salvaggio-fotografo-swimwear-017.jpg",
-        "thumbnailUrl": "photo_web/swimwear/max-salvaggio-fotografo-swimwear-017.webp",
+        "thumbnailUrl": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-017.webp",
         "title": "Fotografo Swimwear 017",
         "tag": "CAMPAIGNS",
         "width": 683,
@@ -3355,9 +3387,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/swimwear/max-salvaggio-fotografo-swimwear-018.webp",
+        "url": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-018.webp",
         "fullResUrl": "photo master/swimwear/max-salvaggio-fotografo-swimwear-018.jpg",
-        "thumbnailUrl": "photo_web/swimwear/max-salvaggio-fotografo-swimwear-018.webp",
+        "thumbnailUrl": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-018.webp",
         "title": "Fotografo Swimwear 018",
         "tag": "CAMPAIGNS",
         "width": 1536,
@@ -3365,9 +3397,9 @@ const portfolioData = {
         "is_horizontal": true
       },
       {
-        "url": "photo_web/swimwear/max-salvaggio-fotografo-swimwear-019.webp",
+        "url": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-019.webp",
         "fullResUrl": "photo master/swimwear/max-salvaggio-fotografo-swimwear-019.jpg",
-        "thumbnailUrl": "photo_web/swimwear/max-salvaggio-fotografo-swimwear-019.webp",
+        "thumbnailUrl": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-019.webp",
         "title": "Fotografo Swimwear 019",
         "tag": "CAMPAIGNS",
         "width": 751,
@@ -3375,9 +3407,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/swimwear/max-salvaggio-fotografo-swimwear-020.webp",
+        "url": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-020.webp",
         "fullResUrl": "photo master/swimwear/max-salvaggio-fotografo-swimwear-020.jpg",
-        "thumbnailUrl": "photo_web/swimwear/max-salvaggio-fotografo-swimwear-020.webp",
+        "thumbnailUrl": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-020.webp",
         "title": "Fotografo Swimwear 020",
         "tag": "CAMPAIGNS",
         "width": 683,
@@ -3385,9 +3417,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/swimwear/max-salvaggio-fotografo-swimwear-021.webp",
+        "url": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-021.webp",
         "fullResUrl": "photo master/swimwear/max-salvaggio-fotografo-swimwear-021.jpg",
-        "thumbnailUrl": "photo_web/swimwear/max-salvaggio-fotografo-swimwear-021.webp",
+        "thumbnailUrl": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-021.webp",
         "title": "Fotografo Swimwear 021",
         "tag": "CAMPAIGNS",
         "width": 683,
@@ -3395,9 +3427,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/swimwear/max-salvaggio-fotografo-swimwear-022.webp",
+        "url": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-022.webp",
         "fullResUrl": "photo master/swimwear/max-salvaggio-fotografo-swimwear-022.jpg",
-        "thumbnailUrl": "photo_web/swimwear/max-salvaggio-fotografo-swimwear-022.webp",
+        "thumbnailUrl": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-022.webp",
         "title": "Fotografo Swimwear 022",
         "tag": "CAMPAIGNS",
         "width": 683,
@@ -3405,9 +3437,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/swimwear/max-salvaggio-fotografo-swimwear-023.webp",
+        "url": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-023.webp",
         "fullResUrl": "photo master/swimwear/max-salvaggio-fotografo-swimwear-023.jpg",
-        "thumbnailUrl": "photo_web/swimwear/max-salvaggio-fotografo-swimwear-023.webp",
+        "thumbnailUrl": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-023.webp",
         "title": "Fotografo Swimwear 023",
         "tag": "CAMPAIGNS",
         "width": 1536,
@@ -3415,9 +3447,9 @@ const portfolioData = {
         "is_horizontal": true
       },
       {
-        "url": "photo_web/swimwear/max-salvaggio-fotografo-swimwear-024.webp",
+        "url": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-024.webp",
         "fullResUrl": "photo master/swimwear/max-salvaggio-fotografo-swimwear-024.jpg",
-        "thumbnailUrl": "photo_web/swimwear/max-salvaggio-fotografo-swimwear-024.webp",
+        "thumbnailUrl": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-024.webp",
         "title": "Fotografo Swimwear 024",
         "tag": "CAMPAIGNS",
         "width": 683,
@@ -3425,9 +3457,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/swimwear/max-salvaggio-fotografo-swimwear-025.webp",
+        "url": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-025.webp",
         "fullResUrl": "photo master/swimwear/max-salvaggio-fotografo-swimwear-025.jpg",
-        "thumbnailUrl": "photo_web/swimwear/max-salvaggio-fotografo-swimwear-025.webp",
+        "thumbnailUrl": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-025.webp",
         "title": "Fotografo Swimwear 025",
         "tag": "CAMPAIGNS",
         "width": 683,
@@ -3435,9 +3467,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/swimwear/max-salvaggio-fotografo-swimwear-026.webp",
+        "url": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-026.webp",
         "fullResUrl": "photo master/swimwear/max-salvaggio-fotografo-swimwear-026.jpg",
-        "thumbnailUrl": "photo_web/swimwear/max-salvaggio-fotografo-swimwear-026.webp",
+        "thumbnailUrl": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-026.webp",
         "title": "Fotografo Swimwear 026",
         "tag": "CAMPAIGNS",
         "width": 683,
@@ -3445,9 +3477,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/swimwear/max-salvaggio-fotografo-swimwear-027.webp",
+        "url": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-027.webp",
         "fullResUrl": "photo master/swimwear/max-salvaggio-fotografo-swimwear-027.jpg",
-        "thumbnailUrl": "photo_web/swimwear/max-salvaggio-fotografo-swimwear-027.webp",
+        "thumbnailUrl": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-027.webp",
         "title": "Fotografo Swimwear 027",
         "tag": "CAMPAIGNS",
         "width": 683,
@@ -3455,9 +3487,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/swimwear/max-salvaggio-fotografo-swimwear-028.webp",
+        "url": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-028.webp",
         "fullResUrl": "photo master/swimwear/max-salvaggio-fotografo-swimwear-028.jpg",
-        "thumbnailUrl": "photo_web/swimwear/max-salvaggio-fotografo-swimwear-028.webp",
+        "thumbnailUrl": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-028.webp",
         "title": "Fotografo Swimwear 028",
         "tag": "CAMPAIGNS",
         "width": 683,
@@ -3465,9 +3497,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/swimwear/max-salvaggio-fotografo-swimwear-029.webp",
+        "url": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-029.webp",
         "fullResUrl": "photo master/swimwear/max-salvaggio-fotografo-swimwear-029.jpg",
-        "thumbnailUrl": "photo_web/swimwear/max-salvaggio-fotografo-swimwear-029.webp",
+        "thumbnailUrl": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-029.webp",
         "title": "Fotografo Swimwear 029",
         "tag": "CAMPAIGNS",
         "width": 768,
@@ -3475,9 +3507,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/swimwear/max-salvaggio-fotografo-swimwear-030.webp",
+        "url": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-030.webp",
         "fullResUrl": "photo master/swimwear/max-salvaggio-fotografo-swimwear-030.jpg",
-        "thumbnailUrl": "photo_web/swimwear/max-salvaggio-fotografo-swimwear-030.webp",
+        "thumbnailUrl": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-030.webp",
         "title": "Fotografo Swimwear 030",
         "tag": "CAMPAIGNS",
         "width": 768,
@@ -3485,9 +3517,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/swimwear/max-salvaggio-fotografo-swimwear-031.webp",
+        "url": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-031.webp",
         "fullResUrl": "photo master/swimwear/max-salvaggio-fotografo-swimwear-031.jpeg",
-        "thumbnailUrl": "photo_web/swimwear/max-salvaggio-fotografo-swimwear-031.webp",
+        "thumbnailUrl": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-031.webp",
         "title": "Fotografo Swimwear 031",
         "tag": "CAMPAIGNS",
         "width": 682,
@@ -3495,9 +3527,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/swimwear/max-salvaggio-fotografo-swimwear-032.webp",
+        "url": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-032.webp",
         "fullResUrl": "photo master/swimwear/max-salvaggio-fotografo-swimwear-032.jpeg",
-        "thumbnailUrl": "photo_web/swimwear/max-salvaggio-fotografo-swimwear-032.webp",
+        "thumbnailUrl": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-032.webp",
         "title": "Fotografo Swimwear 032",
         "tag": "CAMPAIGNS",
         "width": 1536,
@@ -3505,9 +3537,9 @@ const portfolioData = {
         "is_horizontal": true
       },
       {
-        "url": "photo_web/swimwear/max-salvaggio-fotografo-swimwear-033.webp",
+        "url": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-033.webp",
         "fullResUrl": "photo master/swimwear/max-salvaggio-fotografo-swimwear-033.jpg",
-        "thumbnailUrl": "photo_web/swimwear/max-salvaggio-fotografo-swimwear-033.webp",
+        "thumbnailUrl": "photo_web/campaigns/swimwear/max-salvaggio-fotografo-swimwear-033.webp",
         "title": "Fotografo Swimwear 033",
         "tag": "CAMPAIGNS",
         "width": 1638,
@@ -3519,9 +3551,9 @@ const portfolioData = {
   "body_and_form": {
     "organic_sculptures": [
       {
-        "url": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-001.webp",
+        "url": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-001.webp",
         "fullResUrl": "photo master/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-001.jpg",
-        "thumbnailUrl": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-001.webp",
+        "thumbnailUrl": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-001.webp",
         "title": "Fotografo Nudo Fine Art 001",
         "tag": "BODY & FORM",
         "width": 745,
@@ -3529,9 +3561,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-002.webp",
+        "url": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-002.webp",
         "fullResUrl": "photo master/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-002.jpg",
-        "thumbnailUrl": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-002.webp",
+        "thumbnailUrl": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-002.webp",
         "title": "Fotografo Nudo Fine Art 002",
         "tag": "BODY & FORM",
         "width": 683,
@@ -3539,9 +3571,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-003.webp",
+        "url": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-003.webp",
         "fullResUrl": "photo master/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-003.jpg",
-        "thumbnailUrl": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-003.webp",
+        "thumbnailUrl": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-003.webp",
         "title": "Fotografo Nudo Fine Art 003",
         "tag": "BODY & FORM",
         "width": 1536,
@@ -3549,9 +3581,9 @@ const portfolioData = {
         "is_horizontal": true
       },
       {
-        "url": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-004.webp",
+        "url": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-004.webp",
         "fullResUrl": "photo master/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-004.jpg",
-        "thumbnailUrl": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-004.webp",
+        "thumbnailUrl": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-004.webp",
         "title": "Fotografo Nudo Fine Art 004",
         "tag": "BODY & FORM",
         "width": 683,
@@ -3559,9 +3591,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-005.webp",
+        "url": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-005.webp",
         "fullResUrl": "photo master/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-005.jpg",
-        "thumbnailUrl": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-005.webp",
+        "thumbnailUrl": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-005.webp",
         "title": "Fotografo Nudo Fine Art 005",
         "tag": "BODY & FORM",
         "width": 683,
@@ -3569,9 +3601,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-006.webp",
+        "url": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-006.webp",
         "fullResUrl": "photo master/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-006.jpg",
-        "thumbnailUrl": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-006.webp",
+        "thumbnailUrl": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-006.webp",
         "title": "Fotografo Nudo Fine Art 006",
         "tag": "BODY & FORM",
         "width": 768,
@@ -3579,9 +3611,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-007.webp",
+        "url": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-007.webp",
         "fullResUrl": "photo master/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-007.jpg",
-        "thumbnailUrl": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-007.webp",
+        "thumbnailUrl": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-007.webp",
         "title": "Fotografo Nudo Fine Art 007",
         "tag": "BODY & FORM",
         "width": 1536,
@@ -3589,9 +3621,9 @@ const portfolioData = {
         "is_horizontal": true
       },
       {
-        "url": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-008.webp",
+        "url": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-008.webp",
         "fullResUrl": "photo master/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-008.png",
-        "thumbnailUrl": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-008.webp",
+        "thumbnailUrl": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-008.webp",
         "title": "Fotografo Nudo Fine Art 008",
         "tag": "BODY & FORM",
         "width": 1264,
@@ -3599,9 +3631,9 @@ const portfolioData = {
         "is_horizontal": true
       },
       {
-        "url": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-009.webp",
+        "url": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-009.webp",
         "fullResUrl": "photo master/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-009.jpg",
-        "thumbnailUrl": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-009.webp",
+        "thumbnailUrl": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-009.webp",
         "title": "Fotografo Nudo Fine Art 009",
         "tag": "BODY & FORM",
         "width": 683,
@@ -3609,9 +3641,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-010.webp",
+        "url": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-010.webp",
         "fullResUrl": "photo master/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-010.jpg",
-        "thumbnailUrl": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-010.webp",
+        "thumbnailUrl": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-010.webp",
         "title": "Fotografo Nudo Fine Art 010",
         "tag": "BODY & FORM",
         "width": 683,
@@ -3619,9 +3651,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-011.webp",
+        "url": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-011.webp",
         "fullResUrl": "photo master/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-011.jpg",
-        "thumbnailUrl": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-011.webp",
+        "thumbnailUrl": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-011.webp",
         "title": "Fotografo Nudo Fine Art 011",
         "tag": "BODY & FORM",
         "width": 683,
@@ -3629,9 +3661,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-012.webp",
+        "url": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-012.webp",
         "fullResUrl": "photo master/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-012.jpg",
-        "thumbnailUrl": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-012.webp",
+        "thumbnailUrl": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-012.webp",
         "title": "Fotografo Nudo Fine Art 012",
         "tag": "BODY & FORM",
         "width": 1000,
@@ -3639,9 +3671,9 @@ const portfolioData = {
         "is_horizontal": true
       },
       {
-        "url": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-013.webp",
+        "url": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-013.webp",
         "fullResUrl": "photo master/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-013.jpg",
-        "thumbnailUrl": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-013.webp",
+        "thumbnailUrl": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-013.webp",
         "title": "Fotografo Nudo Fine Art 013",
         "tag": "BODY & FORM",
         "width": 667,
@@ -3649,9 +3681,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-014.webp",
+        "url": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-014.webp",
         "fullResUrl": "photo master/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-014.jpg",
-        "thumbnailUrl": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-014.webp",
+        "thumbnailUrl": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-014.webp",
         "title": "Fotografo Nudo Fine Art 014",
         "tag": "BODY & FORM",
         "width": 1536,
@@ -3659,9 +3691,9 @@ const portfolioData = {
         "is_horizontal": true
       },
       {
-        "url": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-015.webp",
+        "url": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-015.webp",
         "fullResUrl": "photo master/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-015.jpeg",
-        "thumbnailUrl": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-015.webp",
+        "thumbnailUrl": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-015.webp",
         "title": "Fotografo Nudo Fine Art 015",
         "tag": "BODY & FORM",
         "width": 748,
@@ -3669,9 +3701,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-016.webp",
+        "url": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-016.webp",
         "fullResUrl": "photo master/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-016.jpeg",
-        "thumbnailUrl": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-016.webp",
+        "thumbnailUrl": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-016.webp",
         "title": "Fotografo Nudo Fine Art 016",
         "tag": "BODY & FORM",
         "width": 1024,
@@ -3679,9 +3711,9 @@ const portfolioData = {
         "is_horizontal": true
       },
       {
-        "url": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-017.webp",
+        "url": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-017.webp",
         "fullResUrl": "photo master/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-017.jpeg",
-        "thumbnailUrl": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-017.webp",
+        "thumbnailUrl": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-017.webp",
         "title": "Fotografo Nudo Fine Art 017",
         "tag": "BODY & FORM",
         "width": 748,
@@ -3689,9 +3721,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-018.webp",
+        "url": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-018.webp",
         "fullResUrl": "photo master/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-018.jpeg",
-        "thumbnailUrl": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-018.webp",
+        "thumbnailUrl": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-018.webp",
         "title": "Fotografo Nudo Fine Art 018",
         "tag": "BODY & FORM",
         "width": 748,
@@ -3699,9 +3731,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-019.webp",
+        "url": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-019.webp",
         "fullResUrl": "photo master/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-019.jpeg",
-        "thumbnailUrl": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-019.webp",
+        "thumbnailUrl": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-019.webp",
         "title": "Fotografo Nudo Fine Art 019",
         "tag": "BODY & FORM",
         "width": 748,
@@ -3709,9 +3741,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-020.webp",
+        "url": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-020.webp",
         "fullResUrl": "photo master/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-020.jpeg",
-        "thumbnailUrl": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-020.webp",
+        "thumbnailUrl": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-020.webp",
         "title": "Fotografo Nudo Fine Art 020",
         "tag": "BODY & FORM",
         "width": 748,
@@ -3719,9 +3751,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-021.webp",
+        "url": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-021.webp",
         "fullResUrl": "photo master/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-021.jpeg",
-        "thumbnailUrl": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-021.webp",
+        "thumbnailUrl": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-021.webp",
         "title": "Fotografo Nudo Fine Art 021",
         "tag": "BODY & FORM",
         "width": 1024,
@@ -3729,9 +3761,9 @@ const portfolioData = {
         "is_horizontal": true
       },
       {
-        "url": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-022.webp",
+        "url": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-022.webp",
         "fullResUrl": "photo master/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-022.jpeg",
-        "thumbnailUrl": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-022.webp",
+        "thumbnailUrl": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-022.webp",
         "title": "Fotografo Nudo Fine Art 022",
         "tag": "BODY & FORM",
         "width": 748,
@@ -3739,9 +3771,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-023.webp",
+        "url": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-023.webp",
         "fullResUrl": "photo master/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-023.jpeg",
-        "thumbnailUrl": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-023.webp",
+        "thumbnailUrl": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-023.webp",
         "title": "Fotografo Nudo Fine Art 023",
         "tag": "BODY & FORM",
         "width": 748,
@@ -3749,9 +3781,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-024.webp",
+        "url": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-024.webp",
         "fullResUrl": "photo master/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-024.jpeg",
-        "thumbnailUrl": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-024.webp",
+        "thumbnailUrl": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-024.webp",
         "title": "Fotografo Nudo Fine Art 024",
         "tag": "BODY & FORM",
         "width": 748,
@@ -3759,9 +3791,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-025.webp",
+        "url": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-025.webp",
         "fullResUrl": "photo master/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-025.jpeg",
-        "thumbnailUrl": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-025.webp",
+        "thumbnailUrl": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-025.webp",
         "title": "Fotografo Nudo Fine Art 025",
         "tag": "BODY & FORM",
         "width": 1024,
@@ -3769,9 +3801,271 @@ const portfolioData = {
         "is_horizontal": true
       },
       {
-        "url": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-026.webp",
+        "url": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-026.webp",
         "fullResUrl": "photo master/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-026.jpeg",
-        "thumbnailUrl": "photo_web/body/ORGANIC SCULPTURES/max-salvaggio-fotografo-nudo-fine-art-026.webp",
+        "thumbnailUrl": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-026.webp",
+        "title": "Fotografo Nudo Fine Art 026",
+        "tag": "BODY & FORM",
+        "width": 748,
+        "height": 1024,
+        "is_horizontal": false
+      }
+    ],
+    "water_and_stones": [
+      {
+        "url": "photo_web/body/water-and-stones/max-salvaggio-fotografo-nudo-fine-art-001.webp",
+        "fullResUrl": "photo master/body/water-and-stones/max-salvaggio-fotografo-nudo-fine-art-001.jpg",
+        "thumbnailUrl": "photo_web/body/water-and-stones/max-salvaggio-fotografo-nudo-fine-art-001.webp",
+        "title": "Fotografo Nudo Fine Art 001",
+        "tag": "BODY & FORM",
+        "width": 745,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/body/water-and-stones/max-salvaggio-fotografo-nudo-fine-art-002.webp",
+        "fullResUrl": "photo master/body/water-and-stones/max-salvaggio-fotografo-nudo-fine-art-002.jpg",
+        "thumbnailUrl": "photo_web/body/water-and-stones/max-salvaggio-fotografo-nudo-fine-art-002.webp",
+        "title": "Fotografo Nudo Fine Art 002",
+        "tag": "BODY & FORM",
+        "width": 683,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/body/water-and-stones/max-salvaggio-fotografo-nudo-fine-art-003.webp",
+        "fullResUrl": "photo master/body/water-and-stones/max-salvaggio-fotografo-nudo-fine-art-003.jpg",
+        "thumbnailUrl": "photo_web/body/water-and-stones/max-salvaggio-fotografo-nudo-fine-art-003.webp",
+        "title": "Fotografo Nudo Fine Art 003",
+        "tag": "BODY & FORM",
+        "width": 1536,
+        "height": 1024,
+        "is_horizontal": true
+      },
+      {
+        "url": "photo_web/body/water-and-stones/max-salvaggio-fotografo-nudo-fine-art-004.webp",
+        "fullResUrl": "photo master/body/water-and-stones/max-salvaggio-fotografo-nudo-fine-art-004.jpg",
+        "thumbnailUrl": "photo_web/body/water-and-stones/max-salvaggio-fotografo-nudo-fine-art-004.webp",
+        "title": "Fotografo Nudo Fine Art 004",
+        "tag": "BODY & FORM",
+        "width": 683,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/body/water-and-stones/max-salvaggio-fotografo-nudo-fine-art-005.webp",
+        "fullResUrl": "photo master/body/water-and-stones/max-salvaggio-fotografo-nudo-fine-art-005.jpg",
+        "thumbnailUrl": "photo_web/body/water-and-stones/max-salvaggio-fotografo-nudo-fine-art-005.webp",
+        "title": "Fotografo Nudo Fine Art 005",
+        "tag": "BODY & FORM",
+        "width": 683,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/body/water-and-stones/max-salvaggio-fotografo-nudo-fine-art-006.webp",
+        "fullResUrl": "photo master/body/water-and-stones/max-salvaggio-fotografo-nudo-fine-art-006.jpg",
+        "thumbnailUrl": "photo_web/body/water-and-stones/max-salvaggio-fotografo-nudo-fine-art-006.webp",
+        "title": "Fotografo Nudo Fine Art 006",
+        "tag": "BODY & FORM",
+        "width": 768,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/body/water-and-stones/max-salvaggio-fotografo-nudo-fine-art-007.webp",
+        "fullResUrl": "photo master/body/water-and-stones/max-salvaggio-fotografo-nudo-fine-art-007.jpg",
+        "thumbnailUrl": "photo_web/body/water-and-stones/max-salvaggio-fotografo-nudo-fine-art-007.webp",
+        "title": "Fotografo Nudo Fine Art 007",
+        "tag": "BODY & FORM",
+        "width": 1536,
+        "height": 1024,
+        "is_horizontal": true
+      },
+      {
+        "url": "photo_web/body/water-and-stones/max-salvaggio-fotografo-nudo-fine-art-008.webp",
+        "fullResUrl": "photo master/body/water-and-stones/max-salvaggio-fotografo-nudo-fine-art-008.png",
+        "thumbnailUrl": "photo_web/body/water-and-stones/max-salvaggio-fotografo-nudo-fine-art-008.webp",
+        "title": "Fotografo Nudo Fine Art 008",
+        "tag": "BODY & FORM",
+        "width": 1264,
+        "height": 842,
+        "is_horizontal": true
+      },
+      {
+        "url": "photo_web/body/water-and-stones/max-salvaggio-fotografo-nudo-fine-art-009.webp",
+        "fullResUrl": "photo master/body/water-and-stones/max-salvaggio-fotografo-nudo-fine-art-009.jpg",
+        "thumbnailUrl": "photo_web/body/water-and-stones/max-salvaggio-fotografo-nudo-fine-art-009.webp",
+        "title": "Fotografo Nudo Fine Art 009",
+        "tag": "BODY & FORM",
+        "width": 683,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/body/water-and-stones/max-salvaggio-fotografo-nudo-fine-art-010.webp",
+        "fullResUrl": "photo master/body/water-and-stones/max-salvaggio-fotografo-nudo-fine-art-010.jpg",
+        "thumbnailUrl": "photo_web/body/water-and-stones/max-salvaggio-fotografo-nudo-fine-art-010.webp",
+        "title": "Fotografo Nudo Fine Art 010",
+        "tag": "BODY & FORM",
+        "width": 683,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/body/water-and-stones/max-salvaggio-fotografo-nudo-fine-art-011.webp",
+        "fullResUrl": "photo master/body/water-and-stones/max-salvaggio-fotografo-nudo-fine-art-011.jpg",
+        "thumbnailUrl": "photo_web/body/water-and-stones/max-salvaggio-fotografo-nudo-fine-art-011.webp",
+        "title": "Fotografo Nudo Fine Art 011",
+        "tag": "BODY & FORM",
+        "width": 683,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/body/water-and-stones/max-salvaggio-fotografo-nudo-fine-art-012.webp",
+        "fullResUrl": "photo master/body/water-and-stones/max-salvaggio-fotografo-nudo-fine-art-012.jpg",
+        "thumbnailUrl": "photo_web/body/water-and-stones/max-salvaggio-fotografo-nudo-fine-art-012.webp",
+        "title": "Fotografo Nudo Fine Art 012",
+        "tag": "BODY & FORM",
+        "width": 1000,
+        "height": 667,
+        "is_horizontal": true
+      },
+      {
+        "url": "photo_web/body/water-and-stones/max-salvaggio-fotografo-nudo-fine-art-013.webp",
+        "fullResUrl": "photo master/body/water-and-stones/max-salvaggio-fotografo-nudo-fine-art-013.jpg",
+        "thumbnailUrl": "photo_web/body/water-and-stones/max-salvaggio-fotografo-nudo-fine-art-013.webp",
+        "title": "Fotografo Nudo Fine Art 013",
+        "tag": "BODY & FORM",
+        "width": 667,
+        "height": 1000,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/body/water-and-stones/max-salvaggio-fotografo-nudo-fine-art-014.webp",
+        "fullResUrl": "photo master/body/water-and-stones/max-salvaggio-fotografo-nudo-fine-art-014.jpg",
+        "thumbnailUrl": "photo_web/body/water-and-stones/max-salvaggio-fotografo-nudo-fine-art-014.webp",
+        "title": "Fotografo Nudo Fine Art 014",
+        "tag": "BODY & FORM",
+        "width": 1536,
+        "height": 1024,
+        "is_horizontal": true
+      },
+      {
+        "url": "photo_web/body/water-and-stones/max-salvaggio-fotografo-nudo-fine-art-015.webp",
+        "fullResUrl": "photo master/body/water-and-stones/max-salvaggio-fotografo-nudo-fine-art-015.jpeg",
+        "thumbnailUrl": "photo_web/body/water-and-stones/max-salvaggio-fotografo-nudo-fine-art-015.webp",
+        "title": "Fotografo Nudo Fine Art 015",
+        "tag": "BODY & FORM",
+        "width": 748,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/body/water-and-stones/max-salvaggio-fotografo-nudo-fine-art-016.webp",
+        "fullResUrl": "photo master/body/water-and-stones/max-salvaggio-fotografo-nudo-fine-art-016.jpeg",
+        "thumbnailUrl": "photo_web/body/water-and-stones/max-salvaggio-fotografo-nudo-fine-art-016.webp",
+        "title": "Fotografo Nudo Fine Art 016",
+        "tag": "BODY & FORM",
+        "width": 1024,
+        "height": 726,
+        "is_horizontal": true
+      },
+      {
+        "url": "photo_web/body/water-and-stones/max-salvaggio-fotografo-nudo-fine-art-017.webp",
+        "fullResUrl": "photo master/body/water-and-stones/max-salvaggio-fotografo-nudo-fine-art-017.jpeg",
+        "thumbnailUrl": "photo_web/body/water-and-stones/max-salvaggio-fotografo-nudo-fine-art-017.webp",
+        "title": "Fotografo Nudo Fine Art 017",
+        "tag": "BODY & FORM",
+        "width": 748,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/body/water-and-stones/max-salvaggio-fotografo-nudo-fine-art-018.webp",
+        "fullResUrl": "photo master/body/water-and-stones/max-salvaggio-fotografo-nudo-fine-art-018.jpeg",
+        "thumbnailUrl": "photo_web/body/water-and-stones/max-salvaggio-fotografo-nudo-fine-art-018.webp",
+        "title": "Fotografo Nudo Fine Art 018",
+        "tag": "BODY & FORM",
+        "width": 748,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/body/water-and-stones/max-salvaggio-fotografo-nudo-fine-art-019.webp",
+        "fullResUrl": "photo master/body/water-and-stones/max-salvaggio-fotografo-nudo-fine-art-019.jpeg",
+        "thumbnailUrl": "photo_web/body/water-and-stones/max-salvaggio-fotografo-nudo-fine-art-019.webp",
+        "title": "Fotografo Nudo Fine Art 019",
+        "tag": "BODY & FORM",
+        "width": 748,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/body/water-and-stones/max-salvaggio-fotografo-nudo-fine-art-020.webp",
+        "fullResUrl": "photo master/body/water-and-stones/max-salvaggio-fotografo-nudo-fine-art-020.jpeg",
+        "thumbnailUrl": "photo_web/body/water-and-stones/max-salvaggio-fotografo-nudo-fine-art-020.webp",
+        "title": "Fotografo Nudo Fine Art 020",
+        "tag": "BODY & FORM",
+        "width": 748,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/body/water-and-stones/max-salvaggio-fotografo-nudo-fine-art-021.webp",
+        "fullResUrl": "photo master/body/water-and-stones/max-salvaggio-fotografo-nudo-fine-art-021.jpeg",
+        "thumbnailUrl": "photo_web/body/water-and-stones/max-salvaggio-fotografo-nudo-fine-art-021.webp",
+        "title": "Fotografo Nudo Fine Art 021",
+        "tag": "BODY & FORM",
+        "width": 1024,
+        "height": 726,
+        "is_horizontal": true
+      },
+      {
+        "url": "photo_web/body/water-and-stones/max-salvaggio-fotografo-nudo-fine-art-022.webp",
+        "fullResUrl": "photo master/body/water-and-stones/max-salvaggio-fotografo-nudo-fine-art-022.jpeg",
+        "thumbnailUrl": "photo_web/body/water-and-stones/max-salvaggio-fotografo-nudo-fine-art-022.webp",
+        "title": "Fotografo Nudo Fine Art 022",
+        "tag": "BODY & FORM",
+        "width": 748,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/body/water-and-stones/max-salvaggio-fotografo-nudo-fine-art-023.webp",
+        "fullResUrl": "photo master/body/water-and-stones/max-salvaggio-fotografo-nudo-fine-art-023.jpeg",
+        "thumbnailUrl": "photo_web/body/water-and-stones/max-salvaggio-fotografo-nudo-fine-art-023.webp",
+        "title": "Fotografo Nudo Fine Art 023",
+        "tag": "BODY & FORM",
+        "width": 748,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/body/water-and-stones/max-salvaggio-fotografo-nudo-fine-art-024.webp",
+        "fullResUrl": "photo master/body/water-and-stones/max-salvaggio-fotografo-nudo-fine-art-024.jpeg",
+        "thumbnailUrl": "photo_web/body/water-and-stones/max-salvaggio-fotografo-nudo-fine-art-024.webp",
+        "title": "Fotografo Nudo Fine Art 024",
+        "tag": "BODY & FORM",
+        "width": 748,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/body/water-and-stones/max-salvaggio-fotografo-nudo-fine-art-025.webp",
+        "fullResUrl": "photo master/body/water-and-stones/max-salvaggio-fotografo-nudo-fine-art-025.jpeg",
+        "thumbnailUrl": "photo_web/body/water-and-stones/max-salvaggio-fotografo-nudo-fine-art-025.webp",
+        "title": "Fotografo Nudo Fine Art 025",
+        "tag": "BODY & FORM",
+        "width": 1024,
+        "height": 726,
+        "is_horizontal": true
+      },
+      {
+        "url": "photo_web/body/water-and-stones/max-salvaggio-fotografo-nudo-fine-art-026.webp",
+        "fullResUrl": "photo master/body/water-and-stones/max-salvaggio-fotografo-nudo-fine-art-026.jpeg",
+        "thumbnailUrl": "photo_web/body/water-and-stones/max-salvaggio-fotografo-nudo-fine-art-026.webp",
         "title": "Fotografo Nudo Fine Art 026",
         "tag": "BODY & FORM",
         "width": 748,
@@ -3781,9 +4075,9 @@ const portfolioData = {
     ],
     "shadows_and_graphic_intimacy": [
       {
-        "url": "photo_web/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-001.webp",
+        "url": "photo_web/body/shadows & graphic intimacy/max-salvaggio-fotografo-nude-fine-art-001.webp",
         "fullResUrl": "photo master/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-001.jpeg",
-        "thumbnailUrl": "photo_web/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-001.webp",
+        "thumbnailUrl": "photo_web/body/shadows & graphic intimacy/max-salvaggio-fotografo-nude-fine-art-001.webp",
         "title": "Fotografo Nude Fine Art 001",
         "tag": "BODY & FORM",
         "width": 682,
@@ -3791,9 +4085,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-002.webp",
+        "url": "photo_web/body/shadows & graphic intimacy/max-salvaggio-fotografo-nude-fine-art-002.webp",
         "fullResUrl": "photo master/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-002.jpeg",
-        "thumbnailUrl": "photo_web/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-002.webp",
+        "thumbnailUrl": "photo_web/body/shadows & graphic intimacy/max-salvaggio-fotografo-nude-fine-art-002.webp",
         "title": "Fotografo Nude Fine Art 002",
         "tag": "BODY & FORM",
         "width": 748,
@@ -3801,9 +4095,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-003.webp",
+        "url": "photo_web/body/shadows & graphic intimacy/max-salvaggio-fotografo-nude-fine-art-003.webp",
         "fullResUrl": "photo master/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-003.jpeg",
-        "thumbnailUrl": "photo_web/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-003.webp",
+        "thumbnailUrl": "photo_web/body/shadows & graphic intimacy/max-salvaggio-fotografo-nude-fine-art-003.webp",
         "title": "Fotografo Nude Fine Art 003",
         "tag": "BODY & FORM",
         "width": 748,
@@ -3811,9 +4105,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-004.webp",
+        "url": "photo_web/body/shadows & graphic intimacy/max-salvaggio-fotografo-nude-fine-art-004.webp",
         "fullResUrl": "photo master/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-004.jpeg",
-        "thumbnailUrl": "photo_web/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-004.webp",
+        "thumbnailUrl": "photo_web/body/shadows & graphic intimacy/max-salvaggio-fotografo-nude-fine-art-004.webp",
         "title": "Fotografo Nude Fine Art 004",
         "tag": "BODY & FORM",
         "width": 748,
@@ -3821,9 +4115,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-005.webp",
+        "url": "photo_web/body/shadows & graphic intimacy/max-salvaggio-fotografo-nude-fine-art-005.webp",
         "fullResUrl": "photo master/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-005.jpeg",
-        "thumbnailUrl": "photo_web/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-005.webp",
+        "thumbnailUrl": "photo_web/body/shadows & graphic intimacy/max-salvaggio-fotografo-nude-fine-art-005.webp",
         "title": "Fotografo Nude Fine Art 005",
         "tag": "BODY & FORM",
         "width": 748,
@@ -3831,9 +4125,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-006.webp",
+        "url": "photo_web/body/shadows & graphic intimacy/max-salvaggio-fotografo-nude-fine-art-006.webp",
         "fullResUrl": "photo master/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-006.jpg",
-        "thumbnailUrl": "photo_web/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-006.webp",
+        "thumbnailUrl": "photo_web/body/shadows & graphic intimacy/max-salvaggio-fotografo-nude-fine-art-006.webp",
         "title": "Fotografo Nude Fine Art 006",
         "tag": "BODY & FORM",
         "width": 747,
@@ -3841,9 +4135,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-007.webp",
+        "url": "photo_web/body/shadows & graphic intimacy/max-salvaggio-fotografo-nude-fine-art-007.webp",
         "fullResUrl": "photo master/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-007.jpeg",
-        "thumbnailUrl": "photo_web/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-007.webp",
+        "thumbnailUrl": "photo_web/body/shadows & graphic intimacy/max-salvaggio-fotografo-nude-fine-art-007.webp",
         "title": "Fotografo Nude Fine Art 007",
         "tag": "BODY & FORM",
         "width": 748,
@@ -3851,9 +4145,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-008.webp",
+        "url": "photo_web/body/shadows & graphic intimacy/max-salvaggio-fotografo-nude-fine-art-008.webp",
         "fullResUrl": "photo master/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-008.jpeg",
-        "thumbnailUrl": "photo_web/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-008.webp",
+        "thumbnailUrl": "photo_web/body/shadows & graphic intimacy/max-salvaggio-fotografo-nude-fine-art-008.webp",
         "title": "Fotografo Nude Fine Art 008",
         "tag": "BODY & FORM",
         "width": 748,
@@ -3861,9 +4155,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-009.webp",
+        "url": "photo_web/body/shadows & graphic intimacy/max-salvaggio-fotografo-nude-fine-art-009.webp",
         "fullResUrl": "photo master/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-009.jpeg",
-        "thumbnailUrl": "photo_web/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-009.webp",
+        "thumbnailUrl": "photo_web/body/shadows & graphic intimacy/max-salvaggio-fotografo-nude-fine-art-009.webp",
         "title": "Fotografo Nude Fine Art 009",
         "tag": "BODY & FORM",
         "width": 748,
@@ -3871,9 +4165,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-010.webp",
+        "url": "photo_web/body/shadows & graphic intimacy/max-salvaggio-fotografo-nude-fine-art-010.webp",
         "fullResUrl": "photo master/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-010.jpeg",
-        "thumbnailUrl": "photo_web/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-010.webp",
+        "thumbnailUrl": "photo_web/body/shadows & graphic intimacy/max-salvaggio-fotografo-nude-fine-art-010.webp",
         "title": "Fotografo Nude Fine Art 010",
         "tag": "BODY & FORM",
         "width": 1024,
@@ -3881,9 +4175,9 @@ const portfolioData = {
         "is_horizontal": true
       },
       {
-        "url": "photo_web/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-011.webp",
+        "url": "photo_web/body/shadows & graphic intimacy/max-salvaggio-fotografo-nude-fine-art-011.webp",
         "fullResUrl": "photo master/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-011.jpeg",
-        "thumbnailUrl": "photo_web/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-011.webp",
+        "thumbnailUrl": "photo_web/body/shadows & graphic intimacy/max-salvaggio-fotografo-nude-fine-art-011.webp",
         "title": "Fotografo Nude Fine Art 011",
         "tag": "BODY & FORM",
         "width": 748,
@@ -3891,9 +4185,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-012.webp",
+        "url": "photo_web/body/shadows & graphic intimacy/max-salvaggio-fotografo-nude-fine-art-012.webp",
         "fullResUrl": "photo master/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-012.jpeg",
-        "thumbnailUrl": "photo_web/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-012.webp",
+        "thumbnailUrl": "photo_web/body/shadows & graphic intimacy/max-salvaggio-fotografo-nude-fine-art-012.webp",
         "title": "Fotografo Nude Fine Art 012",
         "tag": "BODY & FORM",
         "width": 748,
@@ -3901,9 +4195,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-013.webp",
+        "url": "photo_web/body/shadows & graphic intimacy/max-salvaggio-fotografo-nude-fine-art-013.webp",
         "fullResUrl": "photo master/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-013.jpg",
-        "thumbnailUrl": "photo_web/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-013.webp",
+        "thumbnailUrl": "photo_web/body/shadows & graphic intimacy/max-salvaggio-fotografo-nude-fine-art-013.webp",
         "title": "Fotografo Nude Fine Art 013",
         "tag": "BODY & FORM",
         "width": 427,
@@ -3911,9 +4205,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-014.webp",
+        "url": "photo_web/body/shadows & graphic intimacy/max-salvaggio-fotografo-nude-fine-art-014.webp",
         "fullResUrl": "photo master/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-014.jpg",
-        "thumbnailUrl": "photo_web/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-014.webp",
+        "thumbnailUrl": "photo_web/body/shadows & graphic intimacy/max-salvaggio-fotografo-nude-fine-art-014.webp",
         "title": "Fotografo Nude Fine Art 014",
         "tag": "BODY & FORM",
         "width": 827,
@@ -3921,9 +4215,161 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-015.webp",
+        "url": "photo_web/body/shadows & graphic intimacy/max-salvaggio-fotografo-nude-fine-art-015.webp",
         "fullResUrl": "photo master/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-015.jpg",
-        "thumbnailUrl": "photo_web/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-015.webp",
+        "thumbnailUrl": "photo_web/body/shadows & graphic intimacy/max-salvaggio-fotografo-nude-fine-art-015.webp",
+        "title": "Fotografo Nude Fine Art 015",
+        "tag": "BODY & FORM",
+        "width": 682,
+        "height": 1024,
+        "is_horizontal": false
+      }
+    ],
+    "shadows_&_graphic_intimacy": [
+      {
+        "url": "photo_web/body/shadows & graphic intimacy/max-salvaggio-fotografo-nude-fine-art-001.webp",
+        "fullResUrl": "photo master/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-001.jpeg",
+        "thumbnailUrl": "photo_web/body/shadows & graphic intimacy/max-salvaggio-fotografo-nude-fine-art-001.webp",
+        "title": "Fotografo Nude Fine Art 001",
+        "tag": "BODY & FORM",
+        "width": 682,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/body/shadows & graphic intimacy/max-salvaggio-fotografo-nude-fine-art-002.webp",
+        "fullResUrl": "photo master/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-002.jpeg",
+        "thumbnailUrl": "photo_web/body/shadows & graphic intimacy/max-salvaggio-fotografo-nude-fine-art-002.webp",
+        "title": "Fotografo Nude Fine Art 002",
+        "tag": "BODY & FORM",
+        "width": 748,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/body/shadows & graphic intimacy/max-salvaggio-fotografo-nude-fine-art-003.webp",
+        "fullResUrl": "photo master/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-003.jpeg",
+        "thumbnailUrl": "photo_web/body/shadows & graphic intimacy/max-salvaggio-fotografo-nude-fine-art-003.webp",
+        "title": "Fotografo Nude Fine Art 003",
+        "tag": "BODY & FORM",
+        "width": 748,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/body/shadows & graphic intimacy/max-salvaggio-fotografo-nude-fine-art-004.webp",
+        "fullResUrl": "photo master/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-004.jpeg",
+        "thumbnailUrl": "photo_web/body/shadows & graphic intimacy/max-salvaggio-fotografo-nude-fine-art-004.webp",
+        "title": "Fotografo Nude Fine Art 004",
+        "tag": "BODY & FORM",
+        "width": 748,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/body/shadows & graphic intimacy/max-salvaggio-fotografo-nude-fine-art-005.webp",
+        "fullResUrl": "photo master/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-005.jpeg",
+        "thumbnailUrl": "photo_web/body/shadows & graphic intimacy/max-salvaggio-fotografo-nude-fine-art-005.webp",
+        "title": "Fotografo Nude Fine Art 005",
+        "tag": "BODY & FORM",
+        "width": 748,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/body/shadows & graphic intimacy/max-salvaggio-fotografo-nude-fine-art-006.webp",
+        "fullResUrl": "photo master/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-006.jpg",
+        "thumbnailUrl": "photo_web/body/shadows & graphic intimacy/max-salvaggio-fotografo-nude-fine-art-006.webp",
+        "title": "Fotografo Nude Fine Art 006",
+        "tag": "BODY & FORM",
+        "width": 747,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/body/shadows & graphic intimacy/max-salvaggio-fotografo-nude-fine-art-007.webp",
+        "fullResUrl": "photo master/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-007.jpeg",
+        "thumbnailUrl": "photo_web/body/shadows & graphic intimacy/max-salvaggio-fotografo-nude-fine-art-007.webp",
+        "title": "Fotografo Nude Fine Art 007",
+        "tag": "BODY & FORM",
+        "width": 748,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/body/shadows & graphic intimacy/max-salvaggio-fotografo-nude-fine-art-008.webp",
+        "fullResUrl": "photo master/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-008.jpeg",
+        "thumbnailUrl": "photo_web/body/shadows & graphic intimacy/max-salvaggio-fotografo-nude-fine-art-008.webp",
+        "title": "Fotografo Nude Fine Art 008",
+        "tag": "BODY & FORM",
+        "width": 748,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/body/shadows & graphic intimacy/max-salvaggio-fotografo-nude-fine-art-009.webp",
+        "fullResUrl": "photo master/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-009.jpeg",
+        "thumbnailUrl": "photo_web/body/shadows & graphic intimacy/max-salvaggio-fotografo-nude-fine-art-009.webp",
+        "title": "Fotografo Nude Fine Art 009",
+        "tag": "BODY & FORM",
+        "width": 748,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/body/shadows & graphic intimacy/max-salvaggio-fotografo-nude-fine-art-010.webp",
+        "fullResUrl": "photo master/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-010.jpeg",
+        "thumbnailUrl": "photo_web/body/shadows & graphic intimacy/max-salvaggio-fotografo-nude-fine-art-010.webp",
+        "title": "Fotografo Nude Fine Art 010",
+        "tag": "BODY & FORM",
+        "width": 1024,
+        "height": 726,
+        "is_horizontal": true
+      },
+      {
+        "url": "photo_web/body/shadows & graphic intimacy/max-salvaggio-fotografo-nude-fine-art-011.webp",
+        "fullResUrl": "photo master/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-011.jpeg",
+        "thumbnailUrl": "photo_web/body/shadows & graphic intimacy/max-salvaggio-fotografo-nude-fine-art-011.webp",
+        "title": "Fotografo Nude Fine Art 011",
+        "tag": "BODY & FORM",
+        "width": 748,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/body/shadows & graphic intimacy/max-salvaggio-fotografo-nude-fine-art-012.webp",
+        "fullResUrl": "photo master/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-012.jpeg",
+        "thumbnailUrl": "photo_web/body/shadows & graphic intimacy/max-salvaggio-fotografo-nude-fine-art-012.webp",
+        "title": "Fotografo Nude Fine Art 012",
+        "tag": "BODY & FORM",
+        "width": 748,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/body/shadows & graphic intimacy/max-salvaggio-fotografo-nude-fine-art-013.webp",
+        "fullResUrl": "photo master/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-013.jpg",
+        "thumbnailUrl": "photo_web/body/shadows & graphic intimacy/max-salvaggio-fotografo-nude-fine-art-013.webp",
+        "title": "Fotografo Nude Fine Art 013",
+        "tag": "BODY & FORM",
+        "width": 427,
+        "height": 640,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/body/shadows & graphic intimacy/max-salvaggio-fotografo-nude-fine-art-014.webp",
+        "fullResUrl": "photo master/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-014.jpg",
+        "thumbnailUrl": "photo_web/body/shadows & graphic intimacy/max-salvaggio-fotografo-nude-fine-art-014.webp",
+        "title": "Fotografo Nude Fine Art 014",
+        "tag": "BODY & FORM",
+        "width": 827,
+        "height": 1024,
+        "is_horizontal": false
+      },
+      {
+        "url": "photo_web/body/shadows & graphic intimacy/max-salvaggio-fotografo-nude-fine-art-015.webp",
+        "fullResUrl": "photo master/body/SHADOWS & GRAPHIC INTIMACY/max-salvaggio-fotografo-nude-fine-art-015.jpg",
+        "thumbnailUrl": "photo_web/body/shadows & graphic intimacy/max-salvaggio-fotografo-nude-fine-art-015.webp",
         "title": "Fotografo Nude Fine Art 015",
         "tag": "BODY & FORM",
         "width": 682,
@@ -3935,9 +4381,9 @@ const portfolioData = {
   "portraits_and_beauty": {
     "portraits": [
       {
-        "url": "photo_web/portraits/portraits I/max-salvaggio-fotografo-beauty-001.webp",
+        "url": "photo_web/portraits/portraits i/max-salvaggio-fotografo-beauty-001.webp",
         "fullResUrl": "photo master/portraits/portraits I/max-salvaggio-fotografo-beauty-001.jpg",
-        "thumbnailUrl": "photo_web/portraits/portraits I/max-salvaggio-fotografo-beauty-001.webp",
+        "thumbnailUrl": "photo_web/portraits/portraits i/max-salvaggio-fotografo-beauty-001.webp",
         "title": "Fotografo Beauty 001",
         "tag": "PORTRAITS",
         "width": 686,
@@ -3945,9 +4391,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/portraits/portraits I/max-salvaggio-fotografo-beauty-005.webp",
+        "url": "photo_web/portraits/portraits i/max-salvaggio-fotografo-beauty-005.webp",
         "fullResUrl": "photo master/portraits/portraits I/max-salvaggio-fotografo-beauty-005.jpg",
-        "thumbnailUrl": "photo_web/portraits/portraits I/max-salvaggio-fotografo-beauty-005.webp",
+        "thumbnailUrl": "photo_web/portraits/portraits i/max-salvaggio-fotografo-beauty-005.webp",
         "title": "Fotografo Beauty 005",
         "tag": "PORTRAITS",
         "width": 819,
@@ -3955,9 +4401,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/portraits/portraits I/max-salvaggio-fotografo-beauty-006.webp",
+        "url": "photo_web/portraits/portraits i/max-salvaggio-fotografo-beauty-006.webp",
         "fullResUrl": "photo master/portraits/portraits I/max-salvaggio-fotografo-beauty-006.jpg",
-        "thumbnailUrl": "photo_web/portraits/portraits I/max-salvaggio-fotografo-beauty-006.webp",
+        "thumbnailUrl": "photo_web/portraits/portraits i/max-salvaggio-fotografo-beauty-006.webp",
         "title": "Fotografo Beauty 006",
         "tag": "PORTRAITS",
         "width": 785,
@@ -3965,9 +4411,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/portraits/portraits I/max-salvaggio-fotografo-beauty-008.webp",
+        "url": "photo_web/portraits/portraits i/max-salvaggio-fotografo-beauty-008.webp",
         "fullResUrl": "photo master/portraits/portraits I/max-salvaggio-fotografo-beauty-008.jpg",
-        "thumbnailUrl": "photo_web/portraits/portraits I/max-salvaggio-fotografo-beauty-008.webp",
+        "thumbnailUrl": "photo_web/portraits/portraits i/max-salvaggio-fotografo-beauty-008.webp",
         "title": "Fotografo Beauty 008",
         "tag": "PORTRAITS",
         "width": 567,
@@ -3975,9 +4421,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/portraits/portraits I/max-salvaggio-fotografo-beauty-009.webp",
+        "url": "photo_web/portraits/portraits i/max-salvaggio-fotografo-beauty-009.webp",
         "fullResUrl": "photo master/portraits/portraits I/max-salvaggio-fotografo-beauty-009.jpg",
-        "thumbnailUrl": "photo_web/portraits/portraits I/max-salvaggio-fotografo-beauty-009.webp",
+        "thumbnailUrl": "photo_web/portraits/portraits i/max-salvaggio-fotografo-beauty-009.webp",
         "title": "Fotografo Beauty 009",
         "tag": "PORTRAITS",
         "width": 682,
@@ -3985,9 +4431,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/portraits/portraits I/max-salvaggio-fotografo-beauty-014.webp",
+        "url": "photo_web/portraits/portraits i/max-salvaggio-fotografo-beauty-014.webp",
         "fullResUrl": "photo master/portraits/portraits I/max-salvaggio-fotografo-beauty-014.jpg",
-        "thumbnailUrl": "photo_web/portraits/portraits I/max-salvaggio-fotografo-beauty-014.webp",
+        "thumbnailUrl": "photo_web/portraits/portraits i/max-salvaggio-fotografo-beauty-014.webp",
         "title": "Fotografo Beauty 014",
         "tag": "PORTRAITS",
         "width": 426,
@@ -3995,9 +4441,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/portraits/portraits I/max-salvaggio-fotografo-beauty-016.webp",
+        "url": "photo_web/portraits/portraits i/max-salvaggio-fotografo-beauty-016.webp",
         "fullResUrl": "photo master/portraits/portraits I/max-salvaggio-fotografo-beauty-016.jpg",
-        "thumbnailUrl": "photo_web/portraits/portraits I/max-salvaggio-fotografo-beauty-016.webp",
+        "thumbnailUrl": "photo_web/portraits/portraits i/max-salvaggio-fotografo-beauty-016.webp",
         "title": "Fotografo Beauty 016",
         "tag": "PORTRAITS",
         "width": 640,
@@ -4005,9 +4451,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/portraits/portraits I/max-salvaggio-fotografo-beauty-017.webp",
+        "url": "photo_web/portraits/portraits i/max-salvaggio-fotografo-beauty-017.webp",
         "fullResUrl": "photo master/portraits/portraits I/max-salvaggio-fotografo-beauty-017.jpg",
-        "thumbnailUrl": "photo_web/portraits/portraits I/max-salvaggio-fotografo-beauty-017.webp",
+        "thumbnailUrl": "photo_web/portraits/portraits i/max-salvaggio-fotografo-beauty-017.webp",
         "title": "Fotografo Beauty 017",
         "tag": "PORTRAITS",
         "width": 683,
@@ -4015,9 +4461,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/portraits/portraits I/max-salvaggio-fotografo-beauty-018.webp",
+        "url": "photo_web/portraits/portraits i/max-salvaggio-fotografo-beauty-018.webp",
         "fullResUrl": "photo master/portraits/portraits I/max-salvaggio-fotografo-beauty-018.jpg",
-        "thumbnailUrl": "photo_web/portraits/portraits I/max-salvaggio-fotografo-beauty-018.webp",
+        "thumbnailUrl": "photo_web/portraits/portraits i/max-salvaggio-fotografo-beauty-018.webp",
         "title": "Fotografo Beauty 018",
         "tag": "PORTRAITS",
         "width": 683,
@@ -4025,9 +4471,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/portraits/portraits I/max-salvaggio-fotografo-beauty-ray-bitancourt-021.webp",
+        "url": "photo_web/portraits/portraits i/max-salvaggio-fotografo-beauty-ray-bitancourt-021.webp",
         "fullResUrl": "photo master/portraits/portraits I/max-salvaggio-fotografo-beauty-ray-bitancourt-021.jpg",
-        "thumbnailUrl": "photo_web/portraits/portraits I/max-salvaggio-fotografo-beauty-ray-bitancourt-021.webp",
+        "thumbnailUrl": "photo_web/portraits/portraits i/max-salvaggio-fotografo-beauty-ray-bitancourt-021.webp",
         "title": "Fotografo Beauty Ray Bitancourt 021",
         "tag": "PORTRAITS",
         "width": 819,
@@ -4035,9 +4481,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/portraits/portraits I/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-mexico-095.webp",
+        "url": "photo_web/portraits/portraits i/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-mexico-095.webp",
         "fullResUrl": "photo master/portraits/portraits I/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-mexico-095.jpeg",
-        "thumbnailUrl": "photo_web/portraits/portraits I/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-mexico-095.webp",
+        "thumbnailUrl": "photo_web/portraits/portraits i/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-mexico-095.webp",
         "title": "Fotografo Moda Grazia Daniela De Jesus Mexico 095",
         "tag": "PORTRAITS",
         "width": 682,
@@ -4045,9 +4491,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/portraits/portraits I/max-salvaggio-fotografo-portrait-001.webp",
+        "url": "photo_web/portraits/portraits i/max-salvaggio-fotografo-portrait-001.webp",
         "fullResUrl": "photo master/portraits/portraits I/max-salvaggio-fotografo-portrait-001.jpg",
-        "thumbnailUrl": "photo_web/portraits/portraits I/max-salvaggio-fotografo-portrait-001.webp",
+        "thumbnailUrl": "photo_web/portraits/portraits i/max-salvaggio-fotografo-portrait-001.webp",
         "title": "Fotografo Portrait 001",
         "tag": "PORTRAITS",
         "width": 683,
@@ -4055,9 +4501,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/portraits/portraits I/max-salvaggio-fotografo-portrait-003.webp",
+        "url": "photo_web/portraits/portraits i/max-salvaggio-fotografo-portrait-003.webp",
         "fullResUrl": "photo master/portraits/portraits I/max-salvaggio-fotografo-portrait-003.jpg",
-        "thumbnailUrl": "photo_web/portraits/portraits I/max-salvaggio-fotografo-portrait-003.webp",
+        "thumbnailUrl": "photo_web/portraits/portraits i/max-salvaggio-fotografo-portrait-003.webp",
         "title": "Fotografo Portrait 003",
         "tag": "PORTRAITS",
         "width": 683,
@@ -4065,9 +4511,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/portraits/portraits I/max-salvaggio-fotografo-portrait-004.webp",
+        "url": "photo_web/portraits/portraits i/max-salvaggio-fotografo-portrait-004.webp",
         "fullResUrl": "photo master/portraits/portraits I/max-salvaggio-fotografo-portrait-004.jpg",
-        "thumbnailUrl": "photo_web/portraits/portraits I/max-salvaggio-fotografo-portrait-004.webp",
+        "thumbnailUrl": "photo_web/portraits/portraits i/max-salvaggio-fotografo-portrait-004.webp",
         "title": "Fotografo Portrait 004",
         "tag": "PORTRAITS",
         "width": 683,
@@ -4075,9 +4521,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/portraits/portraits I/max-salvaggio-fotografo-portrait-005.webp",
+        "url": "photo_web/portraits/portraits i/max-salvaggio-fotografo-portrait-005.webp",
         "fullResUrl": "photo master/portraits/portraits I/max-salvaggio-fotografo-portrait-005.jpg",
-        "thumbnailUrl": "photo_web/portraits/portraits I/max-salvaggio-fotografo-portrait-005.webp",
+        "thumbnailUrl": "photo_web/portraits/portraits i/max-salvaggio-fotografo-portrait-005.webp",
         "title": "Fotografo Portrait 005",
         "tag": "PORTRAITS",
         "width": 683,
@@ -4085,9 +4531,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/portraits/portraits I/max-salvaggio-fotografo-portrait-006.webp",
+        "url": "photo_web/portraits/portraits i/max-salvaggio-fotografo-portrait-006.webp",
         "fullResUrl": "photo master/portraits/portraits I/max-salvaggio-fotografo-portrait-006.jpg",
-        "thumbnailUrl": "photo_web/portraits/portraits I/max-salvaggio-fotografo-portrait-006.webp",
+        "thumbnailUrl": "photo_web/portraits/portraits i/max-salvaggio-fotografo-portrait-006.webp",
         "title": "Fotografo Portrait 006",
         "tag": "PORTRAITS",
         "width": 683,
@@ -4095,9 +4541,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/portraits/portraits I/max-salvaggio-fotografo-portrait-007.webp",
+        "url": "photo_web/portraits/portraits i/max-salvaggio-fotografo-portrait-007.webp",
         "fullResUrl": "photo master/portraits/portraits I/max-salvaggio-fotografo-portrait-007.jpg",
-        "thumbnailUrl": "photo_web/portraits/portraits I/max-salvaggio-fotografo-portrait-007.webp",
+        "thumbnailUrl": "photo_web/portraits/portraits i/max-salvaggio-fotografo-portrait-007.webp",
         "title": "Fotografo Portrait 007",
         "tag": "PORTRAITS",
         "width": 683,
@@ -4105,9 +4551,9 @@ const portfolioData = {
         "is_horizontal": false
       },
       {
-        "url": "photo_web/portraits/portraits I/max-salvaggio-fotografo-portrait-cane-jessica-4.webp",
+        "url": "photo_web/portraits/portraits i/max-salvaggio-fotografo-portrait-cane-jessica-4.webp",
         "fullResUrl": "photo master/portraits/portraits I/max-salvaggio-fotografo-portrait-cane-jessica-4.jpg",
-        "thumbnailUrl": "photo_web/portraits/portraits I/max-salvaggio-fotografo-portrait-cane-jessica-4.webp",
+        "thumbnailUrl": "photo_web/portraits/portraits i/max-salvaggio-fotografo-portrait-cane-jessica-4.webp",
         "title": "Fotografo Portrait Cane Jessica 4",
         "tag": "PORTRAITS",
         "width": 768,
@@ -4469,5 +4915,181 @@ const portfolioData = {
         "is_horizontal": false
       }
     ]
+  },
+  "categories_meta": {
+    "body/organic sculptures": {
+      "title": "Organic Sculptures",
+      "cover": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-001.webp",
+      "preview_icon": "photo_web/body/organic sculptures/max-salvaggio-fotografo-nudo-fine-art-001.webp",
+      "count": 26
+    },
+    "body/shadows & graphic intimacy": {
+      "title": "Shadows & Graphic Intimacy",
+      "cover": "photo_web/body/shadows & graphic intimacy/max-salvaggio-fotografo-nude-fine-art-001.webp",
+      "preview_icon": "photo_web/body/shadows & graphic intimacy/max-salvaggio-fotografo-nude-fine-art-001.webp",
+      "count": 15
+    },
+    "body/water-and-stones": {
+      "title": "Water & Stones",
+      "cover": "photo_web/body/water-and-stones/max-salvaggio-fotografo-nudo-fine-art-001.webp",
+      "preview_icon": "photo_web/body/water-and-stones/max-salvaggio-fotografo-nudo-fine-art-001.webp",
+      "count": 26
+    },
+    "campaigns": {
+      "title": "Campaigns",
+      "cover": "photo_web/campaigns/max-salvaggio-fotografo-adv-bag-dee-ocleppo.webp",
+      "preview_icon": "photo_web/campaigns/max-salvaggio-fotografo-adv-bag-dee-ocleppo.webp",
+      "count": 6
+    },
+    "editorials/covers": {
+      "title": "Covers",
+      "cover": "photo_web/editorials/covers/max-salvaggio-fotografo-moda-grazia-cover-38.webp",
+      "preview_icon": "photo_web/editorials/covers/max-salvaggio-fotografo-moda-grazia-cover-38.webp",
+      "count": 6
+    },
+    "editorials/moda-grazia-bianco": {
+      "title": "Moda Grazia Bianco",
+      "cover": "photo_web/editorials/moda-grazia-bianco/max-salvaggio-fotografo-moda-grazia-hong-kong-007.webp",
+      "preview_icon": "photo_web/editorials/moda-grazia-bianco/max-salvaggio-fotografo-moda-grazia-hong-kong-007.webp",
+      "count": 11
+    },
+    "editorials/moda-grazia-bon_ton-grinta": {
+      "title": "Moda Grazia Bon Ton Grinta",
+      "cover": "photo_web/editorials/moda-grazia-bon_ton-grinta/max-salvaggio-fotografo-moda-grazia-sharm-el-sheik-egypt-018.webp",
+      "preview_icon": "photo_web/editorials/moda-grazia-bon_ton-grinta/max-salvaggio-fotografo-moda-grazia-sharm-el-sheik-egypt-018.webp",
+      "count": 6
+    },
+    "editorials/moda-grazia-dettaglio": {
+      "title": "Moda Grazia Dettaglio",
+      "cover": "photo_web/editorials/moda-grazia-dettaglio/max-salvaggio-fotografo-moda-grazia-cover-miami-001.webp",
+      "preview_icon": "photo_web/editorials/moda-grazia-dettaglio/max-salvaggio-fotografo-moda-grazia-cover-miami-001.webp",
+      "count": 6
+    },
+    "editorials/moda-grazia-etnico-dark": {
+      "title": "Moda Grazia Etnico Dark",
+      "cover": "photo_web/editorials/moda-grazia-etnico-dark/max-salvaggio-fotografo-moda-grazia-cover-daniela-de-jesus-cosio-mexico-028.webp",
+      "preview_icon": "photo_web/editorials/moda-grazia-etnico-dark/max-salvaggio-fotografo-moda-grazia-cover-daniela-de-jesus-cosio-mexico-028.webp",
+      "count": 13
+    },
+    "editorials/moda-grazia-giungla-urbana": {
+      "title": "Moda Grazia Giungla Urbana",
+      "cover": "photo_web/editorials/moda-grazia-giungla-urbana/max-salvaggio-fotografo-moda-grazia-hong-kong-042.webp",
+      "preview_icon": "photo_web/editorials/moda-grazia-giungla-urbana/max-salvaggio-fotografo-moda-grazia-hong-kong-042.webp",
+      "count": 9
+    },
+    "editorials/moda-grazia-hong-kong-express": {
+      "title": "Moda Grazia Hong Kong Express",
+      "cover": "photo_web/editorials/moda-grazia-hong-kong-express/max-salvaggio-fotografo-moda-grazia-hong-kong-051.webp",
+      "preview_icon": "photo_web/editorials/moda-grazia-hong-kong-express/max-salvaggio-fotografo-moda-grazia-hong-kong-051.webp",
+      "count": 17
+    },
+    "editorials/moda-grazia-leggerezza": {
+      "title": "Moda Grazia Leggerezza",
+      "cover": "photo_web/editorials/moda-grazia-leggerezza/max-salvaggio-fotografo-moda-grazia-cover-egypt-080.webp",
+      "preview_icon": "photo_web/editorials/moda-grazia-leggerezza/max-salvaggio-fotografo-moda-grazia-cover-egypt-080.webp",
+      "count": 7
+    },
+    "editorials/moda-grazia-love-shanghai": {
+      "title": "Moda Grazia Love Shanghai",
+      "cover": "photo_web/editorials/moda-grazia-love-shanghai/max-salvaggio-fotografo-moda-grazia-shanghai-068x.webp",
+      "preview_icon": "photo_web/editorials/moda-grazia-love-shanghai/max-salvaggio-fotografo-moda-grazia-shanghai-068x.webp",
+      "count": 12
+    },
+    "editorials/moda-grazia-mito-futuro": {
+      "title": "Moda Grazia Mito Futuro",
+      "cover": "photo_web/editorials/moda-grazia-mito-futuro/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-mexico-087.webp",
+      "preview_icon": "photo_web/editorials/moda-grazia-mito-futuro/max-salvaggio-fotografo-moda-grazia-daniela-de-jesus-mexico-087.webp",
+      "count": 10
+    },
+    "editorials/moda-grazia-nero-diverso": {
+      "title": "Moda Grazia Nero Diverso",
+      "cover": "photo_web/editorials/moda-grazia-nero-diverso/max-salvaggio-fotografo-moda-grazia-sicilia-097.webp",
+      "preview_icon": "photo_web/editorials/moda-grazia-nero-diverso/max-salvaggio-fotografo-moda-grazia-sicilia-097.webp",
+      "count": 5
+    },
+    "editorials/moda-grazia-safari-chic": {
+      "title": "Moda Grazia Safari Chic",
+      "cover": "photo_web/editorials/moda-grazia-safari-chic/max-salvaggio-fotografo-moda-grazia-kenya-102.webp",
+      "preview_icon": "photo_web/editorials/moda-grazia-safari-chic/max-salvaggio-fotografo-moda-grazia-kenya-102.webp",
+      "count": 10
+    },
+    "editorials/moda-grazia-seduzioni-oriente": {
+      "title": "Moda Grazia Seduzioni Oriente",
+      "cover": "photo_web/editorials/moda-grazia-seduzioni-oriente/max-salvaggio-fotografo-moda-grazia-hong-kong-112.webp",
+      "preview_icon": "photo_web/editorials/moda-grazia-seduzioni-oriente/max-salvaggio-fotografo-moda-grazia-hong-kong-112.webp",
+      "count": 14
+    },
+    "editorials/moda-grazia-specie": {
+      "title": "Moda Grazia Specie",
+      "cover": "photo_web/editorials/moda-grazia-specie/max-salvaggio-fotografo-moda-grazia-tulum-024.webp",
+      "preview_icon": "photo_web/editorials/moda-grazia-specie/max-salvaggio-fotografo-moda-grazia-tulum-024.webp",
+      "count": 4
+    },
+    "editorials/moda-grazia-stile-romanzo": {
+      "title": "Moda Grazia Stile Romanzo",
+      "cover": "photo_web/editorials/moda-grazia-stile-romanzo/max-salvaggio-fotografo-moda-grazia-vietnam-127.webp",
+      "preview_icon": "photo_web/editorials/moda-grazia-stile-romanzo/max-salvaggio-fotografo-moda-grazia-vietnam-127.webp",
+      "count": 10
+    },
+    "editorials/moda-grazia-viaggio-oriente": {
+      "title": "Moda Grazia Viaggio Oriente",
+      "cover": "photo_web/editorials/moda-grazia-viaggio-oriente/max-salvaggio-fotografo-moda-grazia-cover-daniela-de-jesus-cambodia-137.webp",
+      "preview_icon": "photo_web/editorials/moda-grazia-viaggio-oriente/max-salvaggio-fotografo-moda-grazia-cover-daniela-de-jesus-cambodia-137.webp",
+      "count": 19
+    },
+    "lingerie": {
+      "title": "Lingerie",
+      "cover": "photo_web/lingerie/max-salvaggio-fotografo-lingerie-002.webp",
+      "preview_icon": "photo_web/lingerie/max-salvaggio-fotografo-lingerie-002.webp",
+      "count": 24
+    },
+    "pet & portraits/ania": {
+      "title": "Ania",
+      "cover": "photo_web/pet & portraits/ania/max-salvaggio-fotografo-polo-cavallo-anna-001.webp",
+      "preview_icon": "photo_web/pet & portraits/ania/max-salvaggio-fotografo-polo-cavallo-anna-001.webp",
+      "count": 6
+    },
+    "pet & portraits/bea": {
+      "title": "Bea",
+      "cover": "photo_web/pet & portraits/bea/max-salvaggio-fotografo-polo-cavallo-bea-001.webp",
+      "preview_icon": "photo_web/pet & portraits/bea/max-salvaggio-fotografo-polo-cavallo-bea-001.webp",
+      "count": 5
+    },
+    "pet & portraits/noemi": {
+      "title": "Noemi",
+      "cover": "photo_web/pet & portraits/noemi/max-salvaggio-fotografo-cavallo-naomi-tavian-001.webp",
+      "preview_icon": "photo_web/pet & portraits/noemi/max-salvaggio-fotografo-cavallo-naomi-tavian-001.webp",
+      "count": 8
+    },
+    "pet & portraits/pamela": {
+      "title": "Pamela",
+      "cover": "photo_web/pet & portraits/pamela/max-salvaggio-fotografo-cane-pamela-001.webp",
+      "preview_icon": "photo_web/pet & portraits/pamela/max-salvaggio-fotografo-cane-pamela-001.webp",
+      "count": 5
+    },
+    "pet & portraits/studio i": {
+      "title": "Studio I",
+      "cover": "photo_web/pet & portraits/studio i/max-salvaggio-fotografo-cane-alessia-003.webp",
+      "preview_icon": "photo_web/pet & portraits/studio i/max-salvaggio-fotografo-cane-alessia-003.webp",
+      "count": 8
+    },
+    "portraits/portraits i": {
+      "title": "Portraits I",
+      "cover": "photo_web/portraits/portraits i/max-salvaggio-fotografo-beauty-001.webp",
+      "preview_icon": "photo_web/portraits/portraits i/max-salvaggio-fotografo-beauty-001.webp",
+      "count": 18
+    },
+    "portraits/portraits ii": {
+      "title": "Portraits Ii",
+      "cover": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-giacomo-cavalli-portraits-milano-169.webp",
+      "preview_icon": "photo_web/portraits/portraits ii/max-salvaggio-fotografo-moda-uomo-giacomo-cavalli-portraits-milano-169.webp",
+      "count": 45
+    },
+    "swimwear": {
+      "title": "Swimwear",
+      "cover": "photo_web/swimwear/max-salvaggio-fotografo-swimwear-001.webp",
+      "preview_icon": "photo_web/swimwear/max-salvaggio-fotografo-swimwear-001.webp",
+      "count": 33
+    }
   }
 };

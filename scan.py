@@ -23,12 +23,21 @@ def clean_title(filename):
     name = re.sub(r'\s+', ' ', name).strip()
     return name.title()
 
+def clean_folder_title(foldername):
+    name = re.sub(r'^[0-9]+\s*', '', foldername)
+    name = name.replace('-', ' ').replace('_', ' ')
+    name = re.sub(r'\s+', ' ', name).strip()
+    name = name.replace(' and ', ' & ').replace(' And ', ' & ')
+    return name.title()
+
 def create_thumbnail_custom(orig_path, target_rel_subfolder, relative_base):
     """
-    Genera la miniatura .webp in photo_web/[target_rel_subfolder] (es. photo_web/portraits/portraits I/filename.webp)
+    Genera la miniatura .webp in photo_web/[target_rel_subfolder] (es. photo_web/body/water-and-stones/filename.webp)
+    Target: <150 KB, max 800px sul lato lungo.
     """
     filename_base, _ = os.path.splitext(os.path.basename(orig_path))
-    thumb_rel_path = os.path.join('photo_web', target_rel_subfolder, filename_base + '.webp').replace('\\', '/')
+    clean_target_subfolder = target_rel_subfolder.lower().replace('\\', '/')
+    thumb_rel_path = os.path.join('photo_web', clean_target_subfolder, filename_base + '.webp').replace('\\', '/')
     thumb_full_path = os.path.join(relative_base, thumb_rel_path)
     
     os.makedirs(os.path.dirname(thumb_full_path), exist_ok=True)
@@ -52,7 +61,7 @@ def create_thumbnail_custom(orig_path, target_rel_subfolder, relative_base):
                     img.save(thumb_full_path, 'WEBP', quality=quality, optimize=True)
     except Exception as e:
         print(f"Errore generazione miniatura per {orig_path}: {e}")
-        return target_rel_subfolder.replace('\\', '/')
+        return thumb_rel_path
         
     return thumb_rel_path
 
@@ -65,6 +74,8 @@ def get_images_in_dir(path, tag_name, relative_base, web_subfolder=None):
     for root, dirs, files in os.walk(path):
         dirs.sort()
         for file in sorted(files):
+            if file.startswith('.') or file in ('.DS_Store', '.gitkeep'):
+                continue
             file_path = os.path.join(root, file)
             if os.path.isfile(file_path):
                 _, ext = os.path.splitext(file.lower())
@@ -74,9 +85,10 @@ def get_images_in_dir(path, tag_name, relative_base, web_subfolder=None):
                     
                     # Sotto-cartella target per la miniatura WebP in photo_web/
                     if web_subfolder is None:
-                        target_subfolder = os.path.relpath(root, os.path.join(relative_base, 'photo master')).replace('\\', '/')
+                        rel_sub = os.path.relpath(root, os.path.join(relative_base, 'photo master')).replace('\\', '/')
+                        target_subfolder = rel_sub.lower()
                     else:
-                        target_subfolder = web_subfolder
+                        target_subfolder = web_subfolder.lower()
                     
                     # Genera miniatura in photo_web/
                     thumb_url = create_thumbnail_custom(file_path, target_subfolder, relative_base)
@@ -112,7 +124,7 @@ def find_dir_by_keywords(parent_dir, keywords):
     return None
 
 def scan_all():
-    print("Inizio scansione cartelle photo master...")
+    print("Inizio scansione automatica e ricorsiva cartelle photo master...")
     
     data = {
         'overview': [],
@@ -127,18 +139,43 @@ def scan_all():
         },
         'body_and_form': {
             'organic_sculptures': [],
+            'water_and_stones': [],
             'shadows_and_graphic_intimacy': []
         },
         'portraits_and_beauty': {
             'portraits': [],
             'beauty': [],
             'pets_and_portraits': []
-        }
+        },
+        'categories_meta': {}
     }
 
     photo_master_base = os.path.join(base_dir, 'photo master')
 
-    # 1. OVERVIEW (Fallback se photo master/overview esiste, altrimenti mantiene overview/ esistente se presente)
+    # Scansione automatica e ricorsiva di TUTTE le sotto-cartelle in photo master per pre-generare miniature webp e catalogare anteprime/cover
+    if os.path.exists(photo_master_base):
+        for root, dirs, files in os.walk(photo_master_base):
+            dirs.sort()
+            valid_files = [f for f in sorted(files) if not f.startswith('.') and os.path.splitext(f.lower())[1] in VALID_EXTENSIONS]
+            if valid_files:
+                rel_path = os.path.relpath(root, photo_master_base).replace('\\', '/')
+                folder_name = os.path.basename(root)
+                clean_name = clean_folder_title(folder_name)
+                web_sub = rel_path.lower()
+                
+                tag = rel_path.split('/')[0].upper() if '/' in rel_path else rel_path.upper()
+                imgs = get_images_in_dir(root, tag, base_dir, web_subfolder=web_sub)
+                
+                if imgs:
+                    cover_img = imgs[0]['url']
+                    data['categories_meta'][web_sub] = {
+                        'title': clean_name,
+                        'cover': cover_img,
+                        'preview_icon': cover_img,
+                        'count': len(imgs)
+                    }
+
+    # 1. OVERVIEW
     overview_master_path = os.path.join(photo_master_base, 'overview')
     if os.path.exists(overview_master_path):
         data['overview'] = get_images_in_dir(overview_master_path, 'OVERVIEW', base_dir, web_subfolder='overview')
@@ -147,7 +184,7 @@ def scan_all():
         if os.path.exists(legacy_overview_path):
             data['overview'] = get_images_in_dir(legacy_overview_path, 'OVERVIEW', base_dir, web_subfolder='overview')
 
-    # 2. EDITORIALS (photo master/editorials)
+    # 2. EDITORIALS
     editorials_master_path = os.path.join(photo_master_base, 'editorials')
     if os.path.exists(editorials_master_path):
         for item in sorted(os.listdir(editorials_master_path)):
@@ -156,12 +193,15 @@ def scan_all():
             item_path = os.path.join(editorials_master_path, item)
             if os.path.isdir(item_path):
                 project_id = item.lower().replace(' ', '-').replace('_', '-')
-                project_title = item.replace('-', ' ').replace('_', ' ').title()
-                images = get_images_in_dir(item_path, 'EDITORIALS', base_dir, web_subfolder=f'editorials/{item}')
+                project_title = clean_folder_title(item)
+                images = get_images_in_dir(item_path, 'EDITORIALS', base_dir, web_subfolder=f'editorials/{item.lower()}')
                 if images:
+                    cover_url = images[0]['url']
                     data['editorials']['projects'].append({
                         'id': project_id,
                         'title': project_title,
+                        'cover': cover_url,
+                        'preview_icon': cover_url,
                         'place': '',
                         'magazine': '',
                         'images': images
@@ -173,58 +213,84 @@ def scan_all():
                     data['editorials']['unpublished_research'].extend(imgs)
                     break
     else:
-        # Backward compatibility con vecchie cartelle se photo master/editorials è vuota
         legacy_editorials = os.path.join(base_dir, '1 EDITORIALS', 'editorials')
         if os.path.exists(legacy_editorials):
             for folder in sorted(os.listdir(legacy_editorials)):
                 folder_path = os.path.join(legacy_editorials, folder)
                 if os.path.isdir(folder_path):
-                    images = get_images_in_dir(folder_path, 'EDITORIALS', base_dir, web_subfolder=f'editorials/{folder}')
+                    images = get_images_in_dir(folder_path, 'EDITORIALS', base_dir, web_subfolder=f'editorials/{folder.lower()}')
                     if images:
+                        cover_url = images[0]['url']
                         data['editorials']['projects'].append({
                             'id': folder.lower().replace(' ', '-'),
-                            'title': folder.title(),
+                            'title': clean_folder_title(folder),
+                            'cover': cover_url,
+                            'preview_icon': cover_url,
                             'place': '',
                             'magazine': '',
                             'images': images
                         })
 
-    # 3. CAMPAIGNS (photo master/campaigns)
+    # 3. CAMPAIGNS
     campaigns_master_path = os.path.join(photo_master_base, 'campaigns')
-    data['campaigns']['fashion'] = get_images_in_dir(os.path.join(campaigns_master_path, 'fashion'), 'CAMPAIGNS', base_dir, web_subfolder='campaigns/fashion') if os.path.exists(os.path.join(campaigns_master_path, 'fashion')) else get_images_in_dir(os.path.join(campaigns_master_path), 'CAMPAIGNS', base_dir, web_subfolder='campaigns')
+    data['campaigns']['fashion'] = get_images_in_dir(os.path.join(campaigns_master_path, 'fashion'), 'CAMPAIGNS', base_dir, web_subfolder='campaigns/fashion') if os.path.exists(os.path.join(campaigns_master_path, 'fashion')) else get_images_in_dir(campaigns_master_path, 'CAMPAIGNS', base_dir, web_subfolder='campaigns')
     
     lingerie_master_path = os.path.join(photo_master_base, 'lingerie')
-    data['campaigns']['lingerie'] = get_images_in_dir(lingerie_master_path, 'CAMPAIGNS', base_dir, web_subfolder='lingerie')
+    if not os.path.exists(lingerie_master_path):
+        lingerie_master_path = os.path.join(campaigns_master_path, 'lingerie')
+    data['campaigns']['lingerie'] = get_images_in_dir(lingerie_master_path, 'CAMPAIGNS', base_dir, web_subfolder='campaigns/lingerie')
 
     swimwear_master_path = os.path.join(photo_master_base, 'swimwear')
-    data['campaigns']['swimwear'] = get_images_in_dir(swimwear_master_path, 'CAMPAIGNS', base_dir, web_subfolder='swimwear')
+    if not os.path.exists(swimwear_master_path):
+        swimwear_master_path = os.path.join(campaigns_master_path, 'swimwear')
+    data['campaigns']['swimwear'] = get_images_in_dir(swimwear_master_path, 'CAMPAIGNS', base_dir, web_subfolder='campaigns/swimwear')
 
-    # Fallback su vecchie cartelle se nuove in photo master sono vuote
+    # Fallback su vecchie cartelle se photo master è vuota
     if not data['campaigns']['fashion']:
         data['campaigns']['fashion'] = get_images_in_dir(os.path.join(base_dir, '2 CAMPAIGNS', 'FASHION'), 'CAMPAIGNS', base_dir, web_subfolder='campaigns/fashion')
     if not data['campaigns']['lingerie']:
-        data['campaigns']['lingerie'] = get_images_in_dir(os.path.join(base_dir, '2 CAMPAIGNS', 'LINGERIE'), 'CAMPAIGNS', base_dir, web_subfolder='lingerie')
+        data['campaigns']['lingerie'] = get_images_in_dir(os.path.join(base_dir, '2 CAMPAIGNS', 'LINGERIE'), 'CAMPAIGNS', base_dir, web_subfolder='campaigns/lingerie')
     if not data['campaigns']['swimwear']:
-        data['campaigns']['swimwear'] = get_images_in_dir(os.path.join(base_dir, '2 CAMPAIGNS', 'SWIMMWEAR'), 'CAMPAIGNS', base_dir, web_subfolder='swimwear')
+        data['campaigns']['swimwear'] = get_images_in_dir(os.path.join(base_dir, '2 CAMPAIGNS', 'SWIMMWEAR'), 'CAMPAIGNS', base_dir, web_subfolder='campaigns/swimwear')
 
-    # 4. BODY & FORM (photo master/body)
+    # 4. BODY & FORM
     body_master_path = os.path.join(photo_master_base, 'body')
     organic_path = find_dir_by_keywords(body_master_path, ['organic'])
+    water_path = find_dir_by_keywords(body_master_path, ['water', 'stone'])
     shadows_path = find_dir_by_keywords(body_master_path, ['shadow'])
 
     if organic_path:
-        rel_sub = os.path.relpath(organic_path, photo_master_base).replace('\\', '/')
+        rel_sub = os.path.relpath(organic_path, photo_master_base).replace('\\', '/').lower()
         data['body_and_form']['organic_sculptures'] = get_images_in_dir(organic_path, 'BODY & FORM', base_dir, web_subfolder=rel_sub)
     else:
         data['body_and_form']['organic_sculptures'] = get_images_in_dir(os.path.join(base_dir, '3 BODY & FORM', 'ORGANIC SCULPTURES'), 'BODY & FORM', base_dir, web_subfolder='body/organic sculptures')
 
+    if water_path:
+        rel_sub = os.path.relpath(water_path, photo_master_base).replace('\\', '/').lower()
+        data['body_and_form']['water_and_stones'] = get_images_in_dir(water_path, 'BODY & FORM', base_dir, web_subfolder=rel_sub)
+    else:
+        legacy_water = os.path.join(base_dir, 'images', 'body', 'water-and-stones')
+        if os.path.exists(legacy_water):
+            data['body_and_form']['water_and_stones'] = get_images_in_dir(legacy_water, 'BODY & FORM', base_dir, web_subfolder='body/water-and-stones')
+
     if shadows_path:
-        rel_sub = os.path.relpath(shadows_path, photo_master_base).replace('\\', '/')
+        rel_sub = os.path.relpath(shadows_path, photo_master_base).replace('\\', '/').lower()
         data['body_and_form']['shadows_and_graphic_intimacy'] = get_images_in_dir(shadows_path, 'BODY & FORM', base_dir, web_subfolder=rel_sub)
     else:
         data['body_and_form']['shadows_and_graphic_intimacy'] = get_images_in_dir(os.path.join(base_dir, '3 BODY & FORM', 'SHADOWS & GRAPHIC INTIMACY'), 'BODY & FORM', base_dir, web_subfolder='body/shadows')
 
-    # 5. PORTRAITS & BEAUTY (photo master/portraits & photo master/pet & portraits)
+    # Scansione dinamica per eventuali sotto-cartelle aggiuntive in body
+    if os.path.exists(body_master_path):
+        for item in sorted(os.listdir(body_master_path)):
+            item_p = os.path.join(body_master_path, item)
+            if os.path.isdir(item_p):
+                item_lower = item.lower()
+                key = item_lower.replace(' ', '_').replace('-', '_')
+                if key not in data['body_and_form']:
+                    rel_sub = os.path.relpath(item_p, photo_master_base).replace('\\', '/').lower()
+                    data['body_and_form'][key] = get_images_in_dir(item_p, 'BODY & FORM', base_dir, web_subfolder=rel_sub)
+
+    # 5. PORTRAITS & BEAUTY
     portraits_i_path = os.path.join(photo_master_base, 'portraits', 'portraits I')
     portraits_ii_path = os.path.join(photo_master_base, 'portraits', 'portraits II')
     pets_master_path = os.path.join(photo_master_base, 'pet & portraits')
@@ -241,7 +307,6 @@ def scan_all():
         
     data['portraits_and_beauty']['pets_and_portraits'] = pets_imgs if pets_imgs else get_images_in_dir(os.path.join(base_dir, '4 PET and Portraits'), 'PET & PORTRAITS', base_dir, web_subfolder='pet & portraits')
     data['portraits_and_beauty']['beauty'] = get_images_in_dir(os.path.join(base_dir, '4 beauty'), 'BEAUTY', base_dir, web_subfolder='beauty')
-
 
     # Output JSON database to file
     js_content = f"""// Database delle immagini generato automaticamente dallo script scan.py
