@@ -634,14 +634,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const storedTab = localStorage.getItem("activeTab");
 
-    if (currentActive && currentActive.id === ("section-" + sectionId) && targetId !== "editorials" && targetId !== "unpublished-research" && !storedTab) {
+    if (currentActive && currentActive.id === ("section-" + sectionId) && targetId !== "editorials" && targetId !== "unpublished-research" && targetId !== "body-form" && targetId !== "portraits" && !storedTab) {
       return;
     }
 
+    // For tab-sections navigated without a storedTab, force-activate the default tab
+    if (!storedTab) {
+      if (sectionId === "body-form") {
+        localStorage.setItem("activeTab", "body-organic");
+      } else if (sectionId === "portraits") {
+        localStorage.setItem("activeTab", "pb-portraits");
+      }
+    }
+
     // If navigating to portraits-beauty or body-form via a data-tab, activate that tab after transition
-    if (storedTab) {
+    const activeTabToTrigger = localStorage.getItem("activeTab");
+    if (activeTabToTrigger) {
       const triggerTab = () => {
-        const tabButton = document.querySelector(`.tab-link[data-tab="${storedTab}"]`);
+        const tabButton = document.querySelector(`.tab-link[data-tab="${activeTabToTrigger}"]`);
         if (tabButton) { tabButton.click(); }
         localStorage.removeItem("activeTab");
       };
