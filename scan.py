@@ -352,8 +352,8 @@ def scan_all():
                     data['body_and_form'][key] = get_images_in_dir(item_p, 'BODY & FORM', base_dir, web_subfolder=rel_sub)
 
     # 5. PORTRAITS & BEAUTY
-    portraits_i_path = os.path.join(photo_master_base, 'portraits', 'portraits I')
-    portraits_ii_path = os.path.join(photo_master_base, 'portraits', 'portraits II')
+    portraits_i_path = find_dir_by_keywords(os.path.join(photo_master_base, 'portraits'), ['portrait i', 'portraits i', 'portraits 1', 'portrait 1'])
+    portraits_ii_path = find_dir_by_keywords(os.path.join(photo_master_base, 'portraits'), ['portrait ii', 'portraits ii', 'portraits 2', 'portrait 2'])
     pets_master_path = os.path.join(photo_master_base, 'pet & portraits')
 
     portraits_i_imgs = get_images_in_dir(portraits_i_path, 'PORTRAITS', base_dir, web_subfolder='portraits/portraits I')
