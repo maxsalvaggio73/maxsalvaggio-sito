@@ -1,5 +1,5 @@
 // Database delle immagini generato automaticamente dallo script scan.py
-// Data di generazione: 2026-09-12T15:57:37.465162+00:00
+// Data di generazione: 2026-09-12T16:09:10.858103+00:00
 
 const portfolioData = {
   "overview": [
@@ -2913,24 +2913,24 @@ const portfolioData = {
   "campaigns": {
     "fashion": [
       {
-        "url": "photo_web/campaigns/fashion/max-salvaggio-fotografo-adv-bag-dee-ocleppo.webp",
-        "fullResUrl": "photo master/campaigns/max-salvaggio-fotografo-adv-bag-dee-ocleppo.jpg",
-        "thumbnailUrl": "photo_web/campaigns/fashion/max-salvaggio-fotografo-adv-bag-dee-ocleppo.webp",
-        "title": "Fotografo Adv Bag Dee Ocleppo",
-        "tag": "CAMPAIGNS",
-        "width": 1536,
-        "height": 1024,
-        "is_horizontal": true
-      },
-      {
-        "url": "photo_web/campaigns/fashion/max-salvaggio-fotografo-drink-campaign-campari.webp",
-        "fullResUrl": "photo master/campaigns/max-salvaggio-fotografo-drink-campaign-campari.jpg",
-        "thumbnailUrl": "photo_web/campaigns/fashion/max-salvaggio-fotografo-drink-campaign-campari.webp",
-        "title": "Fotografo Drink Campaign Campari",
+        "url": "photo_web/campaigns/fashion/max-salvaggio-campaign-campari-drink.webp",
+        "fullResUrl": "photo master/campaigns/max-salvaggio-campaign-campari-drink.jpg",
+        "thumbnailUrl": "photo_web/campaigns/fashion/max-salvaggio-campaign-campari-drink.webp",
+        "title": "Campaign Campari Drink",
         "tag": "CAMPAIGNS",
         "width": 819,
         "height": 1024,
         "is_horizontal": false
+      },
+      {
+        "url": "photo_web/campaigns/fashion/max-salvaggio-dee-ocleppo-adv-bag-dee-ocleppo.webp",
+        "fullResUrl": "photo master/campaigns/max-salvaggio-dee-ocleppo-adv-bag-dee-ocleppo.jpg",
+        "thumbnailUrl": "photo_web/campaigns/fashion/max-salvaggio-dee-ocleppo-adv-bag-dee-ocleppo.webp",
+        "title": "Dee Ocleppo Adv Bag Dee Ocleppo",
+        "tag": "CAMPAIGNS",
+        "width": 1536,
+        "height": 1024,
+        "is_horizontal": true
       },
       {
         "url": "photo_web/campaigns/fashion/max-salvaggio-fotografo-moda-jeans-re-hash002.webp",
@@ -4680,8 +4680,8 @@ const portfolioData = {
     },
     "campaigns/fashion": {
       "title": "Campaigns",
-      "cover": "photo_web/campaigns/fashion/max-salvaggio-fotografo-adv-bag-dee-ocleppo.webp",
-      "preview_icon": "photo_web/campaigns/fashion/max-salvaggio-fotografo-adv-bag-dee-ocleppo.webp",
+      "cover": "photo_web/campaigns/fashion/max-salvaggio-campaign-campari-drink.webp",
+      "preview_icon": "photo_web/campaigns/fashion/max-salvaggio-campaign-campari-drink.webp",
       "count": 22
     },
     "editorials/covers": {
